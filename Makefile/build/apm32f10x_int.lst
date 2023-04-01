@@ -1,0 +1,417 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_int.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.NMI_Handler,"ax",%progbits
+  18              		.align	1
+  19              		.global	NMI_Handler
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	NMI_Handler:
+  25              	.LFB65:
+  26              		.file 1 "Source/apm32f10x_int.c"
+   1:Source/apm32f10x_int.c **** /*!
+   2:Source/apm32f10x_int.c ****  * @file        apm32f10x_int.c
+   3:Source/apm32f10x_int.c ****  *
+   4:Source/apm32f10x_int.c ****  * @brief      Main Interrupt Service Routines
+   5:Source/apm32f10x_int.c ****  *
+   6:Source/apm32f10x_int.c ****  * @version     V1.0.2
+   7:Source/apm32f10x_int.c ****  *
+   8:Source/apm32f10x_int.c ****  * @date        2022-01-05
+   9:Source/apm32f10x_int.c ****  *
+  10:Source/apm32f10x_int.c ****  * @attention
+  11:Source/apm32f10x_int.c ****  *
+  12:Source/apm32f10x_int.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Source/apm32f10x_int.c ****  *
+  14:Source/apm32f10x_int.c ****  *  You may not use this file except in compliance with the
+  15:Source/apm32f10x_int.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Source/apm32f10x_int.c ****  *
+  17:Source/apm32f10x_int.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Source/apm32f10x_int.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Source/apm32f10x_int.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Source/apm32f10x_int.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Source/apm32f10x_int.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Source/apm32f10x_int.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Source/apm32f10x_int.c ****  *  and limitations under the License.
+  24:Source/apm32f10x_int.c ****  */
+  25:Source/apm32f10x_int.c **** 
+  26:Source/apm32f10x_int.c **** #include "main.h"
+  27:Source/apm32f10x_int.c **** #include "apm32f10x_int.h"
+  28:Source/apm32f10x_int.c **** 
+  29:Source/apm32f10x_int.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Source/apm32f10x_int.c ****   @{
+  31:Source/apm32f10x_int.c **** */
+  32:Source/apm32f10x_int.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 2
+
+
+  33:Source/apm32f10x_int.c **** /** @addtogroup INT_Driver INT Driver
+  34:Source/apm32f10x_int.c ****   @{
+  35:Source/apm32f10x_int.c **** */
+  36:Source/apm32f10x_int.c **** 
+  37:Source/apm32f10x_int.c **** /** @addtogroup INT_Fuctions Fuctions
+  38:Source/apm32f10x_int.c ****   @{
+  39:Source/apm32f10x_int.c **** */
+  40:Source/apm32f10x_int.c **** 
+  41:Source/apm32f10x_int.c **** /*!
+  42:Source/apm32f10x_int.c ****  * @brief   This function handles NMI exception
+  43:Source/apm32f10x_int.c ****  *
+  44:Source/apm32f10x_int.c ****  * @param   None
+  45:Source/apm32f10x_int.c ****  *
+  46:Source/apm32f10x_int.c ****  * @retval  None
+  47:Source/apm32f10x_int.c ****  *
+  48:Source/apm32f10x_int.c ****  */
+  49:Source/apm32f10x_int.c **** void NMI_Handler(void)
+  50:Source/apm32f10x_int.c **** {
+  27              		.loc 1 50 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  51:Source/apm32f10x_int.c **** }
+  32              		.loc 1 51 1 view .LVU1
+  33 0000 7047     		bx	lr
+  34              		.cfi_endproc
+  35              	.LFE65:
+  37              		.section	.text.HardFault_Handler,"ax",%progbits
+  38              		.align	1
+  39              		.global	HardFault_Handler
+  40              		.syntax unified
+  41              		.thumb
+  42              		.thumb_func
+  44              	HardFault_Handler:
+  45              	.LFB66:
+  52:Source/apm32f10x_int.c **** 
+  53:Source/apm32f10x_int.c **** /*!
+  54:Source/apm32f10x_int.c ****  * @brief   This function handles Hard Fault exception
+  55:Source/apm32f10x_int.c ****  *
+  56:Source/apm32f10x_int.c ****  * @param   None
+  57:Source/apm32f10x_int.c ****  *
+  58:Source/apm32f10x_int.c ****  * @retval  None
+  59:Source/apm32f10x_int.c ****  *
+  60:Source/apm32f10x_int.c ****  */
+  61:Source/apm32f10x_int.c **** void HardFault_Handler(void)
+  62:Source/apm32f10x_int.c **** {
+  46              		.loc 1 62 1 view -0
+  47              		.cfi_startproc
+  48              		@ Volatile: function does not return.
+  49              		@ args = 0, pretend = 0, frame = 0
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51              		@ link register save eliminated.
+  52              	.L3:
+  63:Source/apm32f10x_int.c ****     /** Go to infinite loop when Hard Fault exception occurs */
+  64:Source/apm32f10x_int.c ****     while (1)
+  53              		.loc 1 64 5 discriminator 1 view .LVU3
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 3
+
+
+  65:Source/apm32f10x_int.c ****     {
+  66:Source/apm32f10x_int.c ****     }
+  54              		.loc 1 66 5 discriminator 1 view .LVU4
+  64:Source/apm32f10x_int.c ****     {
+  55              		.loc 1 64 11 discriminator 1 view .LVU5
+  56 0000 FEE7     		b	.L3
+  57              		.cfi_endproc
+  58              	.LFE66:
+  60              		.section	.text.MemManage_Handler,"ax",%progbits
+  61              		.align	1
+  62              		.global	MemManage_Handler
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	MemManage_Handler:
+  68              	.LFB67:
+  67:Source/apm32f10x_int.c **** }
+  68:Source/apm32f10x_int.c **** 
+  69:Source/apm32f10x_int.c **** /*!
+  70:Source/apm32f10x_int.c ****  * @brief   This function handles Memory Manage exception
+  71:Source/apm32f10x_int.c ****  *
+  72:Source/apm32f10x_int.c ****  * @param   None
+  73:Source/apm32f10x_int.c ****  *
+  74:Source/apm32f10x_int.c ****  * @retval  None
+  75:Source/apm32f10x_int.c ****  *
+  76:Source/apm32f10x_int.c ****  */
+  77:Source/apm32f10x_int.c **** void MemManage_Handler(void)
+  78:Source/apm32f10x_int.c **** {
+  69              		.loc 1 78 1 view -0
+  70              		.cfi_startproc
+  71              		@ Volatile: function does not return.
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+  75              	.L5:
+  79:Source/apm32f10x_int.c ****     /** Go to infinite loop when Memory Manage exception occurs */
+  80:Source/apm32f10x_int.c ****     while (1)
+  76              		.loc 1 80 5 discriminator 1 view .LVU7
+  81:Source/apm32f10x_int.c ****     {
+  82:Source/apm32f10x_int.c ****     }
+  77              		.loc 1 82 5 discriminator 1 view .LVU8
+  80:Source/apm32f10x_int.c ****     {
+  78              		.loc 1 80 11 discriminator 1 view .LVU9
+  79 0000 FEE7     		b	.L5
+  80              		.cfi_endproc
+  81              	.LFE67:
+  83              		.section	.text.BusFault_Handler,"ax",%progbits
+  84              		.align	1
+  85              		.global	BusFault_Handler
+  86              		.syntax unified
+  87              		.thumb
+  88              		.thumb_func
+  90              	BusFault_Handler:
+  91              	.LFB68:
+  83:Source/apm32f10x_int.c **** }
+  84:Source/apm32f10x_int.c **** 
+  85:Source/apm32f10x_int.c **** /*!
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 4
+
+
+  86:Source/apm32f10x_int.c ****  * @brief   This function handles Bus Fault exception
+  87:Source/apm32f10x_int.c ****  *
+  88:Source/apm32f10x_int.c ****  * @param   None
+  89:Source/apm32f10x_int.c ****  *
+  90:Source/apm32f10x_int.c ****  * @retval  None
+  91:Source/apm32f10x_int.c ****  *
+  92:Source/apm32f10x_int.c ****  */
+  93:Source/apm32f10x_int.c **** void BusFault_Handler(void)
+  94:Source/apm32f10x_int.c **** {
+  92              		.loc 1 94 1 view -0
+  93              		.cfi_startproc
+  94              		@ Volatile: function does not return.
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98              	.L7:
+  95:Source/apm32f10x_int.c ****     /** Go to infinite loop when Bus Fault exception occurs */
+  96:Source/apm32f10x_int.c ****     while (1)
+  99              		.loc 1 96 5 discriminator 1 view .LVU11
+  97:Source/apm32f10x_int.c ****     {
+  98:Source/apm32f10x_int.c ****     }
+ 100              		.loc 1 98 5 discriminator 1 view .LVU12
+  96:Source/apm32f10x_int.c ****     {
+ 101              		.loc 1 96 11 discriminator 1 view .LVU13
+ 102 0000 FEE7     		b	.L7
+ 103              		.cfi_endproc
+ 104              	.LFE68:
+ 106              		.section	.text.UsageFault_Handler,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	UsageFault_Handler
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	UsageFault_Handler:
+ 114              	.LFB69:
+  99:Source/apm32f10x_int.c **** }
+ 100:Source/apm32f10x_int.c **** 
+ 101:Source/apm32f10x_int.c **** /*!
+ 102:Source/apm32f10x_int.c ****  * @brief   This function handles Usage Fault exception
+ 103:Source/apm32f10x_int.c ****  *
+ 104:Source/apm32f10x_int.c ****  * @param   None
+ 105:Source/apm32f10x_int.c ****  *
+ 106:Source/apm32f10x_int.c ****  * @retval  None
+ 107:Source/apm32f10x_int.c ****  *
+ 108:Source/apm32f10x_int.c ****  */
+ 109:Source/apm32f10x_int.c **** void UsageFault_Handler(void)
+ 110:Source/apm32f10x_int.c **** {
+ 115              		.loc 1 110 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ Volatile: function does not return.
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		@ link register save eliminated.
+ 121              	.L9:
+ 111:Source/apm32f10x_int.c ****     /** Go to infinite loop when Usage Fault exception occurs */
+ 112:Source/apm32f10x_int.c ****     while (1)
+ 122              		.loc 1 112 5 discriminator 1 view .LVU15
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 5
+
+
+ 113:Source/apm32f10x_int.c ****     {
+ 114:Source/apm32f10x_int.c ****     }
+ 123              		.loc 1 114 5 discriminator 1 view .LVU16
+ 112:Source/apm32f10x_int.c ****     {
+ 124              		.loc 1 112 11 discriminator 1 view .LVU17
+ 125 0000 FEE7     		b	.L9
+ 126              		.cfi_endproc
+ 127              	.LFE69:
+ 129              		.section	.text.SVC_Handler,"ax",%progbits
+ 130              		.align	1
+ 131              		.global	SVC_Handler
+ 132              		.syntax unified
+ 133              		.thumb
+ 134              		.thumb_func
+ 136              	SVC_Handler:
+ 137              	.LFB70:
+ 115:Source/apm32f10x_int.c **** }
+ 116:Source/apm32f10x_int.c **** 
+ 117:Source/apm32f10x_int.c **** /*!
+ 118:Source/apm32f10x_int.c ****  * @brief   This function handles SVCall exception
+ 119:Source/apm32f10x_int.c ****  *
+ 120:Source/apm32f10x_int.c ****  * @param   None
+ 121:Source/apm32f10x_int.c ****  *
+ 122:Source/apm32f10x_int.c ****  * @retval  None
+ 123:Source/apm32f10x_int.c ****  *
+ 124:Source/apm32f10x_int.c ****  */
+ 125:Source/apm32f10x_int.c **** void SVC_Handler(void)
+ 126:Source/apm32f10x_int.c **** {
+ 138              		.loc 1 126 1 view -0
+ 139              		.cfi_startproc
+ 140              		@ args = 0, pretend = 0, frame = 0
+ 141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 142              		@ link register save eliminated.
+ 127:Source/apm32f10x_int.c **** }
+ 143              		.loc 1 127 1 view .LVU19
+ 144 0000 7047     		bx	lr
+ 145              		.cfi_endproc
+ 146              	.LFE70:
+ 148              		.section	.text.DebugMon_Handler,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	DebugMon_Handler
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	DebugMon_Handler:
+ 156              	.LFB71:
+ 128:Source/apm32f10x_int.c **** 
+ 129:Source/apm32f10x_int.c **** /*!
+ 130:Source/apm32f10x_int.c ****  * @brief   This function handles Debug Monitor exception
+ 131:Source/apm32f10x_int.c ****  *
+ 132:Source/apm32f10x_int.c ****  * @param   None
+ 133:Source/apm32f10x_int.c ****  *
+ 134:Source/apm32f10x_int.c ****  * @retval  None
+ 135:Source/apm32f10x_int.c ****  *
+ 136:Source/apm32f10x_int.c ****  */
+ 137:Source/apm32f10x_int.c **** void DebugMon_Handler(void)
+ 138:Source/apm32f10x_int.c **** {
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 6
+
+
+ 157              		.loc 1 138 1 view -0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              		@ link register save eliminated.
+ 139:Source/apm32f10x_int.c **** }
+ 162              		.loc 1 139 1 view .LVU21
+ 163 0000 7047     		bx	lr
+ 164              		.cfi_endproc
+ 165              	.LFE71:
+ 167              		.section	.text.PendSV_Handler,"ax",%progbits
+ 168              		.align	1
+ 169              		.global	PendSV_Handler
+ 170              		.syntax unified
+ 171              		.thumb
+ 172              		.thumb_func
+ 174              	PendSV_Handler:
+ 175              	.LFB72:
+ 140:Source/apm32f10x_int.c **** 
+ 141:Source/apm32f10x_int.c **** /*!
+ 142:Source/apm32f10x_int.c ****  * @brief   This function handles PendSV_Handler exception
+ 143:Source/apm32f10x_int.c ****  *
+ 144:Source/apm32f10x_int.c ****  * @param   None
+ 145:Source/apm32f10x_int.c ****  *
+ 146:Source/apm32f10x_int.c ****  * @retval  None
+ 147:Source/apm32f10x_int.c ****  *
+ 148:Source/apm32f10x_int.c ****  */
+ 149:Source/apm32f10x_int.c **** void PendSV_Handler(void)
+ 150:Source/apm32f10x_int.c **** {
+ 176              		.loc 1 150 1 view -0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180              		@ link register save eliminated.
+ 151:Source/apm32f10x_int.c **** }
+ 181              		.loc 1 151 1 view .LVU23
+ 182 0000 7047     		bx	lr
+ 183              		.cfi_endproc
+ 184              	.LFE72:
+ 186              		.section	.text.SysTick_Handler,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	SysTick_Handler
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	SysTick_Handler:
+ 194              	.LFB73:
+ 152:Source/apm32f10x_int.c **** 
+ 153:Source/apm32f10x_int.c **** /*!
+ 154:Source/apm32f10x_int.c ****  * @brief   This function handles SysTick Handler
+ 155:Source/apm32f10x_int.c ****  *
+ 156:Source/apm32f10x_int.c ****  * @param   None
+ 157:Source/apm32f10x_int.c ****  *
+ 158:Source/apm32f10x_int.c ****  * @retval  None
+ 159:Source/apm32f10x_int.c ****  *
+ 160:Source/apm32f10x_int.c ****  */
+ 161:Source/apm32f10x_int.c **** void SysTick_Handler(void)
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 7
+
+
+ 162:Source/apm32f10x_int.c **** {
+ 195              		.loc 1 162 1 view -0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		@ link register save eliminated.
+ 163:Source/apm32f10x_int.c ****     tick++;
+ 200              		.loc 1 163 5 view .LVU25
+ 201              		.loc 1 163 9 is_stmt 0 view .LVU26
+ 202 0000 024A     		ldr	r2, .L14
+ 203 0002 1368     		ldr	r3, [r2]
+ 204 0004 0133     		adds	r3, r3, #1
+ 205 0006 1360     		str	r3, [r2]
+ 164:Source/apm32f10x_int.c **** }
+ 206              		.loc 1 164 1 view .LVU27
+ 207 0008 7047     		bx	lr
+ 208              	.L15:
+ 209 000a 00BF     		.align	2
+ 210              	.L14:
+ 211 000c 00000000 		.word	tick
+ 212              		.cfi_endproc
+ 213              	.LFE73:
+ 215              		.text
+ 216              	.Letext0:
+ 217              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 218              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 219              		.file 4 "Include/main.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_int.c
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:18     .text.NMI_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:24     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:38     .text.HardFault_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:44     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:61     .text.MemManage_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:67     .text.MemManage_Handler:00000000 MemManage_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:84     .text.BusFault_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:90     .text.BusFault_Handler:00000000 BusFault_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:107    .text.UsageFault_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:113    .text.UsageFault_Handler:00000000 UsageFault_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:130    .text.SVC_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:136    .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:149    .text.DebugMon_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:155    .text.DebugMon_Handler:00000000 DebugMon_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:168    .text.PendSV_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:174    .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:187    .text.SysTick_Handler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:193    .text.SysTick_Handler:00000000 SysTick_Handler
+C:\Users\geehy\AppData\Local\Temp\ccaWKM4V.s:211    .text.SysTick_Handler:0000000c $d
+
+UNDEFINED SYMBOLS
+tick

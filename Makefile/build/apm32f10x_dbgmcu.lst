@@ -1,0 +1,306 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_dbgmcu.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.DBGMCU_ReadDEVID,"ax",%progbits
+  18              		.align	1
+  19              		.global	DBGMCU_ReadDEVID
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	DBGMCU_ReadDEVID:
+  25              	.LFB65:
+  26              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @file        apm32f10x_dbgmcu.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @brief       This file provides all the DEBUG firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** #include "apm32f10x_dbgmcu.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****   @{
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** */
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /** @addtogroup DBGMCU_Driver DBGMCU Driver
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s 			page 2
+
+
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****   @{
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** */
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /** @addtogroup DBGMCU_Fuctions Fuctions
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****   @{
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** */
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /*!
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @brief  Returns the device identifier.
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @param  None
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @retval Device identifier
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  */
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** uint32_t DBGMCU_ReadDEVID(void)
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** {
+  27              		.loc 1 48 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****    return(DBGMCU->IDCODE_B.EQR);
+  32              		.loc 1 49 4 view .LVU1
+  33              		.loc 1 49 27 is_stmt 0 view .LVU2
+  34 0000 024B     		ldr	r3, .L2
+  35 0002 1868     		ldr	r0, [r3]
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** }
+  36              		.loc 1 50 1 view .LVU3
+  37 0004 C0F30B00 		ubfx	r0, r0, #0, #12
+  38 0008 7047     		bx	lr
+  39              	.L3:
+  40 000a 00BF     		.align	2
+  41              	.L2:
+  42 000c 002004E0 		.word	-536600576
+  43              		.cfi_endproc
+  44              	.LFE65:
+  46              		.section	.text.DBGMCU_ReadREVID,"ax",%progbits
+  47              		.align	1
+  48              		.global	DBGMCU_ReadREVID
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  53              	DBGMCU_ReadREVID:
+  54              	.LFB66:
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /*!
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @brief  Returns the device revision identifier.
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @param  None
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @retval Device revision identifier
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  */
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** uint32_t DBGMCU_ReadREVID(void)
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** {
+  55              		.loc 1 60 1 is_stmt 1 view -0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s 			page 3
+
+
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****    return(DBGMCU->IDCODE_B.WVR);
+  60              		.loc 1 61 4 view .LVU5
+  61              		.loc 1 61 27 is_stmt 0 view .LVU6
+  62 0000 014B     		ldr	r3, .L5
+  63 0002 1868     		ldr	r0, [r3]
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** }
+  64              		.loc 1 62 1 view .LVU7
+  65 0004 000C     		lsrs	r0, r0, #16
+  66 0006 7047     		bx	lr
+  67              	.L6:
+  68              		.align	2
+  69              	.L5:
+  70 0008 002004E0 		.word	-536600576
+  71              		.cfi_endproc
+  72              	.LFE66:
+  74              		.section	.text.DBGMCU_Enable,"ax",%progbits
+  75              		.align	1
+  76              		.global	DBGMCU_Enable
+  77              		.syntax unified
+  78              		.thumb
+  79              		.thumb_func
+  81              	DBGMCU_Enable:
+  82              	.LVL0:
+  83              	.LFB67:
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /*!
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @brief       Enable the specified peripheral and low power mode behavior
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *              when the MCU under Debug mode
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @param       periph: Specifies the peripheral and low power mode
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      This parameter can be any combination of the following values:
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_SLEEP             : Keep debugger connection during SLEEP mode
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_STOP              : Keep debugger connection during STOP mode
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_STANDBY           : Keep debugger connection during STANDBY mod
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_IWDT_STOP         : Debug IWDT stopped when Core is halted
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_WWDT_STOP         : Debug WWDT stopped when Core is halted
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR1_STOP         : TMR1 counter stopped when Core is halted
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR2_STOP         : TMR2 counter stopped when Core is halted
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR3_STOP         : TMR3 counter stopped when Core is halted
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR4_STOP         : TMR4 counter stopped when Core is halted
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_CAN1_STOP         : Debug CAN1 stopped when Core is halted
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_I2C1_SMBUS_TIMEOUT: I2C1 SMBUS timeout mode stopped when Core i
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_I2C2_SMBUS_TIMEOUT: I2C2 SMBUS timeout mode stopped when Core i
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR5_STOP         : TMR5 counter stopped when Core is halted
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR6_STOP         : TMR6 counter stopped when Core is halted
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR7_STOP         : TMR7 counter stopped when Core is halted
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR8_STOP         : TMR8 counter stopped when Core is halted
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_CAN2_STOP         : Debug CAN2 stopped when Core is halted
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR15_STOP        : TMR15 counter stopped when Core is halted
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR16_STOP        : TMR16 counter stopped when Core is halted
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR17_STOP        : TMR17 counter stopped when Core is halted
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR9_STOP         : TMR9 counter stopped when Core is halted
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR10_STOP        : TMR10 counter stopped when Core is halted
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR11_STOP        : TMR11 counter stopped when Core is halted
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR12_STOP        : TMR12 counter stopped when Core is halted
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s 			page 4
+
+
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR13_STOP        : TMR13 counter stopped when Core is halted
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR14_STOP        : TMR14 counter stopped when Core is halted
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @retval      None
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  */
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** void DBGMCU_Enable(uint32_t periph)
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** {
+  84              		.loc 1 100 1 is_stmt 1 view -0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88              		@ link register save eliminated.
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****     DBGMCU->CFG |= periph;
+  89              		.loc 1 101 5 view .LVU9
+  90              		.loc 1 101 17 is_stmt 0 view .LVU10
+  91 0000 024A     		ldr	r2, .L8
+  92 0002 5368     		ldr	r3, [r2, #4]
+  93 0004 0343     		orrs	r3, r3, r0
+  94 0006 5360     		str	r3, [r2, #4]
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** }
+  95              		.loc 1 102 1 view .LVU11
+  96 0008 7047     		bx	lr
+  97              	.L9:
+  98 000a 00BF     		.align	2
+  99              	.L8:
+ 100 000c 002004E0 		.word	-536600576
+ 101              		.cfi_endproc
+ 102              	.LFE67:
+ 104              		.section	.text.DBGMCU_Disable,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	DBGMCU_Disable
+ 107              		.syntax unified
+ 108              		.thumb
+ 109              		.thumb_func
+ 111              	DBGMCU_Disable:
+ 112              	.LVL1:
+ 113              	.LFB68:
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** 
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** /*!
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @brief       Enable the specified peripheral and low power mode behavior
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *              when the MCU under Debug mode
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @param       periph: Specifies the peripheral and low power mode
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      This parameter can be any combination of the following values:
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_SLEEP             : Keep debugger connection during SLEEP mode
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_STOP              : Keep debugger connection during STOP mode
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_STANDBY           : Keep debugger connection during STANDBY mod
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_IWDT_STOP         : Debug IWDT stopped when Core is halted
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_WWDT_STOP         : Debug WWDT stopped when Core is halted
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR1_STOP         : TMR1 counter stopped when Core is halted
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR2_STOP         : TMR2 counter stopped when Core is halted
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR3_STOP         : TMR3 counter stopped when Core is halted
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR4_STOP         : TMR4 counter stopped when Core is halted
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_CAN1_STOP         : Debug CAN1 stopped when Core is halted
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_I2C1_SMBUS_TIMEOUT: I2C1 SMBUS timeout mode stopped when Core i
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_I2C2_SMBUS_TIMEOUT: I2C2 SMBUS timeout mode stopped when Core i
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR5_STOP         : TMR5 counter stopped when Core is halted
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s 			page 5
+
+
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR6_STOP         : TMR6 counter stopped when Core is halted
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR7_STOP         : TMR7 counter stopped when Core is halted
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR8_STOP         : TMR8 counter stopped when Core is halted
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_CAN2_STOP         : Debug CAN2 stopped when Core is halted
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR15_STOP        : TMR15 counter stopped when Core is halted
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR16_STOP        : TMR16 counter stopped when Core is halted
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR17_STOP        : TMR17 counter stopped when Core is halted
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR9_STOP         : TMR9 counter stopped when Core is halted
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR10_STOP        : TMR10 counter stopped when Core is halted
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR11_STOP        : TMR11 counter stopped when Core is halted
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR12_STOP        : TMR12 counter stopped when Core is halted
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR13_STOP        : TMR13 counter stopped when Core is halted
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *                      @arg DBGMCU_TMR14_STOP        : TMR14 counter stopped when Core is halted
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  *
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  * @retval      None
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****  */
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** void DBGMCU_Disable(uint32_t periph)
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** {
+ 114              		.loc 1 140 1 is_stmt 1 view -0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118              		@ link register save eliminated.
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c ****     DBGMCU->CFG &= ~periph;
+ 119              		.loc 1 141 5 view .LVU13
+ 120              		.loc 1 141 17 is_stmt 0 view .LVU14
+ 121 0000 024A     		ldr	r2, .L11
+ 122 0002 5368     		ldr	r3, [r2, #4]
+ 123 0004 23EA0003 		bic	r3, r3, r0
+ 124 0008 5360     		str	r3, [r2, #4]
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dbgmcu.c **** }
+ 125              		.loc 1 142 1 view .LVU15
+ 126 000a 7047     		bx	lr
+ 127              	.L12:
+ 128              		.align	2
+ 129              	.L11:
+ 130 000c 002004E0 		.word	-536600576
+ 131              		.cfi_endproc
+ 132              	.LFE68:
+ 134              		.text
+ 135              	.Letext0:
+ 136              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 137              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 138              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_dbgmcu.c
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:18     .text.DBGMCU_ReadDEVID:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:24     .text.DBGMCU_ReadDEVID:00000000 DBGMCU_ReadDEVID
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:42     .text.DBGMCU_ReadDEVID:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:47     .text.DBGMCU_ReadREVID:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:53     .text.DBGMCU_ReadREVID:00000000 DBGMCU_ReadREVID
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:70     .text.DBGMCU_ReadREVID:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:75     .text.DBGMCU_Enable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:81     .text.DBGMCU_Enable:00000000 DBGMCU_Enable
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:100    .text.DBGMCU_Enable:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:105    .text.DBGMCU_Disable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:111    .text.DBGMCU_Disable:00000000 DBGMCU_Disable
+C:\Users\geehy\AppData\Local\Temp\ccBuKu7g.s:130    .text.DBGMCU_Disable:0000000c $d
+
+NO UNDEFINED SYMBOLS

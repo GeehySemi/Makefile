@@ -1,0 +1,834 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_bakpr.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.BAKPR_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	BAKPR_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	BAKPR_Reset:
+  25              	.LFB65:
+  26              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @file        apm32f10x_bakpr.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief       This file provides all the BAKPR firmware functions.
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** #include "apm32f10x_bakpr.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** */
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 2
+
+
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /** @addtogroup BAKPR_Driver ADC Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /** @addtogroup BAKPR_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Reset the BAKPR peripheral registers to their default reset values.
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_Reset(void)
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+  27              		.loc 1 49 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     RCM_EnableBackupReset();
+  36              		.loc 1 50 5 view .LVU1
+  37 0002 FFF7FEFF 		bl	RCM_EnableBackupReset
+  38              	.LVL0:
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     RCM_DisableBackupReset();
+  39              		.loc 1 51 5 view .LVU2
+  40 0006 FFF7FEFF 		bl	RCM_DisableBackupReset
+  41              	.LVL1:
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+  42              		.loc 1 52 1 is_stmt 0 view .LVU3
+  43 000a 08BD     		pop	{r3, pc}
+  44              		.cfi_endproc
+  45              	.LFE65:
+  47              		.section	.text.BAKPR_ConfigTamperPinLevel,"ax",%progbits
+  48              		.align	1
+  49              		.global	BAKPR_ConfigTamperPinLevel
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  54              	BAKPR_ConfigTamperPinLevel:
+  55              	.LVL2:
+  56              	.LFB66:
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Deinitializes the BAKPR peripheral registers to their default reset values.
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      value: specifies the RTC output source.
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *                    This parameter can be one of the following values:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *                    @arg BAKPR_TAMPER_PIN_LEVEL_HIGH: Tamper pin active on high level
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *                    @arg BAKPR_TAMPER_PIN_LEVEL_LOW: Tamper pin active on low level
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 3
+
+
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_ConfigTamperPinLevel(BAKPR_TAMPER_PIN_LEVEL_T value)
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+  57              		.loc 1 65 1 is_stmt 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CTRL_B.TPALCFG = value;
+  62              		.loc 1 66 5 view .LVU5
+  63              		.loc 1 66 27 is_stmt 0 view .LVU6
+  64 0000 024B     		ldr	r3, .L4
+  65 0002 1A6B     		ldr	r2, [r3, #48]
+  66 0004 60F34102 		bfi	r2, r0, #1, #1
+  67 0008 1A63     		str	r2, [r3, #48]
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+  68              		.loc 1 67 1 view .LVU7
+  69 000a 7047     		bx	lr
+  70              	.L5:
+  71              		.align	2
+  72              	.L4:
+  73 000c 006C0040 		.word	1073769472
+  74              		.cfi_endproc
+  75              	.LFE66:
+  77              		.section	.text.BAKPR_EnableTamperPin,"ax",%progbits
+  78              		.align	1
+  79              		.global	BAKPR_EnableTamperPin
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  84              	BAKPR_EnableTamperPin:
+  85              	.LFB67:
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Enables the Tamper Pin activation.
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_EnableTamperPin(void)
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+  86              		.loc 1 77 1 is_stmt 1 view -0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  90              		@ link register save eliminated.
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CTRL_B.TPFCFG = ENABLE ;
+  91              		.loc 1 78 5 view .LVU9
+  92              		.loc 1 78 26 is_stmt 0 view .LVU10
+  93 0000 024A     		ldr	r2, .L7
+  94 0002 136B     		ldr	r3, [r2, #48]
+  95 0004 43F00103 		orr	r3, r3, #1
+  96 0008 1363     		str	r3, [r2, #48]
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+  97              		.loc 1 79 1 view .LVU11
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 4
+
+
+  98 000a 7047     		bx	lr
+  99              	.L8:
+ 100              		.align	2
+ 101              	.L7:
+ 102 000c 006C0040 		.word	1073769472
+ 103              		.cfi_endproc
+ 104              	.LFE67:
+ 106              		.section	.text.BAKPR_DisableTamperPin,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	BAKPR_DisableTamperPin
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	BAKPR_DisableTamperPin:
+ 114              	.LFB68:
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Disables the Tamper Pin activation.
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_DisableTamperPin(void)
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 115              		.loc 1 89 1 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CTRL_B.TPFCFG = DISABLE ;
+ 120              		.loc 1 90 5 view .LVU13
+ 121              		.loc 1 90 26 is_stmt 0 view .LVU14
+ 122 0000 024B     		ldr	r3, .L10
+ 123 0002 1A6B     		ldr	r2, [r3, #48]
+ 124 0004 6FF30002 		bfc	r2, #0, #1
+ 125 0008 1A63     		str	r2, [r3, #48]
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 126              		.loc 1 91 1 view .LVU15
+ 127 000a 7047     		bx	lr
+ 128              	.L11:
+ 129              		.align	2
+ 130              	.L10:
+ 131 000c 006C0040 		.word	1073769472
+ 132              		.cfi_endproc
+ 133              	.LFE68:
+ 135              		.section	.text.BAKPR_EnableInterrupt,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	BAKPR_EnableInterrupt
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	BAKPR_EnableInterrupt:
+ 143              	.LFB69:
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Enables the Tamper Pin Interrupt.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 5
+
+
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_EnableInterrupt(void)
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 144              		.loc 1 101 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		@ link register save eliminated.
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CSTS_B.TPIEN = ENABLE ;
+ 149              		.loc 1 102 5 view .LVU17
+ 150              		.loc 1 102 25 is_stmt 0 view .LVU18
+ 151 0000 024A     		ldr	r2, .L13
+ 152 0002 536B     		ldr	r3, [r2, #52]
+ 153 0004 43F00403 		orr	r3, r3, #4
+ 154 0008 5363     		str	r3, [r2, #52]
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 155              		.loc 1 103 1 view .LVU19
+ 156 000a 7047     		bx	lr
+ 157              	.L14:
+ 158              		.align	2
+ 159              	.L13:
+ 160 000c 006C0040 		.word	1073769472
+ 161              		.cfi_endproc
+ 162              	.LFE69:
+ 164              		.section	.text.BAKPR_DisableInterrupt,"ax",%progbits
+ 165              		.align	1
+ 166              		.global	BAKPR_DisableInterrupt
+ 167              		.syntax unified
+ 168              		.thumb
+ 169              		.thumb_func
+ 171              	BAKPR_DisableInterrupt:
+ 172              	.LFB70:
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Disables the Tamper Pin Interrupt.
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_DisableInterrupt(void)
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 173              		.loc 1 113 1 is_stmt 1 view -0
+ 174              		.cfi_startproc
+ 175              		@ args = 0, pretend = 0, frame = 0
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+ 177              		@ link register save eliminated.
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CSTS_B.TPIEN = DISABLE ;
+ 178              		.loc 1 114 5 view .LVU21
+ 179              		.loc 1 114 25 is_stmt 0 view .LVU22
+ 180 0000 024B     		ldr	r3, .L16
+ 181 0002 5A6B     		ldr	r2, [r3, #52]
+ 182 0004 6FF38202 		bfc	r2, #2, #1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 6
+
+
+ 183 0008 5A63     		str	r2, [r3, #52]
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 184              		.loc 1 115 1 view .LVU23
+ 185 000a 7047     		bx	lr
+ 186              	.L17:
+ 187              		.align	2
+ 188              	.L16:
+ 189 000c 006C0040 		.word	1073769472
+ 190              		.cfi_endproc
+ 191              	.LFE70:
+ 193              		.section	.text.BAKPR_ConfigRTCOutput,"ax",%progbits
+ 194              		.align	1
+ 195              		.global	BAKPR_ConfigRTCOutput
+ 196              		.syntax unified
+ 197              		.thumb
+ 198              		.thumb_func
+ 200              	BAKPR_ConfigRTCOutput:
+ 201              	.LVL3:
+ 202              	.LFB71:
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief   Select the RTC output source to output on the Tamper pin.
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param   soure: specifies the RTC output source.
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *            This parameter can be one of the following values:
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *            @arg BAKPR_RTC_OUTPUT_SOURCE_NONE             : no RTC output on the Tamper pin.
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *            @arg BAKPR_RTC_OUTPUT_SOURCE_CALIBRATION_CLOCK: output the RTC clock with frequency d
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *            @arg BAKPR_RTC_OUTPUT_SOURCE_ALARM            : output the RTC Alarm pulse signal on 
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *            @arg BAKPR_RTC_OUTPUT_SOURCE_SECOND           : output the RTC Second pulse signal on
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval  None
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_ConfigRTCOutput(BAKPR_RTC_OUTPUT_SOURCE_T soure)
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 203              		.loc 1 130 1 is_stmt 1 view -0
+ 204              		.cfi_startproc
+ 205              		@ args = 0, pretend = 0, frame = 0
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207              		@ link register save eliminated.
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     if(soure == BAKPR_RTC_OUTPUT_SOURCE_NONE)
+ 208              		.loc 1 131 5 view .LVU25
+ 209              		.loc 1 131 7 is_stmt 0 view .LVU26
+ 210 0000 18B9     		cbnz	r0, .L19
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     {
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****         BAKPR->CLKCAL = RESET;
+ 211              		.loc 1 133 9 is_stmt 1 view .LVU27
+ 212              		.loc 1 133 23 is_stmt 0 view .LVU28
+ 213 0002 0E4B     		ldr	r3, .L26
+ 214 0004 0022     		movs	r2, #0
+ 215 0006 DA62     		str	r2, [r3, #44]
+ 216 0008 7047     		bx	lr
+ 217              	.L19:
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     } else if(soure == BAKPR_RTC_OUTPUT_SOURCE_CALIBRATION_CLOCK)
+ 218              		.loc 1 134 12 is_stmt 1 view .LVU29
+ 219              		.loc 1 134 14 is_stmt 0 view .LVU30
+ 220 000a 0128     		cmp	r0, #1
+ 221 000c 04D0     		beq	.L23
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 7
+
+
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     {
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****         BAKPR->CLKCAL_B.CALCOEN = BIT_SET;
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     } else if(soure == BAKPR_RTC_OUTPUT_SOURCE_ALARM)
+ 222              		.loc 1 137 12 is_stmt 1 view .LVU31
+ 223              		.loc 1 137 14 is_stmt 0 view .LVU32
+ 224 000e 0228     		cmp	r0, #2
+ 225 0010 08D0     		beq	.L24
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     {
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****         BAKPR->CLKCAL_B.ASPOEN = BIT_SET;
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     } else if(soure == BAKPR_RTC_OUTPUT_SOURCE_SECOND)
+ 226              		.loc 1 140 12 is_stmt 1 view .LVU33
+ 227              		.loc 1 140 14 is_stmt 0 view .LVU34
+ 228 0012 0328     		cmp	r0, #3
+ 229 0014 0CD0     		beq	.L25
+ 230              	.L18:
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     {
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****         BAKPR->CLKCAL_B.ASPOSEL = BIT_SET;
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     }
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 231              		.loc 1 144 1 view .LVU35
+ 232 0016 7047     		bx	lr
+ 233              	.L23:
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     } else if(soure == BAKPR_RTC_OUTPUT_SOURCE_ALARM)
+ 234              		.loc 1 136 9 is_stmt 1 view .LVU36
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     } else if(soure == BAKPR_RTC_OUTPUT_SOURCE_ALARM)
+ 235              		.loc 1 136 33 is_stmt 0 view .LVU37
+ 236 0018 084A     		ldr	r2, .L26
+ 237 001a D36A     		ldr	r3, [r2, #44]
+ 238 001c 43F08003 		orr	r3, r3, #128
+ 239 0020 D362     		str	r3, [r2, #44]
+ 240 0022 7047     		bx	lr
+ 241              	.L24:
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     } else if(soure == BAKPR_RTC_OUTPUT_SOURCE_SECOND)
+ 242              		.loc 1 139 9 is_stmt 1 view .LVU38
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     } else if(soure == BAKPR_RTC_OUTPUT_SOURCE_SECOND)
+ 243              		.loc 1 139 32 is_stmt 0 view .LVU39
+ 244 0024 054A     		ldr	r2, .L26
+ 245 0026 D36A     		ldr	r3, [r2, #44]
+ 246 0028 43F48073 		orr	r3, r3, #256
+ 247 002c D362     		str	r3, [r2, #44]
+ 248 002e 7047     		bx	lr
+ 249              	.L25:
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     }
+ 250              		.loc 1 142 9 is_stmt 1 view .LVU40
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     }
+ 251              		.loc 1 142 33 is_stmt 0 view .LVU41
+ 252 0030 024A     		ldr	r2, .L26
+ 253 0032 D36A     		ldr	r3, [r2, #44]
+ 254 0034 43F40073 		orr	r3, r3, #512
+ 255 0038 D362     		str	r3, [r2, #44]
+ 256              		.loc 1 144 1 view .LVU42
+ 257 003a ECE7     		b	.L18
+ 258              	.L27:
+ 259              		.align	2
+ 260              	.L26:
+ 261 003c 006C0040 		.word	1073769472
+ 262              		.cfi_endproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 8
+
+
+ 263              	.LFE71:
+ 265              		.section	.text.BAKPR_ConfigRTCCalibrationValue,"ax",%progbits
+ 266              		.align	1
+ 267              		.global	BAKPR_ConfigRTCCalibrationValue
+ 268              		.syntax unified
+ 269              		.thumb
+ 270              		.thumb_func
+ 272              	BAKPR_ConfigRTCCalibrationValue:
+ 273              	.LVL4:
+ 274              	.LFB72:
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Sets RTC Clock Calibration value.
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      calibrationValue: Specifies the calibration value.
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *                               This parameter must be a number between 0 and 0x7F.
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_ConfigRTCCalibrationValue(uint8_t calibrationValue)
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 275              		.loc 1 155 1 is_stmt 1 view -0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 0
+ 278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 279              		@ link register save eliminated.
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CLKCAL_B.CALVALUE = calibrationValue;
+ 280              		.loc 1 156 5 view .LVU44
+ 281              		.loc 1 156 30 is_stmt 0 view .LVU45
+ 282 0000 024B     		ldr	r3, .L29
+ 283 0002 DA6A     		ldr	r2, [r3, #44]
+ 284 0004 60F30602 		bfi	r2, r0, #0, #7
+ 285 0008 DA62     		str	r2, [r3, #44]
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 286              		.loc 1 157 1 view .LVU46
+ 287 000a 7047     		bx	lr
+ 288              	.L30:
+ 289              		.align	2
+ 290              	.L29:
+ 291 000c 006C0040 		.word	1073769472
+ 292              		.cfi_endproc
+ 293              	.LFE72:
+ 295              		.section	.text.BAKPR_ConfigBackupRegister,"ax",%progbits
+ 296              		.align	1
+ 297              		.global	BAKPR_ConfigBackupRegister
+ 298              		.syntax unified
+ 299              		.thumb
+ 300              		.thumb_func
+ 302              	BAKPR_ConfigBackupRegister:
+ 303              	.LVL5:
+ 304              	.LFB73:
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Set user data to the specified Data Backup Register.
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      bakrData : specifies the Data Backup Register.
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *                        This parameter can be BAKPR_DATAx where x is between 1 and 42.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 9
+
+
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      data : data to set
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *                    This parameter can be a 16bit value.
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_ConfigBackupRegister(BAKPR_DATA_T bakrData, uint16_t data)
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 305              		.loc 1 171 1 is_stmt 1 view -0
+ 306              		.cfi_startproc
+ 307              		@ args = 0, pretend = 0, frame = 8
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 309              		@ link register save eliminated.
+ 310              		.loc 1 171 1 is_stmt 0 view .LVU48
+ 311 0000 82B0     		sub	sp, sp, #8
+ 312              	.LCFI1:
+ 313              		.cfi_def_cfa_offset 8
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     __IOM uint32_t tmp = 0;
+ 314              		.loc 1 172 5 is_stmt 1 view .LVU49
+ 315              		.loc 1 172 20 is_stmt 0 view .LVU50
+ 316 0002 0023     		movs	r3, #0
+ 317 0004 0193     		str	r3, [sp, #4]
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     tmp = (uint32_t)BAKPR_BASE;
+ 318              		.loc 1 174 5 is_stmt 1 view .LVU51
+ 319              		.loc 1 174 9 is_stmt 0 view .LVU52
+ 320 0006 044B     		ldr	r3, .L33
+ 321 0008 0193     		str	r3, [sp, #4]
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     tmp += bakrData;
+ 322              		.loc 1 175 5 is_stmt 1 view .LVU53
+ 323              		.loc 1 175 9 is_stmt 0 view .LVU54
+ 324 000a 019B     		ldr	r3, [sp, #4]
+ 325 000c 1844     		add	r0, r0, r3
+ 326              	.LVL6:
+ 327              		.loc 1 175 9 view .LVU55
+ 328 000e 0190     		str	r0, [sp, #4]
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     *(__IOM uint32_t *) tmp = data;
+ 329              		.loc 1 177 5 is_stmt 1 view .LVU56
+ 330              		.loc 1 177 6 is_stmt 0 view .LVU57
+ 331 0010 019B     		ldr	r3, [sp, #4]
+ 332              		.loc 1 177 29 view .LVU58
+ 333 0012 1960     		str	r1, [r3]
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 334              		.loc 1 178 1 view .LVU59
+ 335 0014 02B0     		add	sp, sp, #8
+ 336              	.LCFI2:
+ 337              		.cfi_def_cfa_offset 0
+ 338              		@ sp needed
+ 339 0016 7047     		bx	lr
+ 340              	.L34:
+ 341              		.align	2
+ 342              	.L33:
+ 343 0018 006C0040 		.word	1073769472
+ 344              		.cfi_endproc
+ 345              	.LFE73:
+ 347              		.section	.text.BAKPR_ReadBackupRegister,"ax",%progbits
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 10
+
+
+ 348              		.align	1
+ 349              		.global	BAKPR_ReadBackupRegister
+ 350              		.syntax unified
+ 351              		.thumb
+ 352              		.thumb_func
+ 354              	BAKPR_ReadBackupRegister:
+ 355              	.LVL7:
+ 356              	.LFB74:
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Reads user data from the specified Data Backup Register.
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      bakrData : specifies the Data Backup Register.
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *                        This parameter can be BAKPR_DATAx where x is between 1 and 42.
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     The content of the specified Data Backup Register
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** uint16_t BAKPR_ReadBackupRegister(BAKPR_DATA_T bakrData)
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 357              		.loc 1 189 1 is_stmt 1 view -0
+ 358              		.cfi_startproc
+ 359              		@ args = 0, pretend = 0, frame = 8
+ 360              		@ frame_needed = 0, uses_anonymous_args = 0
+ 361              		@ link register save eliminated.
+ 362              		.loc 1 189 1 is_stmt 0 view .LVU61
+ 363 0000 82B0     		sub	sp, sp, #8
+ 364              	.LCFI3:
+ 365              		.cfi_def_cfa_offset 8
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     __IOM uint32_t tmp = 0;
+ 366              		.loc 1 190 5 is_stmt 1 view .LVU62
+ 367              		.loc 1 190 20 is_stmt 0 view .LVU63
+ 368 0002 0023     		movs	r3, #0
+ 369 0004 0193     		str	r3, [sp, #4]
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     tmp = (uint32_t)BAKPR_BASE;
+ 370              		.loc 1 192 5 is_stmt 1 view .LVU64
+ 371              		.loc 1 192 9 is_stmt 0 view .LVU65
+ 372 0006 054B     		ldr	r3, .L37
+ 373 0008 0193     		str	r3, [sp, #4]
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     tmp += bakrData;
+ 374              		.loc 1 193 5 is_stmt 1 view .LVU66
+ 375              		.loc 1 193 9 is_stmt 0 view .LVU67
+ 376 000a 019B     		ldr	r3, [sp, #4]
+ 377 000c 1844     		add	r0, r0, r3
+ 378              	.LVL8:
+ 379              		.loc 1 193 9 view .LVU68
+ 380 000e 0190     		str	r0, [sp, #4]
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     return (*(__IOM uint32_t *) tmp);
+ 381              		.loc 1 195 5 is_stmt 1 view .LVU69
+ 382              		.loc 1 195 14 is_stmt 0 view .LVU70
+ 383 0010 019B     		ldr	r3, [sp, #4]
+ 384              		.loc 1 195 13 view .LVU71
+ 385 0012 1868     		ldr	r0, [r3]
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 386              		.loc 1 196 1 view .LVU72
+ 387 0014 80B2     		uxth	r0, r0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 11
+
+
+ 388 0016 02B0     		add	sp, sp, #8
+ 389              	.LCFI4:
+ 390              		.cfi_def_cfa_offset 0
+ 391              		@ sp needed
+ 392 0018 7047     		bx	lr
+ 393              	.L38:
+ 394 001a 00BF     		.align	2
+ 395              	.L37:
+ 396 001c 006C0040 		.word	1073769472
+ 397              		.cfi_endproc
+ 398              	.LFE74:
+ 400              		.section	.text.BAKPR_ReadStatusFlag,"ax",%progbits
+ 401              		.align	1
+ 402              		.global	BAKPR_ReadStatusFlag
+ 403              		.syntax unified
+ 404              		.thumb
+ 405              		.thumb_func
+ 407              	BAKPR_ReadStatusFlag:
+ 408              	.LFB75:
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Read whether the Tamper Pin Event flag is set or not.
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     Tamper Pin Event flag state
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** uint8_t BAKPR_ReadStatusFlag(void)
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 409              		.loc 1 206 1 is_stmt 1 view -0
+ 410              		.cfi_startproc
+ 411              		@ args = 0, pretend = 0, frame = 0
+ 412              		@ frame_needed = 0, uses_anonymous_args = 0
+ 413              		@ link register save eliminated.
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     return BAKPR->CSTS_B.TEFLG;
+ 414              		.loc 1 207 5 view .LVU74
+ 415              		.loc 1 207 25 is_stmt 0 view .LVU75
+ 416 0000 024B     		ldr	r3, .L40
+ 417 0002 586B     		ldr	r0, [r3, #52]
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 418              		.loc 1 208 1 view .LVU76
+ 419 0004 C0F30020 		ubfx	r0, r0, #8, #1
+ 420 0008 7047     		bx	lr
+ 421              	.L41:
+ 422 000a 00BF     		.align	2
+ 423              	.L40:
+ 424 000c 006C0040 		.word	1073769472
+ 425              		.cfi_endproc
+ 426              	.LFE75:
+ 428              		.section	.text.BAKPR_ClearStatusFlag,"ax",%progbits
+ 429              		.align	1
+ 430              		.global	BAKPR_ClearStatusFlag
+ 431              		.syntax unified
+ 432              		.thumb
+ 433              		.thumb_func
+ 435              	BAKPR_ClearStatusFlag:
+ 436              	.LFB76:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 12
+
+
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Clears Tamper Pin Event pending flag.
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_ClearStatusFlag(void)
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 437              		.loc 1 218 1 is_stmt 1 view -0
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 0
+ 440              		@ frame_needed = 0, uses_anonymous_args = 0
+ 441              		@ link register save eliminated.
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CSTS_B.TECLR = BIT_SET;
+ 442              		.loc 1 219 5 view .LVU78
+ 443              		.loc 1 219 25 is_stmt 0 view .LVU79
+ 444 0000 024A     		ldr	r2, .L43
+ 445 0002 536B     		ldr	r3, [r2, #52]
+ 446 0004 43F00103 		orr	r3, r3, #1
+ 447 0008 5363     		str	r3, [r2, #52]
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 448              		.loc 1 220 1 view .LVU80
+ 449 000a 7047     		bx	lr
+ 450              	.L44:
+ 451              		.align	2
+ 452              	.L43:
+ 453 000c 006C0040 		.word	1073769472
+ 454              		.cfi_endproc
+ 455              	.LFE76:
+ 457              		.section	.text.BAKPR_ReadIntFlag,"ax",%progbits
+ 458              		.align	1
+ 459              		.global	BAKPR_ReadIntFlag
+ 460              		.syntax unified
+ 461              		.thumb
+ 462              		.thumb_func
+ 464              	BAKPR_ReadIntFlag:
+ 465              	.LFB77:
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Get whether the Tamper Pin Interrupt has occurred or not.
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     Tamper Pin Interrupt State
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** uint8_t BAKPR_ReadIntFlag(void)
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 466              		.loc 1 230 1 is_stmt 1 view -0
+ 467              		.cfi_startproc
+ 468              		@ args = 0, pretend = 0, frame = 0
+ 469              		@ frame_needed = 0, uses_anonymous_args = 0
+ 470              		@ link register save eliminated.
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     return BAKPR->CSTS_B.TIFLG;
+ 471              		.loc 1 231 5 view .LVU82
+ 472              		.loc 1 231 25 is_stmt 0 view .LVU83
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 13
+
+
+ 473 0000 024B     		ldr	r3, .L46
+ 474 0002 586B     		ldr	r0, [r3, #52]
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 475              		.loc 1 232 1 view .LVU84
+ 476 0004 C0F34020 		ubfx	r0, r0, #9, #1
+ 477 0008 7047     		bx	lr
+ 478              	.L47:
+ 479 000a 00BF     		.align	2
+ 480              	.L46:
+ 481 000c 006C0040 		.word	1073769472
+ 482              		.cfi_endproc
+ 483              	.LFE77:
+ 485              		.section	.text.BAKPR_ClearIntFlag,"ax",%progbits
+ 486              		.align	1
+ 487              		.global	BAKPR_ClearIntFlag
+ 488              		.syntax unified
+ 489              		.thumb
+ 490              		.thumb_func
+ 492              	BAKPR_ClearIntFlag:
+ 493              	.LFB78:
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** 
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** /*!
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @brief      Clears Tamper Pin Interrupt pending bit.
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @param      None
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  *
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  * @retval     None
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****  */
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** void BAKPR_ClearIntFlag(void)
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** {
+ 494              		.loc 1 242 1 is_stmt 1 view -0
+ 495              		.cfi_startproc
+ 496              		@ args = 0, pretend = 0, frame = 0
+ 497              		@ frame_needed = 0, uses_anonymous_args = 0
+ 498              		@ link register save eliminated.
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c ****     BAKPR->CSTS_B.TICLR = BIT_SET;
+ 499              		.loc 1 243 5 view .LVU86
+ 500              		.loc 1 243 25 is_stmt 0 view .LVU87
+ 501 0000 024A     		ldr	r2, .L49
+ 502 0002 536B     		ldr	r3, [r2, #52]
+ 503 0004 43F00203 		orr	r3, r3, #2
+ 504 0008 5363     		str	r3, [r2, #52]
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_bakpr.c **** }
+ 505              		.loc 1 244 1 view .LVU88
+ 506 000a 7047     		bx	lr
+ 507              	.L50:
+ 508              		.align	2
+ 509              	.L49:
+ 510 000c 006C0040 		.word	1073769472
+ 511              		.cfi_endproc
+ 512              	.LFE78:
+ 514              		.text
+ 515              	.Letext0:
+ 516              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 517              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 518              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 519              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_bakpr.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 14
+
+
+ 520              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rcm.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_bakpr.c
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:18     .text.BAKPR_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:24     .text.BAKPR_Reset:00000000 BAKPR_Reset
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:48     .text.BAKPR_ConfigTamperPinLevel:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:54     .text.BAKPR_ConfigTamperPinLevel:00000000 BAKPR_ConfigTamperPinLevel
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:73     .text.BAKPR_ConfigTamperPinLevel:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:78     .text.BAKPR_EnableTamperPin:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:84     .text.BAKPR_EnableTamperPin:00000000 BAKPR_EnableTamperPin
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:102    .text.BAKPR_EnableTamperPin:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:107    .text.BAKPR_DisableTamperPin:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:113    .text.BAKPR_DisableTamperPin:00000000 BAKPR_DisableTamperPin
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:131    .text.BAKPR_DisableTamperPin:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:136    .text.BAKPR_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:142    .text.BAKPR_EnableInterrupt:00000000 BAKPR_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:160    .text.BAKPR_EnableInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:165    .text.BAKPR_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:171    .text.BAKPR_DisableInterrupt:00000000 BAKPR_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:189    .text.BAKPR_DisableInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:194    .text.BAKPR_ConfigRTCOutput:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:200    .text.BAKPR_ConfigRTCOutput:00000000 BAKPR_ConfigRTCOutput
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:261    .text.BAKPR_ConfigRTCOutput:0000003c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:266    .text.BAKPR_ConfigRTCCalibrationValue:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:272    .text.BAKPR_ConfigRTCCalibrationValue:00000000 BAKPR_ConfigRTCCalibrationValue
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:291    .text.BAKPR_ConfigRTCCalibrationValue:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:296    .text.BAKPR_ConfigBackupRegister:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:302    .text.BAKPR_ConfigBackupRegister:00000000 BAKPR_ConfigBackupRegister
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:343    .text.BAKPR_ConfigBackupRegister:00000018 $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:348    .text.BAKPR_ReadBackupRegister:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:354    .text.BAKPR_ReadBackupRegister:00000000 BAKPR_ReadBackupRegister
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:396    .text.BAKPR_ReadBackupRegister:0000001c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:401    .text.BAKPR_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:407    .text.BAKPR_ReadStatusFlag:00000000 BAKPR_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:424    .text.BAKPR_ReadStatusFlag:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:429    .text.BAKPR_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:435    .text.BAKPR_ClearStatusFlag:00000000 BAKPR_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:453    .text.BAKPR_ClearStatusFlag:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:458    .text.BAKPR_ReadIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:464    .text.BAKPR_ReadIntFlag:00000000 BAKPR_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:481    .text.BAKPR_ReadIntFlag:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:486    .text.BAKPR_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:492    .text.BAKPR_ClearIntFlag:00000000 BAKPR_ClearIntFlag
+C:\Users\geehy\AppData\Local\Temp\ccBwAcho.s:510    .text.BAKPR_ClearIntFlag:0000000c $d
+
+UNDEFINED SYMBOLS
+RCM_EnableBackupReset
+RCM_DisableBackupReset

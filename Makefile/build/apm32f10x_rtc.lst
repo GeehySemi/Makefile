@@ -1,0 +1,906 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_rtc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.RTC_EnableConfigMode,"ax",%progbits
+  18              		.align	1
+  19              		.global	RTC_EnableConfigMode
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	RTC_EnableConfigMode:
+  25              	.LFB65:
+  26              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @file        apm32f10x_rtc.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief       This file provides all the RTC firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** #include "apm32f10x_rtc.h"
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****   @{
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** */
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /** @addtogroup RTC_Driver RTC Driver
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****   @{
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 2
+
+
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** */
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /** @addtogroup RTC_Fuctions Fuctions
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****   @{
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** */
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Enter RTC configuration mode.
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     None
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_EnableConfigMode(void)
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+  27              		.loc 1 47 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CSTS_B.CFGMFLG = BIT_SET;
+  32              		.loc 1 48 5 view .LVU1
+  33              		.loc 1 48 25 is_stmt 0 view .LVU2
+  34 0000 024A     		ldr	r2, .L2
+  35 0002 5368     		ldr	r3, [r2, #4]
+  36 0004 43F01003 		orr	r3, r3, #16
+  37 0008 5360     		str	r3, [r2, #4]
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+  38              		.loc 1 49 1 view .LVU3
+  39 000a 7047     		bx	lr
+  40              	.L3:
+  41              		.align	2
+  42              	.L2:
+  43 000c 00280040 		.word	1073752064
+  44              		.cfi_endproc
+  45              	.LFE65:
+  47              		.section	.text.RTC_DisableConfigMode,"ax",%progbits
+  48              		.align	1
+  49              		.global	RTC_DisableConfigMode
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  54              	RTC_DisableConfigMode:
+  55              	.LFB66:
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Exit RTC configuration mode.
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     None
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_DisableConfigMode(void)
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+  56              		.loc 1 59 1 is_stmt 1 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 3
+
+
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CSTS_B.CFGMFLG = BIT_RESET;
+  61              		.loc 1 60 5 view .LVU5
+  62              		.loc 1 60 25 is_stmt 0 view .LVU6
+  63 0000 024B     		ldr	r3, .L5
+  64 0002 5A68     		ldr	r2, [r3, #4]
+  65 0004 6FF30412 		bfc	r2, #4, #1
+  66 0008 5A60     		str	r2, [r3, #4]
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+  67              		.loc 1 61 1 view .LVU7
+  68 000a 7047     		bx	lr
+  69              	.L6:
+  70              		.align	2
+  71              	.L5:
+  72 000c 00280040 		.word	1073752064
+  73              		.cfi_endproc
+  74              	.LFE66:
+  76              		.section	.text.RTC_ReadCounter,"ax",%progbits
+  77              		.align	1
+  78              		.global	RTC_ReadCounter
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  83              	RTC_ReadCounter:
+  84              	.LFB67:
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Read the RTC counter value.
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     None
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    RTC counter value.
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** uint32_t RTC_ReadCounter(void)
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+  85              		.loc 1 71 1 is_stmt 1 view -0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89              		@ link register save eliminated.
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     uint32_t reg = 0;
+  90              		.loc 1 72 5 view .LVU9
+  91              	.LVL0:
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     reg = (RTC->CNTH_B.CNTH) << 16;
+  92              		.loc 1 73 5 view .LVU10
+  93              		.loc 1 73 23 is_stmt 0 view .LVU11
+  94 0000 034B     		ldr	r3, .L8
+  95 0002 9869     		ldr	r0, [r3, #24]
+  96              	.LVL1:
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     reg |= (RTC->CNTL_B.CNTL);
+  97              		.loc 1 74 5 is_stmt 1 view .LVU12
+  98              		.loc 1 74 24 is_stmt 0 view .LVU13
+  99 0004 DB69     		ldr	r3, [r3, #28]
+ 100 0006 9BB2     		uxth	r3, r3
+ 101              	.LVL2:
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     return (reg);
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 4
+
+
+ 102              		.loc 1 75 5 is_stmt 1 view .LVU14
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 103              		.loc 1 76 1 is_stmt 0 view .LVU15
+ 104 0008 43EA0040 		orr	r0, r3, r0, lsl #16
+ 105              	.LVL3:
+ 106              		.loc 1 76 1 view .LVU16
+ 107 000c 7047     		bx	lr
+ 108              	.L9:
+ 109 000e 00BF     		.align	2
+ 110              	.L8:
+ 111 0010 00280040 		.word	1073752064
+ 112              		.cfi_endproc
+ 113              	.LFE67:
+ 115              		.section	.text.RTC_ConfigCounter,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	RTC_ConfigCounter
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 122              	RTC_ConfigCounter:
+ 123              	.LVL4:
+ 124              	.LFB68:
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Config the RTC counter value.
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     value: RTC counter new value.
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_ConfigCounter(uint32_t value)
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 125              		.loc 1 86 1 is_stmt 1 view -0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              		.loc 1 86 1 is_stmt 0 view .LVU18
+ 130 0000 10B5     		push	{r4, lr}
+ 131              	.LCFI0:
+ 132              		.cfi_def_cfa_offset 8
+ 133              		.cfi_offset 4, -8
+ 134              		.cfi_offset 14, -4
+ 135 0002 0446     		mov	r4, r0
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC_EnableConfigMode();
+ 136              		.loc 1 87 5 is_stmt 1 view .LVU19
+ 137 0004 FFF7FEFF 		bl	RTC_EnableConfigMode
+ 138              	.LVL5:
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CNTH_B.CNTH = value >> 16;
+ 139              		.loc 1 88 5 view .LVU20
+ 140              		.loc 1 88 22 is_stmt 0 view .LVU21
+ 141 0008 210C     		lsrs	r1, r4, #16
+ 142 000a 064B     		ldr	r3, .L12
+ 143 000c 9A69     		ldr	r2, [r3, #24]
+ 144 000e 61F30F02 		bfi	r2, r1, #0, #16
+ 145 0012 9A61     		str	r2, [r3, #24]
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CNTL_B.CNTL = value & 0x0000FFFF;
+ 146              		.loc 1 89 5 is_stmt 1 view .LVU22
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 5
+
+
+ 147              		.loc 1 89 22 is_stmt 0 view .LVU23
+ 148 0014 A4B2     		uxth	r4, r4
+ 149              	.LVL6:
+ 150              		.loc 1 89 22 view .LVU24
+ 151 0016 DA69     		ldr	r2, [r3, #28]
+ 152 0018 64F30F02 		bfi	r2, r4, #0, #16
+ 153 001c DA61     		str	r2, [r3, #28]
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC_DisableConfigMode();
+ 154              		.loc 1 90 5 is_stmt 1 view .LVU25
+ 155 001e FFF7FEFF 		bl	RTC_DisableConfigMode
+ 156              	.LVL7:
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 157              		.loc 1 91 1 is_stmt 0 view .LVU26
+ 158 0022 10BD     		pop	{r4, pc}
+ 159              	.L13:
+ 160              		.align	2
+ 161              	.L12:
+ 162 0024 00280040 		.word	1073752064
+ 163              		.cfi_endproc
+ 164              	.LFE68:
+ 166              		.section	.text.RTC_ConfigPrescaler,"ax",%progbits
+ 167              		.align	1
+ 168              		.global	RTC_ConfigPrescaler
+ 169              		.syntax unified
+ 170              		.thumb
+ 171              		.thumb_func
+ 173              	RTC_ConfigPrescaler:
+ 174              	.LVL8:
+ 175              	.LFB69:
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Config the RTC prescaler value.
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     value: RTC prescaler new value.
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_ConfigPrescaler(uint32_t value)
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 176              		.loc 1 101 1 is_stmt 1 view -0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180              		.loc 1 101 1 is_stmt 0 view .LVU28
+ 181 0000 10B5     		push	{r4, lr}
+ 182              	.LCFI1:
+ 183              		.cfi_def_cfa_offset 8
+ 184              		.cfi_offset 4, -8
+ 185              		.cfi_offset 14, -4
+ 186 0002 0446     		mov	r4, r0
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC_EnableConfigMode();
+ 187              		.loc 1 102 5 is_stmt 1 view .LVU29
+ 188 0004 FFF7FEFF 		bl	RTC_EnableConfigMode
+ 189              	.LVL9:
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->PSCRLDH_B.PSCRLDH = value >> 16;
+ 190              		.loc 1 103 5 view .LVU30
+ 191              		.loc 1 103 36 is_stmt 0 view .LVU31
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 6
+
+
+ 192 0008 C4F30341 		ubfx	r1, r4, #16, #4
+ 193              		.loc 1 103 28 view .LVU32
+ 194 000c 064B     		ldr	r3, .L16
+ 195 000e 9A68     		ldr	r2, [r3, #8]
+ 196 0010 61F30302 		bfi	r2, r1, #0, #4
+ 197 0014 9A60     		str	r2, [r3, #8]
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->PSCRLDL_B.PSCRLDL = value & 0x0000FFFF;
+ 198              		.loc 1 104 5 is_stmt 1 view .LVU33
+ 199              		.loc 1 104 28 is_stmt 0 view .LVU34
+ 200 0016 A4B2     		uxth	r4, r4
+ 201              	.LVL10:
+ 202              		.loc 1 104 28 view .LVU35
+ 203 0018 DA68     		ldr	r2, [r3, #12]
+ 204 001a 64F30F02 		bfi	r2, r4, #0, #16
+ 205 001e DA60     		str	r2, [r3, #12]
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC_DisableConfigMode();
+ 206              		.loc 1 105 5 is_stmt 1 view .LVU36
+ 207 0020 FFF7FEFF 		bl	RTC_DisableConfigMode
+ 208              	.LVL11:
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 209              		.loc 1 106 1 is_stmt 0 view .LVU37
+ 210 0024 10BD     		pop	{r4, pc}
+ 211              	.L17:
+ 212 0026 00BF     		.align	2
+ 213              	.L16:
+ 214 0028 00280040 		.word	1073752064
+ 215              		.cfi_endproc
+ 216              	.LFE69:
+ 218              		.section	.text.RTC_ConfigAlarm,"ax",%progbits
+ 219              		.align	1
+ 220              		.global	RTC_ConfigAlarm
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	RTC_ConfigAlarm:
+ 226              	.LVL12:
+ 227              	.LFB70:
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Config the RTC alarm value.
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     value: RTC alarm new value.
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_ConfigAlarm(uint32_t value)
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 228              		.loc 1 116 1 is_stmt 1 view -0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		.loc 1 116 1 is_stmt 0 view .LVU39
+ 233 0000 10B5     		push	{r4, lr}
+ 234              	.LCFI2:
+ 235              		.cfi_def_cfa_offset 8
+ 236              		.cfi_offset 4, -8
+ 237              		.cfi_offset 14, -4
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 7
+
+
+ 238 0002 0446     		mov	r4, r0
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC_EnableConfigMode();
+ 239              		.loc 1 117 5 is_stmt 1 view .LVU40
+ 240 0004 FFF7FEFF 		bl	RTC_EnableConfigMode
+ 241              	.LVL13:
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->ALRH_B.ALRH = value >> 16;
+ 242              		.loc 1 118 5 view .LVU41
+ 243              		.loc 1 118 22 is_stmt 0 view .LVU42
+ 244 0008 210C     		lsrs	r1, r4, #16
+ 245 000a 064B     		ldr	r3, .L20
+ 246 000c 1A6A     		ldr	r2, [r3, #32]
+ 247 000e 61F30F02 		bfi	r2, r1, #0, #16
+ 248 0012 1A62     		str	r2, [r3, #32]
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->ALRL_B.ALRL = value & 0x0000FFFF;
+ 249              		.loc 1 119 5 is_stmt 1 view .LVU43
+ 250              		.loc 1 119 22 is_stmt 0 view .LVU44
+ 251 0014 A4B2     		uxth	r4, r4
+ 252              	.LVL14:
+ 253              		.loc 1 119 22 view .LVU45
+ 254 0016 5A6A     		ldr	r2, [r3, #36]
+ 255 0018 64F30F02 		bfi	r2, r4, #0, #16
+ 256 001c 5A62     		str	r2, [r3, #36]
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC_DisableConfigMode();
+ 257              		.loc 1 120 5 is_stmt 1 view .LVU46
+ 258 001e FFF7FEFF 		bl	RTC_DisableConfigMode
+ 259              	.LVL15:
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 260              		.loc 1 121 1 is_stmt 0 view .LVU47
+ 261 0022 10BD     		pop	{r4, pc}
+ 262              	.L21:
+ 263              		.align	2
+ 264              	.L20:
+ 265 0024 00280040 		.word	1073752064
+ 266              		.cfi_endproc
+ 267              	.LFE70:
+ 269              		.section	.text.RTC_ReadDivider,"ax",%progbits
+ 270              		.align	1
+ 271              		.global	RTC_ReadDivider
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 276              	RTC_ReadDivider:
+ 277              	.LFB71:
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Reads the RTC divider value.
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     None
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    RTC Divider value.
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** uint32_t RTC_ReadDivider(void)
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 278              		.loc 1 131 1 is_stmt 1 view -0
+ 279              		.cfi_startproc
+ 280              		@ args = 0, pretend = 0, frame = 0
+ 281              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 8
+
+
+ 282              		@ link register save eliminated.
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     uint32_t reg = 0;
+ 283              		.loc 1 132 5 view .LVU49
+ 284              	.LVL16:
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     reg = (RTC->PSCH_B.PSCH & 0x000F) << 16;
+ 285              		.loc 1 133 5 view .LVU50
+ 286              		.loc 1 133 23 is_stmt 0 view .LVU51
+ 287 0000 044B     		ldr	r3, .L23
+ 288 0002 1869     		ldr	r0, [r3, #16]
+ 289 0004 00F00F00 		and	r0, r0, #15
+ 290              	.LVL17:
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     reg |= (RTC->PSCL_B.PSCL);
+ 291              		.loc 1 134 5 is_stmt 1 view .LVU52
+ 292              		.loc 1 134 24 is_stmt 0 view .LVU53
+ 293 0008 5B69     		ldr	r3, [r3, #20]
+ 294 000a 9BB2     		uxth	r3, r3
+ 295              	.LVL18:
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     return (reg);
+ 296              		.loc 1 135 5 is_stmt 1 view .LVU54
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 297              		.loc 1 136 1 is_stmt 0 view .LVU55
+ 298 000c 43EA0040 		orr	r0, r3, r0, lsl #16
+ 299              	.LVL19:
+ 300              		.loc 1 136 1 view .LVU56
+ 301 0010 7047     		bx	lr
+ 302              	.L24:
+ 303 0012 00BF     		.align	2
+ 304              	.L23:
+ 305 0014 00280040 		.word	1073752064
+ 306              		.cfi_endproc
+ 307              	.LFE71:
+ 309              		.section	.text.RTC_WaitForLastTask,"ax",%progbits
+ 310              		.align	1
+ 311              		.global	RTC_WaitForLastTask
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 316              	RTC_WaitForLastTask:
+ 317              	.LFB72:
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Waits until last write operation on RTC registers has finished.
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     None
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_WaitForLastTask(void)
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 318              		.loc 1 146 1 is_stmt 1 view -0
+ 319              		.cfi_startproc
+ 320              		@ args = 0, pretend = 0, frame = 0
+ 321              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322              		@ link register save eliminated.
+ 323              	.L26:
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     while(RTC->CSTS_B.OCFLG == BIT_RESET)
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     {
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 9
+
+
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     }
+ 324              		.loc 1 149 5 discriminator 1 view .LVU58
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     while(RTC->CSTS_B.OCFLG == BIT_RESET)
+ 325              		.loc 1 147 10 discriminator 1 view .LVU59
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     while(RTC->CSTS_B.OCFLG == BIT_RESET)
+ 326              		.loc 1 147 22 is_stmt 0 discriminator 1 view .LVU60
+ 327 0000 024B     		ldr	r3, .L27
+ 328 0002 5B68     		ldr	r3, [r3, #4]
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     while(RTC->CSTS_B.OCFLG == BIT_RESET)
+ 329              		.loc 1 147 10 discriminator 1 view .LVU61
+ 330 0004 13F0200F 		tst	r3, #32
+ 331 0008 FAD0     		beq	.L26
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 332              		.loc 1 150 1 view .LVU62
+ 333 000a 7047     		bx	lr
+ 334              	.L28:
+ 335              		.align	2
+ 336              	.L27:
+ 337 000c 00280040 		.word	1073752064
+ 338              		.cfi_endproc
+ 339              	.LFE72:
+ 341              		.section	.text.RTC_WaitForSynchor,"ax",%progbits
+ 342              		.align	1
+ 343              		.global	RTC_WaitForSynchor
+ 344              		.syntax unified
+ 345              		.thumb
+ 346              		.thumb_func
+ 348              	RTC_WaitForSynchor:
+ 349              	.LFB73:
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Waits until the RTC registers
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     None
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_WaitForSynchor(void)
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 350              		.loc 1 160 1 is_stmt 1 view -0
+ 351              		.cfi_startproc
+ 352              		@ args = 0, pretend = 0, frame = 0
+ 353              		@ frame_needed = 0, uses_anonymous_args = 0
+ 354              		@ link register save eliminated.
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CSTS_B.RSYNCFLG = BIT_RESET;
+ 355              		.loc 1 161 5 view .LVU64
+ 356              		.loc 1 161 26 is_stmt 0 view .LVU65
+ 357 0000 054B     		ldr	r3, .L31
+ 358 0002 5A68     		ldr	r2, [r3, #4]
+ 359 0004 6FF3C302 		bfc	r2, #3, #1
+ 360 0008 5A60     		str	r2, [r3, #4]
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     while(RTC->CSTS_B.RSYNCFLG == BIT_RESET);
+ 361              		.loc 1 162 5 is_stmt 1 view .LVU66
+ 362              	.L30:
+ 363              		.loc 1 162 45 discriminator 1 view .LVU67
+ 364              		.loc 1 162 10 discriminator 1 view .LVU68
+ 365              		.loc 1 162 22 is_stmt 0 discriminator 1 view .LVU69
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 10
+
+
+ 366 000a 034B     		ldr	r3, .L31
+ 367 000c 5B68     		ldr	r3, [r3, #4]
+ 368              		.loc 1 162 10 discriminator 1 view .LVU70
+ 369 000e 13F0080F 		tst	r3, #8
+ 370 0012 FAD0     		beq	.L30
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 371              		.loc 1 163 1 view .LVU71
+ 372 0014 7047     		bx	lr
+ 373              	.L32:
+ 374 0016 00BF     		.align	2
+ 375              	.L31:
+ 376 0018 00280040 		.word	1073752064
+ 377              		.cfi_endproc
+ 378              	.LFE73:
+ 380              		.section	.text.RTC_EnableInterrupt,"ax",%progbits
+ 381              		.align	1
+ 382              		.global	RTC_EnableInterrupt
+ 383              		.syntax unified
+ 384              		.thumb
+ 385              		.thumb_func
+ 387              	RTC_EnableInterrupt:
+ 388              	.LVL20:
+ 389              	.LFB74:
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Enable RTC interrupts.
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     interrupt: specifies the RTC interrupt sources to be enabled
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  This parameter can be any combination of the following values:
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_OVR : Overflow interrupt
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_ALR : Alarm interrupt
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_SEC : Second interrupt
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_EnableInterrupt(uint16_t interrupt)
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 390              		.loc 1 175 1 is_stmt 1 view -0
+ 391              		.cfi_startproc
+ 392              		@ args = 0, pretend = 0, frame = 0
+ 393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 394              		@ link register save eliminated.
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CTRL |= interrupt;
+ 395              		.loc 1 176 5 view .LVU73
+ 396              		.loc 1 176 15 is_stmt 0 view .LVU74
+ 397 0000 024B     		ldr	r3, .L34
+ 398 0002 1A68     		ldr	r2, [r3]
+ 399 0004 1043     		orrs	r0, r0, r2
+ 400              	.LVL21:
+ 401              		.loc 1 176 15 view .LVU75
+ 402 0006 1860     		str	r0, [r3]
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 403              		.loc 1 177 1 view .LVU76
+ 404 0008 7047     		bx	lr
+ 405              	.L35:
+ 406 000a 00BF     		.align	2
+ 407              	.L34:
+ 408 000c 00280040 		.word	1073752064
+ 409              		.cfi_endproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 11
+
+
+ 410              	.LFE74:
+ 412              		.section	.text.RTC_DisableInterrupt,"ax",%progbits
+ 413              		.align	1
+ 414              		.global	RTC_DisableInterrupt
+ 415              		.syntax unified
+ 416              		.thumb
+ 417              		.thumb_func
+ 419              	RTC_DisableInterrupt:
+ 420              	.LVL22:
+ 421              	.LFB75:
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Disable RTC interrupts.
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     interrupt: specifies the RTC interrupt sources to be disabled
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  This parameter can be any combination of the following values:
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_OVR : Overflow interrupt
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_ALR : Alarm interrupt
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_SEC : Second interrupt
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_DisableInterrupt(uint16_t interrupt)
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 422              		.loc 1 191 1 is_stmt 1 view -0
+ 423              		.cfi_startproc
+ 424              		@ args = 0, pretend = 0, frame = 0
+ 425              		@ frame_needed = 0, uses_anonymous_args = 0
+ 426              		@ link register save eliminated.
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CTRL &= (uint32_t )~interrupt;
+ 427              		.loc 1 192 5 view .LVU78
+ 428              		.loc 1 192 15 is_stmt 0 view .LVU79
+ 429 0000 024A     		ldr	r2, .L37
+ 430 0002 1368     		ldr	r3, [r2]
+ 431 0004 23EA0003 		bic	r3, r3, r0
+ 432 0008 1360     		str	r3, [r2]
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 433              		.loc 1 193 1 view .LVU80
+ 434 000a 7047     		bx	lr
+ 435              	.L38:
+ 436              		.align	2
+ 437              	.L37:
+ 438 000c 00280040 		.word	1073752064
+ 439              		.cfi_endproc
+ 440              	.LFE75:
+ 442              		.section	.text.RTC_ReadStatusFlag,"ax",%progbits
+ 443              		.align	1
+ 444              		.global	RTC_ReadStatusFlag
+ 445              		.syntax unified
+ 446              		.thumb
+ 447              		.thumb_func
+ 449              	RTC_ReadStatusFlag:
+ 450              	.LVL23:
+ 451              	.LFB76:
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Read flag bit
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 12
+
+
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     flag: specifies the flag to check.
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  This parameter can be one of the following values:
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_OC   : RTC Operation Complete flag
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_RSYNC: Registers Synchronized flag
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_OVR  : Overflow flag
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_ALR  : Alarm flag
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_SEC  : Second flag
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    SET or RESET
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** uint8_t RTC_ReadStatusFlag(RTC_FLAG_T flag)
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 452              		.loc 1 209 1 is_stmt 1 view -0
+ 453              		.cfi_startproc
+ 454              		@ args = 0, pretend = 0, frame = 0
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456              		@ link register save eliminated.
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     return  (RTC->CSTS & flag) ? SET : RESET;
+ 457              		.loc 1 210 5 view .LVU82
+ 458              		.loc 1 210 17 is_stmt 0 view .LVU83
+ 459 0000 034B     		ldr	r3, .L40
+ 460 0002 5B68     		ldr	r3, [r3, #4]
+ 461              		.loc 1 210 38 view .LVU84
+ 462 0004 1842     		tst	r0, r3
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 463              		.loc 1 211 1 view .LVU85
+ 464 0006 14BF     		ite	ne
+ 465 0008 0120     		movne	r0, #1
+ 466              	.LVL24:
+ 467              		.loc 1 211 1 view .LVU86
+ 468 000a 0020     		moveq	r0, #0
+ 469 000c 7047     		bx	lr
+ 470              	.L41:
+ 471 000e 00BF     		.align	2
+ 472              	.L40:
+ 473 0010 00280040 		.word	1073752064
+ 474              		.cfi_endproc
+ 475              	.LFE76:
+ 477              		.section	.text.RTC_ClearStatusFlag,"ax",%progbits
+ 478              		.align	1
+ 479              		.global	RTC_ClearStatusFlag
+ 480              		.syntax unified
+ 481              		.thumb
+ 482              		.thumb_func
+ 484              	RTC_ClearStatusFlag:
+ 485              	.LVL25:
+ 486              	.LFB77:
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Clear flag bit
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     flag: specifies the flag to clear.
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  This parameter can be any combination of the following values:
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_OVR : Overflow flag
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_ALR : Alarm flag
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_FLAG_SEC : Second flag
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 13
+
+
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_ClearStatusFlag(uint16_t flag)
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 487              		.loc 1 225 1 is_stmt 1 view -0
+ 488              		.cfi_startproc
+ 489              		@ args = 0, pretend = 0, frame = 0
+ 490              		@ frame_needed = 0, uses_anonymous_args = 0
+ 491              		@ link register save eliminated.
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CSTS &= (uint32_t)~flag;
+ 492              		.loc 1 226 5 view .LVU88
+ 493              		.loc 1 226 15 is_stmt 0 view .LVU89
+ 494 0000 024A     		ldr	r2, .L43
+ 495 0002 5368     		ldr	r3, [r2, #4]
+ 496 0004 23EA0003 		bic	r3, r3, r0
+ 497 0008 5360     		str	r3, [r2, #4]
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 498              		.loc 1 227 1 view .LVU90
+ 499 000a 7047     		bx	lr
+ 500              	.L44:
+ 501              		.align	2
+ 502              	.L43:
+ 503 000c 00280040 		.word	1073752064
+ 504              		.cfi_endproc
+ 505              	.LFE77:
+ 507              		.section	.text.RTC_ReadIntFlag,"ax",%progbits
+ 508              		.align	1
+ 509              		.global	RTC_ReadIntFlag
+ 510              		.syntax unified
+ 511              		.thumb
+ 512              		.thumb_func
+ 514              	RTC_ReadIntFlag:
+ 515              	.LVL26:
+ 516              	.LFB78:
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Read interrupt flag bit is set
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     flag: specifies the flag to check.
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  This parameter can be any combination of the following values:
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_OVR : Overflow interrupt
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_ALR : Alarm interrupt
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_SEC : Second interrupt
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** uint8_t RTC_ReadIntFlag(RTC_INT_T flag)
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 517              		.loc 1 241 1 is_stmt 1 view -0
+ 518              		.cfi_startproc
+ 519              		@ args = 0, pretend = 0, frame = 0
+ 520              		@ frame_needed = 0, uses_anonymous_args = 0
+ 521              		@ link register save eliminated.
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     return (RTC->CSTS & flag) ? SET : RESET;
+ 522              		.loc 1 242 5 view .LVU92
+ 523              		.loc 1 242 16 is_stmt 0 view .LVU93
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 14
+
+
+ 524 0000 034B     		ldr	r3, .L46
+ 525 0002 5B68     		ldr	r3, [r3, #4]
+ 526              		.loc 1 242 37 view .LVU94
+ 527 0004 1842     		tst	r0, r3
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 528              		.loc 1 243 1 view .LVU95
+ 529 0006 14BF     		ite	ne
+ 530 0008 0120     		movne	r0, #1
+ 531              	.LVL27:
+ 532              		.loc 1 243 1 view .LVU96
+ 533 000a 0020     		moveq	r0, #0
+ 534 000c 7047     		bx	lr
+ 535              	.L47:
+ 536 000e 00BF     		.align	2
+ 537              	.L46:
+ 538 0010 00280040 		.word	1073752064
+ 539              		.cfi_endproc
+ 540              	.LFE78:
+ 542              		.section	.text.RTC_ClearIntFlag,"ax",%progbits
+ 543              		.align	1
+ 544              		.global	RTC_ClearIntFlag
+ 545              		.syntax unified
+ 546              		.thumb
+ 547              		.thumb_func
+ 549              	RTC_ClearIntFlag:
+ 550              	.LVL28:
+ 551              	.LFB79:
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** 
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** /*!
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @brief     Clear RTC interrupt flag bit
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @param     flag: specifies the flag to clear.
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  This parameter can be one of the following values:
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_OVR : Overflow interrupt
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_ALR : Alarm interrupt
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *                  @arg RTC_INT_SEC : Second interrupt
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  *
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  * @retval    None
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****  */
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** void RTC_ClearIntFlag(uint16_t flag)
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** {
+ 552              		.loc 1 257 1 is_stmt 1 view -0
+ 553              		.cfi_startproc
+ 554              		@ args = 0, pretend = 0, frame = 0
+ 555              		@ frame_needed = 0, uses_anonymous_args = 0
+ 556              		@ link register save eliminated.
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c ****     RTC->CSTS &= (uint32_t)~flag;
+ 557              		.loc 1 258 5 view .LVU98
+ 558              		.loc 1 258 15 is_stmt 0 view .LVU99
+ 559 0000 024A     		ldr	r2, .L49
+ 560 0002 5368     		ldr	r3, [r2, #4]
+ 561 0004 23EA0003 		bic	r3, r3, r0
+ 562 0008 5360     		str	r3, [r2, #4]
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_rtc.c **** }
+ 563              		.loc 1 259 1 view .LVU100
+ 564 000a 7047     		bx	lr
+ 565              	.L50:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 15
+
+
+ 566              		.align	2
+ 567              	.L49:
+ 568 000c 00280040 		.word	1073752064
+ 569              		.cfi_endproc
+ 570              	.LFE79:
+ 572              		.text
+ 573              	.Letext0:
+ 574              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 575              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 576              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 577              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rtc.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_rtc.c
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:18     .text.RTC_EnableConfigMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:24     .text.RTC_EnableConfigMode:00000000 RTC_EnableConfigMode
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:43     .text.RTC_EnableConfigMode:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:48     .text.RTC_DisableConfigMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:54     .text.RTC_DisableConfigMode:00000000 RTC_DisableConfigMode
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:72     .text.RTC_DisableConfigMode:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:77     .text.RTC_ReadCounter:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:83     .text.RTC_ReadCounter:00000000 RTC_ReadCounter
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:111    .text.RTC_ReadCounter:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:116    .text.RTC_ConfigCounter:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:122    .text.RTC_ConfigCounter:00000000 RTC_ConfigCounter
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:162    .text.RTC_ConfigCounter:00000024 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:167    .text.RTC_ConfigPrescaler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:173    .text.RTC_ConfigPrescaler:00000000 RTC_ConfigPrescaler
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:214    .text.RTC_ConfigPrescaler:00000028 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:219    .text.RTC_ConfigAlarm:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:225    .text.RTC_ConfigAlarm:00000000 RTC_ConfigAlarm
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:265    .text.RTC_ConfigAlarm:00000024 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:270    .text.RTC_ReadDivider:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:276    .text.RTC_ReadDivider:00000000 RTC_ReadDivider
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:305    .text.RTC_ReadDivider:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:310    .text.RTC_WaitForLastTask:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:316    .text.RTC_WaitForLastTask:00000000 RTC_WaitForLastTask
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:337    .text.RTC_WaitForLastTask:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:342    .text.RTC_WaitForSynchor:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:348    .text.RTC_WaitForSynchor:00000000 RTC_WaitForSynchor
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:376    .text.RTC_WaitForSynchor:00000018 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:381    .text.RTC_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:387    .text.RTC_EnableInterrupt:00000000 RTC_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:408    .text.RTC_EnableInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:413    .text.RTC_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:419    .text.RTC_DisableInterrupt:00000000 RTC_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:438    .text.RTC_DisableInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:443    .text.RTC_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:449    .text.RTC_ReadStatusFlag:00000000 RTC_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:473    .text.RTC_ReadStatusFlag:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:478    .text.RTC_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:484    .text.RTC_ClearStatusFlag:00000000 RTC_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:503    .text.RTC_ClearStatusFlag:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:508    .text.RTC_ReadIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:514    .text.RTC_ReadIntFlag:00000000 RTC_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:538    .text.RTC_ReadIntFlag:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:543    .text.RTC_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:549    .text.RTC_ClearIntFlag:00000000 RTC_ClearIntFlag
+C:\Users\geehy\AppData\Local\Temp\cca1AjeI.s:568    .text.RTC_ClearIntFlag:0000000c $d
+
+NO UNDEFINED SYMBOLS

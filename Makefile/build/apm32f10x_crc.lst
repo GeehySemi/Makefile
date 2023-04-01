@@ -1,0 +1,375 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_crc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.CRC_ResetDATA,"ax",%progbits
+  18              		.align	1
+  19              		.global	CRC_ResetDATA
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	CRC_ResetDATA:
+  25              	.LFB65:
+  26              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @file        apm32f10x_crc.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @brief       This file provides all the CRC firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** #include "apm32f10x_crc.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****   @{
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** */
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /** @addtogroup CRC_Driver CRC Driver
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s 			page 2
+
+
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****   @{
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** */
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /** @addtogroup CRC_Fuctions Fuctions
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****   @{
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** */
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /*!
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @brief     Reset CRC data register.
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @param     None
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @retval    None
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  */
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** void CRC_ResetDATA(void)
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** {
+  27              		.loc 1 48 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     CRC->CTRL_B.RST = BIT_SET;
+  32              		.loc 1 49 5 view .LVU1
+  33              		.loc 1 49 21 is_stmt 0 view .LVU2
+  34 0000 024A     		ldr	r2, .L2
+  35 0002 9368     		ldr	r3, [r2, #8]
+  36 0004 43F00103 		orr	r3, r3, #1
+  37 0008 9360     		str	r3, [r2, #8]
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** }
+  38              		.loc 1 50 1 view .LVU3
+  39 000a 7047     		bx	lr
+  40              	.L3:
+  41              		.align	2
+  42              	.L2:
+  43 000c 00300240 		.word	1073885184
+  44              		.cfi_endproc
+  45              	.LFE65:
+  47              		.section	.text.CRC_CalculateCRC,"ax",%progbits
+  48              		.align	1
+  49              		.global	CRC_CalculateCRC
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  54              	CRC_CalculateCRC:
+  55              	.LVL0:
+  56              	.LFB66:
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /*!
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @brief     Calculate CRC of a 32bit data word.
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @param     data: a data word to compute its CRC.
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *                  This parameter can be a 32bit value:
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @retval    A 32-bit CRC value
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  */
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** uint32_t CRC_CalculateCRC(uint32_t data)
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** {
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s 			page 3
+
+
+  57              		.loc 1 61 1 is_stmt 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     CRC->DATA = data;
+  62              		.loc 1 62 5 view .LVU5
+  63              		.loc 1 62 15 is_stmt 0 view .LVU6
+  64 0000 014B     		ldr	r3, .L5
+  65 0002 1860     		str	r0, [r3]
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     return (CRC->DATA);
+  66              		.loc 1 64 5 is_stmt 1 view .LVU7
+  67              		.loc 1 64 16 is_stmt 0 view .LVU8
+  68 0004 1868     		ldr	r0, [r3]
+  69              	.LVL1:
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** }
+  70              		.loc 1 65 1 view .LVU9
+  71 0006 7047     		bx	lr
+  72              	.L6:
+  73              		.align	2
+  74              	.L5:
+  75 0008 00300240 		.word	1073885184
+  76              		.cfi_endproc
+  77              	.LFE66:
+  79              		.section	.text.CRC_CalculateBlockCRC,"ax",%progbits
+  80              		.align	1
+  81              		.global	CRC_CalculateBlockCRC
+  82              		.syntax unified
+  83              		.thumb
+  84              		.thumb_func
+  86              	CRC_CalculateBlockCRC:
+  87              	.LVL2:
+  88              	.LFB67:
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /*!
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @brief     Computes the 32-bit CRC of a given buffer of data word(32-bit).
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @param     buf: Pointer to the buffer containing the data to be computed.
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @param     bufLen: The length of buffer which is computed.
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @retval    A 32-bit CRC value
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  */
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** uint32_t CRC_CalculateBlockCRC(uint32_t *buf, uint32_t bufLen)
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** {
+  89              		.loc 1 77 1 is_stmt 1 view -0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     while(bufLen--)
+  94              		.loc 1 78 5 view .LVU11
+  95              		.loc 1 78 10 is_stmt 0 view .LVU12
+  96 0000 04E0     		b	.L8
+  97              	.LVL3:
+  98              	.L9:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s 			page 4
+
+
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     {
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****         CRC->DATA = *buf++;
+  99              		.loc 1 80 9 is_stmt 1 view .LVU13
+ 100              		.loc 1 80 21 is_stmt 0 view .LVU14
+ 101 0002 50F8041B 		ldr	r1, [r0], #4
+ 102              	.LVL4:
+ 103              		.loc 1 80 19 view .LVU15
+ 104 0006 044A     		ldr	r2, .L10
+ 105 0008 1160     		str	r1, [r2]
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     while(bufLen--)
+ 106              		.loc 1 78 17 view .LVU16
+ 107 000a 1946     		mov	r1, r3
+ 108              	.LVL5:
+ 109              	.L8:
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     while(bufLen--)
+ 110              		.loc 1 78 10 is_stmt 1 view .LVU17
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     while(bufLen--)
+ 111              		.loc 1 78 17 is_stmt 0 view .LVU18
+ 112 000c 4B1E     		subs	r3, r1, #1
+ 113              	.LVL6:
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     while(bufLen--)
+ 114              		.loc 1 78 10 view .LVU19
+ 115 000e 0029     		cmp	r1, #0
+ 116 0010 F7D1     		bne	.L9
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     }
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     return (CRC->DATA);
+ 117              		.loc 1 83 5 is_stmt 1 view .LVU20
+ 118              		.loc 1 83 16 is_stmt 0 view .LVU21
+ 119 0012 014B     		ldr	r3, .L10
+ 120              	.LVL7:
+ 121              		.loc 1 83 16 view .LVU22
+ 122 0014 1868     		ldr	r0, [r3]
+ 123              	.LVL8:
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** }
+ 124              		.loc 1 84 1 view .LVU23
+ 125 0016 7047     		bx	lr
+ 126              	.L11:
+ 127              		.align	2
+ 128              	.L10:
+ 129 0018 00300240 		.word	1073885184
+ 130              		.cfi_endproc
+ 131              	.LFE67:
+ 133              		.section	.text.CRC_ReadCRC,"ax",%progbits
+ 134              		.align	1
+ 135              		.global	CRC_ReadCRC
+ 136              		.syntax unified
+ 137              		.thumb
+ 138              		.thumb_func
+ 140              	CRC_ReadCRC:
+ 141              	.LFB68:
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /*!
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @brief     Returns the current CRC value.
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @param     None
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s 			page 5
+
+
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @retval    A 32-bit CRC value
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  */
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** uint32_t CRC_ReadCRC(void)
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** {
+ 142              		.loc 1 94 1 is_stmt 1 view -0
+ 143              		.cfi_startproc
+ 144              		@ args = 0, pretend = 0, frame = 0
+ 145              		@ frame_needed = 0, uses_anonymous_args = 0
+ 146              		@ link register save eliminated.
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     return (CRC->DATA);
+ 147              		.loc 1 95 5 view .LVU25
+ 148              		.loc 1 95 16 is_stmt 0 view .LVU26
+ 149 0000 014B     		ldr	r3, .L13
+ 150 0002 1868     		ldr	r0, [r3]
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** }
+ 151              		.loc 1 96 1 view .LVU27
+ 152 0004 7047     		bx	lr
+ 153              	.L14:
+ 154 0006 00BF     		.align	2
+ 155              	.L13:
+ 156 0008 00300240 		.word	1073885184
+ 157              		.cfi_endproc
+ 158              	.LFE68:
+ 160              		.section	.text.CRC_WriteIDRegister,"ax",%progbits
+ 161              		.align	1
+ 162              		.global	CRC_WriteIDRegister
+ 163              		.syntax unified
+ 164              		.thumb
+ 165              		.thumb_func
+ 167              	CRC_WriteIDRegister:
+ 168              	.LVL9:
+ 169              	.LFB69:
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /*!
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @brief     Saves a 8bit data in the Independent Data register(INDATA).
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @param     inData: a 8-bit value to be stored in the ID register
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @retval    None
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  */
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** void CRC_WriteIDRegister(uint8_t inData)
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** {
+ 170              		.loc 1 106 1 is_stmt 1 view -0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174              		@ link register save eliminated.
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     CRC->INDATA = inData;
+ 175              		.loc 1 107 5 view .LVU29
+ 176              		.loc 1 107 17 is_stmt 0 view .LVU30
+ 177 0000 014B     		ldr	r3, .L16
+ 178 0002 5860     		str	r0, [r3, #4]
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** }
+ 179              		.loc 1 108 1 view .LVU31
+ 180 0004 7047     		bx	lr
+ 181              	.L17:
+ 182 0006 00BF     		.align	2
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s 			page 6
+
+
+ 183              	.L16:
+ 184 0008 00300240 		.word	1073885184
+ 185              		.cfi_endproc
+ 186              	.LFE69:
+ 188              		.section	.text.CRC_ReadIDRegister,"ax",%progbits
+ 189              		.align	1
+ 190              		.global	CRC_ReadIDRegister
+ 191              		.syntax unified
+ 192              		.thumb
+ 193              		.thumb_func
+ 195              	CRC_ReadIDRegister:
+ 196              	.LFB70:
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** 
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** /*!
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @brief      Reads a 8-bit data saved in the Independent Data register(INDATA).
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @param      None
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  *
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  * @retval     a 8-bit value from the INDATA register
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****  */
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** uint8_t CRC_ReadIDRegister(void)
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** {
+ 197              		.loc 1 118 1 is_stmt 1 view -0
+ 198              		.cfi_startproc
+ 199              		@ args = 0, pretend = 0, frame = 0
+ 200              		@ frame_needed = 0, uses_anonymous_args = 0
+ 201              		@ link register save eliminated.
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c ****     return (CRC->INDATA);
+ 202              		.loc 1 119 5 view .LVU33
+ 203              		.loc 1 119 16 is_stmt 0 view .LVU34
+ 204 0000 014B     		ldr	r3, .L19
+ 205 0002 5868     		ldr	r0, [r3, #4]
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_crc.c **** }
+ 206              		.loc 1 120 1 view .LVU35
+ 207 0004 C0B2     		uxtb	r0, r0
+ 208 0006 7047     		bx	lr
+ 209              	.L20:
+ 210              		.align	2
+ 211              	.L19:
+ 212 0008 00300240 		.word	1073885184
+ 213              		.cfi_endproc
+ 214              	.LFE70:
+ 216              		.text
+ 217              	.Letext0:
+ 218              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 219              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 220              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_crc.c
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:18     .text.CRC_ResetDATA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:24     .text.CRC_ResetDATA:00000000 CRC_ResetDATA
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:43     .text.CRC_ResetDATA:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:48     .text.CRC_CalculateCRC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:54     .text.CRC_CalculateCRC:00000000 CRC_CalculateCRC
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:75     .text.CRC_CalculateCRC:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:80     .text.CRC_CalculateBlockCRC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:86     .text.CRC_CalculateBlockCRC:00000000 CRC_CalculateBlockCRC
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:129    .text.CRC_CalculateBlockCRC:00000018 $d
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:134    .text.CRC_ReadCRC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:140    .text.CRC_ReadCRC:00000000 CRC_ReadCRC
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:156    .text.CRC_ReadCRC:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:161    .text.CRC_WriteIDRegister:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:167    .text.CRC_WriteIDRegister:00000000 CRC_WriteIDRegister
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:184    .text.CRC_WriteIDRegister:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:189    .text.CRC_ReadIDRegister:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:195    .text.CRC_ReadIDRegister:00000000 CRC_ReadIDRegister
+C:\Users\geehy\AppData\Local\Temp\ccvHrlzS.s:212    .text.CRC_ReadIDRegister:00000008 $d
+
+NO UNDEFINED SYMBOLS

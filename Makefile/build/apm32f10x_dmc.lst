@@ -1,0 +1,1522 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_dmc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.DMC_ConfigTiming,"ax",%progbits
+  18              		.align	1
+  19              		.global	DMC_ConfigTiming
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	DMC_ConfigTiming:
+  25              	.LVL0:
+  26              	.LFB67:
+  27              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @file        apm32f10x_dmc.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       This file contains all the functions for the DMC controler peripheral
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** #ifdef APM32F10X_HD
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** #include "apm32f10x_dmc.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 2
+
+
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /** @addtogroup DMC_Driver  DMC Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /** @addtogroup  DMC_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       DMC controler configuration
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       dmcConfig: pointer to a DMC_Config_T structure
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_Config(DMC_Config_T * dmcConfig)
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->SW_B.MCSW = 1;
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     while(!DMC->CTRL1_B.INIT);
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.BAWCFG = dmcConfig->bankWidth;
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.RAWCFG = dmcConfig->rowWidth;
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.CAWCFG = dmcConfig->colWidth;
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->MASK_B.MSIZESEL = dmcConfig->memorySize;
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.CPHACFG = dmcConfig->clkPhase;
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC_ConfigTiming(&dmcConfig->timing);
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.MODESET = 1;
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     while(!DMC->CTRL1_B.MODESET);
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.RDDEN = 1;
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.RDDCFG = 7;
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Fills each dmcConfig member with its default value
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       dmcConfig: pointer to a DMC_Config_T structure
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigStructInit(DMC_Config_T * dmcConfig)
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->bankWidth   = DMC_BANK_WIDTH_2;
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->clkPhase    = DMC_CLK_PHASE_REVERSE;
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->colWidth    = DMC_COL_WIDTH_10;
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->rowWidth    = DMC_ROW_WIDTH_13;
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->memorySize  = DMC_MEMORY_SIZE_8MB;
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC_ConfigTimingStructInit(&dmcConfig->timing);
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Timing configuration
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 3
+
+
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       timingConfig: pointer to a DMC_TimingConfig_T structure
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigTiming(DMC_TimingConfig_T * timingConfig)
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+  28              		.loc 1 95 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.RASMINTSEL = timingConfig->tRAS;
+  33              		.loc 1 96 5 view .LVU1
+  34              		.loc 1 96 42 is_stmt 0 view .LVU2
+  35 0000 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+  36 0002 C2F38302 		ubfx	r2, r2, #2, #4
+  37              		.loc 1 96 28 view .LVU3
+  38 0006 4FF02043 		mov	r3, #-1610612736
+  39 000a 5968     		ldr	r1, [r3, #4]
+  40 000c 62F38501 		bfi	r1, r2, #2, #4
+  41 0010 5960     		str	r1, [r3, #4]
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.DTIMSEL    = timingConfig->tRCD;
+  42              		.loc 1 97 5 is_stmt 1 view .LVU4
+  43              		.loc 1 97 42 is_stmt 0 view .LVU5
+  44 0012 0288     		ldrh	r2, [r0]
+  45 0014 C2F38212 		ubfx	r2, r2, #6, #3
+  46              		.loc 1 97 28 view .LVU6
+  47 0018 5968     		ldr	r1, [r3, #4]
+  48 001a 62F38811 		bfi	r1, r2, #6, #3
+  49 001e 5960     		str	r1, [r3, #4]
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.PCPSEL     = timingConfig->tRP;
+  50              		.loc 1 98 5 is_stmt 1 view .LVU7
+  51              		.loc 1 98 42 is_stmt 0 view .LVU8
+  52 0020 4278     		ldrb	r2, [r0, #1]	@ zero_extendqisi2
+  53 0022 C2F34202 		ubfx	r2, r2, #1, #3
+  54              		.loc 1 98 28 view .LVU9
+  55 0026 5968     		ldr	r1, [r3, #4]
+  56 0028 62F34B21 		bfi	r1, r2, #9, #3
+  57 002c 5960     		str	r1, [r3, #4]
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.WRTIMSEL   = timingConfig->tWR;
+  58              		.loc 1 99 5 is_stmt 1 view .LVU10
+  59              		.loc 1 99 42 is_stmt 0 view .LVU11
+  60 002e 4278     		ldrb	r2, [r0, #1]	@ zero_extendqisi2
+  61 0030 C2F30112 		ubfx	r2, r2, #4, #2
+  62              		.loc 1 99 28 view .LVU12
+  63 0034 5968     		ldr	r1, [r3, #4]
+  64 0036 62F30D31 		bfi	r1, r2, #12, #2
+  65 003a 5960     		str	r1, [r3, #4]
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.ARPSEL     = timingConfig->tARP;
+  66              		.loc 1 100 5 is_stmt 1 view .LVU13
+  67              		.loc 1 100 42 is_stmt 0 view .LVU14
+  68 003c 0268     		ldr	r2, [r0]
+  69 003e C2F38332 		ubfx	r2, r2, #14, #4
+  70              		.loc 1 100 28 view .LVU15
+  71 0042 5968     		ldr	r1, [r3, #4]
+  72 0044 62F39131 		bfi	r1, r2, #14, #4
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 4
+
+
+  73 0048 5960     		str	r1, [r3, #4]
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.ATACP      = timingConfig->tCMD;
+  74              		.loc 1 101 5 is_stmt 1 view .LVU16
+  75              		.loc 1 101 42 is_stmt 0 view .LVU17
+  76 004a 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  77 004c C2F38302 		ubfx	r2, r2, #2, #4
+  78              		.loc 1 101 28 view .LVU18
+  79 0050 5968     		ldr	r1, [r3, #4]
+  80 0052 62F39951 		bfi	r1, r2, #22, #4
+  81 0056 5960     		str	r1, [r3, #4]
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.CASLSEL0  =  timingConfig->latencyCAS & 0x03;
+  82              		.loc 1 103 5 is_stmt 1 view .LVU19
+  83              		.loc 1 103 42 is_stmt 0 view .LVU20
+  84 0058 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+  85              		.loc 1 103 27 view .LVU21
+  86 005a 5A68     		ldr	r2, [r3, #4]
+  87 005c 61F30102 		bfi	r2, r1, #0, #2
+  88 0060 5A60     		str	r2, [r3, #4]
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.ECASLSEL1 = (timingConfig->latencyCAS >> 2) & 0x01;
+  89              		.loc 1 104 5 is_stmt 1 view .LVU22
+  90              		.loc 1 104 27 is_stmt 0 view .LVU23
+  91 0062 5A68     		ldr	r2, [r3, #4]
+  92 0064 6FF39A62 		bfc	r2, #26, #1
+  93 0068 5A60     		str	r2, [r3, #4]
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.XSR0  =  timingConfig->tXSR & 0X0F;
+  94              		.loc 1 106 5 is_stmt 1 view .LVU24
+  95              		.loc 1 106 38 is_stmt 0 view .LVU25
+  96 006a 4288     		ldrh	r2, [r0, #2]
+  97              		.loc 1 106 45 view .LVU26
+  98 006c C2F38312 		ubfx	r2, r2, #6, #4
+  99              		.loc 1 106 23 view .LVU27
+ 100 0070 5968     		ldr	r1, [r3, #4]
+ 101 0072 62F39541 		bfi	r1, r2, #18, #4
+ 102 0076 5960     		str	r1, [r3, #4]
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM0_B.EXSR1 = (timingConfig->tXSR >> 4) & 0X1F;
+ 103              		.loc 1 107 5 is_stmt 1 view .LVU28
+ 104              		.loc 1 107 38 is_stmt 0 view .LVU29
+ 105 0078 4288     		ldrh	r2, [r0, #2]
+ 106              		.loc 1 107 51 view .LVU30
+ 107 007a C2F38422 		ubfx	r2, r2, #10, #5
+ 108              		.loc 1 107 23 view .LVU31
+ 109 007e 5968     		ldr	r1, [r3, #4]
+ 110 0080 62F3DF61 		bfi	r1, r2, #27, #5
+ 111 0084 5960     		str	r1, [r3, #4]
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->REF_B.RCYCCFG = timingConfig->tRFP;
+ 112              		.loc 1 109 5 is_stmt 1 view .LVU32
+ 113              		.loc 1 109 38 is_stmt 0 view .LVU33
+ 114 0086 8188     		ldrh	r1, [r0, #4]
+ 115              		.loc 1 109 24 view .LVU34
+ 116 0088 1A69     		ldr	r2, [r3, #16]
+ 117 008a 61F30F02 		bfi	r2, r1, #0, #16
+ 118 008e 1A61     		str	r2, [r3, #16]
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 119              		.loc 1 110 1 view .LVU35
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 5
+
+
+ 120 0090 7047     		bx	lr
+ 121              		.cfi_endproc
+ 122              	.LFE67:
+ 124              		.section	.text.DMC_Config,"ax",%progbits
+ 125              		.align	1
+ 126              		.global	DMC_Config
+ 127              		.syntax unified
+ 128              		.thumb
+ 129              		.thumb_func
+ 131              	DMC_Config:
+ 132              	.LVL1:
+ 133              	.LFB65:
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->SW_B.MCSW = 1;
+ 134              		.loc 1 49 1 is_stmt 1 view -0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->SW_B.MCSW = 1;
+ 138              		.loc 1 49 1 is_stmt 0 view .LVU37
+ 139 0000 10B5     		push	{r4, lr}
+ 140              	.LCFI0:
+ 141              		.cfi_def_cfa_offset 8
+ 142              		.cfi_offset 4, -8
+ 143              		.cfi_offset 14, -4
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     while(!DMC->CTRL1_B.INIT);
+ 144              		.loc 1 50 5 is_stmt 1 view .LVU38
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     while(!DMC->CTRL1_B.INIT);
+ 145              		.loc 1 50 20 is_stmt 0 view .LVU39
+ 146 0002 4FF02042 		mov	r2, #-1610612736
+ 147 0006 D2F80034 		ldr	r3, [r2, #1024]
+ 148 000a 43F00103 		orr	r3, r3, #1
+ 149 000e C2F80034 		str	r3, [r2, #1024]
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 150              		.loc 1 51 5 is_stmt 1 view .LVU40
+ 151              	.L3:
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 152              		.loc 1 51 30 discriminator 1 view .LVU41
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 153              		.loc 1 51 10 discriminator 1 view .LVU42
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 154              		.loc 1 51 24 is_stmt 0 discriminator 1 view .LVU43
+ 155 0012 4FF02043 		mov	r3, #-1610612736
+ 156 0016 DB68     		ldr	r3, [r3, #12]
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 157              		.loc 1 51 10 discriminator 1 view .LVU44
+ 158 0018 13F0010F 		tst	r3, #1
+ 159 001c F9D0     		beq	.L3
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.RAWCFG = dmcConfig->rowWidth;
+ 160              		.loc 1 53 5 is_stmt 1 view .LVU45
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.RAWCFG = dmcConfig->rowWidth;
+ 161              		.loc 1 53 34 is_stmt 0 view .LVU46
+ 162 001e 4278     		ldrb	r2, [r0, #1]	@ zero_extendqisi2
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.RAWCFG = dmcConfig->rowWidth;
+ 163              		.loc 1 53 23 view .LVU47
+ 164 0020 4FF02044 		mov	r4, #-1610612736
+ 165 0024 2368     		ldr	r3, [r4]
+ 166 0026 62F3C403 		bfi	r3, r2, #3, #2
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 6
+
+
+ 167 002a 2360     		str	r3, [r4]
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.CAWCFG = dmcConfig->colWidth;
+ 168              		.loc 1 54 5 is_stmt 1 view .LVU48
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.CAWCFG = dmcConfig->colWidth;
+ 169              		.loc 1 54 34 is_stmt 0 view .LVU49
+ 170 002c 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.CAWCFG = dmcConfig->colWidth;
+ 171              		.loc 1 54 23 view .LVU50
+ 172 002e 2368     		ldr	r3, [r4]
+ 173 0030 62F34813 		bfi	r3, r2, #5, #4
+ 174 0034 2360     		str	r3, [r4]
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 175              		.loc 1 55 5 is_stmt 1 view .LVU51
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 176              		.loc 1 55 34 is_stmt 0 view .LVU52
+ 177 0036 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 178              		.loc 1 55 23 view .LVU53
+ 179 0038 2368     		ldr	r3, [r4]
+ 180 003a 62F34C23 		bfi	r3, r2, #9, #4
+ 181 003e 2360     		str	r3, [r4]
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.CPHACFG = dmcConfig->clkPhase;
+ 182              		.loc 1 57 5 is_stmt 1 view .LVU54
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.CPHACFG = dmcConfig->clkPhase;
+ 183              		.loc 1 57 37 is_stmt 0 view .LVU55
+ 184 0040 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.CPHACFG = dmcConfig->clkPhase;
+ 185              		.loc 1 57 26 view .LVU56
+ 186 0042 636D     		ldr	r3, [r4, #84]
+ 187 0044 62F30403 		bfi	r3, r2, #0, #5
+ 188 0048 6365     		str	r3, [r4, #84]
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 189              		.loc 1 58 5 is_stmt 1 view .LVU57
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 190              		.loc 1 58 37 is_stmt 0 view .LVU58
+ 191 004a 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 192              		.loc 1 58 26 view .LVU59
+ 193 004c D4F80434 		ldr	r3, [r4, #1028]
+ 194 0050 62F30003 		bfi	r3, r2, #0, #1
+ 195 0054 C4F80434 		str	r3, [r4, #1028]
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 196              		.loc 1 60 5 is_stmt 1 view .LVU60
+ 197 0058 0830     		adds	r0, r0, #8
+ 198              	.LVL2:
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 199              		.loc 1 60 5 is_stmt 0 view .LVU61
+ 200 005a FFF7FEFF 		bl	DMC_ConfigTiming
+ 201              	.LVL3:
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     while(!DMC->CTRL1_B.MODESET);
+ 202              		.loc 1 62 5 is_stmt 1 view .LVU62
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     while(!DMC->CTRL1_B.MODESET);
+ 203              		.loc 1 62 26 is_stmt 0 view .LVU63
+ 204 005e E368     		ldr	r3, [r4, #12]
+ 205 0060 43F40073 		orr	r3, r3, #512
+ 206 0064 E360     		str	r3, [r4, #12]
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 7
+
+
+ 207              		.loc 1 63 5 is_stmt 1 view .LVU64
+ 208              	.L4:
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 209              		.loc 1 63 33 discriminator 1 view .LVU65
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 210              		.loc 1 63 10 discriminator 1 view .LVU66
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 211              		.loc 1 63 24 is_stmt 0 discriminator 1 view .LVU67
+ 212 0066 4FF02043 		mov	r3, #-1610612736
+ 213 006a DB68     		ldr	r3, [r3, #12]
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 214              		.loc 1 63 10 discriminator 1 view .LVU68
+ 215 006c 13F4007F 		tst	r3, #512
+ 216 0070 F9D0     		beq	.L4
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.RDDCFG = 7;
+ 217              		.loc 1 65 5 is_stmt 1 view .LVU69
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.RDDCFG = 7;
+ 218              		.loc 1 65 24 is_stmt 0 view .LVU70
+ 219 0072 4FF02043 		mov	r3, #-1610612736
+ 220 0076 D3F80424 		ldr	r2, [r3, #1028]
+ 221 007a 42F00202 		orr	r2, r2, #2
+ 222 007e C3F80424 		str	r2, [r3, #1028]
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 223              		.loc 1 66 5 is_stmt 1 view .LVU71
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 224              		.loc 1 66 25 is_stmt 0 view .LVU72
+ 225 0082 D3F80424 		ldr	r2, [r3, #1028]
+ 226 0086 42F01C02 		orr	r2, r2, #28
+ 227 008a C3F80424 		str	r2, [r3, #1028]
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 228              		.loc 1 67 1 view .LVU73
+ 229 008e 10BD     		pop	{r4, pc}
+ 230              		.cfi_endproc
+ 231              	.LFE65:
+ 233              		.section	.text.DMC_ConfigTimingStructInit,"ax",%progbits
+ 234              		.align	1
+ 235              		.global	DMC_ConfigTimingStructInit
+ 236              		.syntax unified
+ 237              		.thumb
+ 238              		.thumb_func
+ 240              	DMC_ConfigTimingStructInit:
+ 241              	.LVL4:
+ 242              	.LFB68:
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Fills each config member with its default value
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       timingConfig: pointer to a DMC_TimingConfig_T structure
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigTimingStructInit(DMC_TimingConfig_T * timingConfig)
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 243              		.loc 1 120 1 is_stmt 1 view -0
+ 244              		.cfi_startproc
+ 245              		@ args = 0, pretend = 0, frame = 0
+ 246              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 8
+
+
+ 247              		@ link register save eliminated.
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->latencyCAS = DMC_CAS_LATENCY_3;
+ 248              		.loc 1 121 5 view .LVU75
+ 249              		.loc 1 121 30 is_stmt 0 view .LVU76
+ 250 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 251 0002 0222     		movs	r2, #2
+ 252 0004 62F30103 		bfi	r3, r2, #0, #2
+ 253 0008 0370     		strb	r3, [r0]
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tARP = DMC_AUTO_REFRESH_10;
+ 254              		.loc 1 122 5 is_stmt 1 view .LVU77
+ 255              		.loc 1 122 24 is_stmt 0 view .LVU78
+ 256 000a 0368     		ldr	r3, [r0]
+ 257 000c 0922     		movs	r2, #9
+ 258 000e 62F39133 		bfi	r3, r2, #14, #4
+ 259 0012 0360     		str	r3, [r0]
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tRAS = DMC_RAS_MINIMUM_5;
+ 260              		.loc 1 123 5 is_stmt 1 view .LVU79
+ 261              		.loc 1 123 24 is_stmt 0 view .LVU80
+ 262 0014 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 263 0016 0422     		movs	r2, #4
+ 264 0018 62F38503 		bfi	r3, r2, #2, #4
+ 265 001c 0370     		strb	r3, [r0]
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tCMD = DMC_ATA_CMD_7;
+ 266              		.loc 1 124 5 is_stmt 1 view .LVU81
+ 267              		.loc 1 124 24 is_stmt 0 view .LVU82
+ 268 001e 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 269 0020 0622     		movs	r2, #6
+ 270 0022 62F38503 		bfi	r3, r2, #2, #4
+ 271 0026 8370     		strb	r3, [r0, #2]
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tRCD = DMC_DELAY_TIME_2;
+ 272              		.loc 1 125 5 is_stmt 1 view .LVU83
+ 273              		.loc 1 125 24 is_stmt 0 view .LVU84
+ 274 0028 0188     		ldrh	r1, [r0]
+ 275 002a 0123     		movs	r3, #1
+ 276 002c 63F38811 		bfi	r1, r3, #6, #3
+ 277 0030 0180     		strh	r1, [r0]	@ movhi
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tRP  = DMC_PRECHARGE_2;
+ 278              		.loc 1 126 5 is_stmt 1 view .LVU85
+ 279              		.loc 1 126 24 is_stmt 0 view .LVU86
+ 280 0032 4178     		ldrb	r1, [r0, #1]	@ zero_extendqisi2
+ 281 0034 63F34301 		bfi	r1, r3, #1, #3
+ 282 0038 4170     		strb	r1, [r0, #1]
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tWR  = DMC_NEXT_PRECHARGE_2;
+ 283              		.loc 1 127 5 is_stmt 1 view .LVU87
+ 284              		.loc 1 127 24 is_stmt 0 view .LVU88
+ 285 003a C9B2     		uxtb	r1, r1
+ 286 003c 63F30511 		bfi	r1, r3, #4, #2
+ 287 0040 4170     		strb	r1, [r0, #1]
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tXSR = 6;
+ 288              		.loc 1 128 5 is_stmt 1 view .LVU89
+ 289              		.loc 1 128 24 is_stmt 0 view .LVU90
+ 290 0042 4388     		ldrh	r3, [r0, #2]
+ 291 0044 62F38E13 		bfi	r3, r2, #6, #9
+ 292 0048 4380     		strh	r3, [r0, #2]	@ movhi
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     timingConfig->tRFP = 0xC3;
+ 293              		.loc 1 129 5 is_stmt 1 view .LVU91
+ 294              		.loc 1 129 24 is_stmt 0 view .LVU92
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 9
+
+
+ 295 004a C323     		movs	r3, #195
+ 296 004c 8380     		strh	r3, [r0, #4]	@ movhi
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 297              		.loc 1 130 1 view .LVU93
+ 298 004e 7047     		bx	lr
+ 299              		.cfi_endproc
+ 300              	.LFE68:
+ 302              		.section	.text.DMC_ConfigStructInit,"ax",%progbits
+ 303              		.align	1
+ 304              		.global	DMC_ConfigStructInit
+ 305              		.syntax unified
+ 306              		.thumb
+ 307              		.thumb_func
+ 309              	DMC_ConfigStructInit:
+ 310              	.LVL5:
+ 311              	.LFB66:
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->bankWidth   = DMC_BANK_WIDTH_2;
+ 312              		.loc 1 77 1 is_stmt 1 view -0
+ 313              		.cfi_startproc
+ 314              		@ args = 0, pretend = 0, frame = 0
+ 315              		@ frame_needed = 0, uses_anonymous_args = 0
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->bankWidth   = DMC_BANK_WIDTH_2;
+ 316              		.loc 1 77 1 is_stmt 0 view .LVU95
+ 317 0000 08B5     		push	{r3, lr}
+ 318              	.LCFI1:
+ 319              		.cfi_def_cfa_offset 8
+ 320              		.cfi_offset 3, -8
+ 321              		.cfi_offset 14, -4
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->clkPhase    = DMC_CLK_PHASE_REVERSE;
+ 322              		.loc 1 78 5 is_stmt 1 view .LVU96
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->clkPhase    = DMC_CLK_PHASE_REVERSE;
+ 323              		.loc 1 78 28 is_stmt 0 view .LVU97
+ 324 0002 0123     		movs	r3, #1
+ 325 0004 4370     		strb	r3, [r0, #1]
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->colWidth    = DMC_COL_WIDTH_10;
+ 326              		.loc 1 79 5 is_stmt 1 view .LVU98
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->colWidth    = DMC_COL_WIDTH_10;
+ 327              		.loc 1 79 28 is_stmt 0 view .LVU99
+ 328 0006 0371     		strb	r3, [r0, #4]
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->rowWidth    = DMC_ROW_WIDTH_13;
+ 329              		.loc 1 80 5 is_stmt 1 view .LVU100
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->rowWidth    = DMC_ROW_WIDTH_13;
+ 330              		.loc 1 80 28 is_stmt 0 view .LVU101
+ 331 0008 0923     		movs	r3, #9
+ 332 000a C370     		strb	r3, [r0, #3]
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->memorySize  = DMC_MEMORY_SIZE_8MB;
+ 333              		.loc 1 81 5 is_stmt 1 view .LVU102
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     dmcConfig->memorySize  = DMC_MEMORY_SIZE_8MB;
+ 334              		.loc 1 81 28 is_stmt 0 view .LVU103
+ 335 000c 0C23     		movs	r3, #12
+ 336 000e 8370     		strb	r3, [r0, #2]
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 337              		.loc 1 82 5 is_stmt 1 view .LVU104
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 338              		.loc 1 82 28 is_stmt 0 view .LVU105
+ 339 0010 0823     		movs	r3, #8
+ 340 0012 00F8083B 		strb	r3, [r0], #8
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 10
+
+
+ 341              	.LVL6:
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 342              		.loc 1 84 5 is_stmt 1 view .LVU106
+ 343 0016 FFF7FEFF 		bl	DMC_ConfigTimingStructInit
+ 344              	.LVL7:
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 345              		.loc 1 85 1 is_stmt 0 view .LVU107
+ 346 001a 08BD     		pop	{r3, pc}
+ 347              		.cfi_endproc
+ 348              	.LFE66:
+ 350              		.section	.text.DMC_ConfigBankWidth,"ax",%progbits
+ 351              		.align	1
+ 352              		.global	DMC_ConfigBankWidth
+ 353              		.syntax unified
+ 354              		.thumb
+ 355              		.thumb_func
+ 357              	DMC_ConfigBankWidth:
+ 358              	.LVL8:
+ 359              	.LFB69:
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set number of bank bits
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       bankWidth: Specifies the bank bits number
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                         This parameter can be one of the following values:
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                         @arg DMC_BANK_WIDTH_1
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                         @arg DMC_BANK_WIDTH_2
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigBankWidth(DMC_BANK_WIDTH_T bankWidth)
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 360              		.loc 1 142 1 is_stmt 1 view -0
+ 361              		.cfi_startproc
+ 362              		@ args = 0, pretend = 0, frame = 0
+ 363              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364              		@ link register save eliminated.
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.BAWCFG = bankWidth;
+ 365              		.loc 1 143 5 view .LVU109
+ 366              		.loc 1 143 23 is_stmt 0 view .LVU110
+ 367 0000 4FF02043 		mov	r3, #-1610612736
+ 368 0004 1A68     		ldr	r2, [r3]
+ 369 0006 60F3C402 		bfi	r2, r0, #3, #2
+ 370 000a 1A60     		str	r2, [r3]
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 371              		.loc 1 144 1 view .LVU111
+ 372 000c 7047     		bx	lr
+ 373              		.cfi_endproc
+ 374              	.LFE69:
+ 376              		.section	.text.DMC_ConfigAddrWidth,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	DMC_ConfigAddrWidth
+ 379              		.syntax unified
+ 380              		.thumb
+ 381              		.thumb_func
+ 383              	DMC_ConfigAddrWidth:
+ 384              	.LVL9:
+ 385              	.LFB70:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 11
+
+
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set address bus width
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       rowWidth: Specifies the row address bits number
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        This parameter can be one of the following values:
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_ROW_WIDTH_11
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_ROW_WIDTH_12
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_ROW_WIDTH_13
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_ROW_WIDTH_14
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_ROW_WIDTH_15
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_ROW_WIDTH_16
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       colWidth: Specifies the column address bits number
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        This parameter can be one of the following values:
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_8
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_9
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_10
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_11
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_12
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_13
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_14
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_COL_WIDTH_15
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigAddrWidth(DMC_ROW_WIDTH_T rowWidth, DMC_COL_WIDTH_T colWidth)
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 386              		.loc 1 170 1 is_stmt 1 view -0
+ 387              		.cfi_startproc
+ 388              		@ args = 0, pretend = 0, frame = 0
+ 389              		@ frame_needed = 0, uses_anonymous_args = 0
+ 390              		@ link register save eliminated.
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.RAWCFG = rowWidth;
+ 391              		.loc 1 171 5 view .LVU113
+ 392              		.loc 1 171 23 is_stmt 0 view .LVU114
+ 393 0000 4FF02043 		mov	r3, #-1610612736
+ 394 0004 1A68     		ldr	r2, [r3]
+ 395 0006 60F34812 		bfi	r2, r0, #5, #4
+ 396 000a 1A60     		str	r2, [r3]
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CFG_B.CAWCFG = colWidth;
+ 397              		.loc 1 172 5 is_stmt 1 view .LVU115
+ 398              		.loc 1 172 23 is_stmt 0 view .LVU116
+ 399 000c 1A68     		ldr	r2, [r3]
+ 400 000e 61F34C22 		bfi	r2, r1, #9, #4
+ 401 0012 1A60     		str	r2, [r3]
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 402              		.loc 1 173 1 view .LVU117
+ 403 0014 7047     		bx	lr
+ 404              		.cfi_endproc
+ 405              	.LFE70:
+ 407              		.section	.text.DMC_ConfigStableTimePowerup,"ax",%progbits
+ 408              		.align	1
+ 409              		.global	DMC_ConfigStableTimePowerup
+ 410              		.syntax unified
+ 411              		.thumb
+ 412              		.thumb_func
+ 414              	DMC_ConfigStableTimePowerup:
+ 415              	.LVL10:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 12
+
+
+ 416              	.LFB71:
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set stable time after power up
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       stableTime: Numper of the clock, can be 0x0000 to 0xFFFF
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigStableTimePowerup(uint16_t stableTime)
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 417              		.loc 1 183 1 is_stmt 1 view -0
+ 418              		.cfi_startproc
+ 419              		@ args = 0, pretend = 0, frame = 0
+ 420              		@ frame_needed = 0, uses_anonymous_args = 0
+ 421              		@ link register save eliminated.
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM1_B.STBTIM = stableTime;
+ 422              		.loc 1 184 5 view .LVU119
+ 423              		.loc 1 184 24 is_stmt 0 view .LVU120
+ 424 0000 4FF02043 		mov	r3, #-1610612736
+ 425 0004 9A68     		ldr	r2, [r3, #8]
+ 426              	.LVL11:
+ 427              		.loc 1 184 24 view .LVU121
+ 428 0006 60F30F02 		bfi	r2, r0, #0, #16
+ 429 000a 9A60     		str	r2, [r3, #8]
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 430              		.loc 1 185 1 view .LVU122
+ 431 000c 7047     		bx	lr
+ 432              		.cfi_endproc
+ 433              	.LFE71:
+ 435              		.section	.text.DMC_ConfigAutoRefreshNumDuringInit,"ax",%progbits
+ 436              		.align	1
+ 437              		.global	DMC_ConfigAutoRefreshNumDuringInit
+ 438              		.syntax unified
+ 439              		.thumb
+ 440              		.thumb_func
+ 442              	DMC_ConfigAutoRefreshNumDuringInit:
+ 443              	.LVL12:
+ 444              	.LFB72:
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Number of auto-refreshes during initialization
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       num: Number of auto-refreshes can 1 to 16
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                   This parameter can be one of the following values:
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_AUTO_REFRESH_1
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_AUTO_REFRESH_2
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                             ......
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_AUTO_REFRESH_15
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_AUTO_REFRESH_16
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigAutoRefreshNumDuringInit(DMC_AUTO_REFRESH_T num)
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 445              		.loc 1 201 1 is_stmt 1 view -0
+ 446              		.cfi_startproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 13
+
+
+ 447              		@ args = 0, pretend = 0, frame = 0
+ 448              		@ frame_needed = 0, uses_anonymous_args = 0
+ 449              		@ link register save eliminated.
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->TIM1_B.ARNUMCFG = num;
+ 450              		.loc 1 202 5 view .LVU124
+ 451              		.loc 1 202 26 is_stmt 0 view .LVU125
+ 452 0000 4FF02043 		mov	r3, #-1610612736
+ 453 0004 9A68     		ldr	r2, [r3, #8]
+ 454 0006 60F31342 		bfi	r2, r0, #16, #4
+ 455 000a 9A60     		str	r2, [r3, #8]
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 456              		.loc 1 203 1 view .LVU126
+ 457 000c 7047     		bx	lr
+ 458              		.cfi_endproc
+ 459              	.LFE72:
+ 461              		.section	.text.DMC_ConfigOpenBank,"ax",%progbits
+ 462              		.align	1
+ 463              		.global	DMC_ConfigOpenBank
+ 464              		.syntax unified
+ 465              		.thumb
+ 466              		.thumb_func
+ 468              	DMC_ConfigOpenBank:
+ 469              	.LVL13:
+ 470              	.LFB73:
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Number of DMC internal banks to be open at any time;
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       num:  Number of banks can 1 to 16
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                   This parameter can be one of the following values:
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_BANK_NUMBER_1
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_BANK_NUMBER_2
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                             ......
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_BANK_NUMBER_15
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                        @arg DMC_BANK_NUMBER_16
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigOpenBank(DMC_BANK_NUMBER_T num)
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 471              		.loc 1 218 1 is_stmt 1 view -0
+ 472              		.cfi_startproc
+ 473              		@ args = 0, pretend = 0, frame = 0
+ 474              		@ frame_needed = 0, uses_anonymous_args = 0
+ 475              		@ link register save eliminated.
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.BANKNUMCFG = num;
+ 476              		.loc 1 219 5 view .LVU128
+ 477              		.loc 1 219 29 is_stmt 0 view .LVU129
+ 478 0000 4FF02043 		mov	r3, #-1610612736
+ 479 0004 DA68     		ldr	r2, [r3, #12]
+ 480 0006 60F31032 		bfi	r2, r0, #12, #5
+ 481 000a DA60     		str	r2, [r3, #12]
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 482              		.loc 1 220 1 view .LVU130
+ 483 000c 7047     		bx	lr
+ 484              		.cfi_endproc
+ 485              	.LFE73:
+ 487              		.section	.text.DMC_ReadSelfRefreshStatus,"ax",%progbits
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 14
+
+
+ 488              		.align	1
+ 489              		.global	DMC_ReadSelfRefreshStatus
+ 490              		.syntax unified
+ 491              		.thumb
+ 492              		.thumb_func
+ 494              	DMC_ReadSelfRefreshStatus:
+ 495              	.LFB74:
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Read self-refresh status
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      The status of self-refresh (SET or RESET)
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** uint8_t DMC_ReadSelfRefreshStatus(void)
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 496              		.loc 1 230 1 is_stmt 1 view -0
+ 497              		.cfi_startproc
+ 498              		@ args = 0, pretend = 0, frame = 0
+ 499              		@ frame_needed = 0, uses_anonymous_args = 0
+ 500              		@ link register save eliminated.
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     uint8_t ret;
+ 501              		.loc 1 231 5 view .LVU132
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     ret = DMC->CTRL1_B.SRMFLG ? SET : RESET;
+ 502              		.loc 1 233 5 view .LVU133
+ 503              		.loc 1 233 23 is_stmt 0 view .LVU134
+ 504 0000 4FF02043 		mov	r3, #-1610612736
+ 505 0004 D868     		ldr	r0, [r3, #12]
+ 506              	.LVL14:
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     return ret;
+ 507              		.loc 1 235 5 is_stmt 1 view .LVU135
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 508              		.loc 1 236 1 is_stmt 0 view .LVU136
+ 509 0006 C0F3C020 		ubfx	r0, r0, #11, #1
+ 510              	.LVL15:
+ 511              		.loc 1 236 1 view .LVU137
+ 512 000a 7047     		bx	lr
+ 513              		.cfi_endproc
+ 514              	.LFE74:
+ 516              		.section	.text.DMC_EnableUpdateMode,"ax",%progbits
+ 517              		.align	1
+ 518              		.global	DMC_EnableUpdateMode
+ 519              		.syntax unified
+ 520              		.thumb
+ 521              		.thumb_func
+ 523              	DMC_EnableUpdateMode:
+ 524              	.LFB75:
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set update mode bit
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 15
+
+
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_EnableUpdateMode(void)
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 525              		.loc 1 246 1 is_stmt 1 view -0
+ 526              		.cfi_startproc
+ 527              		@ args = 0, pretend = 0, frame = 0
+ 528              		@ frame_needed = 0, uses_anonymous_args = 0
+ 529              		@ link register save eliminated.
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.MODESET = 1;
+ 530              		.loc 1 247 5 view .LVU139
+ 531              		.loc 1 247 26 is_stmt 0 view .LVU140
+ 532 0000 4FF02042 		mov	r2, #-1610612736
+ 533 0004 D368     		ldr	r3, [r2, #12]
+ 534 0006 43F40073 		orr	r3, r3, #512
+ 535 000a D360     		str	r3, [r2, #12]
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 536              		.loc 1 248 1 view .LVU141
+ 537 000c 7047     		bx	lr
+ 538              		.cfi_endproc
+ 539              	.LFE75:
+ 541              		.section	.text.DMC_EnterPowerdownMode,"ax",%progbits
+ 542              		.align	1
+ 543              		.global	DMC_EnterPowerdownMode
+ 544              		.syntax unified
+ 545              		.thumb
+ 546              		.thumb_func
+ 548              	DMC_EnterPowerdownMode:
+ 549              	.LFB76:
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Enter power down mode
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_EnterPowerdownMode(void)
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 550              		.loc 1 258 1 is_stmt 1 view -0
+ 551              		.cfi_startproc
+ 552              		@ args = 0, pretend = 0, frame = 0
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554              		@ link register save eliminated.
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.PDMEN = 1;
+ 555              		.loc 1 259 5 view .LVU143
+ 556              		.loc 1 259 24 is_stmt 0 view .LVU144
+ 557 0000 4FF02042 		mov	r2, #-1610612736
+ 558 0004 D368     		ldr	r3, [r2, #12]
+ 559 0006 43F00403 		orr	r3, r3, #4
+ 560 000a D360     		str	r3, [r2, #12]
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 561              		.loc 1 260 1 view .LVU145
+ 562 000c 7047     		bx	lr
+ 563              		.cfi_endproc
+ 564              	.LFE76:
+ 566              		.section	.text.DMC_EixtSlefRefreshMode,"ax",%progbits
+ 567              		.align	1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 16
+
+
+ 568              		.global	DMC_EixtSlefRefreshMode
+ 569              		.syntax unified
+ 570              		.thumb
+ 571              		.thumb_func
+ 573              	DMC_EixtSlefRefreshMode:
+ 574              	.LFB77:
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Exit self-refresh mode
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 266:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 267:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 268:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 269:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_EixtSlefRefreshMode(void)
+ 270:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 575              		.loc 1 270 1 is_stmt 1 view -0
+ 576              		.cfi_startproc
+ 577              		@ args = 0, pretend = 0, frame = 0
+ 578              		@ frame_needed = 0, uses_anonymous_args = 0
+ 579              		@ link register save eliminated.
+ 271:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.SRMEN = 0;
+ 580              		.loc 1 271 5 view .LVU147
+ 581              		.loc 1 271 24 is_stmt 0 view .LVU148
+ 582 0000 4FF02043 		mov	r3, #-1610612736
+ 583 0004 DA68     		ldr	r2, [r3, #12]
+ 584 0006 6FF34102 		bfc	r2, #1, #1
+ 585 000a DA60     		str	r2, [r3, #12]
+ 272:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 586              		.loc 1 272 1 view .LVU149
+ 587 000c 7047     		bx	lr
+ 588              		.cfi_endproc
+ 589              	.LFE77:
+ 591              		.section	.text.DMC_EnterSlefRefreshMode,"ax",%progbits
+ 592              		.align	1
+ 593              		.global	DMC_EnterSlefRefreshMode
+ 594              		.syntax unified
+ 595              		.thumb
+ 596              		.thumb_func
+ 598              	DMC_EnterSlefRefreshMode:
+ 599              	.LFB78:
+ 273:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 274:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 275:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Enter self-refresh mode
+ 276:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 277:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 278:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 279:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 280:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 281:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_EnterSlefRefreshMode(void)
+ 282:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 600              		.loc 1 282 1 is_stmt 1 view -0
+ 601              		.cfi_startproc
+ 602              		@ args = 0, pretend = 0, frame = 0
+ 603              		@ frame_needed = 0, uses_anonymous_args = 0
+ 604              		@ link register save eliminated.
+ 283:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.SRMEN = 1;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 17
+
+
+ 605              		.loc 1 283 5 view .LVU151
+ 606              		.loc 1 283 24 is_stmt 0 view .LVU152
+ 607 0000 4FF02042 		mov	r2, #-1610612736
+ 608 0004 D368     		ldr	r3, [r2, #12]
+ 609 0006 43F00203 		orr	r3, r3, #2
+ 610 000a D360     		str	r3, [r2, #12]
+ 284:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 611              		.loc 1 284 1 view .LVU153
+ 612 000c 7047     		bx	lr
+ 613              		.cfi_endproc
+ 614              	.LFE78:
+ 616              		.section	.text.DMC_EnableAccelerateModule,"ax",%progbits
+ 617              		.align	1
+ 618              		.global	DMC_EnableAccelerateModule
+ 619              		.syntax unified
+ 620              		.thumb
+ 621              		.thumb_func
+ 623              	DMC_EnableAccelerateModule:
+ 624              	.LFB79:
+ 285:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 286:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 287:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief     Enable Accelerate Module
+ 288:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 289:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param     None
+ 290:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 291:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval    None
+ 292:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 293:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_EnableAccelerateModule(void)
+ 294:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 625              		.loc 1 294 1 is_stmt 1 view -0
+ 626              		.cfi_startproc
+ 627              		@ args = 0, pretend = 0, frame = 0
+ 628              		@ frame_needed = 0, uses_anonymous_args = 0
+ 629              		@ link register save eliminated.
+ 295:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.BUFFEN = BIT_SET;
+ 630              		.loc 1 295 5 view .LVU155
+ 631              		.loc 1 295 25 is_stmt 0 view .LVU156
+ 632 0000 4FF02042 		mov	r2, #-1610612736
+ 633 0004 D2F80434 		ldr	r3, [r2, #1028]
+ 634 0008 43F04003 		orr	r3, r3, #64
+ 635 000c C2F80434 		str	r3, [r2, #1028]
+ 296:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 636              		.loc 1 296 1 view .LVU157
+ 637 0010 7047     		bx	lr
+ 638              		.cfi_endproc
+ 639              	.LFE79:
+ 641              		.section	.text.DMC_DisableAccelerateModule,"ax",%progbits
+ 642              		.align	1
+ 643              		.global	DMC_DisableAccelerateModule
+ 644              		.syntax unified
+ 645              		.thumb
+ 646              		.thumb_func
+ 648              	DMC_DisableAccelerateModule:
+ 649              	.LFB80:
+ 297:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 298:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 299:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief     Disable Accelerate Module
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 18
+
+
+ 300:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 301:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param     None
+ 302:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 303:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval    None
+ 304:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 305:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_DisableAccelerateModule(void)
+ 306:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 650              		.loc 1 306 1 is_stmt 1 view -0
+ 651              		.cfi_startproc
+ 652              		@ args = 0, pretend = 0, frame = 0
+ 653              		@ frame_needed = 0, uses_anonymous_args = 0
+ 654              		@ link register save eliminated.
+ 307:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.BUFFEN = BIT_RESET;
+ 655              		.loc 1 307 5 view .LVU159
+ 656              		.loc 1 307 25 is_stmt 0 view .LVU160
+ 657 0000 4FF02043 		mov	r3, #-1610612736
+ 658 0004 D3F80424 		ldr	r2, [r3, #1028]
+ 659 0008 6FF38612 		bfc	r2, #6, #1
+ 660 000c C3F80424 		str	r2, [r3, #1028]
+ 308:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 661              		.loc 1 308 1 view .LVU161
+ 662 0010 7047     		bx	lr
+ 663              		.cfi_endproc
+ 664              	.LFE80:
+ 666              		.section	.text.DMC_EnableInit,"ax",%progbits
+ 667              		.align	1
+ 668              		.global	DMC_EnableInit
+ 669              		.syntax unified
+ 670              		.thumb
+ 671              		.thumb_func
+ 673              	DMC_EnableInit:
+ 674              	.LFB81:
+ 309:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 310:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 311:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Init DMC
+ 312:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 313:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 314:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 315:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 316:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 317:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_EnableInit(void)
+ 318:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 675              		.loc 1 318 1 is_stmt 1 view -0
+ 676              		.cfi_startproc
+ 677              		@ args = 0, pretend = 0, frame = 0
+ 678              		@ frame_needed = 0, uses_anonymous_args = 0
+ 679              		@ link register save eliminated.
+ 319:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.INIT = 1;
+ 680              		.loc 1 319 5 view .LVU163
+ 681              		.loc 1 319 23 is_stmt 0 view .LVU164
+ 682 0000 4FF02042 		mov	r2, #-1610612736
+ 683 0004 D368     		ldr	r3, [r2, #12]
+ 684 0006 43F00103 		orr	r3, r3, #1
+ 685 000a D360     		str	r3, [r2, #12]
+ 320:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 686              		.loc 1 320 1 view .LVU165
+ 687 000c 7047     		bx	lr
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 19
+
+
+ 688              		.cfi_endproc
+ 689              	.LFE81:
+ 691              		.section	.text.DMC_ConfigFullRefreshBeforeSR,"ax",%progbits
+ 692              		.align	1
+ 693              		.global	DMC_ConfigFullRefreshBeforeSR
+ 694              		.syntax unified
+ 695              		.thumb
+ 696              		.thumb_func
+ 698              	DMC_ConfigFullRefreshBeforeSR:
+ 699              	.LVL16:
+ 700              	.LFB82:
+ 321:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 323:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set refresh type before enter self-refresh
+ 324:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 325:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       refresh: Specifies the refresh type
+ 326:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                The parameter can be one of following values:
+ 327:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_REFRESH_ROW_ONE: Refresh one row
+ 328:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_REFRESH_ROW_ALL: Refresh all row
+ 329:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 330:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 331:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 332:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigFullRefreshBeforeSR(DMC_REFRESH_T refresh)
+ 333:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 701              		.loc 1 333 1 is_stmt 1 view -0
+ 702              		.cfi_startproc
+ 703              		@ args = 0, pretend = 0, frame = 0
+ 704              		@ frame_needed = 0, uses_anonymous_args = 0
+ 705              		@ link register save eliminated.
+ 334:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.FRBSREN = refresh;
+ 706              		.loc 1 334 5 view .LVU167
+ 707              		.loc 1 334 26 is_stmt 0 view .LVU168
+ 708 0000 4FF02043 		mov	r3, #-1610612736
+ 709 0004 DA68     		ldr	r2, [r3, #12]
+ 710 0006 60F30412 		bfi	r2, r0, #4, #1
+ 711 000a DA60     		str	r2, [r3, #12]
+ 335:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 712              		.loc 1 335 1 view .LVU169
+ 713 000c 7047     		bx	lr
+ 714              		.cfi_endproc
+ 715              	.LFE82:
+ 717              		.section	.text.DMC_ConfigFullRefreshAfterSR,"ax",%progbits
+ 718              		.align	1
+ 719              		.global	DMC_ConfigFullRefreshAfterSR
+ 720              		.syntax unified
+ 721              		.thumb
+ 722              		.thumb_func
+ 724              	DMC_ConfigFullRefreshAfterSR:
+ 725              	.LVL17:
+ 726              	.LFB83:
+ 336:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 337:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 338:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set refresh type after exit self-refresh
+ 339:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 340:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       refresh: Specifies the refresh type
+ 341:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                The parameter can be one of following values:
+ 342:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_REFRESH_ROW_ONE: Refresh one row
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 20
+
+
+ 343:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_REFRESH_ROW_ALL: Refresh all row
+ 344:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 345:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 346:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 347:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigFullRefreshAfterSR(DMC_REFRESH_T refresh)
+ 348:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 727              		.loc 1 348 1 is_stmt 1 view -0
+ 728              		.cfi_startproc
+ 729              		@ args = 0, pretend = 0, frame = 0
+ 730              		@ frame_needed = 0, uses_anonymous_args = 0
+ 731              		@ link register save eliminated.
+ 349:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.FRASREN = refresh;
+ 732              		.loc 1 349 5 view .LVU171
+ 733              		.loc 1 349 26 is_stmt 0 view .LVU172
+ 734 0000 4FF02043 		mov	r3, #-1610612736
+ 735 0004 DA68     		ldr	r2, [r3, #12]
+ 736 0006 60F34512 		bfi	r2, r0, #5, #1
+ 737 000a DA60     		str	r2, [r3, #12]
+ 350:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 738              		.loc 1 350 1 view .LVU173
+ 739 000c 7047     		bx	lr
+ 740              		.cfi_endproc
+ 741              	.LFE83:
+ 743              		.section	.text.DMC_ConfigPrechargeType,"ax",%progbits
+ 744              		.align	1
+ 745              		.global	DMC_ConfigPrechargeType
+ 746              		.syntax unified
+ 747              		.thumb
+ 748              		.thumb_func
+ 750              	DMC_ConfigPrechargeType:
+ 751              	.LVL18:
+ 752              	.LFB84:
+ 351:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 352:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 353:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Config precharge type
+ 354:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 355:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       precharge: Specifies the precharge type
+ 356:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                The parameter can be one of following values:
+ 357:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_PRECHARGE_IM:    Immediate precharge
+ 358:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_PRECHARGE_DELAY: Delayed precharge
+ 359:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 360:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 361:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 362:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigPrechargeType(DMC_PRECHARE_T precharge)
+ 363:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 753              		.loc 1 363 1 is_stmt 1 view -0
+ 754              		.cfi_startproc
+ 755              		@ args = 0, pretend = 0, frame = 0
+ 756              		@ frame_needed = 0, uses_anonymous_args = 0
+ 757              		@ link register save eliminated.
+ 364:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL1_B.PCACFG = precharge;
+ 758              		.loc 1 364 5 view .LVU175
+ 759              		.loc 1 364 25 is_stmt 0 view .LVU176
+ 760 0000 4FF02043 		mov	r3, #-1610612736
+ 761 0004 DA68     		ldr	r2, [r3, #12]
+ 762 0006 60F3C302 		bfi	r2, r0, #3, #1
+ 763 000a DA60     		str	r2, [r3, #12]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 21
+
+
+ 365:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 764              		.loc 1 365 1 view .LVU177
+ 765 000c 7047     		bx	lr
+ 766              		.cfi_endproc
+ 767              	.LFE84:
+ 769              		.section	.text.DMC_ConfigRefreshPeriod,"ax",%progbits
+ 770              		.align	1
+ 771              		.global	DMC_ConfigRefreshPeriod
+ 772              		.syntax unified
+ 773              		.thumb
+ 774              		.thumb_func
+ 776              	DMC_ConfigRefreshPeriod:
+ 777              	.LVL19:
+ 778              	.LFB85:
+ 366:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 367:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 368:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Config refresh period
+ 369:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 370:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       period:   Specifies the refresh period, can be 0x0000 to 0xFFFF
+ 371:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 372:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 373:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 374:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigRefreshPeriod(uint16_t period)
+ 375:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 779              		.loc 1 375 1 is_stmt 1 view -0
+ 780              		.cfi_startproc
+ 781              		@ args = 0, pretend = 0, frame = 0
+ 782              		@ frame_needed = 0, uses_anonymous_args = 0
+ 783              		@ link register save eliminated.
+ 376:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->REF_B.RCYCCFG = period;
+ 784              		.loc 1 376 5 view .LVU179
+ 785              		.loc 1 376 24 is_stmt 0 view .LVU180
+ 786 0000 4FF02043 		mov	r3, #-1610612736
+ 787 0004 1A69     		ldr	r2, [r3, #16]
+ 788              	.LVL20:
+ 789              		.loc 1 376 24 view .LVU181
+ 790 0006 60F30F02 		bfi	r2, r0, #0, #16
+ 791 000a 1A61     		str	r2, [r3, #16]
+ 377:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 792              		.loc 1 377 1 view .LVU182
+ 793 000c 7047     		bx	lr
+ 794              		.cfi_endproc
+ 795              	.LFE85:
+ 797              		.section	.text.DMC_ConfigMemorySize,"ax",%progbits
+ 798              		.align	1
+ 799              		.global	DMC_ConfigMemorySize
+ 800              		.syntax unified
+ 801              		.thumb
+ 802              		.thumb_func
+ 804              	DMC_ConfigMemorySize:
+ 805              	.LVL21:
+ 806              	.LFB86:
+ 378:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 379:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Config memory size
+ 381:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 382:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       memorySize: Specifies memory size
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 22
+
+
+ 383:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                The parameter can be one of following values:
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_0:     Memory size is no link
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_64KB:  Memory size is 64KB
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_128KB: Memory size is 128KB
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_256KB: Memory size is 256KB
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_512KB: Memory size is 512KB
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_1MB:   Memory size is 1MB
+ 390:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_2MB:   Memory size is 2MB
+ 391:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_4MB:   Memory size is 4MB
+ 392:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_8MB:   Memory size is 8MB
+ 393:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_16MB:  Memory size is 16MB
+ 394:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_32MB:  Memory size is 32MB
+ 395:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_64MB:  Memory size is 64MB
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_128MB: Memory size is 128MB
+ 397:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_MEMORY_SIZE_256MB: Memory size is 256MB
+ 398:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 399:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 400:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigMemorySize(DMC_MEMORY_SIZE_T memorySize)
+ 402:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 807              		.loc 1 402 1 is_stmt 1 view -0
+ 808              		.cfi_startproc
+ 809              		@ args = 0, pretend = 0, frame = 0
+ 810              		@ frame_needed = 0, uses_anonymous_args = 0
+ 811              		@ link register save eliminated.
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->MASK_B.MSIZESEL = memorySize;
+ 812              		.loc 1 403 5 view .LVU184
+ 813              		.loc 1 403 26 is_stmt 0 view .LVU185
+ 814 0000 4FF02043 		mov	r3, #-1610612736
+ 815 0004 5A6D     		ldr	r2, [r3, #84]
+ 816 0006 60F30402 		bfi	r2, r0, #0, #5
+ 817 000a 5A65     		str	r2, [r3, #84]
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 818              		.loc 1 404 1 view .LVU186
+ 819 000c 7047     		bx	lr
+ 820              		.cfi_endproc
+ 821              	.LFE86:
+ 823              		.section	.text.DMC_Enable,"ax",%progbits
+ 824              		.align	1
+ 825              		.global	DMC_Enable
+ 826              		.syntax unified
+ 827              		.thumb
+ 828              		.thumb_func
+ 830              	DMC_Enable:
+ 831              	.LFB87:
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Enable DMC controler
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 409:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 410:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 411:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_Enable(void)
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 832              		.loc 1 414 1 is_stmt 1 view -0
+ 833              		.cfi_startproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 23
+
+
+ 834              		@ args = 0, pretend = 0, frame = 0
+ 835              		@ frame_needed = 0, uses_anonymous_args = 0
+ 836              		@ link register save eliminated.
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->SW_B.MCSW = 1;
+ 837              		.loc 1 415 5 view .LVU188
+ 838              		.loc 1 415 20 is_stmt 0 view .LVU189
+ 839 0000 4FF02042 		mov	r2, #-1610612736
+ 840 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 841 0008 43F00103 		orr	r3, r3, #1
+ 842 000c C2F80034 		str	r3, [r2, #1024]
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 843              		.loc 1 416 1 view .LVU190
+ 844 0010 7047     		bx	lr
+ 845              		.cfi_endproc
+ 846              	.LFE87:
+ 848              		.section	.text.DMC_Disable,"ax",%progbits
+ 849              		.align	1
+ 850              		.global	DMC_Disable
+ 851              		.syntax unified
+ 852              		.thumb
+ 853              		.thumb_func
+ 855              	DMC_Disable:
+ 856              	.LFB88:
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 419:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Disable DMC controler
+ 420:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 421:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       None
+ 422:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 423:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 424:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 425:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_Disable(void)
+ 426:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 857              		.loc 1 426 1 is_stmt 1 view -0
+ 858              		.cfi_startproc
+ 859              		@ args = 0, pretend = 0, frame = 0
+ 860              		@ frame_needed = 0, uses_anonymous_args = 0
+ 861              		@ link register save eliminated.
+ 427:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->SW_B.MCSW = 0;
+ 862              		.loc 1 427 5 view .LVU192
+ 863              		.loc 1 427 20 is_stmt 0 view .LVU193
+ 864 0000 4FF02043 		mov	r3, #-1610612736
+ 865 0004 D3F80024 		ldr	r2, [r3, #1024]
+ 866 0008 6FF30002 		bfc	r2, #0, #1
+ 867 000c C3F80024 		str	r2, [r3, #1024]
+ 428:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 868              		.loc 1 428 1 view .LVU194
+ 869 0010 7047     		bx	lr
+ 870              		.cfi_endproc
+ 871              	.LFE88:
+ 873              		.section	.text.DMC_ConfigClockPhase,"ax",%progbits
+ 874              		.align	1
+ 875              		.global	DMC_ConfigClockPhase
+ 876              		.syntax unified
+ 877              		.thumb
+ 878              		.thumb_func
+ 880              	DMC_ConfigClockPhase:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 24
+
+
+ 881              	.LVL22:
+ 882              	.LFB89:
+ 429:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 430:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 431:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set DMC clock phase
+ 432:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 433:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       clkPhase: Specifies clock phase
+ 434:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                The parameter can be one of following values:
+ 435:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_CLK_PHASE_NORMAL: Clock phase is normal
+ 436:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_CLK_PHASE_REVERSE: Clock phase is reverse
+ 437:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 438:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 439:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 440:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigClockPhase(DMC_CLK_PHASE_T clkPhase)
+ 441:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 883              		.loc 1 441 1 is_stmt 1 view -0
+ 884              		.cfi_startproc
+ 885              		@ args = 0, pretend = 0, frame = 0
+ 886              		@ frame_needed = 0, uses_anonymous_args = 0
+ 887              		@ link register save eliminated.
+ 442:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.CPHACFG = clkPhase;
+ 888              		.loc 1 442 5 view .LVU196
+ 889              		.loc 1 442 26 is_stmt 0 view .LVU197
+ 890 0000 4FF02043 		mov	r3, #-1610612736
+ 891 0004 D3F80424 		ldr	r2, [r3, #1028]
+ 892 0008 60F30002 		bfi	r2, r0, #0, #1
+ 893 000c C3F80424 		str	r2, [r3, #1028]
+ 443:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 894              		.loc 1 443 1 view .LVU198
+ 895 0010 7047     		bx	lr
+ 896              		.cfi_endproc
+ 897              	.LFE89:
+ 899              		.section	.text.DMC_ConfigWRAPB,"ax",%progbits
+ 900              		.align	1
+ 901              		.global	DMC_ConfigWRAPB
+ 902              		.syntax unified
+ 903              		.thumb
+ 904              		.thumb_func
+ 906              	DMC_ConfigWRAPB:
+ 907              	.LVL23:
+ 908              	.LFB90:
+ 444:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** 
+ 445:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** /*!
+ 446:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @brief       Set DMC WRAP burst
+ 447:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 448:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @param       burst: WRAP burst Type Selection
+ 449:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                The parameter can be one of following values:
+ 450:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_WRAPB_4: wrap4 burst transfer
+ 451:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *                @arg DMC_WRAPB_8: wrap8 burst transfer
+ 452:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  *
+ 453:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  * @retval      None
+ 454:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****  */
+ 455:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** void DMC_ConfigWRAPB(DMC_WRPB_T burst)
+ 456:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** {
+ 909              		.loc 1 456 1 is_stmt 1 view -0
+ 910              		.cfi_startproc
+ 911              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 25
+
+
+ 912              		@ frame_needed = 0, uses_anonymous_args = 0
+ 913              		@ link register save eliminated.
+ 457:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c ****     DMC->CTRL2_B.WRPBSEL = burst;
+ 914              		.loc 1 457 5 view .LVU200
+ 915              		.loc 1 457 26 is_stmt 0 view .LVU201
+ 916 0000 4FF02043 		mov	r3, #-1610612736
+ 917 0004 D3F80424 		ldr	r2, [r3, #1028]
+ 918 0008 60F3C712 		bfi	r2, r0, #7, #1
+ 919 000c C3F80424 		str	r2, [r3, #1028]
+ 458:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dmc.c **** }
+ 920              		.loc 1 458 1 view .LVU202
+ 921 0010 7047     		bx	lr
+ 922              		.cfi_endproc
+ 923              	.LFE90:
+ 925              		.text
+ 926              	.Letext0:
+ 927              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 928              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 929              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 930              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_dmc.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_dmc.c
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:18     .text.DMC_ConfigTiming:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:24     .text.DMC_ConfigTiming:00000000 DMC_ConfigTiming
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:125    .text.DMC_Config:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:131    .text.DMC_Config:00000000 DMC_Config
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:234    .text.DMC_ConfigTimingStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:240    .text.DMC_ConfigTimingStructInit:00000000 DMC_ConfigTimingStructInit
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:303    .text.DMC_ConfigStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:309    .text.DMC_ConfigStructInit:00000000 DMC_ConfigStructInit
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:351    .text.DMC_ConfigBankWidth:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:357    .text.DMC_ConfigBankWidth:00000000 DMC_ConfigBankWidth
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:377    .text.DMC_ConfigAddrWidth:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:383    .text.DMC_ConfigAddrWidth:00000000 DMC_ConfigAddrWidth
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:408    .text.DMC_ConfigStableTimePowerup:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:414    .text.DMC_ConfigStableTimePowerup:00000000 DMC_ConfigStableTimePowerup
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:436    .text.DMC_ConfigAutoRefreshNumDuringInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:442    .text.DMC_ConfigAutoRefreshNumDuringInit:00000000 DMC_ConfigAutoRefreshNumDuringInit
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:462    .text.DMC_ConfigOpenBank:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:468    .text.DMC_ConfigOpenBank:00000000 DMC_ConfigOpenBank
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:488    .text.DMC_ReadSelfRefreshStatus:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:494    .text.DMC_ReadSelfRefreshStatus:00000000 DMC_ReadSelfRefreshStatus
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:517    .text.DMC_EnableUpdateMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:523    .text.DMC_EnableUpdateMode:00000000 DMC_EnableUpdateMode
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:542    .text.DMC_EnterPowerdownMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:548    .text.DMC_EnterPowerdownMode:00000000 DMC_EnterPowerdownMode
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:567    .text.DMC_EixtSlefRefreshMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:573    .text.DMC_EixtSlefRefreshMode:00000000 DMC_EixtSlefRefreshMode
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:592    .text.DMC_EnterSlefRefreshMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:598    .text.DMC_EnterSlefRefreshMode:00000000 DMC_EnterSlefRefreshMode
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:617    .text.DMC_EnableAccelerateModule:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:623    .text.DMC_EnableAccelerateModule:00000000 DMC_EnableAccelerateModule
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:642    .text.DMC_DisableAccelerateModule:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:648    .text.DMC_DisableAccelerateModule:00000000 DMC_DisableAccelerateModule
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:667    .text.DMC_EnableInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:673    .text.DMC_EnableInit:00000000 DMC_EnableInit
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:692    .text.DMC_ConfigFullRefreshBeforeSR:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:698    .text.DMC_ConfigFullRefreshBeforeSR:00000000 DMC_ConfigFullRefreshBeforeSR
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:718    .text.DMC_ConfigFullRefreshAfterSR:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:724    .text.DMC_ConfigFullRefreshAfterSR:00000000 DMC_ConfigFullRefreshAfterSR
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:744    .text.DMC_ConfigPrechargeType:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:750    .text.DMC_ConfigPrechargeType:00000000 DMC_ConfigPrechargeType
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:770    .text.DMC_ConfigRefreshPeriod:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:776    .text.DMC_ConfigRefreshPeriod:00000000 DMC_ConfigRefreshPeriod
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:798    .text.DMC_ConfigMemorySize:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:804    .text.DMC_ConfigMemorySize:00000000 DMC_ConfigMemorySize
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:824    .text.DMC_Enable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:830    .text.DMC_Enable:00000000 DMC_Enable
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:849    .text.DMC_Disable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:855    .text.DMC_Disable:00000000 DMC_Disable
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:874    .text.DMC_ConfigClockPhase:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:880    .text.DMC_ConfigClockPhase:00000000 DMC_ConfigClockPhase
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:900    .text.DMC_ConfigWRAPB:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccWkeLcB.s:906    .text.DMC_ConfigWRAPB:00000000 DMC_ConfigWRAPB
+
+NO UNDEFINED SYMBOLS

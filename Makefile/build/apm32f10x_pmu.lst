@@ -1,0 +1,850 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_pmu.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.PMU_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	PMU_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	PMU_Reset:
+  25              	.LFB65:
+  26              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @file        apm32f10x_pmu.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief       This file provides all the PMU firmware functions.
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** #include "apm32f10x_pmu.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** */
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 2
+
+
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /** @addtogroup PMU_Driver  PMU Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /** @addtogroup  PMU_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Reset the PMU peripheral register.
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_Reset(void)
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+  27              		.loc 1 49 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_PMU);
+  36              		.loc 1 50 5 view .LVU1
+  37 0002 4FF08050 		mov	r0, #268435456
+  38 0006 FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+  39              	.LVL0:
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_PMU);
+  40              		.loc 1 51 5 view .LVU2
+  41 000a 4FF08050 		mov	r0, #268435456
+  42 000e FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+  43              	.LVL1:
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+  44              		.loc 1 52 1 is_stmt 0 view .LVU3
+  45 0012 08BD     		pop	{r3, pc}
+  46              		.cfi_endproc
+  47              	.LFE65:
+  49              		.section	.text.PMU_EnableBackupAccess,"ax",%progbits
+  50              		.align	1
+  51              		.global	PMU_EnableBackupAccess
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+  56              	PMU_EnableBackupAccess:
+  57              	.LFB66:
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Enables access to the RTC and backup registers.
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 3
+
+
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_EnableBackupAccess(void)
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+  58              		.loc 1 62 1 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              		@ link register save eliminated.
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.BPWEN = ENABLE ;
+  63              		.loc 1 63 5 view .LVU5
+  64              		.loc 1 63 23 is_stmt 0 view .LVU6
+  65 0000 024A     		ldr	r2, .L4
+  66 0002 1368     		ldr	r3, [r2]
+  67 0004 43F48073 		orr	r3, r3, #256
+  68 0008 1360     		str	r3, [r2]
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+  69              		.loc 1 64 1 view .LVU7
+  70 000a 7047     		bx	lr
+  71              	.L5:
+  72              		.align	2
+  73              	.L4:
+  74 000c 00700040 		.word	1073770496
+  75              		.cfi_endproc
+  76              	.LFE66:
+  78              		.section	.text.PMU_DisableBackupAccess,"ax",%progbits
+  79              		.align	1
+  80              		.global	PMU_DisableBackupAccess
+  81              		.syntax unified
+  82              		.thumb
+  83              		.thumb_func
+  85              	PMU_DisableBackupAccess:
+  86              	.LFB67:
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Disables access to the RTC and backup registers.
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_DisableBackupAccess(void)
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+  87              		.loc 1 74 1 is_stmt 1 view -0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91              		@ link register save eliminated.
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.BPWEN = DISABLE;
+  92              		.loc 1 75 5 view .LVU9
+  93              		.loc 1 75 23 is_stmt 0 view .LVU10
+  94 0000 024B     		ldr	r3, .L7
+  95 0002 1A68     		ldr	r2, [r3]
+  96 0004 6FF30822 		bfc	r2, #8, #1
+  97 0008 1A60     		str	r2, [r3]
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+  98              		.loc 1 76 1 view .LVU11
+  99 000a 7047     		bx	lr
+ 100              	.L8:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 4
+
+
+ 101              		.align	2
+ 102              	.L7:
+ 103 000c 00700040 		.word	1073770496
+ 104              		.cfi_endproc
+ 105              	.LFE67:
+ 107              		.section	.text.PMU_EnablePVD,"ax",%progbits
+ 108              		.align	1
+ 109              		.global	PMU_EnablePVD
+ 110              		.syntax unified
+ 111              		.thumb
+ 112              		.thumb_func
+ 114              	PMU_EnablePVD:
+ 115              	.LFB68:
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Enables the Power Voltage Detector(PVD).
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_EnablePVD(void)
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 116              		.loc 1 86 1 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		@ link register save eliminated.
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.PVDEN = ENABLE;
+ 121              		.loc 1 87 5 view .LVU13
+ 122              		.loc 1 87 23 is_stmt 0 view .LVU14
+ 123 0000 024A     		ldr	r2, .L10
+ 124 0002 1368     		ldr	r3, [r2]
+ 125 0004 43F01003 		orr	r3, r3, #16
+ 126 0008 1360     		str	r3, [r2]
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 127              		.loc 1 88 1 view .LVU15
+ 128 000a 7047     		bx	lr
+ 129              	.L11:
+ 130              		.align	2
+ 131              	.L10:
+ 132 000c 00700040 		.word	1073770496
+ 133              		.cfi_endproc
+ 134              	.LFE68:
+ 136              		.section	.text.PMU_DisablePVD,"ax",%progbits
+ 137              		.align	1
+ 138              		.global	PMU_DisablePVD
+ 139              		.syntax unified
+ 140              		.thumb
+ 141              		.thumb_func
+ 143              	PMU_DisablePVD:
+ 144              	.LFB69:
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Disables the Power Voltage Detector(PVD).
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 5
+
+
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_DisablePVD(void)
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 145              		.loc 1 98 1 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		@ link register save eliminated.
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.PVDEN = DISABLE;
+ 150              		.loc 1 99 5 view .LVU17
+ 151              		.loc 1 99 23 is_stmt 0 view .LVU18
+ 152 0000 024B     		ldr	r3, .L13
+ 153 0002 1A68     		ldr	r2, [r3]
+ 154 0004 6FF30412 		bfc	r2, #4, #1
+ 155 0008 1A60     		str	r2, [r3]
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 156              		.loc 1 100 1 view .LVU19
+ 157 000a 7047     		bx	lr
+ 158              	.L14:
+ 159              		.align	2
+ 160              	.L13:
+ 161 000c 00700040 		.word	1073770496
+ 162              		.cfi_endproc
+ 163              	.LFE69:
+ 165              		.section	.text.PMU_ConfigPVDLevel,"ax",%progbits
+ 166              		.align	1
+ 167              		.global	PMU_ConfigPVDLevel
+ 168              		.syntax unified
+ 169              		.thumb
+ 170              		.thumb_func
+ 172              	PMU_ConfigPVDLevel:
+ 173              	.LVL2:
+ 174              	.LFB70:
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Configure a voltage threshold detected by a power supply voltage detector (PVD).
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     level£ºspecifies the PVD detection level
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   This parameter can be one of the following values:
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V2 : Config PVD detection level to 2.2V
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V3 : Config PVD detection level to 2.3V
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V4 : Config PVD detection level to 2.4V
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V5 : Config PVD detection level to 2.5V
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V6 : Config PVD detection level to 2.6V
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V7 : Config PVD detection level to 2.7V
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V8 : Config PVD detection level to 2.8V
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   @arg PMU_PVD_LEVEL_2V9 : Config PVD detection level to 2.9V
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_ConfigPVDLevel(PMU_PVD_LEVEL_T level)
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 175              		.loc 1 119 1 is_stmt 1 view -0
+ 176              		.cfi_startproc
+ 177              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 6
+
+
+ 178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 179              		@ link register save eliminated.
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Clear PLS[7:5] bits */
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.PLSEL = 0x0000;
+ 180              		.loc 1 122 5 view .LVU21
+ 181              		.loc 1 122 23 is_stmt 0 view .LVU22
+ 182 0000 044B     		ldr	r3, .L16
+ 183 0002 1A68     		ldr	r2, [r3]
+ 184 0004 6FF34712 		bfc	r2, #5, #3
+ 185 0008 1A60     		str	r2, [r3]
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Store the new value */
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.PLSEL = level;
+ 186              		.loc 1 124 5 is_stmt 1 view .LVU23
+ 187              		.loc 1 124 23 is_stmt 0 view .LVU24
+ 188 000a 1A68     		ldr	r2, [r3]
+ 189 000c 60F34712 		bfi	r2, r0, #5, #3
+ 190 0010 1A60     		str	r2, [r3]
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 191              		.loc 1 125 1 view .LVU25
+ 192 0012 7047     		bx	lr
+ 193              	.L17:
+ 194              		.align	2
+ 195              	.L16:
+ 196 0014 00700040 		.word	1073770496
+ 197              		.cfi_endproc
+ 198              	.LFE70:
+ 200              		.section	.text.PMU_EnableWakeUpPin,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	PMU_EnableWakeUpPin
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	PMU_EnableWakeUpPin:
+ 208              	.LFB71:
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Enables the WakeUp Pin functionality.
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_EnableWakeUpPin(void)
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 209              		.loc 1 135 1 is_stmt 1 view -0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              		@ link register save eliminated.
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CSTS_B.WKUPCFG = ENABLE ;
+ 214              		.loc 1 136 5 view .LVU27
+ 215              		.loc 1 136 25 is_stmt 0 view .LVU28
+ 216 0000 024A     		ldr	r2, .L19
+ 217 0002 5368     		ldr	r3, [r2, #4]
+ 218 0004 43F48073 		orr	r3, r3, #256
+ 219 0008 5360     		str	r3, [r2, #4]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 7
+
+
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 220              		.loc 1 137 1 view .LVU29
+ 221 000a 7047     		bx	lr
+ 222              	.L20:
+ 223              		.align	2
+ 224              	.L19:
+ 225 000c 00700040 		.word	1073770496
+ 226              		.cfi_endproc
+ 227              	.LFE71:
+ 229              		.section	.text.PMU_DisableWakeUpPin,"ax",%progbits
+ 230              		.align	1
+ 231              		.global	PMU_DisableWakeUpPin
+ 232              		.syntax unified
+ 233              		.thumb
+ 234              		.thumb_func
+ 236              	PMU_DisableWakeUpPin:
+ 237              	.LFB72:
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Diaables the WakeUp Pin functionality.
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_DisableWakeUpPin(void)
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 238              		.loc 1 147 1 is_stmt 1 view -0
+ 239              		.cfi_startproc
+ 240              		@ args = 0, pretend = 0, frame = 0
+ 241              		@ frame_needed = 0, uses_anonymous_args = 0
+ 242              		@ link register save eliminated.
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CSTS_B.WKUPCFG = DISABLE ;
+ 243              		.loc 1 148 5 view .LVU31
+ 244              		.loc 1 148 25 is_stmt 0 view .LVU32
+ 245 0000 024B     		ldr	r3, .L22
+ 246 0002 5A68     		ldr	r2, [r3, #4]
+ 247 0004 6FF30822 		bfc	r2, #8, #1
+ 248 0008 5A60     		str	r2, [r3, #4]
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 249              		.loc 1 149 1 view .LVU33
+ 250 000a 7047     		bx	lr
+ 251              	.L23:
+ 252              		.align	2
+ 253              	.L22:
+ 254 000c 00700040 		.word	1073770496
+ 255              		.cfi_endproc
+ 256              	.LFE72:
+ 258              		.section	.text.PMU_EnterSTOPMode,"ax",%progbits
+ 259              		.align	1
+ 260              		.global	PMU_EnterSTOPMode
+ 261              		.syntax unified
+ 262              		.thumb
+ 263              		.thumb_func
+ 265              	PMU_EnterSTOPMode:
+ 266              	.LVL3:
+ 267              	.LFB73:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 8
+
+
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Enters STOP mode.
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     regulator: specifies the regulator state in STOP mode.
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                       This parameter can be one of the following values:
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                         @arg PMU_REGULATOR_ON      : STOP mode with regulator ON
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                         @arg PMU_REGULATOR_LOWPOWER: STOP mode with regulator in low power mode
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     entry: specifies if STOP mode in entered with WFI or WFE instruction.
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                   This parameter can be one of the following values:
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                     @arg PMU_STOP_ENTRY_WFI: Enter STOP mode with WFI instruction
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                     @arg PMU_STOP_ENTRY_WFE: Enter STOP mode with WFE instruction
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_EnterSTOPMode(PMU_REGULATOR_T regulator, PMU_STOP_ENTRY_T entry)
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 268              		.loc 1 167 1 is_stmt 1 view -0
+ 269              		.cfi_startproc
+ 270              		@ args = 0, pretend = 0, frame = 0
+ 271              		@ frame_needed = 0, uses_anonymous_args = 0
+ 272              		@ link register save eliminated.
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Clear PDDSCFG and LPDSCFG bits */
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.PDDSCFG = 0x00;
+ 273              		.loc 1 169 5 view .LVU35
+ 274              		.loc 1 169 25 is_stmt 0 view .LVU36
+ 275 0000 0E4B     		ldr	r3, .L28
+ 276 0002 1A68     		ldr	r2, [r3]
+ 277 0004 6FF34102 		bfc	r2, #1, #1
+ 278 0008 1A60     		str	r2, [r3]
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.LPDSCFG = 0x00;
+ 279              		.loc 1 170 5 is_stmt 1 view .LVU37
+ 280              		.loc 1 170 25 is_stmt 0 view .LVU38
+ 281 000a 1A68     		ldr	r2, [r3]
+ 282 000c 6FF30002 		bfc	r2, #0, #1
+ 283 0010 1A60     		str	r2, [r3]
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Set LPDSCFG bit according to regulator value */
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.LPDSCFG = regulator;
+ 284              		.loc 1 172 5 is_stmt 1 view .LVU39
+ 285              		.loc 1 172 25 is_stmt 0 view .LVU40
+ 286 0012 1A68     		ldr	r2, [r3]
+ 287 0014 60F30002 		bfi	r2, r0, #0, #1
+ 288 0018 1A60     		str	r2, [r3]
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Set Cortex System Control Register */
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     SCB->SCR |= (uint32_t )0x04;
+ 289              		.loc 1 174 5 is_stmt 1 view .LVU41
+ 290              		.loc 1 174 14 is_stmt 0 view .LVU42
+ 291 001a 094A     		ldr	r2, .L28+4
+ 292 001c 1369     		ldr	r3, [r2, #16]
+ 293 001e 43F00403 		orr	r3, r3, #4
+ 294 0022 1361     		str	r3, [r2, #16]
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Select STOP mode entry*/
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     if(entry == PMU_STOP_ENTRY_WFI)
+ 295              		.loc 1 176 5 is_stmt 1 view .LVU43
+ 296              		.loc 1 176 7 is_stmt 0 view .LVU44
+ 297 0024 0129     		cmp	r1, #1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 9
+
+
+ 298 0026 06D0     		beq	.L27
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     {
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         /** Request Wait For Interrupt */
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         __WFI();
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     else
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     {
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         /** Request Wait For Event */
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         __WFE();
+ 299              		.loc 1 184 9 is_stmt 1 view .LVU45
+ 300              		.syntax unified
+ 301              	@ 184 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c" 1
+ 302 0028 20BF     		wfe
+ 303              	@ 0 "" 2
+ 304              		.thumb
+ 305              		.syntax unified
+ 306              	.L26:
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Reset SLEEPDEEP bit of Cortex System Control Register */
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     SCB->SCR &= (uint32_t)~((uint32_t)0x04);
+ 307              		.loc 1 188 5 view .LVU46
+ 308              		.loc 1 188 14 is_stmt 0 view .LVU47
+ 309 002a 054A     		ldr	r2, .L28+4
+ 310 002c 1369     		ldr	r3, [r2, #16]
+ 311 002e 23F00403 		bic	r3, r3, #4
+ 312 0032 1361     		str	r3, [r2, #16]
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 313              		.loc 1 189 1 view .LVU48
+ 314 0034 7047     		bx	lr
+ 315              	.L27:
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 316              		.loc 1 179 9 is_stmt 1 view .LVU49
+ 317              		.syntax unified
+ 318              	@ 179 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c" 1
+ 319 0036 30BF     		wfi
+ 320              	@ 0 "" 2
+ 321              		.thumb
+ 322              		.syntax unified
+ 323 0038 F7E7     		b	.L26
+ 324              	.L29:
+ 325 003a 00BF     		.align	2
+ 326              	.L28:
+ 327 003c 00700040 		.word	1073770496
+ 328 0040 00ED00E0 		.word	-536810240
+ 329              		.cfi_endproc
+ 330              	.LFE73:
+ 332              		.section	.text.PMU_EnterSTANDBYMode,"ax",%progbits
+ 333              		.align	1
+ 334              		.global	PMU_EnterSTANDBYMode
+ 335              		.syntax unified
+ 336              		.thumb
+ 337              		.thumb_func
+ 339              	PMU_EnterSTANDBYMode:
+ 340              	.LFB74:
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 10
+
+
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Enters STANDBY mode.
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     None
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_EnterSTANDBYMode(void)
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 341              		.loc 1 199 1 view -0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345              		@ link register save eliminated.
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Clear Wake-up flag */
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.WUFLGCLR = BIT_SET;
+ 346              		.loc 1 201 5 view .LVU51
+ 347              		.loc 1 201 26 is_stmt 0 view .LVU52
+ 348 0000 074B     		ldr	r3, .L31
+ 349 0002 1A68     		ldr	r2, [r3]
+ 350 0004 42F00402 		orr	r2, r2, #4
+ 351 0008 1A60     		str	r2, [r3]
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Select STANDBY mode */
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     PMU->CTRL_B.PDDSCFG = BIT_SET;
+ 352              		.loc 1 203 5 is_stmt 1 view .LVU53
+ 353              		.loc 1 203 25 is_stmt 0 view .LVU54
+ 354 000a 1A68     		ldr	r2, [r3]
+ 355 000c 42F00202 		orr	r2, r2, #2
+ 356 0010 1A60     		str	r2, [r3]
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Set Cortex System Control Register */
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     SCB->SCR |= (uint32_t )0x04;
+ 357              		.loc 1 205 5 is_stmt 1 view .LVU55
+ 358              		.loc 1 205 14 is_stmt 0 view .LVU56
+ 359 0012 044A     		ldr	r2, .L31+4
+ 360 0014 1369     		ldr	r3, [r2, #16]
+ 361 0016 43F00403 		orr	r3, r3, #4
+ 362 001a 1361     		str	r3, [r2, #16]
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** #if defined ( __CC_ARM   )
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     __force_stores();
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** #endif
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     /** Request Wait For Interrupt */
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     __WFI();
+ 363              		.loc 1 210 5 is_stmt 1 view .LVU57
+ 364              		.syntax unified
+ 365              	@ 210 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c" 1
+ 366 001c 30BF     		wfi
+ 367              	@ 0 "" 2
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 368              		.loc 1 212 1 is_stmt 0 view .LVU58
+ 369              		.thumb
+ 370              		.syntax unified
+ 371 001e 7047     		bx	lr
+ 372              	.L32:
+ 373              		.align	2
+ 374              	.L31:
+ 375 0020 00700040 		.word	1073770496
+ 376 0024 00ED00E0 		.word	-536810240
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 11
+
+
+ 377              		.cfi_endproc
+ 378              	.LFE74:
+ 380              		.section	.text.PMU_ReadStatusFlag,"ax",%progbits
+ 381              		.align	1
+ 382              		.global	PMU_ReadStatusFlag
+ 383              		.syntax unified
+ 384              		.thumb
+ 385              		.thumb_func
+ 387              	PMU_ReadStatusFlag:
+ 388              	.LVL4:
+ 389              	.LFB75:
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Read the specified PWR flag is set or not.
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     flag£ºReads the status of specifies the flag.
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                  This parameter can be one of the following values:
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                    @arg PMU_FLAG_WUE : Wake Up flag
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                    @arg PMU_FLAG_SB  : StandBy flag
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                    @arg PMU_FLAG_PVDO: PVD Output flag
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    The new state of PMU_FLAG (SET or RESET).
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** uint8_t PMU_ReadStatusFlag(PMU_FLAG_T flag)
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 390              		.loc 1 226 1 is_stmt 1 view -0
+ 391              		.cfi_startproc
+ 392              		@ args = 0, pretend = 0, frame = 0
+ 393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 394              		@ link register save eliminated.
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     uint8_t BitStatus = BIT_RESET;
+ 395              		.loc 1 227 5 view .LVU60
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     if(flag == PMU_FLAG_WUE)
+ 396              		.loc 1 229 5 view .LVU61
+ 397              		.loc 1 229 7 is_stmt 0 view .LVU62
+ 398 0000 20B9     		cbnz	r0, .L34
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     {
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         BitStatus = PMU->CSTS_B.WUEFLG;
+ 399              		.loc 1 231 9 is_stmt 1 view .LVU63
+ 400              		.loc 1 231 32 is_stmt 0 view .LVU64
+ 401 0002 0A4B     		ldr	r3, .L40
+ 402 0004 5868     		ldr	r0, [r3, #4]
+ 403              	.LVL5:
+ 404              		.loc 1 231 32 view .LVU65
+ 405 0006 00F00100 		and	r0, r0, #1
+ 406              	.LVL6:
+ 407              		.loc 1 231 32 view .LVU66
+ 408 000a 7047     		bx	lr
+ 409              	.LVL7:
+ 410              	.L34:
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     else if(flag == PMU_FLAG_SB)
+ 411              		.loc 1 233 10 is_stmt 1 view .LVU67
+ 412              		.loc 1 233 12 is_stmt 0 view .LVU68
+ 413 000c 0128     		cmp	r0, #1
+ 414 000e 03D0     		beq	.L38
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 12
+
+
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     {
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         BitStatus = PMU->CSTS_B.SBFLG;
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     else if(flag == PMU_FLAG_PVDO)
+ 415              		.loc 1 237 10 is_stmt 1 view .LVU69
+ 416              		.loc 1 237 12 is_stmt 0 view .LVU70
+ 417 0010 0228     		cmp	r0, #2
+ 418 0012 06D0     		beq	.L39
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 419              		.loc 1 227 13 view .LVU71
+ 420 0014 0020     		movs	r0, #0
+ 421              	.LVL8:
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     {
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         BitStatus = PMU->CSTS_B.PVDOFLG;
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     return BitStatus;
+ 422              		.loc 1 241 5 is_stmt 1 view .LVU72
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 423              		.loc 1 242 1 is_stmt 0 view .LVU73
+ 424 0016 7047     		bx	lr
+ 425              	.LVL9:
+ 426              	.L38:
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 427              		.loc 1 235 9 is_stmt 1 view .LVU74
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 428              		.loc 1 235 32 is_stmt 0 view .LVU75
+ 429 0018 044B     		ldr	r3, .L40
+ 430 001a 5868     		ldr	r0, [r3, #4]
+ 431              	.LVL10:
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 432              		.loc 1 235 32 view .LVU76
+ 433 001c C0F34000 		ubfx	r0, r0, #1, #1
+ 434              	.LVL11:
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 435              		.loc 1 235 32 view .LVU77
+ 436 0020 7047     		bx	lr
+ 437              	.LVL12:
+ 438              	.L39:
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 439              		.loc 1 239 9 is_stmt 1 view .LVU78
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 440              		.loc 1 239 32 is_stmt 0 view .LVU79
+ 441 0022 024B     		ldr	r3, .L40
+ 442 0024 5868     		ldr	r0, [r3, #4]
+ 443              	.LVL13:
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 444              		.loc 1 239 32 view .LVU80
+ 445 0026 C0F38000 		ubfx	r0, r0, #2, #1
+ 446              	.LVL14:
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 447              		.loc 1 239 32 view .LVU81
+ 448 002a 7047     		bx	lr
+ 449              	.L41:
+ 450              		.align	2
+ 451              	.L40:
+ 452 002c 00700040 		.word	1073770496
+ 453              		.cfi_endproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 13
+
+
+ 454              	.LFE75:
+ 456              		.section	.text.PMU_ClearStatusFlag,"ax",%progbits
+ 457              		.align	1
+ 458              		.global	PMU_ClearStatusFlag
+ 459              		.syntax unified
+ 460              		.thumb
+ 461              		.thumb_func
+ 463              	PMU_ClearStatusFlag:
+ 464              	.LVL15:
+ 465              	.LFB76:
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** 
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** /*!
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @brief     Clears the PWR's pending flags.
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @param     flag£ºClears the status of specifies the flag.
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                  This parameter can be one of the following values:
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                    @arg PMU_FLAG_WUE : Wake Up flag
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *                    @arg PMU_FLAG_SB  : StandBy flag
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  *
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  * @retval    None
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****  */
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** void PMU_ClearStatusFlag(PMU_FLAG_T flag)
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** {
+ 466              		.loc 1 255 1 is_stmt 1 view -0
+ 467              		.cfi_startproc
+ 468              		@ args = 0, pretend = 0, frame = 0
+ 469              		@ frame_needed = 0, uses_anonymous_args = 0
+ 470              		@ link register save eliminated.
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     if(flag == PMU_FLAG_WUE)
+ 471              		.loc 1 256 5 view .LVU83
+ 472              		.loc 1 256 7 is_stmt 0 view .LVU84
+ 473 0000 28B9     		cbnz	r0, .L43
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     {
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         PMU->CTRL_B.WUFLGCLR = BIT_SET;
+ 474              		.loc 1 258 9 is_stmt 1 view .LVU85
+ 475              		.loc 1 258 30 is_stmt 0 view .LVU86
+ 476 0002 074A     		ldr	r2, .L46
+ 477 0004 1368     		ldr	r3, [r2]
+ 478 0006 43F00403 		orr	r3, r3, #4
+ 479 000a 1360     		str	r3, [r2]
+ 480 000c 7047     		bx	lr
+ 481              	.L43:
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     else if(flag == PMU_FLAG_SB)
+ 482              		.loc 1 260 10 is_stmt 1 view .LVU87
+ 483              		.loc 1 260 12 is_stmt 0 view .LVU88
+ 484 000e 0128     		cmp	r0, #1
+ 485 0010 00D0     		beq	.L45
+ 486              	.L42:
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     {
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****         PMU->CTRL_B.SBFLGCLR = BIT_SET;
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c **** }
+ 487              		.loc 1 264 1 view .LVU89
+ 488 0012 7047     		bx	lr
+ 489              	.L45:
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 14
+
+
+ 490              		.loc 1 262 9 is_stmt 1 view .LVU90
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_pmu.c ****     }
+ 491              		.loc 1 262 30 is_stmt 0 view .LVU91
+ 492 0014 024A     		ldr	r2, .L46
+ 493 0016 1368     		ldr	r3, [r2]
+ 494 0018 43F00803 		orr	r3, r3, #8
+ 495 001c 1360     		str	r3, [r2]
+ 496              		.loc 1 264 1 view .LVU92
+ 497 001e F8E7     		b	.L42
+ 498              	.L47:
+ 499              		.align	2
+ 500              	.L46:
+ 501 0020 00700040 		.word	1073770496
+ 502              		.cfi_endproc
+ 503              	.LFE76:
+ 505              		.text
+ 506              	.Letext0:
+ 507              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 508              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 509              		.file 4 "Library/CMSIS/Include/core_cm3.h"
+ 510              		.file 5 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 511              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_pmu.h"
+ 512              		.file 7 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rcm.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_pmu.c
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:18     .text.PMU_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:24     .text.PMU_Reset:00000000 PMU_Reset
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:50     .text.PMU_EnableBackupAccess:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:56     .text.PMU_EnableBackupAccess:00000000 PMU_EnableBackupAccess
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:74     .text.PMU_EnableBackupAccess:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:79     .text.PMU_DisableBackupAccess:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:85     .text.PMU_DisableBackupAccess:00000000 PMU_DisableBackupAccess
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:103    .text.PMU_DisableBackupAccess:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:108    .text.PMU_EnablePVD:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:114    .text.PMU_EnablePVD:00000000 PMU_EnablePVD
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:132    .text.PMU_EnablePVD:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:137    .text.PMU_DisablePVD:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:143    .text.PMU_DisablePVD:00000000 PMU_DisablePVD
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:161    .text.PMU_DisablePVD:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:166    .text.PMU_ConfigPVDLevel:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:172    .text.PMU_ConfigPVDLevel:00000000 PMU_ConfigPVDLevel
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:196    .text.PMU_ConfigPVDLevel:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:201    .text.PMU_EnableWakeUpPin:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:207    .text.PMU_EnableWakeUpPin:00000000 PMU_EnableWakeUpPin
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:225    .text.PMU_EnableWakeUpPin:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:230    .text.PMU_DisableWakeUpPin:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:236    .text.PMU_DisableWakeUpPin:00000000 PMU_DisableWakeUpPin
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:254    .text.PMU_DisableWakeUpPin:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:259    .text.PMU_EnterSTOPMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:265    .text.PMU_EnterSTOPMode:00000000 PMU_EnterSTOPMode
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:327    .text.PMU_EnterSTOPMode:0000003c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:333    .text.PMU_EnterSTANDBYMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:339    .text.PMU_EnterSTANDBYMode:00000000 PMU_EnterSTANDBYMode
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:375    .text.PMU_EnterSTANDBYMode:00000020 $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:381    .text.PMU_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:387    .text.PMU_ReadStatusFlag:00000000 PMU_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:452    .text.PMU_ReadStatusFlag:0000002c $d
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:457    .text.PMU_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:463    .text.PMU_ClearStatusFlag:00000000 PMU_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cc3fWb1j.s:501    .text.PMU_ClearStatusFlag:00000020 $d
+
+UNDEFINED SYMBOLS
+RCM_EnableAPB1PeriphReset
+RCM_DisableAPB1PeriphReset

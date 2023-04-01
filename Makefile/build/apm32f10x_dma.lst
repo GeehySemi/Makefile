@@ -1,0 +1,1406 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_dma.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.DMA_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	DMA_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	DMA_Reset:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @file        apm32f10x_dma.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief       This file provides all the DMA firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** #include "apm32f10x_dma.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****   @{
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** */
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 2
+
+
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /** @addtogroup DMA_Driver DMA Driver
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****   @{
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** */
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /** @addtogroup DMA_Fuctions Fuctions
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****   @{
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** */
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Reset specified DMA Channel registers to their default reset
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5).
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_Reset(DMA_Channel_T *channel)
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+  28              		.loc 1 50 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.CHEN = BIT_RESET;
+  33              		.loc 1 51 5 view .LVU1
+  34              		.loc 1 51 27 is_stmt 0 view .LVU2
+  35 0000 0368     		ldr	r3, [r0]
+  36 0002 6FF30003 		bfc	r3, #0, #1
+  37 0006 0360     		str	r3, [r0]
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG = 0;
+  38              		.loc 1 52 5 is_stmt 1 view .LVU3
+  39              		.loc 1 52 20 is_stmt 0 view .LVU4
+  40 0008 0023     		movs	r3, #0
+  41 000a 0360     		str	r3, [r0]
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHNDATA = 0;
+  42              		.loc 1 53 5 is_stmt 1 view .LVU5
+  43              		.loc 1 53 22 is_stmt 0 view .LVU6
+  44 000c 4360     		str	r3, [r0, #4]
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHMADDR = 0;
+  45              		.loc 1 54 5 is_stmt 1 view .LVU7
+  46              		.loc 1 54 22 is_stmt 0 view .LVU8
+  47 000e C360     		str	r3, [r0, #12]
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHPADDR = 0;
+  48              		.loc 1 55 5 is_stmt 1 view .LVU9
+  49              		.loc 1 55 22 is_stmt 0 view .LVU10
+  50 0010 8360     		str	r3, [r0, #8]
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     if(channel == DMA1_Channel1)
+  51              		.loc 1 57 5 is_stmt 1 view .LVU11
+  52              		.loc 1 57 7 is_stmt 0 view .LVU12
+  53 0012 364B     		ldr	r3, .L26
+  54 0014 9842     		cmp	r0, r3
+  55 0016 21D0     		beq	.L14
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR |= 0xFFFFFFF0;
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 3
+
+
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA1_Channel2)
+  56              		.loc 1 61 10 is_stmt 1 view .LVU13
+  57              		.loc 1 61 12 is_stmt 0 view .LVU14
+  58 0018 354B     		ldr	r3, .L26+4
+  59 001a 9842     		cmp	r0, r3
+  60 001c 24D0     		beq	.L15
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR |= 0xFFFFFF0F;
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA1_Channel3)
+  61              		.loc 1 65 10 is_stmt 1 view .LVU15
+  62              		.loc 1 65 12 is_stmt 0 view .LVU16
+  63 001e 354B     		ldr	r3, .L26+8
+  64 0020 9842     		cmp	r0, r3
+  65 0022 27D0     		beq	.L16
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR |= 0xFFFFF0FF;
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA1_Channel4)
+  66              		.loc 1 69 10 is_stmt 1 view .LVU17
+  67              		.loc 1 69 12 is_stmt 0 view .LVU18
+  68 0024 344B     		ldr	r3, .L26+12
+  69 0026 9842     		cmp	r0, r3
+  70 0028 2AD0     		beq	.L17
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR |= 0xFFFF0FFF;
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA1_Channel5)
+  71              		.loc 1 73 10 is_stmt 1 view .LVU19
+  72              		.loc 1 73 12 is_stmt 0 view .LVU20
+  73 002a 344B     		ldr	r3, .L26+16
+  74 002c 9842     		cmp	r0, r3
+  75 002e 2DD0     		beq	.L18
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR |= 0xFFF0FFFF;
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA1_Channel6)
+  76              		.loc 1 77 10 is_stmt 1 view .LVU21
+  77              		.loc 1 77 12 is_stmt 0 view .LVU22
+  78 0030 334B     		ldr	r3, .L26+20
+  79 0032 9842     		cmp	r0, r3
+  80 0034 30D0     		beq	.L19
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR |= 0xFF0FFFFF;
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA1_Channel7)
+  81              		.loc 1 81 10 is_stmt 1 view .LVU23
+  82              		.loc 1 81 12 is_stmt 0 view .LVU24
+  83 0036 334B     		ldr	r3, .L26+24
+  84 0038 9842     		cmp	r0, r3
+  85 003a 33D0     		beq	.L20
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR |= 0xF0FFFFFF;
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA2_Channel1)
+  86              		.loc 1 85 10 is_stmt 1 view .LVU25
+  87              		.loc 1 85 12 is_stmt 0 view .LVU26
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 4
+
+
+  88 003c 324B     		ldr	r3, .L26+28
+  89 003e 9842     		cmp	r0, r3
+  90 0040 36D0     		beq	.L21
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA2->INTFCLR |= 0xFFFFFFF0;
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA2_Channel2)
+  91              		.loc 1 89 10 is_stmt 1 view .LVU27
+  92              		.loc 1 89 12 is_stmt 0 view .LVU28
+  93 0042 324B     		ldr	r3, .L26+32
+  94 0044 9842     		cmp	r0, r3
+  95 0046 39D0     		beq	.L22
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA2->INTFCLR |= 0xFFFFFF0F;
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA2_Channel3)
+  96              		.loc 1 93 10 is_stmt 1 view .LVU29
+  97              		.loc 1 93 12 is_stmt 0 view .LVU30
+  98 0048 314B     		ldr	r3, .L26+36
+  99 004a 9842     		cmp	r0, r3
+ 100 004c 3CD0     		beq	.L23
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA2->INTFCLR |= 0xFFFFF0FF;
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA2_Channel4)
+ 101              		.loc 1 97 10 is_stmt 1 view .LVU31
+ 102              		.loc 1 97 12 is_stmt 0 view .LVU32
+ 103 004e 314B     		ldr	r3, .L26+40
+ 104 0050 9842     		cmp	r0, r3
+ 105 0052 3FD0     		beq	.L24
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA2->INTFCLR |= 0xFFFF0FFF;
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else if(channel == DMA2_Channel5)
+ 106              		.loc 1 101 10 is_stmt 1 view .LVU33
+ 107              		.loc 1 101 12 is_stmt 0 view .LVU34
+ 108 0054 304B     		ldr	r3, .L26+44
+ 109 0056 9842     		cmp	r0, r3
+ 110 0058 42D0     		beq	.L25
+ 111              	.L1:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA2->INTFCLR |= 0xFFF0FFFF;
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 112              		.loc 1 105 1 view .LVU35
+ 113 005a 7047     		bx	lr
+ 114              	.L14:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 115              		.loc 1 59 9 is_stmt 1 view .LVU36
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 116              		.loc 1 59 23 is_stmt 0 view .LVU37
+ 117 005c 2F4A     		ldr	r2, .L26+48
+ 118 005e 5368     		ldr	r3, [r2, #4]
+ 119 0060 63F00F03 		orn	r3, r3, #15
+ 120 0064 5360     		str	r3, [r2, #4]
+ 121 0066 7047     		bx	lr
+ 122              	.L15:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 5
+
+
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 123              		.loc 1 63 9 is_stmt 1 view .LVU38
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 124              		.loc 1 63 23 is_stmt 0 view .LVU39
+ 125 0068 2C4A     		ldr	r2, .L26+48
+ 126 006a 5368     		ldr	r3, [r2, #4]
+ 127 006c 63F0F003 		orn	r3, r3, #240
+ 128 0070 5360     		str	r3, [r2, #4]
+ 129 0072 7047     		bx	lr
+ 130              	.L16:
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 131              		.loc 1 67 9 is_stmt 1 view .LVU40
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 132              		.loc 1 67 23 is_stmt 0 view .LVU41
+ 133 0074 294A     		ldr	r2, .L26+48
+ 134 0076 5368     		ldr	r3, [r2, #4]
+ 135 0078 63F47063 		orn	r3, r3, #3840
+ 136 007c 5360     		str	r3, [r2, #4]
+ 137 007e 7047     		bx	lr
+ 138              	.L17:
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 139              		.loc 1 71 9 is_stmt 1 view .LVU42
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 140              		.loc 1 71 23 is_stmt 0 view .LVU43
+ 141 0080 264A     		ldr	r2, .L26+48
+ 142 0082 5368     		ldr	r3, [r2, #4]
+ 143 0084 63F47043 		orn	r3, r3, #61440
+ 144 0088 5360     		str	r3, [r2, #4]
+ 145 008a 7047     		bx	lr
+ 146              	.L18:
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 147              		.loc 1 75 9 is_stmt 1 view .LVU44
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 148              		.loc 1 75 23 is_stmt 0 view .LVU45
+ 149 008c 234A     		ldr	r2, .L26+48
+ 150 008e 5368     		ldr	r3, [r2, #4]
+ 151 0090 63F47023 		orn	r3, r3, #983040
+ 152 0094 5360     		str	r3, [r2, #4]
+ 153 0096 7047     		bx	lr
+ 154              	.L19:
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 155              		.loc 1 79 9 is_stmt 1 view .LVU46
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 156              		.loc 1 79 23 is_stmt 0 view .LVU47
+ 157 0098 204A     		ldr	r2, .L26+48
+ 158 009a 5368     		ldr	r3, [r2, #4]
+ 159 009c 63F47003 		orn	r3, r3, #15728640
+ 160 00a0 5360     		str	r3, [r2, #4]
+ 161 00a2 7047     		bx	lr
+ 162              	.L20:
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 163              		.loc 1 83 9 is_stmt 1 view .LVU48
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 164              		.loc 1 83 23 is_stmt 0 view .LVU49
+ 165 00a4 1D4A     		ldr	r2, .L26+48
+ 166 00a6 5368     		ldr	r3, [r2, #4]
+ 167 00a8 63F07063 		orn	r3, r3, #251658240
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 6
+
+
+ 168 00ac 5360     		str	r3, [r2, #4]
+ 169 00ae 7047     		bx	lr
+ 170              	.L21:
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 171              		.loc 1 87 9 is_stmt 1 view .LVU50
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 172              		.loc 1 87 23 is_stmt 0 view .LVU51
+ 173 00b0 1B4A     		ldr	r2, .L26+52
+ 174 00b2 5368     		ldr	r3, [r2, #4]
+ 175 00b4 63F00F03 		orn	r3, r3, #15
+ 176 00b8 5360     		str	r3, [r2, #4]
+ 177 00ba 7047     		bx	lr
+ 178              	.L22:
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 179              		.loc 1 91 9 is_stmt 1 view .LVU52
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 180              		.loc 1 91 23 is_stmt 0 view .LVU53
+ 181 00bc 184A     		ldr	r2, .L26+52
+ 182 00be 5368     		ldr	r3, [r2, #4]
+ 183 00c0 63F0F003 		orn	r3, r3, #240
+ 184 00c4 5360     		str	r3, [r2, #4]
+ 185 00c6 7047     		bx	lr
+ 186              	.L23:
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 187              		.loc 1 95 9 is_stmt 1 view .LVU54
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 188              		.loc 1 95 23 is_stmt 0 view .LVU55
+ 189 00c8 154A     		ldr	r2, .L26+52
+ 190 00ca 5368     		ldr	r3, [r2, #4]
+ 191 00cc 63F47063 		orn	r3, r3, #3840
+ 192 00d0 5360     		str	r3, [r2, #4]
+ 193 00d2 7047     		bx	lr
+ 194              	.L24:
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 195              		.loc 1 99 9 is_stmt 1 view .LVU56
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 196              		.loc 1 99 23 is_stmt 0 view .LVU57
+ 197 00d4 124A     		ldr	r2, .L26+52
+ 198 00d6 5368     		ldr	r3, [r2, #4]
+ 199 00d8 63F47043 		orn	r3, r3, #61440
+ 200 00dc 5360     		str	r3, [r2, #4]
+ 201 00de 7047     		bx	lr
+ 202              	.L25:
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 203              		.loc 1 103 9 is_stmt 1 view .LVU58
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 204              		.loc 1 103 23 is_stmt 0 view .LVU59
+ 205 00e0 0F4A     		ldr	r2, .L26+52
+ 206 00e2 5368     		ldr	r3, [r2, #4]
+ 207 00e4 63F47023 		orn	r3, r3, #983040
+ 208 00e8 5360     		str	r3, [r2, #4]
+ 209              		.loc 1 105 1 view .LVU60
+ 210 00ea B6E7     		b	.L1
+ 211              	.L27:
+ 212              		.align	2
+ 213              	.L26:
+ 214 00ec 08000240 		.word	1073872904
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 7
+
+
+ 215 00f0 1C000240 		.word	1073872924
+ 216 00f4 30000240 		.word	1073872944
+ 217 00f8 44000240 		.word	1073872964
+ 218 00fc 58000240 		.word	1073872984
+ 219 0100 6C000240 		.word	1073873004
+ 220 0104 80000240 		.word	1073873024
+ 221 0108 08040240 		.word	1073873928
+ 222 010c 1C040240 		.word	1073873948
+ 223 0110 30040240 		.word	1073873968
+ 224 0114 44040240 		.word	1073873988
+ 225 0118 58040240 		.word	1073874008
+ 226 011c 00000240 		.word	1073872896
+ 227 0120 00040240 		.word	1073873920
+ 228              		.cfi_endproc
+ 229              	.LFE65:
+ 231              		.section	.text.DMA_Config,"ax",%progbits
+ 232              		.align	1
+ 233              		.global	DMA_Config
+ 234              		.syntax unified
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	DMA_Config:
+ 239              	.LVL1:
+ 240              	.LFB66:
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Configs specified DMA Channel through a structure.
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5)
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     dmaConfig: Point to a DMA_Config_T structure
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_Config(DMA_Channel_T* channel, DMA_Config_T* dmaConfig)
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 241              		.loc 1 119 1 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245              		@ link register save eliminated.
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.DIRCFG = dmaConfig->dir;
+ 246              		.loc 1 120 5 view .LVU62
+ 247              		.loc 1 120 40 is_stmt 0 view .LVU63
+ 248 0000 0A7A     		ldrb	r2, [r1, #8]	@ zero_extendqisi2
+ 249              		.loc 1 120 29 view .LVU64
+ 250 0002 0368     		ldr	r3, [r0]
+ 251 0004 62F30413 		bfi	r3, r2, #4, #1
+ 252 0008 0360     		str	r3, [r0]
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.CIRMODE = dmaConfig->loopMode;
+ 253              		.loc 1 121 5 is_stmt 1 view .LVU65
+ 254              		.loc 1 121 41 is_stmt 0 view .LVU66
+ 255 000a 0A7D     		ldrb	r2, [r1, #20]	@ zero_extendqisi2
+ 256              		.loc 1 121 30 view .LVU67
+ 257 000c 0368     		ldr	r3, [r0]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 8
+
+
+ 258 000e 62F34513 		bfi	r3, r2, #5, #1
+ 259 0012 0360     		str	r3, [r0]
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.PERIMODE = dmaConfig->peripheralInc;
+ 260              		.loc 1 122 5 is_stmt 1 view .LVU68
+ 261              		.loc 1 122 42 is_stmt 0 view .LVU69
+ 262 0014 0A7C     		ldrb	r2, [r1, #16]	@ zero_extendqisi2
+ 263              		.loc 1 122 31 view .LVU70
+ 264 0016 0368     		ldr	r3, [r0]
+ 265 0018 62F38613 		bfi	r3, r2, #6, #1
+ 266 001c 0360     		str	r3, [r0]
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.MIMODE = dmaConfig->memoryInc;
+ 267              		.loc 1 123 5 is_stmt 1 view .LVU71
+ 268              		.loc 1 123 40 is_stmt 0 view .LVU72
+ 269 001e 4A7C     		ldrb	r2, [r1, #17]	@ zero_extendqisi2
+ 270              		.loc 1 123 29 view .LVU73
+ 271 0020 0368     		ldr	r3, [r0]
+ 272 0022 62F3C713 		bfi	r3, r2, #7, #1
+ 273 0026 0360     		str	r3, [r0]
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.PERSIZE = dmaConfig->peripheralDataSize;
+ 274              		.loc 1 124 5 is_stmt 1 view .LVU74
+ 275              		.loc 1 124 41 is_stmt 0 view .LVU75
+ 276 0028 8A7C     		ldrb	r2, [r1, #18]	@ zero_extendqisi2
+ 277              		.loc 1 124 30 view .LVU76
+ 278 002a 0368     		ldr	r3, [r0]
+ 279 002c 62F30923 		bfi	r3, r2, #8, #2
+ 280 0030 0360     		str	r3, [r0]
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.MEMSIZE = dmaConfig->memoryDataSize;
+ 281              		.loc 1 125 5 is_stmt 1 view .LVU77
+ 282              		.loc 1 125 41 is_stmt 0 view .LVU78
+ 283 0032 CA7C     		ldrb	r2, [r1, #19]	@ zero_extendqisi2
+ 284              		.loc 1 125 30 view .LVU79
+ 285 0034 0368     		ldr	r3, [r0]
+ 286 0036 62F38B23 		bfi	r3, r2, #10, #2
+ 287 003a 0360     		str	r3, [r0]
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.CHPL = dmaConfig->priority;
+ 288              		.loc 1 126 5 is_stmt 1 view .LVU80
+ 289              		.loc 1 126 38 is_stmt 0 view .LVU81
+ 290 003c 4A7D     		ldrb	r2, [r1, #21]	@ zero_extendqisi2
+ 291              		.loc 1 126 27 view .LVU82
+ 292 003e 0368     		ldr	r3, [r0]
+ 293 0040 62F30D33 		bfi	r3, r2, #12, #2
+ 294 0044 0360     		str	r3, [r0]
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.M2MMODE = dmaConfig->M2M;
+ 295              		.loc 1 127 5 is_stmt 1 view .LVU83
+ 296              		.loc 1 127 41 is_stmt 0 view .LVU84
+ 297 0046 8A7D     		ldrb	r2, [r1, #22]	@ zero_extendqisi2
+ 298              		.loc 1 127 30 view .LVU85
+ 299 0048 0368     		ldr	r3, [r0]
+ 300 004a 62F38E33 		bfi	r3, r2, #14, #1
+ 301 004e 0360     		str	r3, [r0]
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHNDATA = dmaConfig->bufferSize;
+ 302              		.loc 1 129 5 is_stmt 1 view .LVU86
+ 303              		.loc 1 129 33 is_stmt 0 view .LVU87
+ 304 0050 CB68     		ldr	r3, [r1, #12]
+ 305              		.loc 1 129 22 view .LVU88
+ 306 0052 4360     		str	r3, [r0, #4]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 9
+
+
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHPADDR = dmaConfig->peripheralBaseAddr;
+ 307              		.loc 1 130 5 is_stmt 1 view .LVU89
+ 308              		.loc 1 130 33 is_stmt 0 view .LVU90
+ 309 0054 0B68     		ldr	r3, [r1]
+ 310              		.loc 1 130 22 view .LVU91
+ 311 0056 8360     		str	r3, [r0, #8]
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHMADDR = dmaConfig->memoryBaseAddr;
+ 312              		.loc 1 131 5 is_stmt 1 view .LVU92
+ 313              		.loc 1 131 33 is_stmt 0 view .LVU93
+ 314 0058 4B68     		ldr	r3, [r1, #4]
+ 315              		.loc 1 131 22 view .LVU94
+ 316 005a C360     		str	r3, [r0, #12]
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 317              		.loc 1 132 1 view .LVU95
+ 318 005c 7047     		bx	lr
+ 319              		.cfi_endproc
+ 320              	.LFE66:
+ 322              		.section	.text.DMA_ConfigStructInit,"ax",%progbits
+ 323              		.align	1
+ 324              		.global	DMA_ConfigStructInit
+ 325              		.syntax unified
+ 326              		.thumb
+ 327              		.thumb_func
+ 329              	DMA_ConfigStructInit:
+ 330              	.LVL2:
+ 331              	.LFB67:
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Populate the structure with default values.
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     dmaConfig: Point to a DMA_Config_T structure.
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_ConfigStructInit( DMA_Config_T* dmaConfig)
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 332              		.loc 1 142 1 is_stmt 1 view -0
+ 333              		.cfi_startproc
+ 334              		@ args = 0, pretend = 0, frame = 0
+ 335              		@ frame_needed = 0, uses_anonymous_args = 0
+ 336              		@ link register save eliminated.
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->peripheralBaseAddr = 0;
+ 337              		.loc 1 143 5 view .LVU97
+ 338              		.loc 1 143 35 is_stmt 0 view .LVU98
+ 339 0000 0023     		movs	r3, #0
+ 340 0002 0360     		str	r3, [r0]
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->memoryBaseAddr = 0;
+ 341              		.loc 1 144 5 is_stmt 1 view .LVU99
+ 342              		.loc 1 144 31 is_stmt 0 view .LVU100
+ 343 0004 4360     		str	r3, [r0, #4]
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->dir = DMA_DIR_PERIPHERAL_SRC;
+ 344              		.loc 1 145 5 is_stmt 1 view .LVU101
+ 345              		.loc 1 145 20 is_stmt 0 view .LVU102
+ 346 0006 0372     		strb	r3, [r0, #8]
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->bufferSize = 0;
+ 347              		.loc 1 146 5 is_stmt 1 view .LVU103
+ 348              		.loc 1 146 27 is_stmt 0 view .LVU104
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 10
+
+
+ 349 0008 C360     		str	r3, [r0, #12]
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->peripheralInc = DMA_PERIPHERAL_INC_DISABLE;
+ 350              		.loc 1 147 5 is_stmt 1 view .LVU105
+ 351              		.loc 1 147 30 is_stmt 0 view .LVU106
+ 352 000a 0374     		strb	r3, [r0, #16]
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->memoryInc = DMA_MEMORY_INC_DISABLE;
+ 353              		.loc 1 148 5 is_stmt 1 view .LVU107
+ 354              		.loc 1 148 26 is_stmt 0 view .LVU108
+ 355 000c 4374     		strb	r3, [r0, #17]
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->peripheralDataSize = DMA_PERIPHERAL_DATA_SIZE_BYTE;
+ 356              		.loc 1 149 5 is_stmt 1 view .LVU109
+ 357              		.loc 1 149 35 is_stmt 0 view .LVU110
+ 358 000e 8374     		strb	r3, [r0, #18]
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->memoryDataSize = DMA_MEMORY_DATA_SIZE_BYTE;
+ 359              		.loc 1 150 5 is_stmt 1 view .LVU111
+ 360              		.loc 1 150 31 is_stmt 0 view .LVU112
+ 361 0010 C374     		strb	r3, [r0, #19]
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->loopMode = DMA_MODE_NORMAL;
+ 362              		.loc 1 151 5 is_stmt 1 view .LVU113
+ 363              		.loc 1 151 25 is_stmt 0 view .LVU114
+ 364 0012 0375     		strb	r3, [r0, #20]
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->priority = DMA_PRIORITY_LOW;
+ 365              		.loc 1 152 5 is_stmt 1 view .LVU115
+ 366              		.loc 1 152 25 is_stmt 0 view .LVU116
+ 367 0014 4375     		strb	r3, [r0, #21]
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     dmaConfig->M2M = DMA_M2MEN_DISABLE;
+ 368              		.loc 1 153 5 is_stmt 1 view .LVU117
+ 369              		.loc 1 153 20 is_stmt 0 view .LVU118
+ 370 0016 8375     		strb	r3, [r0, #22]
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 371              		.loc 1 154 1 view .LVU119
+ 372 0018 7047     		bx	lr
+ 373              		.cfi_endproc
+ 374              	.LFE67:
+ 376              		.section	.text.DMA_Enable,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	DMA_Enable
+ 379              		.syntax unified
+ 380              		.thumb
+ 381              		.thumb_func
+ 383              	DMA_Enable:
+ 384              	.LVL3:
+ 385              	.LFB68:
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Enable the specified DMA Channel
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5)
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_Enable(DMA_Channel_T *channel)
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 386              		.loc 1 166 1 is_stmt 1 view -0
+ 387              		.cfi_startproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 11
+
+
+ 388              		@ args = 0, pretend = 0, frame = 0
+ 389              		@ frame_needed = 0, uses_anonymous_args = 0
+ 390              		@ link register save eliminated.
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.CHEN = ENABLE;
+ 391              		.loc 1 167 5 view .LVU121
+ 392              		.loc 1 167 27 is_stmt 0 view .LVU122
+ 393 0000 0368     		ldr	r3, [r0]
+ 394 0002 43F00103 		orr	r3, r3, #1
+ 395 0006 0360     		str	r3, [r0]
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 396              		.loc 1 168 1 view .LVU123
+ 397 0008 7047     		bx	lr
+ 398              		.cfi_endproc
+ 399              	.LFE68:
+ 401              		.section	.text.DMA_Disable,"ax",%progbits
+ 402              		.align	1
+ 403              		.global	DMA_Disable
+ 404              		.syntax unified
+ 405              		.thumb
+ 406              		.thumb_func
+ 408              	DMA_Disable:
+ 409              	.LVL4:
+ 410              	.LFB69:
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Disable the specified DMA Channel
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5)
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_Disable(DMA_Channel_T *channel)
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 411              		.loc 1 180 1 is_stmt 1 view -0
+ 412              		.cfi_startproc
+ 413              		@ args = 0, pretend = 0, frame = 0
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415              		@ link register save eliminated.
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG_B.CHEN = DISABLE;
+ 416              		.loc 1 181 5 view .LVU125
+ 417              		.loc 1 181 27 is_stmt 0 view .LVU126
+ 418 0000 0368     		ldr	r3, [r0]
+ 419 0002 6FF30003 		bfc	r3, #0, #1
+ 420 0006 0360     		str	r3, [r0]
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 421              		.loc 1 182 1 view .LVU127
+ 422 0008 7047     		bx	lr
+ 423              		.cfi_endproc
+ 424              	.LFE69:
+ 426              		.section	.text.DMA_ConfigDataNumber,"ax",%progbits
+ 427              		.align	1
+ 428              		.global	DMA_ConfigDataNumber
+ 429              		.syntax unified
+ 430              		.thumb
+ 431              		.thumb_func
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 12
+
+
+ 433              	DMA_ConfigDataNumber:
+ 434              	.LVL5:
+ 435              	.LFB70:
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Configs the number of data units in the channel.
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5)
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     dataNumber:The number of data units in the current DMA Channel transfer.
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_ConfigDataNumber(DMA_Channel_T *channel, uint16_t dataNumber)
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 436              		.loc 1 196 1 is_stmt 1 view -0
+ 437              		.cfi_startproc
+ 438              		@ args = 0, pretend = 0, frame = 0
+ 439              		@ frame_needed = 0, uses_anonymous_args = 0
+ 440              		@ link register save eliminated.
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHNDATA = dataNumber;
+ 441              		.loc 1 197 5 view .LVU129
+ 442              		.loc 1 197 22 is_stmt 0 view .LVU130
+ 443 0000 4160     		str	r1, [r0, #4]
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 444              		.loc 1 198 1 view .LVU131
+ 445 0002 7047     		bx	lr
+ 446              		.cfi_endproc
+ 447              	.LFE70:
+ 449              		.section	.text.DMA_ReadDataNumber,"ax",%progbits
+ 450              		.align	1
+ 451              		.global	DMA_ReadDataNumber
+ 452              		.syntax unified
+ 453              		.thumb
+ 454              		.thumb_func
+ 456              	DMA_ReadDataNumber:
+ 457              	.LVL6:
+ 458              	.LFB71:
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Read the number of data units in the channel
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5)
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    The number of CHNDATA value
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** uint16_t DMA_ReadDataNumber(DMA_Channel_T *channel)
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 459              		.loc 1 210 1 is_stmt 1 view -0
+ 460              		.cfi_startproc
+ 461              		@ args = 0, pretend = 0, frame = 0
+ 462              		@ frame_needed = 0, uses_anonymous_args = 0
+ 463              		@ link register save eliminated.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 13
+
+
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     return channel->CHNDATA;
+ 464              		.loc 1 211 5 view .LVU133
+ 465              		.loc 1 211 19 is_stmt 0 view .LVU134
+ 466 0000 4068     		ldr	r0, [r0, #4]
+ 467              	.LVL7:
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 468              		.loc 1 212 1 view .LVU135
+ 469 0002 80B2     		uxth	r0, r0
+ 470 0004 7047     		bx	lr
+ 471              		.cfi_endproc
+ 472              	.LFE71:
+ 474              		.section	.text.DMA_EnableInterrupt,"ax",%progbits
+ 475              		.align	1
+ 476              		.global	DMA_EnableInterrupt
+ 477              		.syntax unified
+ 478              		.thumb
+ 479              		.thumb_func
+ 481              	DMA_EnableInterrupt:
+ 482              	.LVL8:
+ 483              	.LFB72:
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Enables the specified DMA Channel interrupts.
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5)
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     interrupt: DMA interrupts sources to selsct
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       This parameter can be any combination of the following values:
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       @arg DMA_INT_TC   : All Transfer Complete Interrupt
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       @arg DMA_INT_HT   : Half Transfer Complete Interrupt
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       @arg DMA_INT_TERR : Transfer Error Occur Interrupt
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_EnableInterrupt(DMA_Channel_T *channel, uint32_t interrupt)
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 484              		.loc 1 230 1 is_stmt 1 view -0
+ 485              		.cfi_startproc
+ 486              		@ args = 0, pretend = 0, frame = 0
+ 487              		@ frame_needed = 0, uses_anonymous_args = 0
+ 488              		@ link register save eliminated.
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG |= interrupt;
+ 489              		.loc 1 231 5 view .LVU137
+ 490              		.loc 1 231 20 is_stmt 0 view .LVU138
+ 491 0000 0368     		ldr	r3, [r0]
+ 492 0002 0B43     		orrs	r3, r3, r1
+ 493 0004 0360     		str	r3, [r0]
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 494              		.loc 1 232 1 view .LVU139
+ 495 0006 7047     		bx	lr
+ 496              		.cfi_endproc
+ 497              	.LFE72:
+ 499              		.section	.text.DMA_DisableInterrupt,"ax",%progbits
+ 500              		.align	1
+ 501              		.global	DMA_DisableInterrupt
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 14
+
+
+ 502              		.syntax unified
+ 503              		.thumb
+ 504              		.thumb_func
+ 506              	DMA_DisableInterrupt:
+ 507              	.LVL9:
+ 508              	.LFB73:
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Disable the specified DMA Channel interrupts.
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     channel:DMA1_channelx(x can be from 1 to 7) or DMA2_channely(y can be from 1 to 5)
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     interrupt: DMA interrupts sources to selsct
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       This parameter can be any combination of the following values:
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       @arg DMA_INT_TC   : All Transfer Complete Interrupt
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       @arg DMA_INT_HT   : Half Transfer Complete Interrupt
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                       @arg DMA_INT_TERR : Transfer Error Occur Interrupt
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_DisableInterrupt(DMA_Channel_T *channel, uint32_t interrupt)
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 509              		.loc 1 250 1 is_stmt 1 view -0
+ 510              		.cfi_startproc
+ 511              		@ args = 0, pretend = 0, frame = 0
+ 512              		@ frame_needed = 0, uses_anonymous_args = 0
+ 513              		@ link register save eliminated.
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     channel->CHCFG &= ~interrupt;
+ 514              		.loc 1 251 5 view .LVU141
+ 515              		.loc 1 251 20 is_stmt 0 view .LVU142
+ 516 0000 0368     		ldr	r3, [r0]
+ 517 0002 23EA0103 		bic	r3, r3, r1
+ 518 0006 0360     		str	r3, [r0]
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 519              		.loc 1 252 1 view .LVU143
+ 520 0008 7047     		bx	lr
+ 521              		.cfi_endproc
+ 522              	.LFE73:
+ 524              		.section	.text.DMA_ReadStatusFlag,"ax",%progbits
+ 525              		.align	1
+ 526              		.global	DMA_ReadStatusFlag
+ 527              		.syntax unified
+ 528              		.thumb
+ 529              		.thumb_func
+ 531              	DMA_ReadStatusFlag:
+ 532              	.LVL10:
+ 533              	.LFB74:
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Read whether the specifie DMA Channel flag is set or not.
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     flag: the flag to check.
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                  This parameter can be one of the following values:
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT1: DMA1 Channel 1 global flag.
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC1:   DMA1 Channel 1 transfer complete flag.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 15
+
+
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT1:   DMA1 Channel 1 half transfer flag.
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR1: DMA1 Channel 1 transfer error flag.
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT2: DMA1 Channel2 global flag.
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC2:   DMA1 Channel2 transfer complete flag.
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT2:   DMA1 Channel2 half transfer flag.
+ 266:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR2: DMA1 Channel2 transfer error flag.
+ 267:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT3: DMA1 Channel3 global flag.
+ 268:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC3:   DMA1 Channel3 transfer complete flag.
+ 269:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT3:   DMA1 Channel3 half transfer flag.
+ 270:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR3: DMA1 Channel3 transfer error flag.
+ 271:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT4: DMA1 Channel4 global flag.
+ 272:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC4:   DMA1 Channel4 transfer complete flag.
+ 273:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT4:   DMA1 Channel4 half transfer flag.
+ 274:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR4: DMA1 Channel4 transfer error flag.
+ 275:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT5: DMA1 Channel5 global flag.
+ 276:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC5:   DMA1 Channel5 transfer complete flag.
+ 277:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT5:   DMA1 Channel5 half transfer flag.
+ 278:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR5: DMA1 Channel5 transfer error flag.
+ 279:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT6: DMA1 Channel6 global flag.
+ 280:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC6:   DMA1 Channel6 transfer complete flag.
+ 281:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT6:   DMA1 Channel6 half transfer flag.
+ 282:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR6: DMA1 Channel6 transfer error flag.
+ 283:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT7: DMA1 Channel7 global flag.
+ 284:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC7:   DMA1 Channel7 transfer complete flag.
+ 285:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT7:   DMA1 Channel7 half transfer flag.
+ 286:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR7: DMA1 Channel7 transfer error flag.
+ 287:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 288:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT1: DMA2 Channel 1 global flag.
+ 289:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC1:   DMA2 Channel 1 transfer complete flag.
+ 290:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT1:   DMA2 Channel 1 half transfer flag.
+ 291:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR1: DMA2 Channel 1 transfer error flag.
+ 292:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT2: DMA2 Channel 2 global flag.
+ 293:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC2:   DMA2 Channel 2 transfer complete flag.
+ 294:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT2:   DMA2 Channel 2 half transfer flag.
+ 295:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR2: DMA2 Channel 2 transfer error flag.
+ 296:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT3: DMA2 Channel 3 global flag.
+ 297:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC3:   DMA2 Channel 3 transfer complete flag.
+ 298:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT3:   DMA2 Channel 3 half transfer flag.
+ 299:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR3: DMA2 Channel 3 transfer error flag.
+ 300:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT4: DMA2 Channel 4 global flag.
+ 301:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC4:   DMA2 Channel 4 transfer complete flag.
+ 302:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT4:   DMA2 Channel 4 half transfer flag.
+ 303:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR4: DMA2 Channel 4 transfer error flag.
+ 304:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT5: DMA2 Channel 5 global flag.
+ 305:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC5:   DMA2 Channel 5 transfer complete flag.
+ 306:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT5:   DMA2 Channel 5 half transfer flag.
+ 307:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR5: DMA2 Channel 5 transfer error flag.
+ 308:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 309:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    Flag State
+ 310:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 311:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 312:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 313:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** uint8_t DMA_ReadStatusFlag(DMA_FLAG_T flag)
+ 314:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 534              		.loc 1 314 1 is_stmt 1 view -0
+ 535              		.cfi_startproc
+ 536              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 16
+
+
+ 537              		@ frame_needed = 0, uses_anonymous_args = 0
+ 538              		@ link register save eliminated.
+ 315:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     if((flag & 0x10000000) != RESET )
+ 539              		.loc 1 315 5 view .LVU145
+ 540              		.loc 1 315 7 is_stmt 0 view .LVU146
+ 541 0000 10F0805F 		tst	r0, #268435456
+ 542 0004 05D0     		beq	.L37
+ 316:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 317:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         if((DMA2->INTSTS & flag ) != RESET )
+ 543              		.loc 1 317 9 is_stmt 1 view .LVU147
+ 544              		.loc 1 317 17 is_stmt 0 view .LVU148
+ 545 0006 084B     		ldr	r3, .L41
+ 546 0008 1B68     		ldr	r3, [r3]
+ 547              		.loc 1 317 11 view .LVU149
+ 548 000a 0342     		tst	r3, r0
+ 549 000c 07D0     		beq	.L39
+ 318:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 319:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return SET ;
+ 550              		.loc 1 319 20 view .LVU150
+ 551 000e 0120     		movs	r0, #1
+ 552              	.LVL11:
+ 553              		.loc 1 319 20 view .LVU151
+ 554 0010 7047     		bx	lr
+ 555              	.LVL12:
+ 556              	.L37:
+ 320:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         } else
+ 321:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return RESET ;
+ 323:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 324:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 325:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     else
+ 326:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 327:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         if((DMA1->INTSTS & flag ) != RESET )
+ 557              		.loc 1 327 9 is_stmt 1 view .LVU152
+ 558              		.loc 1 327 17 is_stmt 0 view .LVU153
+ 559 0012 064B     		ldr	r3, .L41+4
+ 560 0014 1B68     		ldr	r3, [r3]
+ 561              		.loc 1 327 11 view .LVU154
+ 562 0016 0342     		tst	r3, r0
+ 563 0018 03D0     		beq	.L40
+ 328:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 329:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return SET ;
+ 564              		.loc 1 329 20 view .LVU155
+ 565 001a 0120     		movs	r0, #1
+ 566              	.LVL13:
+ 567              		.loc 1 329 20 view .LVU156
+ 568 001c 7047     		bx	lr
+ 569              	.LVL14:
+ 570              	.L39:
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 571              		.loc 1 322 20 view .LVU157
+ 572 001e 0020     		movs	r0, #0
+ 573              	.LVL15:
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 574              		.loc 1 322 20 view .LVU158
+ 575 0020 7047     		bx	lr
+ 576              	.LVL16:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 17
+
+
+ 577              	.L40:
+ 330:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         } else
+ 331:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 332:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return RESET ;
+ 578              		.loc 1 332 20 view .LVU159
+ 579 0022 0020     		movs	r0, #0
+ 580              	.LVL17:
+ 333:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 334:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 335:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 581              		.loc 1 335 1 view .LVU160
+ 582 0024 7047     		bx	lr
+ 583              	.L42:
+ 584 0026 00BF     		.align	2
+ 585              	.L41:
+ 586 0028 00040240 		.word	1073873920
+ 587 002c 00000240 		.word	1073872896
+ 588              		.cfi_endproc
+ 589              	.LFE74:
+ 591              		.section	.text.DMA_ClearStatusFlag,"ax",%progbits
+ 592              		.align	1
+ 593              		.global	DMA_ClearStatusFlag
+ 594              		.syntax unified
+ 595              		.thumb
+ 596              		.thumb_func
+ 598              	DMA_ClearStatusFlag:
+ 599              	.LVL18:
+ 600              	.LFB75:
+ 336:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 337:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 338:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Clears the specifie DMA Channel's flags.
+ 339:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 340:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     flag:the flag to Clear.
+ 341:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                  This parameter can be any combination of the following values:
+ 342:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT1: DMA1 Channel 1 global flag.
+ 343:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC1:   DMA1 Channel 1 transfer complete flag.
+ 344:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT1:   DMA1 Channel 1 half transfer flag.
+ 345:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR1: DMA1 Channel 1 transfer error flag.
+ 346:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT2: DMA1 Channel2 global flag.
+ 347:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC2:   DMA1 Channel2 transfer complete flag.
+ 348:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT2:   DMA1 Channel2 half transfer flag.
+ 349:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR2: DMA1 Channel2 transfer error flag.
+ 350:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT3: DMA1 Channel3 global flag.
+ 351:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC3:   DMA1 Channel3 transfer complete flag.
+ 352:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT3:   DMA1 Channel3 half transfer flag.
+ 353:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR3: DMA1 Channel3 transfer error flag.
+ 354:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT4: DMA1 Channel4 global flag.
+ 355:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC4:   DMA1 Channel4 transfer complete flag.
+ 356:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT4:   DMA1 Channel4 half transfer flag.
+ 357:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR4: DMA1 Channel4 transfer error flag.
+ 358:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT5: DMA1 Channel5 global flag.
+ 359:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC5:   DMA1 Channel5 transfer complete flag.
+ 360:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT5:   DMA1 Channel5 half transfer flag.
+ 361:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR5: DMA1 Channel5 transfer error flag.
+ 362:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT6: DMA1 Channel6 global flag.
+ 363:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC6:   DMA1 Channel6 transfer complete flag.
+ 364:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT6:   DMA1 Channel6 half transfer flag.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 18
+
+
+ 365:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR6: DMA1 Channel6 transfer error flag.
+ 366:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_GINT7: DMA1 Channel7 global flag.
+ 367:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TC7:   DMA1 Channel7 transfer complete flag.
+ 368:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_HT7:   DMA1 Channel7 half transfer flag.
+ 369:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_FLAG_TERR7: DMA1 Channel7 transfer error flag.
+ 370:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 371:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT1: DMA2 Channel 1 global flag.
+ 372:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC1:   DMA2 Channel 1 transfer complete flag.
+ 373:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT1:   DMA2 Channel 1 half transfer flag.
+ 374:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR1: DMA2 Channel 1 transfer error flag.
+ 375:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT2: DMA2 Channel 2 global flag.
+ 376:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC2:   DMA2 Channel 2 transfer complete flag.
+ 377:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT2:   DMA2 Channel 2 half transfer flag.
+ 378:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR2: DMA2 Channel 2 transfer error flag.
+ 379:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT3: DMA2 Channel 3 global flag.
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC3:   DMA2 Channel 3 transfer complete flag.
+ 381:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT3:   DMA2 Channel 3 half transfer flag.
+ 382:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR3: DMA2 Channel 3 transfer error flag.
+ 383:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT4: DMA2 Channel 4 global flag.
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC4:   DMA2 Channel 4 transfer complete flag.
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT4:   DMA2 Channel 4 half transfer flag.
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR4: DMA2 Channel 4 transfer error flag.
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_GINT5: DMA2 Channel 5 global flag.
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TC5:   DMA2 Channel 5 transfer complete flag.
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_HT5:   DMA2 Channel 5 half transfer flag.
+ 390:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_FLAG_TERR5: DMA2 Channel 5 transfer error flag.
+ 391:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 392:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 393:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 394:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 395:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_ClearStatusFlag(uint32_t flag)
+ 397:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 601              		.loc 1 397 1 is_stmt 1 view -0
+ 602              		.cfi_startproc
+ 603              		@ args = 0, pretend = 0, frame = 0
+ 604              		@ frame_needed = 0, uses_anonymous_args = 0
+ 605              		@ link register save eliminated.
+ 398:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     if((flag & 0x10000000) != RESET)
+ 606              		.loc 1 398 5 view .LVU162
+ 607              		.loc 1 398 7 is_stmt 0 view .LVU163
+ 608 0000 10F0805F 		tst	r0, #268435456
+ 609 0004 02D0     		beq	.L44
+ 399:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 400:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA2->INTFCLR = flag;
+ 610              		.loc 1 400 9 is_stmt 1 view .LVU164
+ 611              		.loc 1 400 23 is_stmt 0 view .LVU165
+ 612 0006 034B     		ldr	r3, .L46
+ 613 0008 5860     		str	r0, [r3, #4]
+ 614 000a 7047     		bx	lr
+ 615              	.L44:
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     } else
+ 402:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR = flag;
+ 616              		.loc 1 403 9 is_stmt 1 view .LVU166
+ 617              		.loc 1 403 23 is_stmt 0 view .LVU167
+ 618 000c 024B     		ldr	r3, .L46+4
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 19
+
+
+ 619 000e 5860     		str	r0, [r3, #4]
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 620              		.loc 1 405 1 view .LVU168
+ 621 0010 7047     		bx	lr
+ 622              	.L47:
+ 623 0012 00BF     		.align	2
+ 624              	.L46:
+ 625 0014 00040240 		.word	1073873920
+ 626 0018 00000240 		.word	1073872896
+ 627              		.cfi_endproc
+ 628              	.LFE75:
+ 630              		.section	.text.DMA_ReadIntFlag,"ax",%progbits
+ 631              		.align	1
+ 632              		.global	DMA_ReadIntFlag
+ 633              		.syntax unified
+ 634              		.thumb
+ 635              		.thumb_func
+ 637              	DMA_ReadIntFlag:
+ 638              	.LVL19:
+ 639              	.LFB76:
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Read whether the specified DMA Channel interrupts is set or not.
+ 409:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 410:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     interrupt: interrupt source to check.
+ 411:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                  This parameter can be one of the following values:
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT1 : DMA1 Channel 1 global interrupt.
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC1   : DMA1 Channel 1 transfer complete interrupt.
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT1   : DMA1 Channel 1 half transfer interrupt.
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR1 : DMA1 Channel 1 transfer error interrupt.
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT2 : DMA1 Channel2 global interrupt.
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC2   : DMA1 Channel2 transfer complete interrupt.
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT2   : DMA1 Channel2 half transfer interrupt.
+ 419:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR2 : DMA1 Channel2 transfer error interrupt.
+ 420:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT3 : DMA1 Channel3 global interrupt.
+ 421:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC3   : DMA1 Channel3 transfer complete interrupt.
+ 422:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT3   : DMA1 Channel3 half transfer interrupt.
+ 423:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR3 : DMA1 Channel3 transfer error interrupt.
+ 424:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT4 : DMA1 Channel4 global interrupt.
+ 425:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC4   : DMA1 Channel4 transfer complete interrupt.
+ 426:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT4   : DMA1 Channel4 half transfer interrupt.
+ 427:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR4 : DMA1 Channel4 transfer error interrupt.
+ 428:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT5 : DMA1 Channel5 global interrupt.
+ 429:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC5     DMA1 Channel5 transfer complete interrupt.
+ 430:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT5     DMA1 Channel5 half transfer interrupt.
+ 431:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR5 : DMA1 Channel5 transfer error interrupt.
+ 432:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT6 : DMA1 Channel6 global interrupt.
+ 433:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC6   : DMA1 Channel6 transfer complete interrupt.
+ 434:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT6   : DMA1 Channel6 half transfer interrupt.
+ 435:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR6 : DMA1 Channel6 transfer error interrupt.
+ 436:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT7 : DMA1 Channel7 global interrupt.
+ 437:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC7   : DMA1 Channel7 transfer complete interrupt.
+ 438:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT7   : DMA1 Channel7 half transfer interrupt.
+ 439:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR7 : DMA1 Channel7 transfer error interrupt.
+ 440:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 441:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT1 : DMA2 Channel 1 global interrupt.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 20
+
+
+ 442:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC1   : DMA2 Channel 1 transfer complete interrupt.
+ 443:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT1   : DMA2 Channel 1 half transfer interrupt.
+ 444:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR1 : DMA2 Channel 1 transfer error interrupt.
+ 445:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT2 : DMA2 Channel 2 global interrupt.
+ 446:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC2   : DMA2 Channel 2 transfer complete interrupt.
+ 447:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT2   : DMA2 Channel 2 half transfer interrupt.
+ 448:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR2 : DMA2 Channel 2 transfer error interrupt.
+ 449:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT3 : DMA2 Channel 3 global interrupt.
+ 450:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC3   : DMA2 Channel 3 transfer complete interrupt.
+ 451:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT3   : DMA2 Channel 3 half transfer interrupt.
+ 452:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR3 : DMA2 Channel 3 transfer error interrupt.
+ 453:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT4 : DMA2 Channel 4 global interrupt.
+ 454:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC4   : DMA2 Channel 4 transfer complete interrupt.
+ 455:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT4   : DMA2 Channel 4 half transfer interrupt.
+ 456:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR4 : DMA2 Channel 4 transfer error interrupt.
+ 457:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT5 : DMA2 Channel 5 global interrupt.
+ 458:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC5   : DMA2 Channel 5 transfer complete interrupt.
+ 459:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT5   : DMA2 Channel 5 half transfer interrupt.
+ 460:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR5 : DMA2 Channel 5 transfer error interrupt.
+ 461:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 462:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    interrupt State
+ 463:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ 465:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 466:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** uint8_t DMA_ReadIntFlag(DMA_INT_FLAG_T flag)
+ 467:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 640              		.loc 1 467 1 is_stmt 1 view -0
+ 641              		.cfi_startproc
+ 642              		@ args = 0, pretend = 0, frame = 0
+ 643              		@ frame_needed = 0, uses_anonymous_args = 0
+ 644              		@ link register save eliminated.
+ 468:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     if((flag & 0x10000000) != RESET )
+ 645              		.loc 1 468 5 view .LVU170
+ 646              		.loc 1 468 7 is_stmt 0 view .LVU171
+ 647 0000 10F0805F 		tst	r0, #268435456
+ 648 0004 05D0     		beq	.L49
+ 469:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 470:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         if((DMA2->INTSTS & flag ) != RESET )
+ 649              		.loc 1 470 9 is_stmt 1 view .LVU172
+ 650              		.loc 1 470 17 is_stmt 0 view .LVU173
+ 651 0006 084B     		ldr	r3, .L53
+ 652 0008 1B68     		ldr	r3, [r3]
+ 653              		.loc 1 470 11 view .LVU174
+ 654 000a 0342     		tst	r3, r0
+ 655 000c 07D0     		beq	.L51
+ 471:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 472:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return SET ;
+ 656              		.loc 1 472 20 view .LVU175
+ 657 000e 0120     		movs	r0, #1
+ 658              	.LVL20:
+ 659              		.loc 1 472 20 view .LVU176
+ 660 0010 7047     		bx	lr
+ 661              	.LVL21:
+ 662              	.L49:
+ 473:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         } else
+ 474:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return RESET ;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 21
+
+
+ 476:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 477:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     } else
+ 478:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 479:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         if((DMA1->INTSTS & flag ) != RESET )
+ 663              		.loc 1 479 9 is_stmt 1 view .LVU177
+ 664              		.loc 1 479 17 is_stmt 0 view .LVU178
+ 665 0012 064B     		ldr	r3, .L53+4
+ 666 0014 1B68     		ldr	r3, [r3]
+ 667              		.loc 1 479 11 view .LVU179
+ 668 0016 0342     		tst	r3, r0
+ 669 0018 03D0     		beq	.L52
+ 480:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 481:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return SET ;
+ 670              		.loc 1 481 20 view .LVU180
+ 671 001a 0120     		movs	r0, #1
+ 672              	.LVL22:
+ 673              		.loc 1 481 20 view .LVU181
+ 674 001c 7047     		bx	lr
+ 675              	.LVL23:
+ 676              	.L51:
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 677              		.loc 1 475 20 view .LVU182
+ 678 001e 0020     		movs	r0, #0
+ 679              	.LVL24:
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 680              		.loc 1 475 20 view .LVU183
+ 681 0020 7047     		bx	lr
+ 682              	.LVL25:
+ 683              	.L52:
+ 482:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         } else
+ 483:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         {
+ 484:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****             return RESET ;
+ 684              		.loc 1 484 20 view .LVU184
+ 685 0022 0020     		movs	r0, #0
+ 686              	.LVL26:
+ 485:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         }
+ 486:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 687              		.loc 1 487 1 view .LVU185
+ 688 0024 7047     		bx	lr
+ 689              	.L54:
+ 690 0026 00BF     		.align	2
+ 691              	.L53:
+ 692 0028 00040240 		.word	1073873920
+ 693 002c 00000240 		.word	1073872896
+ 694              		.cfi_endproc
+ 695              	.LFE76:
+ 697              		.section	.text.DMA_ClearIntFlag,"ax",%progbits
+ 698              		.align	1
+ 699              		.global	DMA_ClearIntFlag
+ 700              		.syntax unified
+ 701              		.thumb
+ 702              		.thumb_func
+ 704              	DMA_ClearIntFlag:
+ 705              	.LVL27:
+ 706              	.LFB77:
+ 488:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** /*!
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 22
+
+
+ 489:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @brief     Clears the specified DMA Channel's interrupts.
+ 490:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 491:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @param     flag: the interrupt flag to Clear.
+ 492:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                  This parameter can be any combination of the following values:
+ 493:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT1 : DMA1 Channel 1 global interrupt.
+ 494:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC1   : DMA1 Channel 1 transfer complete interrupt.
+ 495:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT1   : DMA1 Channel 1 half transfer interrupt.
+ 496:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR1 : DMA1 Channel 1 transfer error interrupt.
+ 497:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT2 : DMA1 Channel2 global interrupt.
+ 498:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC2   : DMA1 Channel2 transfer complete interrupt.
+ 499:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT2   : DMA1 Channel2 half transfer interrupt.
+ 500:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR2 : DMA1 Channel2 transfer error interrupt.
+ 501:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT3 : DMA1 Channel3 global interrupt.
+ 502:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC3   : DMA1 Channel3 transfer complete interrupt.
+ 503:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT3   : DMA1 Channel3 half transfer interrupt.
+ 504:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR3 : DMA1 Channel3 transfer error interrupt.
+ 505:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT4 : DMA1 Channel4 global interrupt.
+ 506:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC4   : DMA1 Channel4 transfer complete interrupt.
+ 507:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT4   : DMA1 Channel4 half transfer interrupt.
+ 508:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR4 : DMA1 Channel4 transfer error interrupt.
+ 509:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT5 : DMA1 Channel5 global interrupt.
+ 510:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC5     DMA1 Channel5 transfer complete interrupt.
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT5     DMA1 Channel5 half transfer interrupt.
+ 512:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR5 : DMA1 Channel5 transfer error interrupt.
+ 513:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT6 : DMA1 Channel6 global interrupt.
+ 514:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC6   : DMA1 Channel6 transfer complete interrupt.
+ 515:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT6   : DMA1 Channel6 half transfer interrupt.
+ 516:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR6 : DMA1 Channel6 transfer error interrupt.
+ 517:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_GINT7 : DMA1 Channel7 global interrupt.
+ 518:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TC7   : DMA1 Channel7 transfer complete interrupt.
+ 519:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_HT7   : DMA1 Channel7 half transfer interrupt.
+ 520:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA1_INT_FLAG_TERR7 : DMA1 Channel7 transfer error interrupt.
+ 521:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** 
+ 522:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT1 : DMA2 Channel 1 global interrupt.
+ 523:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC1   : DMA2 Channel 1 transfer complete interrupt.
+ 524:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT1   : DMA2 Channel 1 half transfer interrupt.
+ 525:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR1 : DMA2 Channel 1 transfer error interrupt.
+ 526:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT2 : DMA2 Channel 2 global interrupt.
+ 527:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC2   : DMA2 Channel 2 transfer complete interrupt.
+ 528:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT2   : DMA2 Channel 2 half transfer interrupt.
+ 529:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR2 : DMA2 Channel 2 transfer error interrupt.
+ 530:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT3 : DMA2 Channel 3 global interrupt.
+ 531:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC3   : DMA2 Channel 3 transfer complete interrupt.
+ 532:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT3   : DMA2 Channel 3 half transfer interrupt.
+ 533:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR3 : DMA2 Channel 3 transfer error interrupt.
+ 534:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT4 : DMA2 Channel 4 global interrupt.
+ 535:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC4   : DMA2 Channel 4 transfer complete interrupt.
+ 536:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT4   : DMA2 Channel 4 half transfer interrupt.
+ 537:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR4 : DMA2 Channel 4 transfer error interrupt.
+ 538:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_GINT5 : DMA2 Channel 5 global interrupt.
+ 539:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TC5   : DMA2 Channel 5 transfer complete interrupt.
+ 540:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_HT5   : DMA2 Channel 5 half transfer interrupt.
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *                    @arg DMA2_INT_FLAG_TERR5 : DMA2 Channel 5 transfer error interrupt.
+ 542:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 543:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @retval    None
+ 544:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  *
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  * @note      DMA2 Channel only for APM32 High density devices.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 23
+
+
+ 546:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****  */
+ 547:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** void DMA_ClearIntFlag(uint32_t flag)
+ 548:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** {
+ 707              		.loc 1 548 1 is_stmt 1 view -0
+ 708              		.cfi_startproc
+ 709              		@ args = 0, pretend = 0, frame = 0
+ 710              		@ frame_needed = 0, uses_anonymous_args = 0
+ 711              		@ link register save eliminated.
+ 549:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     if((flag & 0x10000000) != RESET)
+ 712              		.loc 1 549 5 view .LVU187
+ 713              		.loc 1 549 7 is_stmt 0 view .LVU188
+ 714 0000 10F0805F 		tst	r0, #268435456
+ 715 0004 02D0     		beq	.L56
+ 550:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 551:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA2->INTFCLR = flag;
+ 716              		.loc 1 551 9 is_stmt 1 view .LVU189
+ 717              		.loc 1 551 23 is_stmt 0 view .LVU190
+ 718 0006 034B     		ldr	r3, .L58
+ 719 0008 5860     		str	r0, [r3, #4]
+ 720 000a 7047     		bx	lr
+ 721              	.L56:
+ 552:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     } else
+ 553:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     {
+ 554:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****         DMA1->INTFCLR = flag;
+ 722              		.loc 1 554 9 is_stmt 1 view .LVU191
+ 723              		.loc 1 554 23 is_stmt 0 view .LVU192
+ 724 000c 024B     		ldr	r3, .L58+4
+ 725 000e 5860     		str	r0, [r3, #4]
+ 555:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c ****     }
+ 556:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_dma.c **** }
+ 726              		.loc 1 556 1 view .LVU193
+ 727 0010 7047     		bx	lr
+ 728              	.L59:
+ 729 0012 00BF     		.align	2
+ 730              	.L58:
+ 731 0014 00040240 		.word	1073873920
+ 732 0018 00000240 		.word	1073872896
+ 733              		.cfi_endproc
+ 734              	.LFE77:
+ 736              		.text
+ 737              	.Letext0:
+ 738              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 739              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 740              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 741              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_dma.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccysBsem.s 			page 24
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_dma.c
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:18     .text.DMA_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:24     .text.DMA_Reset:00000000 DMA_Reset
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:214    .text.DMA_Reset:000000ec $d
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:232    .text.DMA_Config:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:238    .text.DMA_Config:00000000 DMA_Config
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:323    .text.DMA_ConfigStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:329    .text.DMA_ConfigStructInit:00000000 DMA_ConfigStructInit
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:377    .text.DMA_Enable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:383    .text.DMA_Enable:00000000 DMA_Enable
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:402    .text.DMA_Disable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:408    .text.DMA_Disable:00000000 DMA_Disable
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:427    .text.DMA_ConfigDataNumber:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:433    .text.DMA_ConfigDataNumber:00000000 DMA_ConfigDataNumber
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:450    .text.DMA_ReadDataNumber:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:456    .text.DMA_ReadDataNumber:00000000 DMA_ReadDataNumber
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:475    .text.DMA_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:481    .text.DMA_EnableInterrupt:00000000 DMA_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:500    .text.DMA_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:506    .text.DMA_DisableInterrupt:00000000 DMA_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:525    .text.DMA_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:531    .text.DMA_ReadStatusFlag:00000000 DMA_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:586    .text.DMA_ReadStatusFlag:00000028 $d
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:592    .text.DMA_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:598    .text.DMA_ClearStatusFlag:00000000 DMA_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:625    .text.DMA_ClearStatusFlag:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:631    .text.DMA_ReadIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:637    .text.DMA_ReadIntFlag:00000000 DMA_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:692    .text.DMA_ReadIntFlag:00000028 $d
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:698    .text.DMA_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:704    .text.DMA_ClearIntFlag:00000000 DMA_ClearIntFlag
+C:\Users\geehy\AppData\Local\Temp\ccysBsem.s:731    .text.DMA_ClearIntFlag:00000014 $d
+
+NO UNDEFINED SYMBOLS

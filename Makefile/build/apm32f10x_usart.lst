@@ -1,0 +1,2486 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_usart.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.USART_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	USART_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	USART_Reset:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @file        apm32f10x_usart.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief       This file provides all the USART firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** #include "apm32f10x_usart.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 2
+
+
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /** @addtogroup USART_Driver USART Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /** @addtogroup USART_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Reset usart peripheral registers to their default reset values
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_Reset(USART_T* usart)
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+  28              		.loc 1 51 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 51 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (USART1 == usart)
+  38              		.loc 1 52 5 is_stmt 1 view .LVU2
+  39              		.loc 1 52 8 is_stmt 0 view .LVU3
+  40 0002 1E4B     		ldr	r3, .L13
+  41 0004 9842     		cmp	r0, r3
+  42 0006 0CD0     		beq	.L8
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_EnableAPB2PeriphReset(RCM_APB2_PERIPH_USART1);
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_USART1);
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     else if (USART2 == usart)
+  43              		.loc 1 57 10 is_stmt 1 view .LVU4
+  44              		.loc 1 57 13 is_stmt 0 view .LVU5
+  45 0008 1D4B     		ldr	r3, .L13+4
+  46 000a 9842     		cmp	r0, r3
+  47 000c 12D0     		beq	.L9
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_USART2);
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_USART2);
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     else if (USART3 == usart)
+  48              		.loc 1 62 10 is_stmt 1 view .LVU6
+  49              		.loc 1 62 13 is_stmt 0 view .LVU7
+  50 000e 1D4B     		ldr	r3, .L13+8
+  51 0010 9842     		cmp	r0, r3
+  52 0012 18D0     		beq	.L10
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 3
+
+
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_USART3);
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_USART3);
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     else if (UART4 == usart)
+  53              		.loc 1 67 10 is_stmt 1 view .LVU8
+  54              		.loc 1 67 13 is_stmt 0 view .LVU9
+  55 0014 1C4B     		ldr	r3, .L13+12
+  56 0016 9842     		cmp	r0, r3
+  57 0018 1ED0     		beq	.L11
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_UART4);
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_UART4);
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     else if (UART5 == usart)
+  58              		.loc 1 72 10 is_stmt 1 view .LVU10
+  59              		.loc 1 72 13 is_stmt 0 view .LVU11
+  60 001a 1C4B     		ldr	r3, .L13+16
+  61 001c 9842     		cmp	r0, r3
+  62 001e 24D0     		beq	.L12
+  63              	.LVL1:
+  64              	.L1:
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_UART5);
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_UART5);
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+  65              		.loc 1 77 1 view .LVU12
+  66 0020 08BD     		pop	{r3, pc}
+  67              	.LVL2:
+  68              	.L8:
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_USART1);
+  69              		.loc 1 54 9 is_stmt 1 view .LVU13
+  70 0022 4FF48040 		mov	r0, #16384
+  71              	.LVL3:
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_USART1);
+  72              		.loc 1 54 9 is_stmt 0 view .LVU14
+  73 0026 FFF7FEFF 		bl	RCM_EnableAPB2PeriphReset
+  74              	.LVL4:
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+  75              		.loc 1 55 9 is_stmt 1 view .LVU15
+  76 002a 4FF48040 		mov	r0, #16384
+  77 002e FFF7FEFF 		bl	RCM_DisableAPB2PeriphReset
+  78              	.LVL5:
+  79 0032 F5E7     		b	.L1
+  80              	.LVL6:
+  81              	.L9:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_USART2);
+  82              		.loc 1 59 9 view .LVU16
+  83 0034 4FF40030 		mov	r0, #131072
+  84              	.LVL7:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_USART2);
+  85              		.loc 1 59 9 is_stmt 0 view .LVU17
+  86 0038 FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+  87              	.LVL8:
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+  88              		.loc 1 60 9 is_stmt 1 view .LVU18
+  89 003c 4FF40030 		mov	r0, #131072
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 4
+
+
+  90 0040 FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+  91              	.LVL9:
+  92 0044 ECE7     		b	.L1
+  93              	.LVL10:
+  94              	.L10:
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_USART3);
+  95              		.loc 1 64 9 view .LVU19
+  96 0046 4FF48020 		mov	r0, #262144
+  97              	.LVL11:
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_USART3);
+  98              		.loc 1 64 9 is_stmt 0 view .LVU20
+  99 004a FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+ 100              	.LVL12:
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 101              		.loc 1 65 9 is_stmt 1 view .LVU21
+ 102 004e 4FF48020 		mov	r0, #262144
+ 103 0052 FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+ 104              	.LVL13:
+ 105 0056 E3E7     		b	.L1
+ 106              	.LVL14:
+ 107              	.L11:
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_UART4);
+ 108              		.loc 1 69 9 view .LVU22
+ 109 0058 4FF40020 		mov	r0, #524288
+ 110              	.LVL15:
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_UART4);
+ 111              		.loc 1 69 9 is_stmt 0 view .LVU23
+ 112 005c FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+ 113              	.LVL16:
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 114              		.loc 1 70 9 is_stmt 1 view .LVU24
+ 115 0060 4FF40020 		mov	r0, #524288
+ 116 0064 FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+ 117              	.LVL17:
+ 118 0068 DAE7     		b	.L1
+ 119              	.LVL18:
+ 120              	.L12:
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_UART5);
+ 121              		.loc 1 74 9 view .LVU25
+ 122 006a 4FF48010 		mov	r0, #1048576
+ 123              	.LVL19:
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_UART5);
+ 124              		.loc 1 74 9 is_stmt 0 view .LVU26
+ 125 006e FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+ 126              	.LVL20:
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 127              		.loc 1 75 9 is_stmt 1 view .LVU27
+ 128 0072 4FF48010 		mov	r0, #1048576
+ 129 0076 FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+ 130              	.LVL21:
+ 131              		.loc 1 77 1 is_stmt 0 view .LVU28
+ 132 007a D1E7     		b	.L1
+ 133              	.L14:
+ 134              		.align	2
+ 135              	.L13:
+ 136 007c 00380140 		.word	1073821696
+ 137 0080 00440040 		.word	1073759232
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 5
+
+
+ 138 0084 00480040 		.word	1073760256
+ 139 0088 004C0040 		.word	1073761280
+ 140 008c 00500040 		.word	1073762304
+ 141              		.cfi_endproc
+ 142              	.LFE65:
+ 144              		.section	.text.USART_Config,"ax",%progbits
+ 145              		.align	1
+ 146              		.global	USART_Config
+ 147              		.syntax unified
+ 148              		.thumb
+ 149              		.thumb_func
+ 151              	USART_Config:
+ 152              	.LVL22:
+ 153              	.LFB66:
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Config the USART peripheral according to the specified parameters in the usartConfig
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     uart:         Select the USART or the UART peripheral
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usartConfig:  pointer to a USART_Config_T structure
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_Config(USART_T* uart, USART_Config_T* usartConfig)
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 154              		.loc 1 91 1 is_stmt 1 view -0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 8
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158              		.loc 1 91 1 is_stmt 0 view .LVU30
+ 159 0000 30B5     		push	{r4, r5, lr}
+ 160              	.LCFI1:
+ 161              		.cfi_def_cfa_offset 12
+ 162              		.cfi_offset 4, -12
+ 163              		.cfi_offset 5, -8
+ 164              		.cfi_offset 14, -4
+ 165 0002 83B0     		sub	sp, sp, #12
+ 166              	.LCFI2:
+ 167              		.cfi_def_cfa_offset 24
+ 168 0004 0446     		mov	r4, r0
+ 169 0006 0D46     		mov	r5, r1
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uint32_t temp, fCLK, intDiv, fractionalDiv;
+ 170              		.loc 1 92 5 is_stmt 1 view .LVU31
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp = uart->CTRL1;
+ 171              		.loc 1 94 5 view .LVU32
+ 172              		.loc 1 94 10 is_stmt 0 view .LVU33
+ 173 0008 C268     		ldr	r2, [r0, #12]
+ 174              	.LVL23:
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp &= 0xE9F3;
+ 175              		.loc 1 95 5 is_stmt 1 view .LVU34
+ 176              		.loc 1 95 10 is_stmt 0 view .LVU35
+ 177 000a 22F4B052 		bic	r2, r2, #5632
+ 178              	.LVL24:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 6
+
+
+ 179              		.loc 1 95 10 view .LVU36
+ 180 000e 22F00C02 		bic	r2, r2, #12
+ 181 0012 1204     		lsls	r2, r2, #16
+ 182 0014 120C     		lsrs	r2, r2, #16
+ 183              	.LVL25:
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp |= (uint32_t)usartConfig->mode | \
+ 184              		.loc 1 96 5 is_stmt 1 view .LVU37
+ 185              		.loc 1 96 34 is_stmt 0 view .LVU38
+ 186 0016 8B7A     		ldrb	r3, [r1, #10]	@ zero_extendqisi2
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****             (uint32_t)usartConfig->parity | \
+ 187              		.loc 1 97 34 view .LVU39
+ 188 0018 0989     		ldrh	r1, [r1, #8]
+ 189              	.LVL26:
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp |= (uint32_t)usartConfig->mode | \
+ 190              		.loc 1 96 41 view .LVU40
+ 191 001a 0B43     		orrs	r3, r3, r1
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****             (uint32_t)usartConfig->wordLength;
+ 192              		.loc 1 98 34 view .LVU41
+ 193 001c A988     		ldrh	r1, [r5, #4]
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****             (uint32_t)usartConfig->parity | \
+ 194              		.loc 1 97 43 view .LVU42
+ 195 001e 0B43     		orrs	r3, r3, r1
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp |= (uint32_t)usartConfig->mode | \
+ 196              		.loc 1 96 10 view .LVU43
+ 197 0020 1343     		orrs	r3, r3, r2
+ 198              	.LVL27:
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uart->CTRL1 = temp;
+ 199              		.loc 1 99 5 is_stmt 1 view .LVU44
+ 200              		.loc 1 99 17 is_stmt 0 view .LVU45
+ 201 0022 C360     		str	r3, [r0, #12]
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp = uart->CTRL2;
+ 202              		.loc 1 101 5 is_stmt 1 view .LVU46
+ 203              		.loc 1 101 10 is_stmt 0 view .LVU47
+ 204 0024 0269     		ldr	r2, [r0, #16]
+ 205              	.LVL28:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp &= 0xCFFF;
+ 206              		.loc 1 102 5 is_stmt 1 view .LVU48
+ 207              		.loc 1 102 10 is_stmt 0 view .LVU49
+ 208 0026 22F44052 		bic	r2, r2, #12288
+ 209              	.LVL29:
+ 210              		.loc 1 102 10 view .LVU50
+ 211 002a 1204     		lsls	r2, r2, #16
+ 212 002c 120C     		lsrs	r2, r2, #16
+ 213              	.LVL30:
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp |= usartConfig->stopBits;
+ 214              		.loc 1 103 5 is_stmt 1 view .LVU51
+ 215              		.loc 1 103 24 is_stmt 0 view .LVU52
+ 216 002e EB88     		ldrh	r3, [r5, #6]
+ 217              		.loc 1 103 10 view .LVU53
+ 218 0030 1343     		orrs	r3, r3, r2
+ 219              	.LVL31:
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uart->CTRL2 = temp;
+ 220              		.loc 1 104 5 is_stmt 1 view .LVU54
+ 221              		.loc 1 104 17 is_stmt 0 view .LVU55
+ 222 0032 0361     		str	r3, [r0, #16]
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 7
+
+
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp = uart->CTRL3;
+ 223              		.loc 1 106 5 is_stmt 1 view .LVU56
+ 224              		.loc 1 106 10 is_stmt 0 view .LVU57
+ 225 0034 4269     		ldr	r2, [r0, #20]
+ 226              	.LVL32:
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp &= 0xFCFF;
+ 227              		.loc 1 107 5 is_stmt 1 view .LVU58
+ 228              		.loc 1 107 10 is_stmt 0 view .LVU59
+ 229 0036 22F44072 		bic	r2, r2, #768
+ 230              	.LVL33:
+ 231              		.loc 1 107 10 view .LVU60
+ 232 003a 1204     		lsls	r2, r2, #16
+ 233 003c 120C     		lsrs	r2, r2, #16
+ 234              	.LVL34:
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp |= (uint32_t)usartConfig->hardwareFlow;
+ 235              		.loc 1 108 5 is_stmt 1 view .LVU61
+ 236              		.loc 1 108 34 is_stmt 0 view .LVU62
+ 237 003e AB89     		ldrh	r3, [r5, #12]
+ 238              		.loc 1 108 10 view .LVU63
+ 239 0040 1343     		orrs	r3, r3, r2
+ 240              	.LVL35:
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uart->CTRL3 = temp;
+ 241              		.loc 1 109 5 is_stmt 1 view .LVU64
+ 242              		.loc 1 109 17 is_stmt 0 view .LVU65
+ 243 0042 4361     		str	r3, [r0, #20]
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (uart == USART1)
+ 244              		.loc 1 111 5 is_stmt 1 view .LVU66
+ 245              		.loc 1 111 8 is_stmt 0 view .LVU67
+ 246 0044 134B     		ldr	r3, .L20
+ 247              	.LVL36:
+ 248              		.loc 1 111 8 view .LVU68
+ 249 0046 9842     		cmp	r0, r3
+ 250 0048 1ED0     		beq	.L19
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_ReadPCLKFreq(NULL, &fCLK);
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     else
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         RCM_ReadPCLKFreq(&fCLK, NULL);
+ 251              		.loc 1 117 9 is_stmt 1 view .LVU69
+ 252 004a 0021     		movs	r1, #0
+ 253 004c 01A8     		add	r0, sp, #4
+ 254              	.LVL37:
+ 255              		.loc 1 117 9 is_stmt 0 view .LVU70
+ 256 004e FFF7FEFF 		bl	RCM_ReadPCLKFreq
+ 257              	.LVL38:
+ 258              	.L17:
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     intDiv = ((25 * fCLK) / (4 * (usartConfig->baudRate)));
+ 259              		.loc 1 120 5 is_stmt 1 view .LVU71
+ 260              		.loc 1 120 19 is_stmt 0 view .LVU72
+ 261 0052 019B     		ldr	r3, [sp, #4]
+ 262 0054 03EB8303 		add	r3, r3, r3, lsl #2
+ 263 0058 03EB8303 		add	r3, r3, r3, lsl #2
+ 264              		.loc 1 120 46 view .LVU73
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 8
+
+
+ 265 005c 2A68     		ldr	r2, [r5]
+ 266              		.loc 1 120 32 view .LVU74
+ 267 005e 9200     		lsls	r2, r2, #2
+ 268              		.loc 1 120 12 view .LVU75
+ 269 0060 B3FBF2F3 		udiv	r3, r3, r2
+ 270              	.LVL39:
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp = (intDiv / 100) << 4;
+ 271              		.loc 1 121 5 is_stmt 1 view .LVU76
+ 272              		.loc 1 121 20 is_stmt 0 view .LVU77
+ 273 0064 0C49     		ldr	r1, .L20+4
+ 274 0066 A1FB0302 		umull	r0, r2, r1, r3
+ 275 006a 5209     		lsrs	r2, r2, #5
+ 276              	.LVL40:
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     fractionalDiv = intDiv - (100 * (temp >> 4));
+ 277              		.loc 1 122 5 is_stmt 1 view .LVU78
+ 278              		.loc 1 122 19 is_stmt 0 view .LVU79
+ 279 006c 6420     		movs	r0, #100
+ 280 006e 02FB1033 		mls	r3, r2, r0, r3
+ 281              	.LVL41:
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp |= ((((fractionalDiv * 16) + 50) / 100)) & ((uint8_t)0x0F);
+ 282              		.loc 1 123 5 is_stmt 1 view .LVU80
+ 283              		.loc 1 123 31 is_stmt 0 view .LVU81
+ 284 0072 1B01     		lsls	r3, r3, #4
+ 285              	.LVL42:
+ 286              		.loc 1 123 37 view .LVU82
+ 287 0074 3233     		adds	r3, r3, #50
+ 288              		.loc 1 123 43 view .LVU83
+ 289 0076 A1FB0313 		umull	r1, r3, r1, r3
+ 290              		.loc 1 123 51 view .LVU84
+ 291 007a C3F34313 		ubfx	r3, r3, #5, #4
+ 292              		.loc 1 123 10 view .LVU85
+ 293 007e 43EA0213 		orr	r3, r3, r2, lsl #4
+ 294              	.LVL43:
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uart->BR = temp;
+ 295              		.loc 1 125 5 is_stmt 1 view .LVU86
+ 296              		.loc 1 125 14 is_stmt 0 view .LVU87
+ 297 0082 A360     		str	r3, [r4, #8]
+ 298              	.LVL44:
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 299              		.loc 1 126 1 view .LVU88
+ 300 0084 03B0     		add	sp, sp, #12
+ 301              	.LCFI3:
+ 302              		.cfi_remember_state
+ 303              		.cfi_def_cfa_offset 12
+ 304              		@ sp needed
+ 305 0086 30BD     		pop	{r4, r5, pc}
+ 306              	.LVL45:
+ 307              	.L19:
+ 308              	.LCFI4:
+ 309              		.cfi_restore_state
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 310              		.loc 1 113 9 is_stmt 1 view .LVU89
+ 311 0088 01A9     		add	r1, sp, #4
+ 312 008a 0020     		movs	r0, #0
+ 313              	.LVL46:
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 9
+
+
+ 314              		.loc 1 113 9 is_stmt 0 view .LVU90
+ 315 008c FFF7FEFF 		bl	RCM_ReadPCLKFreq
+ 316              	.LVL47:
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 317              		.loc 1 113 9 view .LVU91
+ 318 0090 DFE7     		b	.L17
+ 319              	.L21:
+ 320 0092 00BF     		.align	2
+ 321              	.L20:
+ 322 0094 00380140 		.word	1073821696
+ 323 0098 1F85EB51 		.word	1374389535
+ 324              		.cfi_endproc
+ 325              	.LFE66:
+ 327              		.section	.text.USART_ConfigStructInit,"ax",%progbits
+ 328              		.align	1
+ 329              		.global	USART_ConfigStructInit
+ 330              		.syntax unified
+ 331              		.thumb
+ 332              		.thumb_func
+ 334              	USART_ConfigStructInit:
+ 335              	.LVL48:
+ 336              	.LFB67:
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Fills each USART_InitStruct member with its default value
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usartConfig:   pointer to a USART_Config_T structure which will be initialized
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigStructInit(USART_Config_T* usartConfig)
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 337              		.loc 1 136 1 is_stmt 1 view -0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341              		@ link register save eliminated.
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usartConfig->baudRate = 9600;
+ 342              		.loc 1 137 5 view .LVU93
+ 343              		.loc 1 137 27 is_stmt 0 view .LVU94
+ 344 0000 4FF41653 		mov	r3, #9600
+ 345 0004 0360     		str	r3, [r0]
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usartConfig->wordLength = USART_WORD_LEN_8B;
+ 346              		.loc 1 138 5 is_stmt 1 view .LVU95
+ 347              		.loc 1 138 29 is_stmt 0 view .LVU96
+ 348 0006 0023     		movs	r3, #0
+ 349 0008 8380     		strh	r3, [r0, #4]	@ movhi
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usartConfig->stopBits = USART_STOP_BIT_1;
+ 350              		.loc 1 139 5 is_stmt 1 view .LVU97
+ 351              		.loc 1 139 27 is_stmt 0 view .LVU98
+ 352 000a C380     		strh	r3, [r0, #6]	@ movhi
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usartConfig->parity = USART_PARITY_NONE ;
+ 353              		.loc 1 140 5 is_stmt 1 view .LVU99
+ 354              		.loc 1 140 25 is_stmt 0 view .LVU100
+ 355 000c 0381     		strh	r3, [r0, #8]	@ movhi
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usartConfig->mode = USART_MODE_TX_RX;
+ 356              		.loc 1 141 5 is_stmt 1 view .LVU101
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 10
+
+
+ 357              		.loc 1 141 23 is_stmt 0 view .LVU102
+ 358 000e 0C22     		movs	r2, #12
+ 359 0010 8272     		strb	r2, [r0, #10]
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usartConfig->hardwareFlow = USART_HARDWARE_FLOW_NONE;
+ 360              		.loc 1 142 5 is_stmt 1 view .LVU103
+ 361              		.loc 1 142 31 is_stmt 0 view .LVU104
+ 362 0012 8381     		strh	r3, [r0, #12]	@ movhi
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 363              		.loc 1 143 1 view .LVU105
+ 364 0014 7047     		bx	lr
+ 365              		.cfi_endproc
+ 366              	.LFE67:
+ 368              		.section	.text.USART_ConfigClock,"ax",%progbits
+ 369              		.align	1
+ 370              		.global	USART_ConfigClock
+ 371              		.syntax unified
+ 372              		.thumb
+ 373              		.thumb_func
+ 375              	USART_ConfigClock:
+ 376              	.LVL49:
+ 377              	.LFB68:
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Configuration communication clock
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:  Select the USART or the UART peripheral
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     clockConfig:   Pointer to a USART_clockConfig_T structure
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigClock(USART_T* usart, USART_ClockConfig_T* clockConfig)
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 378              		.loc 1 157 1 is_stmt 1 view -0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 382              		@ link register save eliminated.
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.CLKEN   = clockConfig->clock;
+ 383              		.loc 1 158 5 view .LVU107
+ 384              		.loc 1 158 41 is_stmt 0 view .LVU108
+ 385 0000 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+ 386              		.loc 1 158 28 view .LVU109
+ 387 0002 0369     		ldr	r3, [r0, #16]
+ 388 0004 62F3CB23 		bfi	r3, r2, #11, #1
+ 389 0008 0361     		str	r3, [r0, #16]
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.CPHA    = clockConfig->phase;
+ 390              		.loc 1 159 5 is_stmt 1 view .LVU110
+ 391              		.loc 1 159 41 is_stmt 0 view .LVU111
+ 392 000a 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 393              		.loc 1 159 28 view .LVU112
+ 394 000c 0369     		ldr	r3, [r0, #16]
+ 395 000e 62F34923 		bfi	r3, r2, #9, #1
+ 396 0012 0361     		str	r3, [r0, #16]
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.CPOL    = clockConfig->polarity;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 11
+
+
+ 397              		.loc 1 160 5 is_stmt 1 view .LVU113
+ 398              		.loc 1 160 41 is_stmt 0 view .LVU114
+ 399 0014 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 400              		.loc 1 160 28 view .LVU115
+ 401 0016 0369     		ldr	r3, [r0, #16]
+ 402 0018 62F38A23 		bfi	r3, r2, #10, #1
+ 403 001c 0361     		str	r3, [r0, #16]
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.LBCPOEN = clockConfig->lastBit;
+ 404              		.loc 1 161 5 is_stmt 1 view .LVU116
+ 405              		.loc 1 161 41 is_stmt 0 view .LVU117
+ 406 001e CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ 407              		.loc 1 161 28 view .LVU118
+ 408 0020 0369     		ldr	r3, [r0, #16]
+ 409 0022 62F30823 		bfi	r3, r2, #8, #1
+ 410 0026 0361     		str	r3, [r0, #16]
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 411              		.loc 1 162 1 view .LVU119
+ 412 0028 7047     		bx	lr
+ 413              		.cfi_endproc
+ 414              	.LFE68:
+ 416              		.section	.text.USART_ConfigClockStructInit,"ax",%progbits
+ 417              		.align	1
+ 418              		.global	USART_ConfigClockStructInit
+ 419              		.syntax unified
+ 420              		.thumb
+ 421              		.thumb_func
+ 423              	USART_ConfigClockStructInit:
+ 424              	.LVL50:
+ 425              	.LFB69:
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Fills each clockConfig member with its default value
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     clockConfig:   Pointer to a USART_clockConfig_T structure
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigClockStructInit(USART_ClockConfig_T* clockConfig)
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 426              		.loc 1 173 1 is_stmt 1 view -0
+ 427              		.cfi_startproc
+ 428              		@ args = 0, pretend = 0, frame = 0
+ 429              		@ frame_needed = 0, uses_anonymous_args = 0
+ 430              		@ link register save eliminated.
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     clockConfig->clock     = USART_CLKEN_DISABLE;
+ 431              		.loc 1 174 5 view .LVU121
+ 432              		.loc 1 174 28 is_stmt 0 view .LVU122
+ 433 0000 0023     		movs	r3, #0
+ 434 0002 0370     		strb	r3, [r0]
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     clockConfig->phase     = USART_CLKPHA_1EDGE;
+ 435              		.loc 1 175 5 is_stmt 1 view .LVU123
+ 436              		.loc 1 175 28 is_stmt 0 view .LVU124
+ 437 0004 8370     		strb	r3, [r0, #2]
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     clockConfig->polarity  = USART_CLKPOL_LOW;
+ 438              		.loc 1 176 5 is_stmt 1 view .LVU125
+ 439              		.loc 1 176 28 is_stmt 0 view .LVU126
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 12
+
+
+ 440 0006 4370     		strb	r3, [r0, #1]
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     clockConfig->lastBit   = USART_LBCP_DISABLE;
+ 441              		.loc 1 177 5 is_stmt 1 view .LVU127
+ 442              		.loc 1 177 28 is_stmt 0 view .LVU128
+ 443 0008 C370     		strb	r3, [r0, #3]
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 444              		.loc 1 178 1 view .LVU129
+ 445 000a 7047     		bx	lr
+ 446              		.cfi_endproc
+ 447              	.LFE69:
+ 449              		.section	.text.USART_Enable,"ax",%progbits
+ 450              		.align	1
+ 451              		.global	USART_Enable
+ 452              		.syntax unified
+ 453              		.thumb
+ 454              		.thumb_func
+ 456              	USART_Enable:
+ 457              	.LVL51:
+ 458              	.LFB70:
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enables the specified USART peripheral
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_Enable(USART_T* usart)
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 459              		.loc 1 190 1 is_stmt 1 view -0
+ 460              		.cfi_startproc
+ 461              		@ args = 0, pretend = 0, frame = 0
+ 462              		@ frame_needed = 0, uses_anonymous_args = 0
+ 463              		@ link register save eliminated.
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.UEN = BIT_SET;
+ 464              		.loc 1 191 5 view .LVU131
+ 465              		.loc 1 191 24 is_stmt 0 view .LVU132
+ 466 0000 C368     		ldr	r3, [r0, #12]
+ 467 0002 43F40053 		orr	r3, r3, #8192
+ 468 0006 C360     		str	r3, [r0, #12]
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 469              		.loc 1 192 1 view .LVU133
+ 470 0008 7047     		bx	lr
+ 471              		.cfi_endproc
+ 472              	.LFE70:
+ 474              		.section	.text.USART_Disable,"ax",%progbits
+ 475              		.align	1
+ 476              		.global	USART_Disable
+ 477              		.syntax unified
+ 478              		.thumb
+ 479              		.thumb_func
+ 481              	USART_Disable:
+ 482              	.LVL52:
+ 483              	.LFB71:
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 13
+
+
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable the specified USART peripheral
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_Disable(USART_T* usart)
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 484              		.loc 1 204 1 is_stmt 1 view -0
+ 485              		.cfi_startproc
+ 486              		@ args = 0, pretend = 0, frame = 0
+ 487              		@ frame_needed = 0, uses_anonymous_args = 0
+ 488              		@ link register save eliminated.
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.UEN = BIT_RESET;
+ 489              		.loc 1 205 5 view .LVU135
+ 490              		.loc 1 205 24 is_stmt 0 view .LVU136
+ 491 0000 C368     		ldr	r3, [r0, #12]
+ 492 0002 6FF34D33 		bfc	r3, #13, #1
+ 493 0006 C360     		str	r3, [r0, #12]
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 494              		.loc 1 206 1 view .LVU137
+ 495 0008 7047     		bx	lr
+ 496              		.cfi_endproc
+ 497              	.LFE71:
+ 499              		.section	.text.USART_EnableDMA,"ax",%progbits
+ 500              		.align	1
+ 501              		.global	USART_EnableDMA
+ 502              		.syntax unified
+ 503              		.thumb
+ 504              		.thumb_func
+ 506              	USART_EnableDMA:
+ 507              	.LVL53:
+ 508              	.LFB72:
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enables the USART DMA interface
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     dmaReq:  Specifies the DMA request
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     This parameter can be one of the following values:
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_DMA_TX:     USART DMA receive request
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_DMA_RX:     USART DMA transmit request
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_DMA_TX_RX:  USART DMA transmit/receive request
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableDMA(USART_T* usart, USART_DMA_T dmaReq)
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 509              		.loc 1 224 1 is_stmt 1 view -0
+ 510              		.cfi_startproc
+ 511              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 14
+
+
+ 512              		@ frame_needed = 0, uses_anonymous_args = 0
+ 513              		@ link register save eliminated.
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3 |= dmaReq;
+ 514              		.loc 1 225 5 view .LVU139
+ 515              		.loc 1 225 18 is_stmt 0 view .LVU140
+ 516 0000 4369     		ldr	r3, [r0, #20]
+ 517 0002 1943     		orrs	r1, r1, r3
+ 518              	.LVL54:
+ 519              		.loc 1 225 18 view .LVU141
+ 520 0004 4161     		str	r1, [r0, #20]
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 521              		.loc 1 226 1 view .LVU142
+ 522 0006 7047     		bx	lr
+ 523              		.cfi_endproc
+ 524              	.LFE72:
+ 526              		.section	.text.USART_DisableDMA,"ax",%progbits
+ 527              		.align	1
+ 528              		.global	USART_DisableDMA
+ 529              		.syntax unified
+ 530              		.thumb
+ 531              		.thumb_func
+ 533              	USART_DisableDMA:
+ 534              	.LVL55:
+ 535              	.LFB73:
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable the USART DMA interface
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     dmaReq:  Specifies the DMA request
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     This parameter can be one of the following values:
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_DMA_TX:     USART DMA receive request
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_DMA_RX:     USART DMA transmit request
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_DMA_TX_RX:  USART DMA transmit/receive request
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableDMA(USART_T* usart, USART_DMA_T dmaReq)
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 536              		.loc 1 244 1 is_stmt 1 view -0
+ 537              		.cfi_startproc
+ 538              		@ args = 0, pretend = 0, frame = 0
+ 539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 540              		@ link register save eliminated.
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3 &= (uint32_t)~dmaReq;
+ 541              		.loc 1 245 5 view .LVU144
+ 542              		.loc 1 245 18 is_stmt 0 view .LVU145
+ 543 0000 4369     		ldr	r3, [r0, #20]
+ 544 0002 23EA0103 		bic	r3, r3, r1
+ 545 0006 4361     		str	r3, [r0, #20]
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 546              		.loc 1 246 1 view .LVU146
+ 547 0008 7047     		bx	lr
+ 548              		.cfi_endproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 15
+
+
+ 549              	.LFE73:
+ 551              		.section	.text.USART_Address,"ax",%progbits
+ 552              		.align	1
+ 553              		.global	USART_Address
+ 554              		.syntax unified
+ 555              		.thumb
+ 556              		.thumb_func
+ 558              	USART_Address:
+ 559              	.LVL56:
+ 560              	.LFB74:
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Configures the address of the USART node
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     address: Indicates the address of the USART node
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_Address(USART_T* usart, uint8_t address)
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 561              		.loc 1 260 1 is_stmt 1 view -0
+ 562              		.cfi_startproc
+ 563              		@ args = 0, pretend = 0, frame = 0
+ 564              		@ frame_needed = 0, uses_anonymous_args = 0
+ 565              		@ link register save eliminated.
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.ADDR = address;
+ 566              		.loc 1 261 5 view .LVU148
+ 567              		.loc 1 261 25 is_stmt 0 view .LVU149
+ 568 0000 0369     		ldr	r3, [r0, #16]
+ 569 0002 61F30303 		bfi	r3, r1, #0, #4
+ 570 0006 0361     		str	r3, [r0, #16]
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 571              		.loc 1 262 1 view .LVU150
+ 572 0008 7047     		bx	lr
+ 573              		.cfi_endproc
+ 574              	.LFE74:
+ 576              		.section	.text.USART_ConfigWakeUp,"ax",%progbits
+ 577              		.align	1
+ 578              		.global	USART_ConfigWakeUp
+ 579              		.syntax unified
+ 580              		.thumb
+ 581              		.thumb_func
+ 583              	USART_ConfigWakeUp:
+ 584              	.LVL57:
+ 585              	.LFB75:
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Selects the USART WakeUp method.
+ 266:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 267:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:  Select the USART or the UART peripheral
+ 268:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 269:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     wakeup: Specifies the selected USART auto baud rate method
+ 270:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                    This parameter can be one of the following values:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 16
+
+
+ 271:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                    @arg USART_WAKEUP_IDLE_LINE:    WakeUp by an idle line detection
+ 272:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                    @arg USART_WAKEUP_ADDRESS_MARK: WakeUp by an address mark
+ 273:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 274:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 275:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 276:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 277:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 278:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigWakeUp(USART_T* usart, USART_WAKEUP_T wakeup)
+ 279:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 586              		.loc 1 279 1 is_stmt 1 view -0
+ 587              		.cfi_startproc
+ 588              		@ args = 0, pretend = 0, frame = 0
+ 589              		@ frame_needed = 0, uses_anonymous_args = 0
+ 590              		@ link register save eliminated.
+ 280:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.WUPMCFG = wakeup;
+ 591              		.loc 1 280 5 view .LVU152
+ 592              		.loc 1 280 28 is_stmt 0 view .LVU153
+ 593 0000 C368     		ldr	r3, [r0, #12]
+ 594 0002 61F3CB23 		bfi	r3, r1, #11, #1
+ 595 0006 C360     		str	r3, [r0, #12]
+ 281:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 596              		.loc 1 281 1 view .LVU154
+ 597 0008 7047     		bx	lr
+ 598              		.cfi_endproc
+ 599              	.LFE75:
+ 601              		.section	.text.USART_EnableMuteMode,"ax",%progbits
+ 602              		.align	1
+ 603              		.global	USART_EnableMuteMode
+ 604              		.syntax unified
+ 605              		.thumb
+ 606              		.thumb_func
+ 608              	USART_EnableMuteMode:
+ 609              	.LVL58:
+ 610              	.LFB76:
+ 282:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 283:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 284:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enable USART Receiver in mute mode
+ 285:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 286:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 287:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 288:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 289:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 290:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 291:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 292:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableMuteMode(USART_T* usart)
+ 293:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 611              		.loc 1 293 1 is_stmt 1 view -0
+ 612              		.cfi_startproc
+ 613              		@ args = 0, pretend = 0, frame = 0
+ 614              		@ frame_needed = 0, uses_anonymous_args = 0
+ 615              		@ link register save eliminated.
+ 294:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.RXMUTEEN = BIT_SET;
+ 616              		.loc 1 294 5 view .LVU156
+ 617              		.loc 1 294 29 is_stmt 0 view .LVU157
+ 618 0000 C368     		ldr	r3, [r0, #12]
+ 619 0002 43F00203 		orr	r3, r3, #2
+ 620 0006 C360     		str	r3, [r0, #12]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 17
+
+
+ 295:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 621              		.loc 1 295 1 view .LVU158
+ 622 0008 7047     		bx	lr
+ 623              		.cfi_endproc
+ 624              	.LFE76:
+ 626              		.section	.text.USART_DisableMuteMode,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	USART_DisableMuteMode
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ 633              	USART_DisableMuteMode:
+ 634              	.LVL59:
+ 635              	.LFB77:
+ 296:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 297:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 298:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable USART Receiver in active mode
+ 299:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 300:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 301:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 302:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 303:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 304:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 305:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 306:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableMuteMode(USART_T* usart)
+ 307:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 636              		.loc 1 307 1 is_stmt 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 640              		@ link register save eliminated.
+ 308:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.RXMUTEEN = BIT_RESET;
+ 641              		.loc 1 308 5 view .LVU160
+ 642              		.loc 1 308 29 is_stmt 0 view .LVU161
+ 643 0000 C368     		ldr	r3, [r0, #12]
+ 644 0002 6FF34103 		bfc	r3, #1, #1
+ 645 0006 C360     		str	r3, [r0, #12]
+ 309:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 646              		.loc 1 309 1 view .LVU162
+ 647 0008 7047     		bx	lr
+ 648              		.cfi_endproc
+ 649              	.LFE77:
+ 651              		.section	.text.USART_ConfigLINBreakDetectLength,"ax",%progbits
+ 652              		.align	1
+ 653              		.global	USART_ConfigLINBreakDetectLength
+ 654              		.syntax unified
+ 655              		.thumb
+ 656              		.thumb_func
+ 658              	USART_ConfigLINBreakDetectLength:
+ 659              	.LVL60:
+ 660              	.LFB78:
+ 310:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 311:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 312:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Sets the USART LIN Break detection length
+ 313:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 314:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 315:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 18
+
+
+ 316:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     length:  Specifies the LIN break detection length
+ 317:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     This parameter can be one of the following values:
+ 318:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_LBDL_10B: 10-bit break detection
+ 319:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                     @arg USART_LBDL_10B: 11-bit break detection
+ 320:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 321:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 323:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 324:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 325:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigLINBreakDetectLength(USART_T* usart, USART_LBDL_T length)
+ 326:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 661              		.loc 1 326 1 is_stmt 1 view -0
+ 662              		.cfi_startproc
+ 663              		@ args = 0, pretend = 0, frame = 0
+ 664              		@ frame_needed = 0, uses_anonymous_args = 0
+ 665              		@ link register save eliminated.
+ 327:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.LBDLCFG = length;
+ 666              		.loc 1 327 5 view .LVU164
+ 667              		.loc 1 327 28 is_stmt 0 view .LVU165
+ 668 0000 0369     		ldr	r3, [r0, #16]
+ 669 0002 61F34513 		bfi	r3, r1, #5, #1
+ 670 0006 0361     		str	r3, [r0, #16]
+ 328:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 671              		.loc 1 328 1 view .LVU166
+ 672 0008 7047     		bx	lr
+ 673              		.cfi_endproc
+ 674              	.LFE78:
+ 676              		.section	.text.USART_EnableLIN,"ax",%progbits
+ 677              		.align	1
+ 678              		.global	USART_EnableLIN
+ 679              		.syntax unified
+ 680              		.thumb
+ 681              		.thumb_func
+ 683              	USART_EnableLIN:
+ 684              	.LVL61:
+ 685              	.LFB79:
+ 329:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 330:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 331:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enables the USART LIN MODE
+ 332:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 333:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 334:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 335:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 336:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 337:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 338:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 339:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableLIN(USART_T* usart)
+ 340:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 686              		.loc 1 340 1 is_stmt 1 view -0
+ 687              		.cfi_startproc
+ 688              		@ args = 0, pretend = 0, frame = 0
+ 689              		@ frame_needed = 0, uses_anonymous_args = 0
+ 690              		@ link register save eliminated.
+ 341:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.LINMEN = BIT_SET;
+ 691              		.loc 1 341 5 view .LVU168
+ 692              		.loc 1 341 27 is_stmt 0 view .LVU169
+ 693 0000 0369     		ldr	r3, [r0, #16]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 19
+
+
+ 694 0002 43F48043 		orr	r3, r3, #16384
+ 695 0006 0361     		str	r3, [r0, #16]
+ 342:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 696              		.loc 1 342 1 view .LVU170
+ 697 0008 7047     		bx	lr
+ 698              		.cfi_endproc
+ 699              	.LFE79:
+ 701              		.section	.text.USART_DisableLIN,"ax",%progbits
+ 702              		.align	1
+ 703              		.global	USART_DisableLIN
+ 704              		.syntax unified
+ 705              		.thumb
+ 706              		.thumb_func
+ 708              	USART_DisableLIN:
+ 709              	.LVL62:
+ 710              	.LFB80:
+ 343:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 344:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 345:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable the USART LIN MODE
+ 346:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 347:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 348:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 349:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 350:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 351:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 352:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 353:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableLIN(USART_T* usart)
+ 354:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 711              		.loc 1 354 1 is_stmt 1 view -0
+ 712              		.cfi_startproc
+ 713              		@ args = 0, pretend = 0, frame = 0
+ 714              		@ frame_needed = 0, uses_anonymous_args = 0
+ 715              		@ link register save eliminated.
+ 355:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL2_B.LINMEN = BIT_RESET;
+ 716              		.loc 1 355 5 view .LVU172
+ 717              		.loc 1 355 27 is_stmt 0 view .LVU173
+ 718 0000 0369     		ldr	r3, [r0, #16]
+ 719 0002 6FF38E33 		bfc	r3, #14, #1
+ 720 0006 0361     		str	r3, [r0, #16]
+ 356:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 721              		.loc 1 356 1 view .LVU174
+ 722 0008 7047     		bx	lr
+ 723              		.cfi_endproc
+ 724              	.LFE80:
+ 726              		.section	.text.USART_EnableTx,"ax",%progbits
+ 727              		.align	1
+ 728              		.global	USART_EnableTx
+ 729              		.syntax unified
+ 730              		.thumb
+ 731              		.thumb_func
+ 733              	USART_EnableTx:
+ 734              	.LVL63:
+ 735              	.LFB81:
+ 357:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 358:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 359:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Transmitter Enable
+ 360:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 20
+
+
+ 361:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 362:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 363:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 364:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 365:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 366:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 367:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableTx(USART_T* usart)
+ 368:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 736              		.loc 1 368 1 is_stmt 1 view -0
+ 737              		.cfi_startproc
+ 738              		@ args = 0, pretend = 0, frame = 0
+ 739              		@ frame_needed = 0, uses_anonymous_args = 0
+ 740              		@ link register save eliminated.
+ 369:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.TXEN = BIT_SET;
+ 741              		.loc 1 369 5 view .LVU176
+ 742              		.loc 1 369 25 is_stmt 0 view .LVU177
+ 743 0000 C368     		ldr	r3, [r0, #12]
+ 744 0002 43F00803 		orr	r3, r3, #8
+ 745 0006 C360     		str	r3, [r0, #12]
+ 370:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 746              		.loc 1 370 1 view .LVU178
+ 747 0008 7047     		bx	lr
+ 748              		.cfi_endproc
+ 749              	.LFE81:
+ 751              		.section	.text.USART_DisableTx,"ax",%progbits
+ 752              		.align	1
+ 753              		.global	USART_DisableTx
+ 754              		.syntax unified
+ 755              		.thumb
+ 756              		.thumb_func
+ 758              	USART_DisableTx:
+ 759              	.LVL64:
+ 760              	.LFB82:
+ 371:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 372:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 373:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Transmitter Disable
+ 374:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 375:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 376:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 377:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 378:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 379:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 381:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableTx(USART_T* usart)
+ 382:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 761              		.loc 1 382 1 is_stmt 1 view -0
+ 762              		.cfi_startproc
+ 763              		@ args = 0, pretend = 0, frame = 0
+ 764              		@ frame_needed = 0, uses_anonymous_args = 0
+ 765              		@ link register save eliminated.
+ 383:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.TXEN = BIT_RESET;
+ 766              		.loc 1 383 5 view .LVU180
+ 767              		.loc 1 383 25 is_stmt 0 view .LVU181
+ 768 0000 C368     		ldr	r3, [r0, #12]
+ 769 0002 6FF3C303 		bfc	r3, #3, #1
+ 770 0006 C360     		str	r3, [r0, #12]
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 21
+
+
+ 771              		.loc 1 384 1 view .LVU182
+ 772 0008 7047     		bx	lr
+ 773              		.cfi_endproc
+ 774              	.LFE82:
+ 776              		.section	.text.USART_EnableRx,"ax",%progbits
+ 777              		.align	1
+ 778              		.global	USART_EnableRx
+ 779              		.syntax unified
+ 780              		.thumb
+ 781              		.thumb_func
+ 783              	USART_EnableRx:
+ 784              	.LVL65:
+ 785              	.LFB83:
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Receiver enable
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 390:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 391:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 392:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 393:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 394:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 395:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableRx(USART_T* usart)
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 786              		.loc 1 396 1 is_stmt 1 view -0
+ 787              		.cfi_startproc
+ 788              		@ args = 0, pretend = 0, frame = 0
+ 789              		@ frame_needed = 0, uses_anonymous_args = 0
+ 790              		@ link register save eliminated.
+ 397:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.RXEN = BIT_SET;
+ 791              		.loc 1 397 5 view .LVU184
+ 792              		.loc 1 397 25 is_stmt 0 view .LVU185
+ 793 0000 C368     		ldr	r3, [r0, #12]
+ 794 0002 43F00403 		orr	r3, r3, #4
+ 795 0006 C360     		str	r3, [r0, #12]
+ 398:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 796              		.loc 1 398 1 view .LVU186
+ 797 0008 7047     		bx	lr
+ 798              		.cfi_endproc
+ 799              	.LFE83:
+ 801              		.section	.text.USART_DisableRx,"ax",%progbits
+ 802              		.align	1
+ 803              		.global	USART_DisableRx
+ 804              		.syntax unified
+ 805              		.thumb
+ 806              		.thumb_func
+ 808              	USART_DisableRx:
+ 809              	.LVL66:
+ 810              	.LFB84:
+ 399:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 400:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Receiver disable
+ 402:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 22
+
+
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 409:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableRx(USART_T* usart)
+ 410:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 811              		.loc 1 410 1 is_stmt 1 view -0
+ 812              		.cfi_startproc
+ 813              		@ args = 0, pretend = 0, frame = 0
+ 814              		@ frame_needed = 0, uses_anonymous_args = 0
+ 815              		@ link register save eliminated.
+ 411:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.RXEN = BIT_RESET;
+ 816              		.loc 1 411 5 view .LVU188
+ 817              		.loc 1 411 25 is_stmt 0 view .LVU189
+ 818 0000 C368     		ldr	r3, [r0, #12]
+ 819 0002 6FF38203 		bfc	r3, #2, #1
+ 820 0006 C360     		str	r3, [r0, #12]
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 821              		.loc 1 412 1 view .LVU190
+ 822 0008 7047     		bx	lr
+ 823              		.cfi_endproc
+ 824              	.LFE84:
+ 826              		.section	.text.USART_TxData,"ax",%progbits
+ 827              		.align	1
+ 828              		.global	USART_TxData
+ 829              		.syntax unified
+ 830              		.thumb
+ 831              		.thumb_func
+ 833              	USART_TxData:
+ 834              	.LVL67:
+ 835              	.LFB85:
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Transmits single data
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 419:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     data:  the data to transmit
+ 420:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 421:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 422:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 423:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 424:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 425:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_TxData(USART_T* usart, uint16_t data)
+ 426:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 836              		.loc 1 426 1 is_stmt 1 view -0
+ 837              		.cfi_startproc
+ 838              		@ args = 0, pretend = 0, frame = 0
+ 839              		@ frame_needed = 0, uses_anonymous_args = 0
+ 840              		@ link register save eliminated.
+ 427:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->DATA_B.DATA = data;
+ 841              		.loc 1 427 5 view .LVU192
+ 842              		.loc 1 427 24 is_stmt 0 view .LVU193
+ 843 0000 4368     		ldr	r3, [r0, #4]
+ 844 0002 61F30803 		bfi	r3, r1, #0, #9
+ 845 0006 4360     		str	r3, [r0, #4]
+ 428:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 846              		.loc 1 428 1 view .LVU194
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 23
+
+
+ 847 0008 7047     		bx	lr
+ 848              		.cfi_endproc
+ 849              	.LFE85:
+ 851              		.section	.text.USART_RxData,"ax",%progbits
+ 852              		.align	1
+ 853              		.global	USART_RxData
+ 854              		.syntax unified
+ 855              		.thumb
+ 856              		.thumb_func
+ 858              	USART_RxData:
+ 859              	.LVL68:
+ 860              	.LFB86:
+ 429:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 430:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 431:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Returns the most recent received data
+ 432:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 433:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 434:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 435:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 436:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 437:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 438:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 439:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** uint16_t USART_RxData(USART_T* usart)
+ 440:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 861              		.loc 1 440 1 is_stmt 1 view -0
+ 862              		.cfi_startproc
+ 863              		@ args = 0, pretend = 0, frame = 0
+ 864              		@ frame_needed = 0, uses_anonymous_args = 0
+ 865              		@ link register save eliminated.
+ 441:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     return (uint16_t)(usart->DATA_B.DATA);
+ 866              		.loc 1 441 5 view .LVU196
+ 867              		.loc 1 441 36 is_stmt 0 view .LVU197
+ 868 0000 4068     		ldr	r0, [r0, #4]
+ 869              	.LVL69:
+ 442:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 870              		.loc 1 442 1 view .LVU198
+ 871 0002 C0F30800 		ubfx	r0, r0, #0, #9
+ 872 0006 7047     		bx	lr
+ 873              		.cfi_endproc
+ 874              	.LFE86:
+ 876              		.section	.text.USART_TxBreak,"ax",%progbits
+ 877              		.align	1
+ 878              		.global	USART_TxBreak
+ 879              		.syntax unified
+ 880              		.thumb
+ 881              		.thumb_func
+ 883              	USART_TxBreak:
+ 884              	.LVL70:
+ 885              	.LFB87:
+ 443:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 444:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 445:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Transmits break characters
+ 446:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 447:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 448:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 449:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 450:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 24
+
+
+ 451:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 452:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 453:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_TxBreak(USART_T* usart)
+ 454:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 886              		.loc 1 454 1 is_stmt 1 view -0
+ 887              		.cfi_startproc
+ 888              		@ args = 0, pretend = 0, frame = 0
+ 889              		@ frame_needed = 0, uses_anonymous_args = 0
+ 890              		@ link register save eliminated.
+ 455:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL1_B.TXBF = BIT_SET;
+ 891              		.loc 1 455 5 view .LVU200
+ 892              		.loc 1 455 25 is_stmt 0 view .LVU201
+ 893 0000 C368     		ldr	r3, [r0, #12]
+ 894 0002 43F00103 		orr	r3, r3, #1
+ 895 0006 C360     		str	r3, [r0, #12]
+ 456:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 896              		.loc 1 456 1 view .LVU202
+ 897 0008 7047     		bx	lr
+ 898              		.cfi_endproc
+ 899              	.LFE87:
+ 901              		.section	.text.USART_ConfigGuardTime,"ax",%progbits
+ 902              		.align	1
+ 903              		.global	USART_ConfigGuardTime
+ 904              		.syntax unified
+ 905              		.thumb
+ 906              		.thumb_func
+ 908              	USART_ConfigGuardTime:
+ 909              	.LVL71:
+ 910              	.LFB88:
+ 457:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 458:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 459:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Sets the specified USART guard time
+ 460:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 461:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:     Select the USART or the UART peripheral
+ 462:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 463:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     guardTime: Specifies the guard time
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 465:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 466:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 467:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3
+ 468:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 469:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigGuardTime(USART_T* usart, uint8_t guardTime)
+ 470:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 911              		.loc 1 470 1 is_stmt 1 view -0
+ 912              		.cfi_startproc
+ 913              		@ args = 0, pretend = 0, frame = 0
+ 914              		@ frame_needed = 0, uses_anonymous_args = 0
+ 915              		@ link register save eliminated.
+ 471:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->GTPSC_B.GRDT = guardTime;
+ 916              		.loc 1 471 5 view .LVU204
+ 917              		.loc 1 471 25 is_stmt 0 view .LVU205
+ 918 0000 8369     		ldr	r3, [r0, #24]
+ 919 0002 61F30F23 		bfi	r3, r1, #8, #8
+ 920 0006 8361     		str	r3, [r0, #24]
+ 472:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 921              		.loc 1 472 1 view .LVU206
+ 922 0008 7047     		bx	lr
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 25
+
+
+ 923              		.cfi_endproc
+ 924              	.LFE88:
+ 926              		.section	.text.USART_ConfigPrescaler,"ax",%progbits
+ 927              		.align	1
+ 928              		.global	USART_ConfigPrescaler
+ 929              		.syntax unified
+ 930              		.thumb
+ 931              		.thumb_func
+ 933              	USART_ConfigPrescaler:
+ 934              	.LVL72:
+ 935              	.LFB89:
+ 473:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 474:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Sets the system clock divider number
+ 476:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 477:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 478:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 479:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     div:   specifies the divider number
+ 480:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 481:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 482:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 483:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3
+ 484:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 485:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigPrescaler(USART_T* usart, uint8_t div)
+ 486:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 936              		.loc 1 486 1 is_stmt 1 view -0
+ 937              		.cfi_startproc
+ 938              		@ args = 0, pretend = 0, frame = 0
+ 939              		@ frame_needed = 0, uses_anonymous_args = 0
+ 940              		@ link register save eliminated.
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->GTPSC_B.PSC = div;
+ 941              		.loc 1 487 5 view .LVU208
+ 942              		.loc 1 487 24 is_stmt 0 view .LVU209
+ 943 0000 8369     		ldr	r3, [r0, #24]
+ 944              	.LVL73:
+ 945              		.loc 1 487 24 view .LVU210
+ 946 0002 61F30703 		bfi	r3, r1, #0, #8
+ 947 0006 8361     		str	r3, [r0, #24]
+ 488:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 948              		.loc 1 488 1 view .LVU211
+ 949 0008 7047     		bx	lr
+ 950              		.cfi_endproc
+ 951              	.LFE89:
+ 953              		.section	.text.USART_EnableSmartCard,"ax",%progbits
+ 954              		.align	1
+ 955              		.global	USART_EnableSmartCard
+ 956              		.syntax unified
+ 957              		.thumb
+ 958              		.thumb_func
+ 960              	USART_EnableSmartCard:
+ 961              	.LVL74:
+ 962              	.LFB90:
+ 489:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 490:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 491:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enables the USART Smart Card mode
+ 492:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 493:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 26
+
+
+ 494:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 495:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 496:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 497:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The Smart Card mode is not available for UART4 and UART5
+ 498:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 499:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableSmartCard(USART_T* usart)
+ 500:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 963              		.loc 1 500 1 is_stmt 1 view -0
+ 964              		.cfi_startproc
+ 965              		@ args = 0, pretend = 0, frame = 0
+ 966              		@ frame_needed = 0, uses_anonymous_args = 0
+ 967              		@ link register save eliminated.
+ 501:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.SCEN = BIT_SET;
+ 968              		.loc 1 501 5 view .LVU213
+ 969              		.loc 1 501 25 is_stmt 0 view .LVU214
+ 970 0000 4369     		ldr	r3, [r0, #20]
+ 971 0002 43F02003 		orr	r3, r3, #32
+ 972 0006 4361     		str	r3, [r0, #20]
+ 502:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 973              		.loc 1 502 1 view .LVU215
+ 974 0008 7047     		bx	lr
+ 975              		.cfi_endproc
+ 976              	.LFE90:
+ 978              		.section	.text.USART_DisableSmartCard,"ax",%progbits
+ 979              		.align	1
+ 980              		.global	USART_DisableSmartCard
+ 981              		.syntax unified
+ 982              		.thumb
+ 983              		.thumb_func
+ 985              	USART_DisableSmartCard:
+ 986              	.LVL75:
+ 987              	.LFB91:
+ 503:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 504:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 505:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable the USART Smart Card mode
+ 506:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 507:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 508:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 509:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 510:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The Smart Card mode is not available for UART4 and UART5
+ 512:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 513:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableSmartCard(USART_T* usart)
+ 514:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 988              		.loc 1 514 1 is_stmt 1 view -0
+ 989              		.cfi_startproc
+ 990              		@ args = 0, pretend = 0, frame = 0
+ 991              		@ frame_needed = 0, uses_anonymous_args = 0
+ 992              		@ link register save eliminated.
+ 515:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.SCEN = BIT_RESET;
+ 993              		.loc 1 515 5 view .LVU217
+ 994              		.loc 1 515 25 is_stmt 0 view .LVU218
+ 995 0000 4369     		ldr	r3, [r0, #20]
+ 996 0002 6FF34513 		bfc	r3, #5, #1
+ 997 0006 4361     		str	r3, [r0, #20]
+ 516:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 998              		.loc 1 516 1 view .LVU219
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 27
+
+
+ 999 0008 7047     		bx	lr
+ 1000              		.cfi_endproc
+ 1001              	.LFE91:
+ 1003              		.section	.text.USART_EnableSmartCardNACK,"ax",%progbits
+ 1004              		.align	1
+ 1005              		.global	USART_EnableSmartCardNACK
+ 1006              		.syntax unified
+ 1007              		.thumb
+ 1008              		.thumb_func
+ 1010              	USART_EnableSmartCardNACK:
+ 1011              	.LVL76:
+ 1012              	.LFB92:
+ 517:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 518:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 519:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enables NACK transmission
+ 520:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 521:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 522:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 523:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 524:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 525:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The Smart Card mode is not available for UART4 and UART5
+ 526:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 527:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableSmartCardNACK(USART_T* usart)
+ 528:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1013              		.loc 1 528 1 is_stmt 1 view -0
+ 1014              		.cfi_startproc
+ 1015              		@ args = 0, pretend = 0, frame = 0
+ 1016              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1017              		@ link register save eliminated.
+ 529:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.SCNACKEN = BIT_SET;
+ 1018              		.loc 1 529 5 view .LVU221
+ 1019              		.loc 1 529 29 is_stmt 0 view .LVU222
+ 1020 0000 4369     		ldr	r3, [r0, #20]
+ 1021 0002 43F01003 		orr	r3, r3, #16
+ 1022 0006 4361     		str	r3, [r0, #20]
+ 530:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1023              		.loc 1 530 1 view .LVU223
+ 1024 0008 7047     		bx	lr
+ 1025              		.cfi_endproc
+ 1026              	.LFE92:
+ 1028              		.section	.text.USART_DisableSmartCardNACK,"ax",%progbits
+ 1029              		.align	1
+ 1030              		.global	USART_DisableSmartCardNACK
+ 1031              		.syntax unified
+ 1032              		.thumb
+ 1033              		.thumb_func
+ 1035              	USART_DisableSmartCardNACK:
+ 1036              	.LVL77:
+ 1037              	.LFB93:
+ 531:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 532:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 533:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable NACK transmission
+ 534:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 535:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 536:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 537:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 538:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 28
+
+
+ 539:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The Smart Card mode is not available for UART4 and UART5
+ 540:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableSmartCardNACK(USART_T* usart)
+ 542:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1038              		.loc 1 542 1 is_stmt 1 view -0
+ 1039              		.cfi_startproc
+ 1040              		@ args = 0, pretend = 0, frame = 0
+ 1041              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1042              		@ link register save eliminated.
+ 543:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.SCNACKEN = BIT_RESET;
+ 1043              		.loc 1 543 5 view .LVU225
+ 1044              		.loc 1 543 29 is_stmt 0 view .LVU226
+ 1045 0000 4369     		ldr	r3, [r0, #20]
+ 1046 0002 6FF30413 		bfc	r3, #4, #1
+ 1047 0006 4361     		str	r3, [r0, #20]
+ 544:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1048              		.loc 1 544 1 view .LVU227
+ 1049 0008 7047     		bx	lr
+ 1050              		.cfi_endproc
+ 1051              	.LFE93:
+ 1053              		.section	.text.USART_EnableHalfDuplex,"ax",%progbits
+ 1054              		.align	1
+ 1055              		.global	USART_EnableHalfDuplex
+ 1056              		.syntax unified
+ 1057              		.thumb
+ 1058              		.thumb_func
+ 1060              	USART_EnableHalfDuplex:
+ 1061              	.LVL78:
+ 1062              	.LFB94:
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 546:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 547:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enables USART Half Duplex communication
+ 548:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 549:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 550:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 551:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 552:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 553:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 554:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 555:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableHalfDuplex(USART_T* usart)
+ 556:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1063              		.loc 1 556 1 is_stmt 1 view -0
+ 1064              		.cfi_startproc
+ 1065              		@ args = 0, pretend = 0, frame = 0
+ 1066              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1067              		@ link register save eliminated.
+ 557:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.HDEN = BIT_SET;
+ 1068              		.loc 1 557 5 view .LVU229
+ 1069              		.loc 1 557 25 is_stmt 0 view .LVU230
+ 1070 0000 4369     		ldr	r3, [r0, #20]
+ 1071 0002 43F00803 		orr	r3, r3, #8
+ 1072 0006 4361     		str	r3, [r0, #20]
+ 558:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1073              		.loc 1 558 1 view .LVU231
+ 1074 0008 7047     		bx	lr
+ 1075              		.cfi_endproc
+ 1076              	.LFE94:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 29
+
+
+ 1078              		.section	.text.USART_DisableHalfDuplex,"ax",%progbits
+ 1079              		.align	1
+ 1080              		.global	USART_DisableHalfDuplex
+ 1081              		.syntax unified
+ 1082              		.thumb
+ 1083              		.thumb_func
+ 1085              	USART_DisableHalfDuplex:
+ 1086              	.LVL79:
+ 1087              	.LFB95:
+ 559:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 560:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 561:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable USART Half Duplex communication
+ 562:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 563:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 564:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 565:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 566:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 567:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 568:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 569:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableHalfDuplex(USART_T* usart)
+ 570:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1088              		.loc 1 570 1 is_stmt 1 view -0
+ 1089              		.cfi_startproc
+ 1090              		@ args = 0, pretend = 0, frame = 0
+ 1091              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1092              		@ link register save eliminated.
+ 571:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.HDEN = BIT_RESET;
+ 1093              		.loc 1 571 5 view .LVU233
+ 1094              		.loc 1 571 25 is_stmt 0 view .LVU234
+ 1095 0000 4369     		ldr	r3, [r0, #20]
+ 1096 0002 6FF3C303 		bfc	r3, #3, #1
+ 1097 0006 4361     		str	r3, [r0, #20]
+ 572:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1098              		.loc 1 572 1 view .LVU235
+ 1099 0008 7047     		bx	lr
+ 1100              		.cfi_endproc
+ 1101              	.LFE95:
+ 1103              		.section	.text.USART_ConfigIrDA,"ax",%progbits
+ 1104              		.align	1
+ 1105              		.global	USART_ConfigIrDA
+ 1106              		.syntax unified
+ 1107              		.thumb
+ 1108              		.thumb_func
+ 1110              	USART_ConfigIrDA:
+ 1111              	.LVL80:
+ 1112              	.LFB96:
+ 573:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 575:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Configures the USART's IrDA interface
+ 576:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 577:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:    Select the USART or the UART peripheral
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 579:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     IrDAMode: Specifies the IrDA mode
+ 580:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                      This parameter can be one of the following values:
+ 581:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                      @arg USART_IRDALP_NORMAL:   Normal
+ 582:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                      @arg USART_IRDALP_LOWPOWER: Low-Power
+ 583:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 30
+
+
+ 584:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 585:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 586:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 587:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ConfigIrDA(USART_T* usart, USART_IRDALP_T IrDAMode)
+ 588:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1113              		.loc 1 588 1 is_stmt 1 view -0
+ 1114              		.cfi_startproc
+ 1115              		@ args = 0, pretend = 0, frame = 0
+ 1116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1117              		@ link register save eliminated.
+ 589:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.IRLPEN = IrDAMode;
+ 1118              		.loc 1 589 5 view .LVU237
+ 1119              		.loc 1 589 27 is_stmt 0 view .LVU238
+ 1120 0000 4369     		ldr	r3, [r0, #20]
+ 1121 0002 61F38203 		bfi	r3, r1, #2, #1
+ 1122 0006 4361     		str	r3, [r0, #20]
+ 590:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1123              		.loc 1 590 1 view .LVU239
+ 1124 0008 7047     		bx	lr
+ 1125              		.cfi_endproc
+ 1126              	.LFE96:
+ 1128              		.section	.text.USART_EnableIrDA,"ax",%progbits
+ 1129              		.align	1
+ 1130              		.global	USART_EnableIrDA
+ 1131              		.syntax unified
+ 1132              		.thumb
+ 1133              		.thumb_func
+ 1135              	USART_EnableIrDA:
+ 1136              	.LVL81:
+ 1137              	.LFB97:
+ 591:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 592:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 593:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enables the USART's IrDA interface
+ 594:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 595:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 596:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 597:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 598:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 599:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 600:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 601:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableIrDA(USART_T* usart)
+ 602:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1138              		.loc 1 602 1 is_stmt 1 view -0
+ 1139              		.cfi_startproc
+ 1140              		@ args = 0, pretend = 0, frame = 0
+ 1141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1142              		@ link register save eliminated.
+ 603:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.IREN = BIT_SET;
+ 1143              		.loc 1 603 5 view .LVU241
+ 1144              		.loc 1 603 25 is_stmt 0 view .LVU242
+ 1145 0000 4369     		ldr	r3, [r0, #20]
+ 1146 0002 43F00203 		orr	r3, r3, #2
+ 1147 0006 4361     		str	r3, [r0, #20]
+ 604:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1148              		.loc 1 604 1 view .LVU243
+ 1149 0008 7047     		bx	lr
+ 1150              		.cfi_endproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 31
+
+
+ 1151              	.LFE97:
+ 1153              		.section	.text.USART_DisableIrDA,"ax",%progbits
+ 1154              		.align	1
+ 1155              		.global	USART_DisableIrDA
+ 1156              		.syntax unified
+ 1157              		.thumb
+ 1158              		.thumb_func
+ 1160              	USART_DisableIrDA:
+ 1161              	.LVL82:
+ 1162              	.LFB98:
+ 605:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 606:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 607:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disable the USART's IrDA interface
+ 608:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 609:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 610:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 612:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 613:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 614:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableIrDA(USART_T* usart)
+ 616:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1163              		.loc 1 616 1 is_stmt 1 view -0
+ 1164              		.cfi_startproc
+ 1165              		@ args = 0, pretend = 0, frame = 0
+ 1166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1167              		@ link register save eliminated.
+ 617:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->CTRL3_B.IREN = BIT_RESET;
+ 1168              		.loc 1 617 5 view .LVU245
+ 1169              		.loc 1 617 25 is_stmt 0 view .LVU246
+ 1170 0000 4369     		ldr	r3, [r0, #20]
+ 1171 0002 6FF34103 		bfc	r3, #1, #1
+ 1172 0006 4361     		str	r3, [r0, #20]
+ 618:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1173              		.loc 1 618 1 view .LVU247
+ 1174 0008 7047     		bx	lr
+ 1175              		.cfi_endproc
+ 1176              	.LFE98:
+ 1178              		.section	.text.USART_EnableInterrupt,"ax",%progbits
+ 1179              		.align	1
+ 1180              		.global	USART_EnableInterrupt
+ 1181              		.syntax unified
+ 1182              		.thumb
+ 1183              		.thumb_func
+ 1185              	USART_EnableInterrupt:
+ 1186              	.LVL83:
+ 1187              	.LFB99:
+ 619:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 620:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 621:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Enable the specified USART interrupts
+ 622:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 623:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:     Select the USART or the UART peripheral
+ 624:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 625:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     interrupt:  Specifies the USART interrupts sources
+ 626:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        The parameter can be one of following values:
+ 627:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_PE:    Parity error interrupt
+ 628:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_TXBE:  Tansmit data buffer empty interrupt
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 32
+
+
+ 629:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_TXC:   Transmission complete interrupt
+ 630:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_RXBNE: Receive data buffer not empty interrupt
+ 631:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_IDLE:  Idle line detection interrupt
+ 632:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_LBD:   LIN break detection interrupt
+ 633:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_CTS:   CTS change interrupt
+ 634:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_ERR:   Error interrupt(Frame error, noise error, overrun e
+ 635:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 636:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 637:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 638:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 639:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 640:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_EnableInterrupt(USART_T* usart, USART_INT_T interrupt)
+ 641:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1188              		.loc 1 641 1 is_stmt 1 view -0
+ 1189              		.cfi_startproc
+ 1190              		@ args = 0, pretend = 0, frame = 0
+ 1191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1192              		@ link register save eliminated.
+ 642:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uint32_t temp;
+ 1193              		.loc 1 642 5 view .LVU249
+ 643:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 644:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp = (uint32_t)(interrupt & 0xffff);
+ 1194              		.loc 1 644 5 view .LVU250
+ 1195              		.loc 1 644 10 is_stmt 0 view .LVU251
+ 1196 0000 8BB2     		uxth	r3, r1
+ 1197              	.LVL84:
+ 645:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 646:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (interrupt & 0x10000)
+ 1198              		.loc 1 646 5 is_stmt 1 view .LVU252
+ 1199              		.loc 1 646 8 is_stmt 0 view .LVU253
+ 1200 0002 11F4803F 		tst	r1, #65536
+ 1201 0006 02D0     		beq	.L55
+ 647:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 648:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         usart->CTRL1 |= temp;
+ 1202              		.loc 1 648 9 is_stmt 1 view .LVU254
+ 1203              		.loc 1 648 22 is_stmt 0 view .LVU255
+ 1204 0008 C268     		ldr	r2, [r0, #12]
+ 1205 000a 1A43     		orrs	r2, r2, r3
+ 1206 000c C260     		str	r2, [r0, #12]
+ 1207              	.L55:
+ 649:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 650:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 651:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (interrupt & 0x20000)
+ 1208              		.loc 1 651 5 is_stmt 1 view .LVU256
+ 1209              		.loc 1 651 8 is_stmt 0 view .LVU257
+ 1210 000e 11F4003F 		tst	r1, #131072
+ 1211 0012 02D0     		beq	.L56
+ 652:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         usart->CTRL2 |= temp;
+ 1212              		.loc 1 653 9 is_stmt 1 view .LVU258
+ 1213              		.loc 1 653 22 is_stmt 0 view .LVU259
+ 1214 0014 0269     		ldr	r2, [r0, #16]
+ 1215 0016 1A43     		orrs	r2, r2, r3
+ 1216 0018 0261     		str	r2, [r0, #16]
+ 1217              	.L56:
+ 654:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 655:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 33
+
+
+ 656:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (interrupt & 0x40000)
+ 1218              		.loc 1 656 5 is_stmt 1 view .LVU260
+ 1219              		.loc 1 656 8 is_stmt 0 view .LVU261
+ 1220 001a 11F4802F 		tst	r1, #262144
+ 1221 001e 02D0     		beq	.L54
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 658:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         usart->CTRL3 |= temp;
+ 1222              		.loc 1 658 9 is_stmt 1 view .LVU262
+ 1223              		.loc 1 658 22 is_stmt 0 view .LVU263
+ 1224 0020 4269     		ldr	r2, [r0, #20]
+ 1225 0022 1343     		orrs	r3, r3, r2
+ 1226              	.LVL85:
+ 1227              		.loc 1 658 22 view .LVU264
+ 1228 0024 4361     		str	r3, [r0, #20]
+ 1229              	.L54:
+ 659:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 660:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1230              		.loc 1 660 1 view .LVU265
+ 1231 0026 7047     		bx	lr
+ 1232              		.cfi_endproc
+ 1233              	.LFE99:
+ 1235              		.section	.text.USART_DisableInterrupt,"ax",%progbits
+ 1236              		.align	1
+ 1237              		.global	USART_DisableInterrupt
+ 1238              		.syntax unified
+ 1239              		.thumb
+ 1240              		.thumb_func
+ 1242              	USART_DisableInterrupt:
+ 1243              	.LVL86:
+ 1244              	.LFB100:
+ 661:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 662:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 663:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Disables the specified USART interrupts
+ 664:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 665:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:      Select the USART or the UART peripheral
+ 666:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 667:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     interrupt:  Specifies the USART interrupts sources
+ 668:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        The parameter can be one of following values:
+ 669:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_PE:    Parity error interrupt
+ 670:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_TXBE:  Tansmit data buffer empty interrupt
+ 671:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_TXC:   Transmission complete interrupt
+ 672:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_RXBNE: Receive data buffer not empty interrupt
+ 673:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_IDLE:  Idle line detection interrupt
+ 674:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_LBD:   LIN break detection interrupt
+ 675:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_CTS:   CTS change interrupt
+ 676:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_ERR:   Error interrupt(Frame error, noise error, overrun e
+ 677:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 678:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 679:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 680:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 681:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 682:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_DisableInterrupt(USART_T* usart, USART_INT_T interrupt)
+ 683:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1245              		.loc 1 683 1 is_stmt 1 view -0
+ 1246              		.cfi_startproc
+ 1247              		@ args = 0, pretend = 0, frame = 0
+ 1248              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 34
+
+
+ 1249              		@ link register save eliminated.
+ 684:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uint32_t temp;
+ 1250              		.loc 1 684 5 view .LVU267
+ 685:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 686:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     temp = (uint32_t)~(interrupt & 0xffff);
+ 1251              		.loc 1 686 5 view .LVU268
+ 1252              		.loc 1 686 34 is_stmt 0 view .LVU269
+ 1253 0000 8BB2     		uxth	r3, r1
+ 1254              		.loc 1 686 10 view .LVU270
+ 1255 0002 DB43     		mvns	r3, r3
+ 1256              	.LVL87:
+ 687:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (interrupt & 0x10000)
+ 1257              		.loc 1 688 5 is_stmt 1 view .LVU271
+ 1258              		.loc 1 688 8 is_stmt 0 view .LVU272
+ 1259 0004 11F4803F 		tst	r1, #65536
+ 1260 0008 02D0     		beq	.L59
+ 689:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 690:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         usart->CTRL1 &= temp;
+ 1261              		.loc 1 690 9 is_stmt 1 view .LVU273
+ 1262              		.loc 1 690 22 is_stmt 0 view .LVU274
+ 1263 000a C268     		ldr	r2, [r0, #12]
+ 1264 000c 1A40     		ands	r2, r2, r3
+ 1265 000e C260     		str	r2, [r0, #12]
+ 1266              	.L59:
+ 691:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 693:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (interrupt & 0x20000)
+ 1267              		.loc 1 693 5 is_stmt 1 view .LVU275
+ 1268              		.loc 1 693 8 is_stmt 0 view .LVU276
+ 1269 0010 11F4003F 		tst	r1, #131072
+ 1270 0014 02D0     		beq	.L60
+ 694:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 695:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         usart->CTRL2 &= temp;
+ 1271              		.loc 1 695 9 is_stmt 1 view .LVU277
+ 1272              		.loc 1 695 22 is_stmt 0 view .LVU278
+ 1273 0016 0269     		ldr	r2, [r0, #16]
+ 1274 0018 1A40     		ands	r2, r2, r3
+ 1275 001a 0261     		str	r2, [r0, #16]
+ 1276              	.L60:
+ 696:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 697:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 698:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (interrupt & 0x40000)
+ 1277              		.loc 1 698 5 is_stmt 1 view .LVU279
+ 1278              		.loc 1 698 8 is_stmt 0 view .LVU280
+ 1279 001c 11F4802F 		tst	r1, #262144
+ 1280 0020 02D0     		beq	.L58
+ 699:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 700:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         usart->CTRL3 &= temp;
+ 1281              		.loc 1 700 9 is_stmt 1 view .LVU281
+ 1282              		.loc 1 700 22 is_stmt 0 view .LVU282
+ 1283 0022 4269     		ldr	r2, [r0, #20]
+ 1284 0024 1340     		ands	r3, r3, r2
+ 1285              	.LVL88:
+ 1286              		.loc 1 700 22 view .LVU283
+ 1287 0026 4361     		str	r3, [r0, #20]
+ 1288              	.L58:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 35
+
+
+ 701:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1289              		.loc 1 702 1 view .LVU284
+ 1290 0028 7047     		bx	lr
+ 1291              		.cfi_endproc
+ 1292              	.LFE100:
+ 1294              		.section	.text.USART_ReadStatusFlag,"ax",%progbits
+ 1295              		.align	1
+ 1296              		.global	USART_ReadStatusFlag
+ 1297              		.syntax unified
+ 1298              		.thumb
+ 1299              		.thumb_func
+ 1301              	USART_ReadStatusFlag:
+ 1302              	.LVL89:
+ 1303              	.LFB101:
+ 703:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 705:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Read the specified USART flag
+ 706:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 707:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 708:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 709:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     flag:  Specifies the flag to check
+ 710:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   The parameter can be one of following values:
+ 711:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_CTS:    CTS Change flag (not available for UART4 and UART5)
+ 712:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_LBD:    LIN Break detection flag
+ 713:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_TXBE:   Transmit data buffer empty flag
+ 714:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_TXC:    Transmission Complete flag
+ 715:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_RXBNE:  Receive data buffer not empty flag
+ 716:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_IDLE:   Idle Line detection flag
+ 717:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_OVRE:   OverRun Error flag
+ 718:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_NE:     Noise Error flag
+ 719:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_FE:     Framing Error flag
+ 720:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_PE:     Parity Error flag
+ 721:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 722:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    The new state of flag (SET or RESET)
+ 723:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 724:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 725:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 726:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** uint8_t USART_ReadStatusFlag(USART_T* usart, USART_FLAG_T flag)
+ 727:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1304              		.loc 1 727 1 is_stmt 1 view -0
+ 1305              		.cfi_startproc
+ 1306              		@ args = 0, pretend = 0, frame = 0
+ 1307              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1308              		@ link register save eliminated.
+ 728:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     return (usart->STS & flag) ? SET : RESET;
+ 1309              		.loc 1 728 5 view .LVU286
+ 1310              		.loc 1 728 18 is_stmt 0 view .LVU287
+ 1311 0000 0368     		ldr	r3, [r0]
+ 1312              		.loc 1 728 38 view .LVU288
+ 1313 0002 1942     		tst	r1, r3
+ 729:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1314              		.loc 1 729 1 view .LVU289
+ 1315 0004 14BF     		ite	ne
+ 1316 0006 0120     		movne	r0, #1
+ 1317              	.LVL90:
+ 1318              		.loc 1 729 1 view .LVU290
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 36
+
+
+ 1319 0008 0020     		moveq	r0, #0
+ 1320 000a 7047     		bx	lr
+ 1321              		.cfi_endproc
+ 1322              	.LFE101:
+ 1324              		.section	.text.USART_ClearStatusFlag,"ax",%progbits
+ 1325              		.align	1
+ 1326              		.global	USART_ClearStatusFlag
+ 1327              		.syntax unified
+ 1328              		.thumb
+ 1329              		.thumb_func
+ 1331              	USART_ClearStatusFlag:
+ 1332              	.LVL91:
+ 1333              	.LFB102:
+ 730:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 731:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 732:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Clears the USARTx's pending flags
+ 733:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 734:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart:   Select the USART or the UART peripheral
+ 735:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 736:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     flag:  Specifies the flag to clear
+ 737:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   The parameter can be one of following values:
+ 738:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_CTS:    CTS Change flag (not available for UART4 and UART5)
+ 739:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_LBD:    LIN Break detection flag
+ 740:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_TXC:    Transmission Complete flag
+ 741:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_FLAG_RXBNE:  Receive data buffer not empty flag
+ 742:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 743:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 744:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 745:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 746:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 747:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ClearStatusFlag(USART_T* usart, USART_FLAG_T flag)
+ 748:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1334              		.loc 1 748 1 is_stmt 1 view -0
+ 1335              		.cfi_startproc
+ 1336              		@ args = 0, pretend = 0, frame = 0
+ 1337              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1338              		@ link register save eliminated.
+ 749:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->STS &= (uint32_t)~flag;
+ 1339              		.loc 1 749 5 view .LVU292
+ 1340              		.loc 1 749 16 is_stmt 0 view .LVU293
+ 1341 0000 0368     		ldr	r3, [r0]
+ 1342 0002 23EA0103 		bic	r3, r3, r1
+ 1343 0006 0360     		str	r3, [r0]
+ 750:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1344              		.loc 1 750 1 view .LVU294
+ 1345 0008 7047     		bx	lr
+ 1346              		.cfi_endproc
+ 1347              	.LFE102:
+ 1349              		.section	.text.USART_ReadIntFlag,"ax",%progbits
+ 1350              		.align	1
+ 1351              		.global	USART_ReadIntFlag
+ 1352              		.syntax unified
+ 1353              		.thumb
+ 1354              		.thumb_func
+ 1356              	USART_ReadIntFlag:
+ 1357              	.LVL92:
+ 1358              	.LFB103:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 37
+
+
+ 751:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 752:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 753:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Read the specified USART interrupt flag
+ 754:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 755:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 756:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 757:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     flag:  Specifies the USART interrupt source to check
+ 758:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        The parameter can be one of following values:
+ 759:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_TXBE:  Tansmit data buffer empty interrupt
+ 760:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_TXC:   Transmission complete interrupt
+ 761:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_RXBNE: Receive data buffer not empty interrupt
+ 762:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_IDLE:  Idle line detection interrupt
+ 763:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_LBD:   LIN break detection interrupt
+ 764:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_CTS:   CTS change interrupt
+ 765:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_OVRE:  OverRun Error interruptpt
+ 766:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_NE:    Noise Error interrupt
+ 767:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_FE:    Framing Error interrupt
+ 768:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                        @arg USART_INT_PE:    Parity error interrupt
+ 769:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 770:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    The new state of flag (SET or RESET)
+ 771:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 772:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 773:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 774:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** uint8_t USART_ReadIntFlag(USART_T* usart, USART_INT_T flag)
+ 775:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1359              		.loc 1 775 1 is_stmt 1 view -0
+ 1360              		.cfi_startproc
+ 1361              		@ args = 0, pretend = 0, frame = 0
+ 1362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1363              		@ link register save eliminated.
+ 776:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uint32_t itFlag, srFlag;
+ 1364              		.loc 1 776 5 view .LVU296
+ 777:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 778:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (flag & 0x10000)
+ 1365              		.loc 1 778 5 view .LVU297
+ 1366              		.loc 1 778 8 is_stmt 0 view .LVU298
+ 1367 0000 11F4803F 		tst	r1, #65536
+ 1368 0004 0CD0     		beq	.L65
+ 779:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 780:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         itFlag = usart->CTRL1 & flag & 0xffff;
+ 1369              		.loc 1 780 9 is_stmt 1 view .LVU299
+ 1370              		.loc 1 780 23 is_stmt 0 view .LVU300
+ 1371 0006 C368     		ldr	r3, [r0, #12]
+ 1372              		.loc 1 780 31 view .LVU301
+ 1373 0008 0B40     		ands	r3, r3, r1
+ 1374              		.loc 1 780 16 view .LVU302
+ 1375 000a 9BB2     		uxth	r3, r3
+ 1376              	.LVL93:
+ 1377              	.L66:
+ 781:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 782:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     else if (flag & 0x20000)
+ 783:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         itFlag = usart->CTRL2 & flag & 0xffff;
+ 785:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 786:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     else
+ 787:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         itFlag = usart->CTRL3 & flag & 0xffff;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 38
+
+
+ 789:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 790:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 791:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     srFlag = flag >> 24;
+ 1378              		.loc 1 791 5 is_stmt 1 view .LVU303
+ 1379              		.loc 1 791 12 is_stmt 0 view .LVU304
+ 1380 000c 090E     		lsrs	r1, r1, #24
+ 1381              	.LVL94:
+ 792:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     srFlag = (uint32_t)(1 << srFlag);
+ 1382              		.loc 1 792 5 is_stmt 1 view .LVU305
+ 1383              		.loc 1 792 27 is_stmt 0 view .LVU306
+ 1384 000e 0122     		movs	r2, #1
+ 1385 0010 02FA01F1 		lsl	r1, r2, r1
+ 1386              	.LVL95:
+ 793:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     srFlag = usart->STS & srFlag;
+ 1387              		.loc 1 793 5 is_stmt 1 view .LVU307
+ 1388              		.loc 1 793 19 is_stmt 0 view .LVU308
+ 1389 0014 0268     		ldr	r2, [r0]
+ 1390              	.LVL96:
+ 794:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 795:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     if (srFlag && itFlag)
+ 1391              		.loc 1 795 5 is_stmt 1 view .LVU309
+ 1392              		.loc 1 795 8 is_stmt 0 view .LVU310
+ 1393 0016 0A42     		tst	r2, r1
+ 1394 0018 0DD0     		beq	.L69
+ 1395              		.loc 1 795 16 discriminator 1 view .LVU311
+ 1396 001a 73B9     		cbnz	r3, .L70
+ 796:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 797:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****         return SET;
+ 798:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 799:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 800:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     return RESET;
+ 1397              		.loc 1 800 12 view .LVU312
+ 1398 001c 0020     		movs	r0, #0
+ 1399              	.LVL97:
+ 1400              		.loc 1 800 12 view .LVU313
+ 1401 001e 7047     		bx	lr
+ 1402              	.LVL98:
+ 1403              	.L65:
+ 782:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 1404              		.loc 1 782 10 is_stmt 1 view .LVU314
+ 782:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     {
+ 1405              		.loc 1 782 13 is_stmt 0 view .LVU315
+ 1406 0020 11F4003F 		tst	r1, #131072
+ 1407 0024 03D0     		beq	.L67
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1408              		.loc 1 784 9 is_stmt 1 view .LVU316
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1409              		.loc 1 784 23 is_stmt 0 view .LVU317
+ 1410 0026 0369     		ldr	r3, [r0, #16]
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1411              		.loc 1 784 31 view .LVU318
+ 1412 0028 0B40     		ands	r3, r3, r1
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1413              		.loc 1 784 16 view .LVU319
+ 1414 002a 9BB2     		uxth	r3, r3
+ 1415              	.LVL99:
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 39
+
+
+ 1416              		.loc 1 784 16 view .LVU320
+ 1417 002c EEE7     		b	.L66
+ 1418              	.LVL100:
+ 1419              	.L67:
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1420              		.loc 1 788 9 is_stmt 1 view .LVU321
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1421              		.loc 1 788 23 is_stmt 0 view .LVU322
+ 1422 002e 4369     		ldr	r3, [r0, #20]
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1423              		.loc 1 788 31 view .LVU323
+ 1424 0030 0B40     		ands	r3, r3, r1
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1425              		.loc 1 788 16 view .LVU324
+ 1426 0032 9BB2     		uxth	r3, r3
+ 1427              	.LVL101:
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1428              		.loc 1 788 16 view .LVU325
+ 1429 0034 EAE7     		b	.L66
+ 1430              	.LVL102:
+ 1431              	.L69:
+ 1432              		.loc 1 800 12 view .LVU326
+ 1433 0036 0020     		movs	r0, #0
+ 1434              	.LVL103:
+ 1435              		.loc 1 800 12 view .LVU327
+ 1436 0038 7047     		bx	lr
+ 1437              	.LVL104:
+ 1438              	.L70:
+ 797:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     }
+ 1439              		.loc 1 797 16 view .LVU328
+ 1440 003a 0120     		movs	r0, #1
+ 1441              	.LVL105:
+ 801:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1442              		.loc 1 801 1 view .LVU329
+ 1443 003c 7047     		bx	lr
+ 1444              		.cfi_endproc
+ 1445              	.LFE103:
+ 1447              		.section	.text.USART_ClearIntFlag,"ax",%progbits
+ 1448              		.align	1
+ 1449              		.global	USART_ClearIntFlag
+ 1450              		.syntax unified
+ 1451              		.thumb
+ 1452              		.thumb_func
+ 1454              	USART_ClearIntFlag:
+ 1455              	.LVL106:
+ 1456              	.LFB104:
+ 802:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 803:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** /*!
+ 804:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @brief     Clears the USART interrupt pending bits
+ 805:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 806:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     usart: Select the USART or the UART peripheral
+ 807:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 808:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @param     flag:  Specifies the interrupt pending bit to clear
+ 809:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   The parameter can be one of following values:
+ 810:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_INT_RXBNE: Receive data buffer not empty interrupt
+ 811:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_INT_TXC:   Transmission complete interrupt
+ 812:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_INT_LBD:   LIN break detection interrupt
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 40
+
+
+ 813:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *                   @arg USART_INT_CTS:   CTS change interrupt
+ 814:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 815:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @retval    None
+ 816:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  *
+ 817:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  * @note      The usart can be USART1, USART2, USART3, UART4 and UART5
+ 818:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****  */
+ 819:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** void USART_ClearIntFlag(USART_T* usart, USART_INT_T flag)
+ 820:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** {
+ 1457              		.loc 1 820 1 is_stmt 1 view -0
+ 1458              		.cfi_startproc
+ 1459              		@ args = 0, pretend = 0, frame = 0
+ 1460              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1461              		@ link register save eliminated.
+ 821:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     uint32_t srFlag;
+ 1462              		.loc 1 821 5 view .LVU331
+ 822:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 823:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     srFlag = flag >> 24;
+ 1463              		.loc 1 823 5 view .LVU332
+ 1464              		.loc 1 823 12 is_stmt 0 view .LVU333
+ 1465 0000 090E     		lsrs	r1, r1, #24
+ 1466              	.LVL107:
+ 824:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     srFlag = (uint32_t)(1 << srFlag);
+ 1467              		.loc 1 824 5 is_stmt 1 view .LVU334
+ 1468              		.loc 1 824 27 is_stmt 0 view .LVU335
+ 1469 0002 0123     		movs	r3, #1
+ 1470 0004 8B40     		lsls	r3, r3, r1
+ 1471              	.LVL108:
+ 825:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** 
+ 826:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c ****     usart->STS &= (uint32_t)~srFlag;
+ 1472              		.loc 1 826 5 is_stmt 1 view .LVU336
+ 1473              		.loc 1 826 16 is_stmt 0 view .LVU337
+ 1474 0006 0168     		ldr	r1, [r0]
+ 1475 0008 21EA0301 		bic	r1, r1, r3
+ 1476 000c 0160     		str	r1, [r0]
+ 827:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_usart.c **** }
+ 1477              		.loc 1 827 1 view .LVU338
+ 1478 000e 7047     		bx	lr
+ 1479              		.cfi_endproc
+ 1480              	.LFE104:
+ 1482              		.text
+ 1483              	.Letext0:
+ 1484              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1485              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1486              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 1487              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_usart.h"
+ 1488              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rcm.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 41
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_usart.c
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:18     .text.USART_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:24     .text.USART_Reset:00000000 USART_Reset
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:136    .text.USART_Reset:0000007c $d
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:145    .text.USART_Config:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:151    .text.USART_Config:00000000 USART_Config
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:322    .text.USART_Config:00000094 $d
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:328    .text.USART_ConfigStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:334    .text.USART_ConfigStructInit:00000000 USART_ConfigStructInit
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:369    .text.USART_ConfigClock:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:375    .text.USART_ConfigClock:00000000 USART_ConfigClock
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:417    .text.USART_ConfigClockStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:423    .text.USART_ConfigClockStructInit:00000000 USART_ConfigClockStructInit
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:450    .text.USART_Enable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:456    .text.USART_Enable:00000000 USART_Enable
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:475    .text.USART_Disable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:481    .text.USART_Disable:00000000 USART_Disable
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:500    .text.USART_EnableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:506    .text.USART_EnableDMA:00000000 USART_EnableDMA
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:527    .text.USART_DisableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:533    .text.USART_DisableDMA:00000000 USART_DisableDMA
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:552    .text.USART_Address:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:558    .text.USART_Address:00000000 USART_Address
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:577    .text.USART_ConfigWakeUp:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:583    .text.USART_ConfigWakeUp:00000000 USART_ConfigWakeUp
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:602    .text.USART_EnableMuteMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:608    .text.USART_EnableMuteMode:00000000 USART_EnableMuteMode
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:627    .text.USART_DisableMuteMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:633    .text.USART_DisableMuteMode:00000000 USART_DisableMuteMode
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:652    .text.USART_ConfigLINBreakDetectLength:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:658    .text.USART_ConfigLINBreakDetectLength:00000000 USART_ConfigLINBreakDetectLength
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:677    .text.USART_EnableLIN:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:683    .text.USART_EnableLIN:00000000 USART_EnableLIN
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:702    .text.USART_DisableLIN:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:708    .text.USART_DisableLIN:00000000 USART_DisableLIN
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:727    .text.USART_EnableTx:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:733    .text.USART_EnableTx:00000000 USART_EnableTx
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:752    .text.USART_DisableTx:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:758    .text.USART_DisableTx:00000000 USART_DisableTx
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:777    .text.USART_EnableRx:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:783    .text.USART_EnableRx:00000000 USART_EnableRx
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:802    .text.USART_DisableRx:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:808    .text.USART_DisableRx:00000000 USART_DisableRx
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:827    .text.USART_TxData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:833    .text.USART_TxData:00000000 USART_TxData
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:852    .text.USART_RxData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:858    .text.USART_RxData:00000000 USART_RxData
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:877    .text.USART_TxBreak:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:883    .text.USART_TxBreak:00000000 USART_TxBreak
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:902    .text.USART_ConfigGuardTime:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:908    .text.USART_ConfigGuardTime:00000000 USART_ConfigGuardTime
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:927    .text.USART_ConfigPrescaler:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:933    .text.USART_ConfigPrescaler:00000000 USART_ConfigPrescaler
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:954    .text.USART_EnableSmartCard:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:960    .text.USART_EnableSmartCard:00000000 USART_EnableSmartCard
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:979    .text.USART_DisableSmartCard:00000000 $t
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s 			page 42
+
+
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:985    .text.USART_DisableSmartCard:00000000 USART_DisableSmartCard
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1004   .text.USART_EnableSmartCardNACK:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1010   .text.USART_EnableSmartCardNACK:00000000 USART_EnableSmartCardNACK
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1029   .text.USART_DisableSmartCardNACK:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1035   .text.USART_DisableSmartCardNACK:00000000 USART_DisableSmartCardNACK
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1054   .text.USART_EnableHalfDuplex:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1060   .text.USART_EnableHalfDuplex:00000000 USART_EnableHalfDuplex
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1079   .text.USART_DisableHalfDuplex:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1085   .text.USART_DisableHalfDuplex:00000000 USART_DisableHalfDuplex
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1104   .text.USART_ConfigIrDA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1110   .text.USART_ConfigIrDA:00000000 USART_ConfigIrDA
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1129   .text.USART_EnableIrDA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1135   .text.USART_EnableIrDA:00000000 USART_EnableIrDA
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1154   .text.USART_DisableIrDA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1160   .text.USART_DisableIrDA:00000000 USART_DisableIrDA
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1179   .text.USART_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1185   .text.USART_EnableInterrupt:00000000 USART_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1236   .text.USART_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1242   .text.USART_DisableInterrupt:00000000 USART_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1295   .text.USART_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1301   .text.USART_ReadStatusFlag:00000000 USART_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1325   .text.USART_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1331   .text.USART_ClearStatusFlag:00000000 USART_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1350   .text.USART_ReadIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1356   .text.USART_ReadIntFlag:00000000 USART_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1448   .text.USART_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccK4kvVp.s:1454   .text.USART_ClearIntFlag:00000000 USART_ClearIntFlag
+
+UNDEFINED SYMBOLS
+RCM_EnableAPB2PeriphReset
+RCM_DisableAPB2PeriphReset
+RCM_EnableAPB1PeriphReset
+RCM_DisableAPB1PeriphReset
+RCM_ReadPCLKFreq

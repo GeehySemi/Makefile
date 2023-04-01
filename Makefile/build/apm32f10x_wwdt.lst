@@ -1,0 +1,503 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_wwdt.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.WWDT_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	WWDT_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	WWDT_Reset:
+  25              	.LFB65:
+  26              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @file        apm32f10x_wwdt.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief       This file contains all the functions for the WWDT peripheral
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** #include "apm32f10x_wwdt.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** */
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 2
+
+
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /** @addtogroup WWDT_Driver  WWDT Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /** @addtogroup  WWDT_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief        Reset the WWDT peripheral registers
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param        None
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval       None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** void WWDT_Reset(void)
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+  27              		.loc 1 49 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_WWDT);
+  36              		.loc 1 50 5 view .LVU1
+  37 0002 4FF40060 		mov	r0, #2048
+  38 0006 FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+  39              	.LVL0:
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_WWDT);
+  40              		.loc 1 51 5 view .LVU2
+  41 000a 4FF40060 		mov	r0, #2048
+  42 000e FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+  43              	.LVL1:
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+  44              		.loc 1 52 1 is_stmt 0 view .LVU3
+  45 0012 08BD     		pop	{r3, pc}
+  46              		.cfi_endproc
+  47              	.LFE65:
+  49              		.section	.text.WWDT_ConfigTimebase,"ax",%progbits
+  50              		.align	1
+  51              		.global	WWDT_ConfigTimebase
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+  56              	WWDT_ConfigTimebase:
+  57              	.LVL2:
+  58              	.LFB66:
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief        Config the WWDT Timebase
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param        timebase: WWDT Prescaler
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *               The parameter can be one of following values:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *               @arg WWDT_TIME_BASE_1:  WWDT counter clock = (PCLK1/4096)/1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 3
+
+
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *               @arg WWDT_TIME_BASE_2:  WWDT counter clock = (PCLK1/4096)/2
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *               @arg WWDT_TIME_BASE_4:  WWDT counter clock = (PCLK1/4096)/4
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *               @arg WWDT_TIME_BASE_8:  WWDT counter clock = (PCLK1/4096)/8
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval       None
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** void WWDT_ConfigTimebase(WWDT_TIME_BASE_T timeBase)
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+  59              		.loc 1 67 1 is_stmt 1 view -0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 8
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+  64              		.loc 1 67 1 is_stmt 0 view .LVU5
+  65 0000 82B0     		sub	sp, sp, #8
+  66              	.LCFI1:
+  67              		.cfi_def_cfa_offset 8
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     __IO uint32_t reg;
+  68              		.loc 1 68 5 is_stmt 1 view .LVU6
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     reg = WWDT->CFG & 0xFFFFFE7F;
+  69              		.loc 1 70 5 view .LVU7
+  70              		.loc 1 70 15 is_stmt 0 view .LVU8
+  71 0002 064A     		ldr	r2, .L5
+  72 0004 5368     		ldr	r3, [r2, #4]
+  73              		.loc 1 70 21 view .LVU9
+  74 0006 23F4C073 		bic	r3, r3, #384
+  75              		.loc 1 70 9 view .LVU10
+  76 000a 0193     		str	r3, [sp, #4]
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     reg |= timeBase;
+  77              		.loc 1 71 5 is_stmt 1 view .LVU11
+  78              		.loc 1 71 9 is_stmt 0 view .LVU12
+  79 000c 019B     		ldr	r3, [sp, #4]
+  80 000e 1843     		orrs	r0, r0, r3
+  81              	.LVL3:
+  82              		.loc 1 71 9 view .LVU13
+  83 0010 0190     		str	r0, [sp, #4]
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     WWDT->CFG = reg;
+  84              		.loc 1 72 5 is_stmt 1 view .LVU14
+  85              		.loc 1 72 15 is_stmt 0 view .LVU15
+  86 0012 019B     		ldr	r3, [sp, #4]
+  87 0014 5360     		str	r3, [r2, #4]
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+  88              		.loc 1 73 1 view .LVU16
+  89 0016 02B0     		add	sp, sp, #8
+  90              	.LCFI2:
+  91              		.cfi_def_cfa_offset 0
+  92              		@ sp needed
+  93 0018 7047     		bx	lr
+  94              	.L6:
+  95 001a 00BF     		.align	2
+  96              	.L5:
+  97 001c 002C0040 		.word	1073753088
+  98              		.cfi_endproc
+  99              	.LFE66:
+ 101              		.section	.text.WWDT_ConfigWindowData,"ax",%progbits
+ 102              		.align	1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 4
+
+
+ 103              		.global	WWDT_ConfigWindowData
+ 104              		.syntax unified
+ 105              		.thumb
+ 106              		.thumb_func
+ 108              	WWDT_ConfigWindowData:
+ 109              	.LVL4:
+ 110              	.LFB67:
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief        Config the WWDT Window data
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param        windowdata: window data which compare with the downcounter
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval       None
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @note         The windowdata must be lower than 0x80
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** void WWDT_ConfigWindowData(uint8_t windowData)
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+ 111              		.loc 1 85 1 is_stmt 1 view -0
+ 112              		.cfi_startproc
+ 113              		@ args = 0, pretend = 0, frame = 8
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115              		@ link register save eliminated.
+ 116              		.loc 1 85 1 is_stmt 0 view .LVU18
+ 117 0000 82B0     		sub	sp, sp, #8
+ 118              	.LCFI3:
+ 119              		.cfi_def_cfa_offset 8
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     __IO uint32_t reg;
+ 120              		.loc 1 86 5 is_stmt 1 view .LVU19
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     reg = WWDT->CFG & 0xFFFFFF80;
+ 121              		.loc 1 88 5 view .LVU20
+ 122              		.loc 1 88 15 is_stmt 0 view .LVU21
+ 123 0002 074A     		ldr	r2, .L9
+ 124 0004 5368     		ldr	r3, [r2, #4]
+ 125              		.loc 1 88 21 view .LVU22
+ 126 0006 23F07F03 		bic	r3, r3, #127
+ 127              		.loc 1 88 9 view .LVU23
+ 128 000a 0193     		str	r3, [sp, #4]
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     reg |= windowData & 0x7F;
+ 129              		.loc 1 89 5 is_stmt 1 view .LVU24
+ 130              		.loc 1 89 23 is_stmt 0 view .LVU25
+ 131 000c 00F07F00 		and	r0, r0, #127
+ 132              	.LVL5:
+ 133              		.loc 1 89 9 view .LVU26
+ 134 0010 019B     		ldr	r3, [sp, #4]
+ 135 0012 1843     		orrs	r0, r0, r3
+ 136 0014 0190     		str	r0, [sp, #4]
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     WWDT->CFG = reg;
+ 137              		.loc 1 90 5 is_stmt 1 view .LVU27
+ 138              		.loc 1 90 15 is_stmt 0 view .LVU28
+ 139 0016 019B     		ldr	r3, [sp, #4]
+ 140 0018 5360     		str	r3, [r2, #4]
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+ 141              		.loc 1 91 1 view .LVU29
+ 142 001a 02B0     		add	sp, sp, #8
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 5
+
+
+ 143              	.LCFI4:
+ 144              		.cfi_def_cfa_offset 0
+ 145              		@ sp needed
+ 146 001c 7047     		bx	lr
+ 147              	.L10:
+ 148 001e 00BF     		.align	2
+ 149              	.L9:
+ 150 0020 002C0040 		.word	1073753088
+ 151              		.cfi_endproc
+ 152              	.LFE67:
+ 154              		.section	.text.WWDT_ConfigCounter,"ax",%progbits
+ 155              		.align	1
+ 156              		.global	WWDT_ConfigCounter
+ 157              		.syntax unified
+ 158              		.thumb
+ 159              		.thumb_func
+ 161              	WWDT_ConfigCounter:
+ 162              	.LVL6:
+ 163              	.LFB68:
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief       Config the WWDT counter value
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param       counter: Specifies the watchdog counter value
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval      None
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @note        The counter between 0x40 and 0x7F
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** void WWDT_ConfigCounter(uint8_t counter)
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+ 164              		.loc 1 103 1 is_stmt 1 view -0
+ 165              		.cfi_startproc
+ 166              		@ args = 0, pretend = 0, frame = 0
+ 167              		@ frame_needed = 0, uses_anonymous_args = 0
+ 168              		@ link register save eliminated.
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     WWDT->CTRL = counter & 0x7F;
+ 169              		.loc 1 104 5 view .LVU31
+ 170              		.loc 1 104 26 is_stmt 0 view .LVU32
+ 171 0000 00F07F00 		and	r0, r0, #127
+ 172              	.LVL7:
+ 173              		.loc 1 104 16 view .LVU33
+ 174 0004 014B     		ldr	r3, .L12
+ 175 0006 1860     		str	r0, [r3]
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+ 176              		.loc 1 105 1 view .LVU34
+ 177 0008 7047     		bx	lr
+ 178              	.L13:
+ 179 000a 00BF     		.align	2
+ 180              	.L12:
+ 181 000c 002C0040 		.word	1073753088
+ 182              		.cfi_endproc
+ 183              	.LFE68:
+ 185              		.section	.text.WWDT_EnableEWI,"ax",%progbits
+ 186              		.align	1
+ 187              		.global	WWDT_EnableEWI
+ 188              		.syntax unified
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 6
+
+
+ 189              		.thumb
+ 190              		.thumb_func
+ 192              	WWDT_EnableEWI:
+ 193              	.LFB69:
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief        Enable the WWDT Early Wakeup interrupt
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param        None
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval       None
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** void WWDT_EnableEWI(void)
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+ 194              		.loc 1 115 1 is_stmt 1 view -0
+ 195              		.cfi_startproc
+ 196              		@ args = 0, pretend = 0, frame = 0
+ 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 198              		@ link register save eliminated.
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     WWDT->CFG_B.EWIEN = SET;
+ 199              		.loc 1 116 5 view .LVU36
+ 200              		.loc 1 116 23 is_stmt 0 view .LVU37
+ 201 0000 024A     		ldr	r2, .L15
+ 202 0002 5368     		ldr	r3, [r2, #4]
+ 203 0004 43F40073 		orr	r3, r3, #512
+ 204 0008 5360     		str	r3, [r2, #4]
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+ 205              		.loc 1 117 1 view .LVU38
+ 206 000a 7047     		bx	lr
+ 207              	.L16:
+ 208              		.align	2
+ 209              	.L15:
+ 210 000c 002C0040 		.word	1073753088
+ 211              		.cfi_endproc
+ 212              	.LFE69:
+ 214              		.section	.text.WWDT_Enable,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	WWDT_Enable
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 221              	WWDT_Enable:
+ 222              	.LVL8:
+ 223              	.LFB70:
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief        Enable WWDT and set the counter value
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param        counter: the window watchdog counter value
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval       None
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @note         The counter between 0x40 and 0x7F
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** void WWDT_Enable(uint8_t counter)
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+ 224              		.loc 1 129 1 is_stmt 1 view -0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 7
+
+
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228              		@ link register save eliminated.
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     WWDT->CTRL =  counter | 0x00000080;
+ 229              		.loc 1 130 5 view .LVU40
+ 230              		.loc 1 130 27 is_stmt 0 view .LVU41
+ 231 0000 40F08000 		orr	r0, r0, #128
+ 232              	.LVL9:
+ 233              		.loc 1 130 16 view .LVU42
+ 234 0004 014B     		ldr	r3, .L18
+ 235 0006 1860     		str	r0, [r3]
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+ 236              		.loc 1 131 1 view .LVU43
+ 237 0008 7047     		bx	lr
+ 238              	.L19:
+ 239 000a 00BF     		.align	2
+ 240              	.L18:
+ 241 000c 002C0040 		.word	1073753088
+ 242              		.cfi_endproc
+ 243              	.LFE70:
+ 245              		.section	.text.WWDT_ReadFlag,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	WWDT_ReadFlag
+ 248              		.syntax unified
+ 249              		.thumb
+ 250              		.thumb_func
+ 252              	WWDT_ReadFlag:
+ 253              	.LFB71:
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief        Read the Early Wakeup interrupt flag
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param        None
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval       the state of the Early Wakeup interrupt flagte
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** uint8_t WWDT_ReadFlag(void)
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+ 254              		.loc 1 141 1 is_stmt 1 view -0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              		@ link register save eliminated.
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     return (uint8_t) (WWDT->STS);
+ 259              		.loc 1 142 5 view .LVU45
+ 260              		.loc 1 142 27 is_stmt 0 view .LVU46
+ 261 0000 014B     		ldr	r3, .L21
+ 262 0002 9868     		ldr	r0, [r3, #8]
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+ 263              		.loc 1 143 1 view .LVU47
+ 264 0004 C0B2     		uxtb	r0, r0
+ 265 0006 7047     		bx	lr
+ 266              	.L22:
+ 267              		.align	2
+ 268              	.L21:
+ 269 0008 002C0040 		.word	1073753088
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 8
+
+
+ 270              		.cfi_endproc
+ 271              	.LFE71:
+ 273              		.section	.text.WWDT_ClearFlag,"ax",%progbits
+ 274              		.align	1
+ 275              		.global	WWDT_ClearFlag
+ 276              		.syntax unified
+ 277              		.thumb
+ 278              		.thumb_func
+ 280              	WWDT_ClearFlag:
+ 281              	.LFB72:
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** 
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** /*!
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @brief        Clear the Early Wakeup interrupt flag
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @param        None
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  *
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  * @retval       None
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****  */
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** void WWDT_ClearFlag(void)
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** {
+ 282              		.loc 1 153 1 is_stmt 1 view -0
+ 283              		.cfi_startproc
+ 284              		@ args = 0, pretend = 0, frame = 0
+ 285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 286              		@ link register save eliminated.
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c ****     WWDT->STS_B.EWIFLG = RESET;
+ 287              		.loc 1 154 5 view .LVU49
+ 288              		.loc 1 154 24 is_stmt 0 view .LVU50
+ 289 0000 024B     		ldr	r3, .L24
+ 290 0002 9A68     		ldr	r2, [r3, #8]
+ 291 0004 6FF30002 		bfc	r2, #0, #1
+ 292 0008 9A60     		str	r2, [r3, #8]
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_wwdt.c **** }
+ 293              		.loc 1 155 1 view .LVU51
+ 294 000a 7047     		bx	lr
+ 295              	.L25:
+ 296              		.align	2
+ 297              	.L24:
+ 298 000c 002C0040 		.word	1073753088
+ 299              		.cfi_endproc
+ 300              	.LFE72:
+ 302              		.text
+ 303              	.Letext0:
+ 304              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 305              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 306              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 307              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_wwdt.h"
+ 308              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rcm.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_wwdt.c
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:18     .text.WWDT_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:24     .text.WWDT_Reset:00000000 WWDT_Reset
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:50     .text.WWDT_ConfigTimebase:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:56     .text.WWDT_ConfigTimebase:00000000 WWDT_ConfigTimebase
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:97     .text.WWDT_ConfigTimebase:0000001c $d
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:102    .text.WWDT_ConfigWindowData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:108    .text.WWDT_ConfigWindowData:00000000 WWDT_ConfigWindowData
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:150    .text.WWDT_ConfigWindowData:00000020 $d
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:155    .text.WWDT_ConfigCounter:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:161    .text.WWDT_ConfigCounter:00000000 WWDT_ConfigCounter
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:181    .text.WWDT_ConfigCounter:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:186    .text.WWDT_EnableEWI:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:192    .text.WWDT_EnableEWI:00000000 WWDT_EnableEWI
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:210    .text.WWDT_EnableEWI:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:215    .text.WWDT_Enable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:221    .text.WWDT_Enable:00000000 WWDT_Enable
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:241    .text.WWDT_Enable:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:246    .text.WWDT_ReadFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:252    .text.WWDT_ReadFlag:00000000 WWDT_ReadFlag
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:269    .text.WWDT_ReadFlag:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:274    .text.WWDT_ClearFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:280    .text.WWDT_ClearFlag:00000000 WWDT_ClearFlag
+C:\Users\geehy\AppData\Local\Temp\ccIdFjAE.s:298    .text.WWDT_ClearFlag:0000000c $d
+
+UNDEFINED SYMBOLS
+RCM_EnableAPB1PeriphReset
+RCM_DisableAPB1PeriphReset

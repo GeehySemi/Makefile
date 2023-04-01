@@ -1,0 +1,986 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"Board.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.APM_MINI_LEDInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	APM_MINI_LEDInit
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	APM_MINI_LEDInit:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Board/Board_APM32F103_MINI.c"
+   1:Board/Board_APM32F103_MINI.c **** /*!
+   2:Board/Board_APM32F103_MINI.c ****  * @file        Board_APM32F103_MINI.c
+   3:Board/Board_APM32F103_MINI.c ****  *
+   4:Board/Board_APM32F103_MINI.c ****  * @brief       This file provides firmware functions to manage Leds and key buttons
+   5:Board/Board_APM32F103_MINI.c ****  *
+   6:Board/Board_APM32F103_MINI.c ****  * @version     V1.0.2
+   7:Board/Board_APM32F103_MINI.c ****  *
+   8:Board/Board_APM32F103_MINI.c ****  * @date        2022-01-05
+   9:Board/Board_APM32F103_MINI.c ****  *
+  10:Board/Board_APM32F103_MINI.c ****  * @attention
+  11:Board/Board_APM32F103_MINI.c ****  *
+  12:Board/Board_APM32F103_MINI.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Board/Board_APM32F103_MINI.c ****  *
+  14:Board/Board_APM32F103_MINI.c ****  *  You may not use this file except in compliance with the
+  15:Board/Board_APM32F103_MINI.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Board/Board_APM32F103_MINI.c ****  *
+  17:Board/Board_APM32F103_MINI.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Board/Board_APM32F103_MINI.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Board/Board_APM32F103_MINI.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Board/Board_APM32F103_MINI.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Board/Board_APM32F103_MINI.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Board/Board_APM32F103_MINI.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Board/Board_APM32F103_MINI.c ****  *  and limitations under the License.
+  24:Board/Board_APM32F103_MINI.c ****  */
+  25:Board/Board_APM32F103_MINI.c **** 
+  26:Board/Board_APM32F103_MINI.c **** #include "Board_APM32F103_MINI.h"
+  27:Board/Board_APM32F103_MINI.c **** 
+  28:Board/Board_APM32F103_MINI.c **** /** @defgroup APM32F103_MINI_Private_Variables
+  29:Board/Board_APM32F103_MINI.c ****   * @{
+  30:Board/Board_APM32F103_MINI.c ****   */
+  31:Board/Board_APM32F103_MINI.c **** GPIO_T* GPIO_PORT[LEDn] = {LED2_GPIO_PORT, LED3_GPIO_PORT};
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 2
+
+
+  32:Board/Board_APM32F103_MINI.c **** const uint16_t GPIO_PIN[LEDn] = {LED2_PIN, LED3_PIN};
+  33:Board/Board_APM32F103_MINI.c **** const uint32_t GPIO_CLK[LEDn] = {LED2_GPIO_CLK, LED3_GPIO_CLK};
+  34:Board/Board_APM32F103_MINI.c **** 
+  35:Board/Board_APM32F103_MINI.c **** GPIO_T* BUTTON_PORT[BUTTONn] = {KEY1_BUTTON_GPIO_PORT, KEY2_BUTTON_GPIO_PORT};
+  36:Board/Board_APM32F103_MINI.c **** 
+  37:Board/Board_APM32F103_MINI.c **** const uint16_t BUTTON_PIN[BUTTONn] = {KEY1_BUTTON_PIN, KEY2_BUTTON_PIN};
+  38:Board/Board_APM32F103_MINI.c **** 
+  39:Board/Board_APM32F103_MINI.c **** const uint32_t BUTTON_CLK[BUTTONn] = {KEY1_BUTTON_GPIO_CLK, KEY2_BUTTON_GPIO_CLK};
+  40:Board/Board_APM32F103_MINI.c **** 
+  41:Board/Board_APM32F103_MINI.c **** const uint16_t BUTTON_EINT_LINE[BUTTONn] = {KEY1_BUTTON_EINT_LINE,KEY2_BUTTON_EINT_LINE};
+  42:Board/Board_APM32F103_MINI.c **** 
+  43:Board/Board_APM32F103_MINI.c **** const GPIO_PORT_SOURCE_T BUTTON_PORT_SOURCE[BUTTONn] = {KEY1_BUTTON_EINT_PORT_SOURCE,KEY2_BUTTON_EI
+  44:Board/Board_APM32F103_MINI.c **** 
+  45:Board/Board_APM32F103_MINI.c **** const GPIO_PIN_SOURCE_T BUTTON_PIN_SOURCE[BUTTONn] = {KEY1_BUTTON_EINT_PIN_SOURCE,KEY2_BUTTON_EINT_
+  46:Board/Board_APM32F103_MINI.c **** 
+  47:Board/Board_APM32F103_MINI.c **** const IRQn_Type BUTTON_IRQn[BUTTONn] = {KEY1_BUTTON_EINT_IRQn, KEY2_BUTTON_EINT_IRQn};
+  48:Board/Board_APM32F103_MINI.c **** 
+  49:Board/Board_APM32F103_MINI.c **** USART_T* COM_USART[COMn] = {MINI_COM1, MINI_COM2};
+  50:Board/Board_APM32F103_MINI.c **** 
+  51:Board/Board_APM32F103_MINI.c **** GPIO_T* COM_TX_PORT[COMn] = {MINI_COM1_TX_GPIO_PORT, MINI_COM2_TX_GPIO_PORT};
+  52:Board/Board_APM32F103_MINI.c **** 
+  53:Board/Board_APM32F103_MINI.c **** GPIO_T* COM_RX_PORT[COMn] = {MINI_COM1_RX_GPIO_PORT, MINI_COM2_RX_GPIO_PORT};
+  54:Board/Board_APM32F103_MINI.c **** 
+  55:Board/Board_APM32F103_MINI.c **** const uint32_t COM_USART_CLK[COMn] = {MINI_COM1_CLK, MINI_COM2_CLK};
+  56:Board/Board_APM32F103_MINI.c **** 
+  57:Board/Board_APM32F103_MINI.c **** const uint32_t COM_TX_PORT_CLK[COMn] = {MINI_COM1_TX_GPIO_CLK, MINI_COM2_TX_GPIO_CLK};
+  58:Board/Board_APM32F103_MINI.c **** 
+  59:Board/Board_APM32F103_MINI.c **** const uint32_t COM_RX_PORT_CLK[COMn] = {MINI_COM1_RX_GPIO_CLK, MINI_COM2_RX_GPIO_CLK};
+  60:Board/Board_APM32F103_MINI.c **** 
+  61:Board/Board_APM32F103_MINI.c **** const uint16_t COM_TX_PIN[COMn] = {MINI_COM1_TX_PIN, MINI_COM2_TX_PIN};
+  62:Board/Board_APM32F103_MINI.c **** 
+  63:Board/Board_APM32F103_MINI.c **** const uint16_t COM_RX_PIN[COMn] = {MINI_COM1_RX_PIN, MINI_COM2_RX_PIN};
+  64:Board/Board_APM32F103_MINI.c **** 
+  65:Board/Board_APM32F103_MINI.c **** /**
+  66:Board/Board_APM32F103_MINI.c ****   * @}
+  67:Board/Board_APM32F103_MINI.c ****   */
+  68:Board/Board_APM32F103_MINI.c **** 
+  69:Board/Board_APM32F103_MINI.c **** /** @defgroup APM32F103_MINI_Private_Functions
+  70:Board/Board_APM32F103_MINI.c ****   * @{
+  71:Board/Board_APM32F103_MINI.c ****   */
+  72:Board/Board_APM32F103_MINI.c **** 
+  73:Board/Board_APM32F103_MINI.c **** /*!
+  74:Board/Board_APM32F103_MINI.c ****  * @brief       Configures LED GPIO.
+  75:Board/Board_APM32F103_MINI.c ****  *
+  76:Board/Board_APM32F103_MINI.c ****  * @param       Led: Specifies the Led to be configured.
+  77:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+  78:Board/Board_APM32F103_MINI.c ****  *              @arg LED2
+  79:Board/Board_APM32F103_MINI.c ****  *              @arg LED3
+  80:Board/Board_APM32F103_MINI.c ****  *
+  81:Board/Board_APM32F103_MINI.c ****  * @retval      None
+  82:Board/Board_APM32F103_MINI.c ****  */
+  83:Board/Board_APM32F103_MINI.c **** void APM_MINI_LEDInit(Led_TypeDef Led)
+  84:Board/Board_APM32F103_MINI.c **** {
+  28              		.loc 1 84 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 3
+
+
+  32              		.loc 1 84 1 is_stmt 0 view .LVU1
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 82B0     		sub	sp, sp, #8
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 24
+  43 0004 0446     		mov	r4, r0
+  85:Board/Board_APM32F103_MINI.c ****     GPIO_Config_T  configStruct;
+  44              		.loc 1 85 5 is_stmt 1 view .LVU2
+  86:Board/Board_APM32F103_MINI.c **** 
+  87:Board/Board_APM32F103_MINI.c ****     /** Enable the GPIO_LED Clock */
+  88:Board/Board_APM32F103_MINI.c ****     RCM_EnableAPB2PeriphClock(GPIO_CLK[Led]);
+  45              		.loc 1 88 5 view .LVU3
+  46 0006 0D4B     		ldr	r3, .L3
+  47 0008 53F82000 		ldr	r0, [r3, r0, lsl #2]
+  48              	.LVL1:
+  49              		.loc 1 88 5 is_stmt 0 view .LVU4
+  50 000c FFF7FEFF 		bl	RCM_EnableAPB2PeriphClock
+  51              	.LVL2:
+  89:Board/Board_APM32F103_MINI.c **** 
+  90:Board/Board_APM32F103_MINI.c ****     /** Configure the GPIO_LED pin */
+  91:Board/Board_APM32F103_MINI.c ****     configStruct.pin = GPIO_PIN[Led];
+  52              		.loc 1 91 5 is_stmt 1 view .LVU5
+  53              		.loc 1 91 32 is_stmt 0 view .LVU6
+  54 0010 0B4B     		ldr	r3, .L3+4
+  55 0012 33F81450 		ldrh	r5, [r3, r4, lsl #1]
+  56              		.loc 1 91 22 view .LVU7
+  57 0016 ADF80450 		strh	r5, [sp, #4]	@ movhi
+  92:Board/Board_APM32F103_MINI.c ****     configStruct.mode = GPIO_MODE_OUT_PP;
+  58              		.loc 1 92 5 is_stmt 1 view .LVU8
+  59              		.loc 1 92 23 is_stmt 0 view .LVU9
+  60 001a 8023     		movs	r3, #128
+  61 001c 8DF80730 		strb	r3, [sp, #7]
+  93:Board/Board_APM32F103_MINI.c ****     configStruct.speed = GPIO_SPEED_50MHz;
+  62              		.loc 1 93 5 is_stmt 1 view .LVU10
+  63              		.loc 1 93 24 is_stmt 0 view .LVU11
+  64 0020 0323     		movs	r3, #3
+  65 0022 8DF80630 		strb	r3, [sp, #6]
+  94:Board/Board_APM32F103_MINI.c **** 
+  95:Board/Board_APM32F103_MINI.c ****     GPIO_Config(GPIO_PORT[Led], &configStruct);
+  66              		.loc 1 95 5 is_stmt 1 view .LVU12
+  67 0026 074E     		ldr	r6, .L3+8
+  68 0028 01A9     		add	r1, sp, #4
+  69 002a 56F82400 		ldr	r0, [r6, r4, lsl #2]
+  70 002e FFF7FEFF 		bl	GPIO_Config
+  71              	.LVL3:
+  96:Board/Board_APM32F103_MINI.c ****     GPIO_PORT[Led]->BC = GPIO_PIN[Led];
+  72              		.loc 1 96 5 view .LVU13
+  73              		.loc 1 96 14 is_stmt 0 view .LVU14
+  74 0032 56F82430 		ldr	r3, [r6, r4, lsl #2]
+  75              		.loc 1 96 24 view .LVU15
+  76 0036 5D61     		str	r5, [r3, #20]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 4
+
+
+  97:Board/Board_APM32F103_MINI.c **** }
+  77              		.loc 1 97 1 view .LVU16
+  78 0038 02B0     		add	sp, sp, #8
+  79              	.LCFI2:
+  80              		.cfi_def_cfa_offset 16
+  81              		@ sp needed
+  82 003a 70BD     		pop	{r4, r5, r6, pc}
+  83              	.L4:
+  84              		.align	2
+  85              	.L3:
+  86 003c 00000000 		.word	.LANCHOR0
+  87 0040 00000000 		.word	.LANCHOR1
+  88 0044 00000000 		.word	.LANCHOR2
+  89              		.cfi_endproc
+  90              	.LFE65:
+  92              		.section	.text.APM_MINI_LEDOn,"ax",%progbits
+  93              		.align	1
+  94              		.global	APM_MINI_LEDOn
+  95              		.syntax unified
+  96              		.thumb
+  97              		.thumb_func
+  99              	APM_MINI_LEDOn:
+ 100              	.LVL4:
+ 101              	.LFB66:
+  98:Board/Board_APM32F103_MINI.c **** 
+  99:Board/Board_APM32F103_MINI.c **** /*!
+ 100:Board/Board_APM32F103_MINI.c ****  * @brief       Turns selected LED On.
+ 101:Board/Board_APM32F103_MINI.c ****  *
+ 102:Board/Board_APM32F103_MINI.c ****  * @param       Led: Specifies the Led to be configured.
+ 103:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+ 104:Board/Board_APM32F103_MINI.c ****  *              @arg LED2
+ 105:Board/Board_APM32F103_MINI.c ****  *              @arg LED3
+ 106:Board/Board_APM32F103_MINI.c ****  *
+ 107:Board/Board_APM32F103_MINI.c ****  * @retval      None
+ 108:Board/Board_APM32F103_MINI.c ****  */
+ 109:Board/Board_APM32F103_MINI.c **** void APM_MINI_LEDOn(Led_TypeDef Led)
+ 110:Board/Board_APM32F103_MINI.c **** {
+ 102              		.loc 1 110 1 is_stmt 1 view -0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106              		@ link register save eliminated.
+ 111:Board/Board_APM32F103_MINI.c ****     GPIO_PORT[Led]->BC = GPIO_PIN[Led];
+ 107              		.loc 1 111 5 view .LVU18
+ 108              		.loc 1 111 14 is_stmt 0 view .LVU19
+ 109 0000 034B     		ldr	r3, .L6
+ 110 0002 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 111              		.loc 1 111 34 view .LVU20
+ 112 0006 034A     		ldr	r2, .L6+4
+ 113 0008 32F81020 		ldrh	r2, [r2, r0, lsl #1]
+ 114              		.loc 1 111 24 view .LVU21
+ 115 000c 5A61     		str	r2, [r3, #20]
+ 112:Board/Board_APM32F103_MINI.c **** }
+ 116              		.loc 1 112 1 view .LVU22
+ 117 000e 7047     		bx	lr
+ 118              	.L7:
+ 119              		.align	2
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 5
+
+
+ 120              	.L6:
+ 121 0010 00000000 		.word	.LANCHOR2
+ 122 0014 00000000 		.word	.LANCHOR1
+ 123              		.cfi_endproc
+ 124              	.LFE66:
+ 126              		.section	.text.APM_MINI_LEDOff,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	APM_MINI_LEDOff
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 133              	APM_MINI_LEDOff:
+ 134              	.LVL5:
+ 135              	.LFB67:
+ 113:Board/Board_APM32F103_MINI.c **** 
+ 114:Board/Board_APM32F103_MINI.c **** /*!
+ 115:Board/Board_APM32F103_MINI.c ****  * @brief       Turns selected LED Off.
+ 116:Board/Board_APM32F103_MINI.c ****  *
+ 117:Board/Board_APM32F103_MINI.c ****  * @param       Led: Specifies the Led to be configured.
+ 118:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+ 119:Board/Board_APM32F103_MINI.c ****  *              @arg LED2
+ 120:Board/Board_APM32F103_MINI.c ****  *              @arg LED3
+ 121:Board/Board_APM32F103_MINI.c ****  *
+ 122:Board/Board_APM32F103_MINI.c ****  * @retval      None
+ 123:Board/Board_APM32F103_MINI.c ****  */
+ 124:Board/Board_APM32F103_MINI.c **** void APM_MINI_LEDOff(Led_TypeDef Led)
+ 125:Board/Board_APM32F103_MINI.c **** {
+ 136              		.loc 1 125 1 is_stmt 1 view -0
+ 137              		.cfi_startproc
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              		@ link register save eliminated.
+ 126:Board/Board_APM32F103_MINI.c ****     GPIO_PORT[Led]->BSC = GPIO_PIN[Led];
+ 141              		.loc 1 126 5 view .LVU24
+ 142              		.loc 1 126 14 is_stmt 0 view .LVU25
+ 143 0000 034B     		ldr	r3, .L9
+ 144 0002 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 145              		.loc 1 126 35 view .LVU26
+ 146 0006 034A     		ldr	r2, .L9+4
+ 147 0008 32F81020 		ldrh	r2, [r2, r0, lsl #1]
+ 148              		.loc 1 126 25 view .LVU27
+ 149 000c 1A61     		str	r2, [r3, #16]
+ 127:Board/Board_APM32F103_MINI.c **** }
+ 150              		.loc 1 127 1 view .LVU28
+ 151 000e 7047     		bx	lr
+ 152              	.L10:
+ 153              		.align	2
+ 154              	.L9:
+ 155 0010 00000000 		.word	.LANCHOR2
+ 156 0014 00000000 		.word	.LANCHOR1
+ 157              		.cfi_endproc
+ 158              	.LFE67:
+ 160              		.section	.text.APM_MINI_LEDToggle,"ax",%progbits
+ 161              		.align	1
+ 162              		.global	APM_MINI_LEDToggle
+ 163              		.syntax unified
+ 164              		.thumb
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 6
+
+
+ 165              		.thumb_func
+ 167              	APM_MINI_LEDToggle:
+ 168              	.LVL6:
+ 169              	.LFB68:
+ 128:Board/Board_APM32F103_MINI.c **** 
+ 129:Board/Board_APM32F103_MINI.c **** /*!
+ 130:Board/Board_APM32F103_MINI.c ****  * @brief       Toggles the selected LED.
+ 131:Board/Board_APM32F103_MINI.c ****  *
+ 132:Board/Board_APM32F103_MINI.c ****  * @param       Led: Specifies the Led to be configured.
+ 133:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+ 134:Board/Board_APM32F103_MINI.c ****  *              @arg LED2
+ 135:Board/Board_APM32F103_MINI.c ****  *              @arg LED3
+ 136:Board/Board_APM32F103_MINI.c ****  *
+ 137:Board/Board_APM32F103_MINI.c ****  * @retval      None
+ 138:Board/Board_APM32F103_MINI.c ****  */
+ 139:Board/Board_APM32F103_MINI.c **** void APM_MINI_LEDToggle(Led_TypeDef Led)
+ 140:Board/Board_APM32F103_MINI.c **** {
+ 170              		.loc 1 140 1 is_stmt 1 view -0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174              		@ link register save eliminated.
+ 141:Board/Board_APM32F103_MINI.c ****     GPIO_PORT[Led]->ODATA ^= GPIO_PIN[Led];
+ 175              		.loc 1 141 5 view .LVU30
+ 176              		.loc 1 141 14 is_stmt 0 view .LVU31
+ 177 0000 044B     		ldr	r3, .L12
+ 178 0002 53F82020 		ldr	r2, [r3, r0, lsl #2]
+ 179              		.loc 1 141 27 view .LVU32
+ 180 0006 D368     		ldr	r3, [r2, #12]
+ 181              		.loc 1 141 38 view .LVU33
+ 182 0008 0349     		ldr	r1, .L12+4
+ 183 000a 31F81010 		ldrh	r1, [r1, r0, lsl #1]
+ 184              		.loc 1 141 27 view .LVU34
+ 185 000e 4B40     		eors	r3, r3, r1
+ 186 0010 D360     		str	r3, [r2, #12]
+ 142:Board/Board_APM32F103_MINI.c **** }
+ 187              		.loc 1 142 1 view .LVU35
+ 188 0012 7047     		bx	lr
+ 189              	.L13:
+ 190              		.align	2
+ 191              	.L12:
+ 192 0014 00000000 		.word	.LANCHOR2
+ 193 0018 00000000 		.word	.LANCHOR1
+ 194              		.cfi_endproc
+ 195              	.LFE68:
+ 197              		.section	.text.APM_MINI_PBInit,"ax",%progbits
+ 198              		.align	1
+ 199              		.global	APM_MINI_PBInit
+ 200              		.syntax unified
+ 201              		.thumb
+ 202              		.thumb_func
+ 204              	APM_MINI_PBInit:
+ 205              	.LVL7:
+ 206              	.LFB69:
+ 143:Board/Board_APM32F103_MINI.c **** 
+ 144:Board/Board_APM32F103_MINI.c **** /*!
+ 145:Board/Board_APM32F103_MINI.c ****  * @brief       Configures Button GPIO and EINT Line.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 7
+
+
+ 146:Board/Board_APM32F103_MINI.c ****  *
+ 147:Board/Board_APM32F103_MINI.c ****  * @param       Button: Specifies the Button to be configured.
+ 148:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+ 149:Board/Board_APM32F103_MINI.c ****  *              @arg BUTTON_KEY1: Key1 Push Button
+ 150:Board/Board_APM32F103_MINI.c ****  *              @arg BUTTON_KEY2: Key2 Push Button
+ 151:Board/Board_APM32F103_MINI.c ****  * @param       Button_Mode: Specifies Button mode.
+ 152:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+ 153:Board/Board_APM32F103_MINI.c ****  *              @arg BUTTON_MODE_GPIO: Button will be used as simple IO
+ 154:Board/Board_APM32F103_MINI.c ****  *              @arg BUTTON_MODE_EINT: Button will be connected to EINT line
+ 155:Board/Board_APM32F103_MINI.c ****  *                   with interrupt generation capability
+ 156:Board/Board_APM32F103_MINI.c ****  *
+ 157:Board/Board_APM32F103_MINI.c ****  * @retval      None
+ 158:Board/Board_APM32F103_MINI.c ****  */
+ 159:Board/Board_APM32F103_MINI.c **** void APM_MINI_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
+ 160:Board/Board_APM32F103_MINI.c **** {
+ 207              		.loc 1 160 1 is_stmt 1 view -0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 16
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211              		.loc 1 160 1 is_stmt 0 view .LVU37
+ 212 0000 30B5     		push	{r4, r5, lr}
+ 213              	.LCFI3:
+ 214              		.cfi_def_cfa_offset 12
+ 215              		.cfi_offset 4, -12
+ 216              		.cfi_offset 5, -8
+ 217              		.cfi_offset 14, -4
+ 218 0002 85B0     		sub	sp, sp, #20
+ 219              	.LCFI4:
+ 220              		.cfi_def_cfa_offset 32
+ 221 0004 0446     		mov	r4, r0
+ 222 0006 0D46     		mov	r5, r1
+ 161:Board/Board_APM32F103_MINI.c ****     GPIO_Config_T     GPIO_configStruct;
+ 223              		.loc 1 161 5 is_stmt 1 view .LVU38
+ 162:Board/Board_APM32F103_MINI.c ****     EINT_Config_T     EINT_configStruct;
+ 224              		.loc 1 162 5 view .LVU39
+ 163:Board/Board_APM32F103_MINI.c **** 
+ 164:Board/Board_APM32F103_MINI.c ****     /** Enable the BUTTON Clock */
+ 165:Board/Board_APM32F103_MINI.c ****     RCM_EnableAPB2PeriphClock(BUTTON_CLK[Button] | RCM_APB2_PERIPH_AFIO);
+ 225              		.loc 1 165 5 view .LVU40
+ 226              		.loc 1 165 41 is_stmt 0 view .LVU41
+ 227 0008 1A4B     		ldr	r3, .L18
+ 228 000a 53F82000 		ldr	r0, [r3, r0, lsl #2]
+ 229              	.LVL8:
+ 230              		.loc 1 165 5 view .LVU42
+ 231 000e 40F00100 		orr	r0, r0, #1
+ 232 0012 FFF7FEFF 		bl	RCM_EnableAPB2PeriphClock
+ 233              	.LVL9:
+ 166:Board/Board_APM32F103_MINI.c **** 
+ 167:Board/Board_APM32F103_MINI.c ****     /** Configure Button pin as input floating */
+ 168:Board/Board_APM32F103_MINI.c ****     GPIO_configStruct.mode = GPIO_MODE_IN_PU;
+ 234              		.loc 1 168 5 is_stmt 1 view .LVU43
+ 235              		.loc 1 168 28 is_stmt 0 view .LVU44
+ 236 0016 4823     		movs	r3, #72
+ 237 0018 8DF80F30 		strb	r3, [sp, #15]
+ 169:Board/Board_APM32F103_MINI.c ****     GPIO_configStruct.pin = BUTTON_PIN[Button];
+ 238              		.loc 1 169 5 is_stmt 1 view .LVU45
+ 239              		.loc 1 169 39 is_stmt 0 view .LVU46
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 8
+
+
+ 240 001c 164B     		ldr	r3, .L18+4
+ 241 001e 33F81430 		ldrh	r3, [r3, r4, lsl #1]
+ 242              		.loc 1 169 27 view .LVU47
+ 243 0022 ADF80C30 		strh	r3, [sp, #12]	@ movhi
+ 170:Board/Board_APM32F103_MINI.c ****     GPIO_Config(BUTTON_PORT[Button], &GPIO_configStruct);
+ 244              		.loc 1 170 5 is_stmt 1 view .LVU48
+ 245 0026 03A9     		add	r1, sp, #12
+ 246 0028 144B     		ldr	r3, .L18+8
+ 247 002a 53F82400 		ldr	r0, [r3, r4, lsl #2]
+ 248 002e FFF7FEFF 		bl	GPIO_Config
+ 249              	.LVL10:
+ 171:Board/Board_APM32F103_MINI.c **** 
+ 172:Board/Board_APM32F103_MINI.c ****     if (Button_Mode == BUTTON_MODE_EINT)
+ 250              		.loc 1 172 5 view .LVU49
+ 251              		.loc 1 172 8 is_stmt 0 view .LVU50
+ 252 0032 012D     		cmp	r5, #1
+ 253 0034 01D0     		beq	.L17
+ 254              	.L14:
+ 173:Board/Board_APM32F103_MINI.c ****     {
+ 174:Board/Board_APM32F103_MINI.c ****         /** Connect Button EINT Line to Button GPIO Pin */
+ 175:Board/Board_APM32F103_MINI.c ****         GPIO_ConfigEINTLine(BUTTON_PORT_SOURCE[Button], BUTTON_PIN_SOURCE[Button]);
+ 176:Board/Board_APM32F103_MINI.c **** 
+ 177:Board/Board_APM32F103_MINI.c ****         /** Configure Button EINT line */
+ 178:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.line = BUTTON_EINT_LINE[Button];
+ 179:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.mode = EINT_MODE_INTERRUPT;
+ 180:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.trigger = EINT_TRIGGER_FALLING;
+ 181:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.lineCmd = ENABLE;
+ 182:Board/Board_APM32F103_MINI.c ****         EINT_Config(&EINT_configStruct);
+ 183:Board/Board_APM32F103_MINI.c **** 
+ 184:Board/Board_APM32F103_MINI.c ****         /** Enable and set Button EINT Interrupt to the lowest priority */
+ 185:Board/Board_APM32F103_MINI.c ****         NVIC_EnableIRQRequest(BUTTON_IRQn[Button], 0x0f, 0x0f);
+ 186:Board/Board_APM32F103_MINI.c ****     }
+ 187:Board/Board_APM32F103_MINI.c **** }
+ 255              		.loc 1 187 1 view .LVU51
+ 256 0036 05B0     		add	sp, sp, #20
+ 257              	.LCFI5:
+ 258              		.cfi_remember_state
+ 259              		.cfi_def_cfa_offset 12
+ 260              		@ sp needed
+ 261 0038 30BD     		pop	{r4, r5, pc}
+ 262              	.L17:
+ 263              	.LCFI6:
+ 264              		.cfi_restore_state
+ 175:Board/Board_APM32F103_MINI.c **** 
+ 265              		.loc 1 175 9 is_stmt 1 view .LVU52
+ 266 003a 114B     		ldr	r3, .L18+12
+ 267 003c 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
+ 268 003e 114B     		ldr	r3, .L18+16
+ 269 0040 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
+ 270 0042 FFF7FEFF 		bl	GPIO_ConfigEINTLine
+ 271              	.LVL11:
+ 178:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.mode = EINT_MODE_INTERRUPT;
+ 272              		.loc 1 178 9 view .LVU53
+ 178:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.mode = EINT_MODE_INTERRUPT;
+ 273              		.loc 1 178 50 is_stmt 0 view .LVU54
+ 274 0046 104B     		ldr	r3, .L18+20
+ 275 0048 33F81430 		ldrh	r3, [r3, r4, lsl #1]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 9
+
+
+ 178:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.mode = EINT_MODE_INTERRUPT;
+ 276              		.loc 1 178 32 view .LVU55
+ 277 004c 0193     		str	r3, [sp, #4]
+ 179:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.trigger = EINT_TRIGGER_FALLING;
+ 278              		.loc 1 179 9 is_stmt 1 view .LVU56
+ 179:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.trigger = EINT_TRIGGER_FALLING;
+ 279              		.loc 1 179 32 is_stmt 0 view .LVU57
+ 280 004e 0023     		movs	r3, #0
+ 281 0050 8DF80830 		strb	r3, [sp, #8]
+ 180:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.lineCmd = ENABLE;
+ 282              		.loc 1 180 9 is_stmt 1 view .LVU58
+ 180:Board/Board_APM32F103_MINI.c ****         EINT_configStruct.lineCmd = ENABLE;
+ 283              		.loc 1 180 35 is_stmt 0 view .LVU59
+ 284 0054 0C23     		movs	r3, #12
+ 285 0056 8DF80930 		strb	r3, [sp, #9]
+ 181:Board/Board_APM32F103_MINI.c ****         EINT_Config(&EINT_configStruct);
+ 286              		.loc 1 181 9 is_stmt 1 view .LVU60
+ 181:Board/Board_APM32F103_MINI.c ****         EINT_Config(&EINT_configStruct);
+ 287              		.loc 1 181 35 is_stmt 0 view .LVU61
+ 288 005a 0123     		movs	r3, #1
+ 289 005c 8DF80A30 		strb	r3, [sp, #10]
+ 182:Board/Board_APM32F103_MINI.c **** 
+ 290              		.loc 1 182 9 is_stmt 1 view .LVU62
+ 291 0060 01A8     		add	r0, sp, #4
+ 292 0062 FFF7FEFF 		bl	EINT_Config
+ 293              	.LVL12:
+ 185:Board/Board_APM32F103_MINI.c ****     }
+ 294              		.loc 1 185 9 view .LVU63
+ 295 0066 0F22     		movs	r2, #15
+ 296 0068 1146     		mov	r1, r2
+ 297 006a 084B     		ldr	r3, .L18+24
+ 298 006c 1857     		ldrsb	r0, [r3, r4]
+ 299 006e FFF7FEFF 		bl	NVIC_EnableIRQRequest
+ 300              	.LVL13:
+ 301              		.loc 1 187 1 is_stmt 0 view .LVU64
+ 302 0072 E0E7     		b	.L14
+ 303              	.L19:
+ 304              		.align	2
+ 305              	.L18:
+ 306 0074 00000000 		.word	.LANCHOR3
+ 307 0078 00000000 		.word	.LANCHOR4
+ 308 007c 00000000 		.word	.LANCHOR5
+ 309 0080 00000000 		.word	.LANCHOR6
+ 310 0084 00000000 		.word	.LANCHOR7
+ 311 0088 00000000 		.word	.LANCHOR8
+ 312 008c 00000000 		.word	.LANCHOR9
+ 313              		.cfi_endproc
+ 314              	.LFE69:
+ 316              		.section	.text.APM_MINI_PBGetState,"ax",%progbits
+ 317              		.align	1
+ 318              		.global	APM_MINI_PBGetState
+ 319              		.syntax unified
+ 320              		.thumb
+ 321              		.thumb_func
+ 323              	APM_MINI_PBGetState:
+ 324              	.LVL14:
+ 325              	.LFB70:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 10
+
+
+ 188:Board/Board_APM32F103_MINI.c **** 
+ 189:Board/Board_APM32F103_MINI.c **** /*!
+ 190:Board/Board_APM32F103_MINI.c ****  * @brief       Returns the selected Button state.
+ 191:Board/Board_APM32F103_MINI.c ****  *
+ 192:Board/Board_APM32F103_MINI.c ****  * @param       Button: Specifies the Button to be configured.
+ 193:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+ 194:Board/Board_APM32F103_MINI.c ****  *              @arg BUTTON_KEY1: Key1 Push Button
+ 195:Board/Board_APM32F103_MINI.c ****  *              @arg BUTTON_KEY2: Key2 Push Button
+ 196:Board/Board_APM32F103_MINI.c ****  *
+ 197:Board/Board_APM32F103_MINI.c ****  * @retval      The Button GPIO pin value.
+ 198:Board/Board_APM32F103_MINI.c ****  */
+ 199:Board/Board_APM32F103_MINI.c **** uint32_t APM_MINI_PBGetState(Button_TypeDef Button)
+ 200:Board/Board_APM32F103_MINI.c **** {
+ 326              		.loc 1 200 1 is_stmt 1 view -0
+ 327              		.cfi_startproc
+ 328              		@ args = 0, pretend = 0, frame = 0
+ 329              		@ frame_needed = 0, uses_anonymous_args = 0
+ 330              		.loc 1 200 1 is_stmt 0 view .LVU66
+ 331 0000 08B5     		push	{r3, lr}
+ 332              	.LCFI7:
+ 333              		.cfi_def_cfa_offset 8
+ 334              		.cfi_offset 3, -8
+ 335              		.cfi_offset 14, -4
+ 201:Board/Board_APM32F103_MINI.c ****     return GPIO_ReadInputBit(BUTTON_PORT[Button], BUTTON_PIN[Button]);
+ 336              		.loc 1 201 5 is_stmt 1 view .LVU67
+ 337              		.loc 1 201 12 is_stmt 0 view .LVU68
+ 338 0002 044B     		ldr	r3, .L22
+ 339 0004 33F81010 		ldrh	r1, [r3, r0, lsl #1]
+ 340 0008 034B     		ldr	r3, .L22+4
+ 341 000a 53F82000 		ldr	r0, [r3, r0, lsl #2]
+ 342              	.LVL15:
+ 343              		.loc 1 201 12 view .LVU69
+ 344 000e FFF7FEFF 		bl	GPIO_ReadInputBit
+ 345              	.LVL16:
+ 202:Board/Board_APM32F103_MINI.c **** }
+ 346              		.loc 1 202 1 view .LVU70
+ 347 0012 08BD     		pop	{r3, pc}
+ 348              	.L23:
+ 349              		.align	2
+ 350              	.L22:
+ 351 0014 00000000 		.word	.LANCHOR4
+ 352 0018 00000000 		.word	.LANCHOR5
+ 353              		.cfi_endproc
+ 354              	.LFE70:
+ 356              		.section	.text.APM_MINI_COMInit,"ax",%progbits
+ 357              		.align	1
+ 358              		.global	APM_MINI_COMInit
+ 359              		.syntax unified
+ 360              		.thumb
+ 361              		.thumb_func
+ 363              	APM_MINI_COMInit:
+ 364              	.LVL17:
+ 365              	.LFB71:
+ 203:Board/Board_APM32F103_MINI.c **** 
+ 204:Board/Board_APM32F103_MINI.c **** /*!
+ 205:Board/Board_APM32F103_MINI.c ****  * @brief       Configures COM port.
+ 206:Board/Board_APM32F103_MINI.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 11
+
+
+ 207:Board/Board_APM32F103_MINI.c ****  * @param       COM: Specifies the COM port to be configured.
+ 208:Board/Board_APM32F103_MINI.c ****  *              This parameter can be one of following parameters:
+ 209:Board/Board_APM32F103_MINI.c ****  *              @arg COM1
+ 210:Board/Board_APM32F103_MINI.c ****  *              @arg COM2
+ 211:Board/Board_APM32F103_MINI.c ****  *
+ 212:Board/Board_APM32F103_MINI.c ****  * @retval      None
+ 213:Board/Board_APM32F103_MINI.c ****  */
+ 214:Board/Board_APM32F103_MINI.c **** void APM_MINI_COMInit(COM_TypeDef COM, USART_Config_T* configStruct)
+ 215:Board/Board_APM32F103_MINI.c **** {
+ 366              		.loc 1 215 1 is_stmt 1 view -0
+ 367              		.cfi_startproc
+ 368              		@ args = 0, pretend = 0, frame = 8
+ 369              		@ frame_needed = 0, uses_anonymous_args = 0
+ 370              		.loc 1 215 1 is_stmt 0 view .LVU72
+ 371 0000 70B5     		push	{r4, r5, r6, lr}
+ 372              	.LCFI8:
+ 373              		.cfi_def_cfa_offset 16
+ 374              		.cfi_offset 4, -16
+ 375              		.cfi_offset 5, -12
+ 376              		.cfi_offset 6, -8
+ 377              		.cfi_offset 14, -4
+ 378 0002 82B0     		sub	sp, sp, #8
+ 379              	.LCFI9:
+ 380              		.cfi_def_cfa_offset 24
+ 381 0004 0446     		mov	r4, r0
+ 382 0006 0D46     		mov	r5, r1
+ 216:Board/Board_APM32F103_MINI.c ****     GPIO_Config_T GPIO_configStruct;
+ 383              		.loc 1 216 5 is_stmt 1 view .LVU73
+ 217:Board/Board_APM32F103_MINI.c **** 
+ 218:Board/Board_APM32F103_MINI.c ****     /** Enable GPIO clock */
+ 219:Board/Board_APM32F103_MINI.c ****     RCM_EnableAPB2PeriphClock(COM_TX_PORT_CLK[COM] | COM_RX_PORT_CLK[COM]);
+ 384              		.loc 1 219 5 view .LVU74
+ 385              		.loc 1 219 46 is_stmt 0 view .LVU75
+ 386 0008 1F4B     		ldr	r3, .L28
+ 387 000a 53F82000 		ldr	r0, [r3, r0, lsl #2]
+ 388              	.LVL18:
+ 389              		.loc 1 219 69 view .LVU76
+ 390 000e 1F4B     		ldr	r3, .L28+4
+ 391 0010 53F82430 		ldr	r3, [r3, r4, lsl #2]
+ 392              		.loc 1 219 5 view .LVU77
+ 393 0014 1843     		orrs	r0, r0, r3
+ 394 0016 FFF7FEFF 		bl	RCM_EnableAPB2PeriphClock
+ 395              	.LVL19:
+ 220:Board/Board_APM32F103_MINI.c **** 
+ 221:Board/Board_APM32F103_MINI.c ****     if (COM == COM1)
+ 396              		.loc 1 221 5 is_stmt 1 view .LVU78
+ 397              		.loc 1 221 8 is_stmt 0 view .LVU79
+ 398 001a 7CBB     		cbnz	r4, .L25
+ 222:Board/Board_APM32F103_MINI.c ****     {
+ 223:Board/Board_APM32F103_MINI.c ****         RCM_EnableAPB2PeriphClock(COM_USART_CLK[COM]);
+ 399              		.loc 1 223 9 is_stmt 1 view .LVU80
+ 400 001c 1C4B     		ldr	r3, .L28+8
+ 401 001e 53F82400 		ldr	r0, [r3, r4, lsl #2]
+ 402 0022 FFF7FEFF 		bl	RCM_EnableAPB2PeriphClock
+ 403              	.LVL20:
+ 404              	.L26:
+ 224:Board/Board_APM32F103_MINI.c ****     }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 12
+
+
+ 225:Board/Board_APM32F103_MINI.c ****     else
+ 226:Board/Board_APM32F103_MINI.c ****     {
+ 227:Board/Board_APM32F103_MINI.c ****         RCM_EnableAPB1PeriphClock(COM_USART_CLK[COM]);
+ 228:Board/Board_APM32F103_MINI.c ****     }
+ 229:Board/Board_APM32F103_MINI.c **** 
+ 230:Board/Board_APM32F103_MINI.c ****     /** Configure USART Tx as alternate function push-pull */
+ 231:Board/Board_APM32F103_MINI.c ****     GPIO_configStruct.mode = GPIO_MODE_AF_PP;
+ 405              		.loc 1 231 5 view .LVU81
+ 406              		.loc 1 231 28 is_stmt 0 view .LVU82
+ 407 0026 8823     		movs	r3, #136
+ 408 0028 8DF80730 		strb	r3, [sp, #7]
+ 232:Board/Board_APM32F103_MINI.c ****     GPIO_configStruct.pin = COM_TX_PIN[COM];
+ 409              		.loc 1 232 5 is_stmt 1 view .LVU83
+ 410              		.loc 1 232 39 is_stmt 0 view .LVU84
+ 411 002c 194B     		ldr	r3, .L28+12
+ 412 002e 33F81430 		ldrh	r3, [r3, r4, lsl #1]
+ 413              		.loc 1 232 27 view .LVU85
+ 414 0032 ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 233:Board/Board_APM32F103_MINI.c ****     GPIO_configStruct.speed = GPIO_SPEED_50MHz;
+ 415              		.loc 1 233 5 is_stmt 1 view .LVU86
+ 416              		.loc 1 233 29 is_stmt 0 view .LVU87
+ 417 0036 0323     		movs	r3, #3
+ 418 0038 8DF80630 		strb	r3, [sp, #6]
+ 234:Board/Board_APM32F103_MINI.c ****     GPIO_Config(COM_TX_PORT[COM], &GPIO_configStruct);
+ 419              		.loc 1 234 5 is_stmt 1 view .LVU88
+ 420 003c 01A9     		add	r1, sp, #4
+ 421 003e 164B     		ldr	r3, .L28+16
+ 422 0040 53F82400 		ldr	r0, [r3, r4, lsl #2]
+ 423 0044 FFF7FEFF 		bl	GPIO_Config
+ 424              	.LVL21:
+ 235:Board/Board_APM32F103_MINI.c **** 
+ 236:Board/Board_APM32F103_MINI.c ****     /** Configure USART Rx as input floating */
+ 237:Board/Board_APM32F103_MINI.c ****     GPIO_configStruct.mode = GPIO_MODE_IN_FLOATING;
+ 425              		.loc 1 237 5 view .LVU89
+ 426              		.loc 1 237 28 is_stmt 0 view .LVU90
+ 427 0048 0423     		movs	r3, #4
+ 428 004a 8DF80730 		strb	r3, [sp, #7]
+ 238:Board/Board_APM32F103_MINI.c ****     GPIO_configStruct.pin = COM_RX_PIN[COM];
+ 429              		.loc 1 238 5 is_stmt 1 view .LVU91
+ 430              		.loc 1 238 39 is_stmt 0 view .LVU92
+ 431 004e 134B     		ldr	r3, .L28+20
+ 432 0050 33F81430 		ldrh	r3, [r3, r4, lsl #1]
+ 433              		.loc 1 238 27 view .LVU93
+ 434 0054 ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 239:Board/Board_APM32F103_MINI.c ****     GPIO_Config(COM_RX_PORT[COM], &GPIO_configStruct);
+ 435              		.loc 1 239 5 is_stmt 1 view .LVU94
+ 436 0058 01A9     		add	r1, sp, #4
+ 437 005a 114B     		ldr	r3, .L28+24
+ 438 005c 53F82400 		ldr	r0, [r3, r4, lsl #2]
+ 439 0060 FFF7FEFF 		bl	GPIO_Config
+ 440              	.LVL22:
+ 240:Board/Board_APM32F103_MINI.c **** 
+ 241:Board/Board_APM32F103_MINI.c ****     /** USART configuration */
+ 242:Board/Board_APM32F103_MINI.c ****     USART_Config(COM_USART[COM], configStruct);
+ 441              		.loc 1 242 5 view .LVU95
+ 442 0064 0F4E     		ldr	r6, .L28+28
+ 443 0066 2946     		mov	r1, r5
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 13
+
+
+ 444 0068 56F82400 		ldr	r0, [r6, r4, lsl #2]
+ 445 006c FFF7FEFF 		bl	USART_Config
+ 446              	.LVL23:
+ 243:Board/Board_APM32F103_MINI.c **** 
+ 244:Board/Board_APM32F103_MINI.c ****     /** Enable USART */
+ 245:Board/Board_APM32F103_MINI.c ****     USART_Enable(COM_USART[COM]);
+ 447              		.loc 1 245 5 view .LVU96
+ 448 0070 56F82400 		ldr	r0, [r6, r4, lsl #2]
+ 449 0074 FFF7FEFF 		bl	USART_Enable
+ 450              	.LVL24:
+ 246:Board/Board_APM32F103_MINI.c **** }
+ 451              		.loc 1 246 1 is_stmt 0 view .LVU97
+ 452 0078 02B0     		add	sp, sp, #8
+ 453              	.LCFI10:
+ 454              		.cfi_remember_state
+ 455              		.cfi_def_cfa_offset 16
+ 456              		@ sp needed
+ 457 007a 70BD     		pop	{r4, r5, r6, pc}
+ 458              	.LVL25:
+ 459              	.L25:
+ 460              	.LCFI11:
+ 461              		.cfi_restore_state
+ 227:Board/Board_APM32F103_MINI.c ****     }
+ 462              		.loc 1 227 9 is_stmt 1 view .LVU98
+ 463 007c 044B     		ldr	r3, .L28+8
+ 464 007e 53F82400 		ldr	r0, [r3, r4, lsl #2]
+ 465 0082 FFF7FEFF 		bl	RCM_EnableAPB1PeriphClock
+ 466              	.LVL26:
+ 467 0086 CEE7     		b	.L26
+ 468              	.L29:
+ 469              		.align	2
+ 470              	.L28:
+ 471 0088 00000000 		.word	.LANCHOR10
+ 472 008c 00000000 		.word	.LANCHOR11
+ 473 0090 00000000 		.word	.LANCHOR12
+ 474 0094 00000000 		.word	.LANCHOR13
+ 475 0098 00000000 		.word	.LANCHOR14
+ 476 009c 00000000 		.word	.LANCHOR15
+ 477 00a0 00000000 		.word	.LANCHOR16
+ 478 00a4 00000000 		.word	.LANCHOR17
+ 479              		.cfi_endproc
+ 480              	.LFE71:
+ 482              		.global	COM_RX_PIN
+ 483              		.global	COM_TX_PIN
+ 484              		.global	COM_RX_PORT_CLK
+ 485              		.global	COM_TX_PORT_CLK
+ 486              		.global	COM_USART_CLK
+ 487              		.global	COM_RX_PORT
+ 488              		.global	COM_TX_PORT
+ 489              		.global	COM_USART
+ 490              		.global	BUTTON_IRQn
+ 491              		.global	BUTTON_PIN_SOURCE
+ 492              		.global	BUTTON_PORT_SOURCE
+ 493              		.global	BUTTON_EINT_LINE
+ 494              		.global	BUTTON_CLK
+ 495              		.global	BUTTON_PIN
+ 496              		.global	BUTTON_PORT
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 14
+
+
+ 497              		.global	GPIO_CLK
+ 498              		.global	GPIO_PIN
+ 499              		.global	GPIO_PORT
+ 500              		.section	.data.BUTTON_PORT,"aw"
+ 501              		.align	2
+ 502              		.set	.LANCHOR5,. + 0
+ 505              	BUTTON_PORT:
+ 506 0000 00080140 		.word	1073809408
+ 507 0004 00080140 		.word	1073809408
+ 508              		.section	.data.COM_RX_PORT,"aw"
+ 509              		.align	2
+ 510              		.set	.LANCHOR16,. + 0
+ 513              	COM_RX_PORT:
+ 514 0000 00080140 		.word	1073809408
+ 515 0004 00080140 		.word	1073809408
+ 516              		.section	.data.COM_TX_PORT,"aw"
+ 517              		.align	2
+ 518              		.set	.LANCHOR14,. + 0
+ 521              	COM_TX_PORT:
+ 522 0000 00080140 		.word	1073809408
+ 523 0004 00080140 		.word	1073809408
+ 524              		.section	.data.COM_USART,"aw"
+ 525              		.align	2
+ 526              		.set	.LANCHOR17,. + 0
+ 529              	COM_USART:
+ 530 0000 00380140 		.word	1073821696
+ 531 0004 00440040 		.word	1073759232
+ 532              		.section	.data.GPIO_PORT,"aw"
+ 533              		.align	2
+ 534              		.set	.LANCHOR2,. + 0
+ 537              	GPIO_PORT:
+ 538 0000 00180140 		.word	1073813504
+ 539 0004 00180140 		.word	1073813504
+ 540              		.section	.rodata.BUTTON_CLK,"a"
+ 541              		.align	2
+ 542              		.set	.LANCHOR3,. + 0
+ 545              	BUTTON_CLK:
+ 546 0000 04000000 		.word	4
+ 547 0004 04000000 		.word	4
+ 548              		.section	.rodata.BUTTON_EINT_LINE,"a"
+ 549              		.align	2
+ 550              		.set	.LANCHOR8,. + 0
+ 553              	BUTTON_EINT_LINE:
+ 554 0000 0200     		.short	2
+ 555 0002 0100     		.short	1
+ 556              		.section	.rodata.BUTTON_IRQn,"a"
+ 557              		.align	2
+ 558              		.set	.LANCHOR9,. + 0
+ 561              	BUTTON_IRQn:
+ 562 0000 07       		.byte	7
+ 563 0001 06       		.byte	6
+ 564              		.section	.rodata.BUTTON_PIN,"a"
+ 565              		.align	2
+ 566              		.set	.LANCHOR4,. + 0
+ 569              	BUTTON_PIN:
+ 570 0000 0200     		.short	2
+ 571 0002 0100     		.short	1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 15
+
+
+ 572              		.section	.rodata.BUTTON_PIN_SOURCE,"a"
+ 573              		.align	2
+ 574              		.set	.LANCHOR6,. + 0
+ 577              	BUTTON_PIN_SOURCE:
+ 578 0000 01       		.byte	1
+ 579 0001 00       		.byte	0
+ 580              		.section	.rodata.BUTTON_PORT_SOURCE,"a"
+ 581              		.align	2
+ 582              		.set	.LANCHOR7,. + 0
+ 585              	BUTTON_PORT_SOURCE:
+ 586 0000 0000     		.space	2
+ 587              		.section	.rodata.COM_RX_PIN,"a"
+ 588              		.align	2
+ 589              		.set	.LANCHOR15,. + 0
+ 592              	COM_RX_PIN:
+ 593 0000 0004     		.short	1024
+ 594 0002 0800     		.short	8
+ 595              		.section	.rodata.COM_RX_PORT_CLK,"a"
+ 596              		.align	2
+ 597              		.set	.LANCHOR11,. + 0
+ 600              	COM_RX_PORT_CLK:
+ 601 0000 04000000 		.word	4
+ 602 0004 04000000 		.word	4
+ 603              		.section	.rodata.COM_TX_PIN,"a"
+ 604              		.align	2
+ 605              		.set	.LANCHOR13,. + 0
+ 608              	COM_TX_PIN:
+ 609 0000 0002     		.short	512
+ 610 0002 0400     		.short	4
+ 611              		.section	.rodata.COM_TX_PORT_CLK,"a"
+ 612              		.align	2
+ 613              		.set	.LANCHOR10,. + 0
+ 616              	COM_TX_PORT_CLK:
+ 617 0000 04000000 		.word	4
+ 618 0004 04000000 		.word	4
+ 619              		.section	.rodata.COM_USART_CLK,"a"
+ 620              		.align	2
+ 621              		.set	.LANCHOR12,. + 0
+ 624              	COM_USART_CLK:
+ 625 0000 00400000 		.word	16384
+ 626 0004 00000200 		.word	131072
+ 627              		.section	.rodata.GPIO_CLK,"a"
+ 628              		.align	2
+ 629              		.set	.LANCHOR0,. + 0
+ 632              	GPIO_CLK:
+ 633 0000 40000000 		.word	64
+ 634 0004 40000000 		.word	64
+ 635              		.section	.rodata.GPIO_PIN,"a"
+ 636              		.align	2
+ 637              		.set	.LANCHOR1,. + 0
+ 640              	GPIO_PIN:
+ 641 0000 4000     		.short	64
+ 642 0002 2000     		.short	32
+ 643              		.text
+ 644              	.Letext0:
+ 645              		.file 2 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 646              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 16
+
+
+ 647              		.file 4 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 648              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_gpio.h"
+ 649              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rcm.h"
+ 650              		.file 7 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_eint.h"
+ 651              		.file 8 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_usart.h"
+ 652              		.file 9 "Board/Board_APM32F103_MINI.h"
+ 653              		.file 10 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_misc.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 Board.c
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:18     .text.APM_MINI_LEDInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:24     .text.APM_MINI_LEDInit:00000000 APM_MINI_LEDInit
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:86     .text.APM_MINI_LEDInit:0000003c $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:93     .text.APM_MINI_LEDOn:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:99     .text.APM_MINI_LEDOn:00000000 APM_MINI_LEDOn
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:121    .text.APM_MINI_LEDOn:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:127    .text.APM_MINI_LEDOff:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:133    .text.APM_MINI_LEDOff:00000000 APM_MINI_LEDOff
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:155    .text.APM_MINI_LEDOff:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:161    .text.APM_MINI_LEDToggle:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:167    .text.APM_MINI_LEDToggle:00000000 APM_MINI_LEDToggle
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:192    .text.APM_MINI_LEDToggle:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:198    .text.APM_MINI_PBInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:204    .text.APM_MINI_PBInit:00000000 APM_MINI_PBInit
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:306    .text.APM_MINI_PBInit:00000074 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:317    .text.APM_MINI_PBGetState:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:323    .text.APM_MINI_PBGetState:00000000 APM_MINI_PBGetState
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:351    .text.APM_MINI_PBGetState:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:357    .text.APM_MINI_COMInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:363    .text.APM_MINI_COMInit:00000000 APM_MINI_COMInit
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:471    .text.APM_MINI_COMInit:00000088 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:592    .rodata.COM_RX_PIN:00000000 COM_RX_PIN
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:608    .rodata.COM_TX_PIN:00000000 COM_TX_PIN
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:600    .rodata.COM_RX_PORT_CLK:00000000 COM_RX_PORT_CLK
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:616    .rodata.COM_TX_PORT_CLK:00000000 COM_TX_PORT_CLK
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:624    .rodata.COM_USART_CLK:00000000 COM_USART_CLK
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:513    .data.COM_RX_PORT:00000000 COM_RX_PORT
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:521    .data.COM_TX_PORT:00000000 COM_TX_PORT
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:529    .data.COM_USART:00000000 COM_USART
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:561    .rodata.BUTTON_IRQn:00000000 BUTTON_IRQn
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:577    .rodata.BUTTON_PIN_SOURCE:00000000 BUTTON_PIN_SOURCE
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:585    .rodata.BUTTON_PORT_SOURCE:00000000 BUTTON_PORT_SOURCE
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:553    .rodata.BUTTON_EINT_LINE:00000000 BUTTON_EINT_LINE
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:545    .rodata.BUTTON_CLK:00000000 BUTTON_CLK
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:569    .rodata.BUTTON_PIN:00000000 BUTTON_PIN
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:505    .data.BUTTON_PORT:00000000 BUTTON_PORT
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:632    .rodata.GPIO_CLK:00000000 GPIO_CLK
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:640    .rodata.GPIO_PIN:00000000 GPIO_PIN
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:537    .data.GPIO_PORT:00000000 GPIO_PORT
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:501    .data.BUTTON_PORT:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:509    .data.COM_RX_PORT:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:517    .data.COM_TX_PORT:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:525    .data.COM_USART:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:533    .data.GPIO_PORT:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:541    .rodata.BUTTON_CLK:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:549    .rodata.BUTTON_EINT_LINE:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:557    .rodata.BUTTON_IRQn:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:565    .rodata.BUTTON_PIN:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:573    .rodata.BUTTON_PIN_SOURCE:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:581    .rodata.BUTTON_PORT_SOURCE:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:588    .rodata.COM_RX_PIN:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:596    .rodata.COM_RX_PORT_CLK:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:604    .rodata.COM_TX_PIN:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:612    .rodata.COM_TX_PORT_CLK:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:620    .rodata.COM_USART_CLK:00000000 $d
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s 			page 18
+
+
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:628    .rodata.GPIO_CLK:00000000 $d
+C:\Users\geehy\AppData\Local\Temp\ccoekjy7.s:636    .rodata.GPIO_PIN:00000000 $d
+
+UNDEFINED SYMBOLS
+RCM_EnableAPB2PeriphClock
+GPIO_Config
+GPIO_ConfigEINTLine
+EINT_Config
+NVIC_EnableIRQRequest
+GPIO_ReadInputBit
+USART_Config
+USART_Enable
+RCM_EnableAPB1PeriphClock

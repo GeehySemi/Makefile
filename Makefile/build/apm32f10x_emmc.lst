@@ -1,0 +1,2538 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_emmc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.EMMC_ResetNORSRAM,"ax",%progbits
+  18              		.align	1
+  19              		.global	EMMC_ResetNORSRAM
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	EMMC_ResetNORSRAM:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @file        apm32f10x_emmc.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief       This file provides all the EMMC firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** #include "apm32f10x_emmc.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 2
+
+
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /** @addtogroup EMMC_Driver EMMC Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /** @addtogroup EMMC_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Rest the EMMMC NOR/SRAM Banks registers
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_1: EMMC Bank1 NOR/SRAM1
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_2: EMMC Bank1 NOR/SRAM2
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_3: EMMC Bank1 NOR/SRAM3
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_4: EMMC Bank1 NOR/SRAM4
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ResetNORSRAM(EMMC_BANK1_NORSRAM_T bank)
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+  28              		.loc 1 54 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** EMMC_BANK1_NORSRAM_1 */
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK1_NORSRAM_1)
+  33              		.loc 1 56 5 view .LVU1
+  34              		.loc 1 56 7 is_stmt 0 view .LVU2
+  35 0000 0346     		mov	r3, r0
+  36 0002 88B9     		cbnz	r0, .L2
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank1->SNCTRL_T[bank] = 0x000030DB;
+  37              		.loc 1 58 9 is_stmt 1 view .LVU3
+  38              		.loc 1 58 36 is_stmt 0 view .LVU4
+  39 0004 4FF02042 		mov	r2, #-1610612736
+  40 0008 43F2DB01 		movw	r1, #12507
+  41 000c 42F82010 		str	r1, [r2, r0, lsl #2]
+  42              	.L3:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** EMMC_BANK1_NORSRAM_2,  EMMC_BANK1_NORSRAM_3 or EMMC_BANK1_NORSRAM_4 */
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank1->SNCTRL_T[bank] = 0x000030D2;
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank1->SNCTRL_T[bank + 1] = 0x0FFFFFFF;
+  43              		.loc 1 65 5 is_stmt 1 view .LVU5
+  44              		.loc 1 65 31 is_stmt 0 view .LVU6
+  45 0010 581C     		adds	r0, r3, #1
+  46              	.LVL1:
+  47              		.loc 1 65 36 view .LVU7
+  48 0012 6FF07042 		mvn	r2, #-268435456
+  49 0016 4FF02041 		mov	r1, #-1610612736
+  50 001a 41F82020 		str	r2, [r1, r0, lsl #2]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 3
+
+
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank1E->WRTTIM[bank] = 0x0FFFFFFF;
+  51              		.loc 1 66 5 is_stmt 1 view .LVU8
+  52              		.loc 1 66 31 is_stmt 0 view .LVU9
+  53 001e 9B00     		lsls	r3, r3, #2
+  54 0020 0B44     		add	r3, r3, r1
+  55 0022 C3F80421 		str	r2, [r3, #260]
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+  56              		.loc 1 67 1 view .LVU10
+  57 0026 7047     		bx	lr
+  58              	.LVL2:
+  59              	.L2:
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+  60              		.loc 1 63 9 is_stmt 1 view .LVU11
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+  61              		.loc 1 63 36 is_stmt 0 view .LVU12
+  62 0028 4FF02042 		mov	r2, #-1610612736
+  63 002c 43F2D201 		movw	r1, #12498
+  64 0030 42F82010 		str	r1, [r2, r0, lsl #2]
+  65 0034 ECE7     		b	.L3
+  66              		.cfi_endproc
+  67              	.LFE65:
+  69              		.section	.text.EMMC_ResetNAND,"ax",%progbits
+  70              		.align	1
+  71              		.global	EMMC_ResetNAND
+  72              		.syntax unified
+  73              		.thumb
+  74              		.thumb_func
+  76              	EMMC_ResetNAND:
+  77              	.LVL3:
+  78              	.LFB66:
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Rest the EMMMC NAND Banks registers
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK2_NAND: FSMC Bank2 NAND
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK3_NAND: FSMC Bank3 NAND
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ResetNAND(EMMC_BANK_NAND_T bank)
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+  79              		.loc 1 80 1 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		@ link register save eliminated.
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+  84              		.loc 1 81 5 view .LVU14
+  85              		.loc 1 81 7 is_stmt 0 view .LVU15
+  86 0000 1028     		cmp	r0, #16
+  87 0002 0ED0     		beq	.L7
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         /** Set the EMMC_Bank2 registers to their reset values */
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CTRL2 = 0x00000018;
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->STSINT2 = 0x00000040;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 4
+
+
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CMSTIM2 = 0xFCFCFCFC;
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->AMSTIM2 = 0xFCFCFCFC;
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** EMMC_BANK3_NAND */
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         /** Set the EMMC_Bank3 registers to their reset values */
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CTRL3 = 0x00000018;
+  88              		.loc 1 93 9 is_stmt 1 view .LVU16
+  89              		.loc 1 93 27 is_stmt 0 view .LVU17
+  90 0004 4FF02043 		mov	r3, #-1610612736
+  91 0008 1822     		movs	r2, #24
+  92 000a C3F88020 		str	r2, [r3, #128]
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->STSINT3 = 0x00000040;
+  93              		.loc 1 94 9 is_stmt 1 view .LVU18
+  94              		.loc 1 94 29 is_stmt 0 view .LVU19
+  95 000e 4022     		movs	r2, #64
+  96 0010 C3F88420 		str	r2, [r3, #132]
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CMSTIM3 = 0xFCFCFCFC;
+  97              		.loc 1 95 9 is_stmt 1 view .LVU20
+  98              		.loc 1 95 29 is_stmt 0 view .LVU21
+  99 0014 4FF0FC32 		mov	r2, #-50529028
+ 100 0018 C3F88820 		str	r2, [r3, #136]
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->AMSTIM3 = 0xFCFCFCFC;
+ 101              		.loc 1 96 9 is_stmt 1 view .LVU22
+ 102              		.loc 1 96 29 is_stmt 0 view .LVU23
+ 103 001c C3F88C20 		str	r2, [r3, #140]
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 104              		.loc 1 98 1 view .LVU24
+ 105 0020 7047     		bx	lr
+ 106              	.L7:
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->STSINT2 = 0x00000040;
+ 107              		.loc 1 84 9 is_stmt 1 view .LVU25
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->STSINT2 = 0x00000040;
+ 108              		.loc 1 84 27 is_stmt 0 view .LVU26
+ 109 0022 4FF02043 		mov	r3, #-1610612736
+ 110 0026 1822     		movs	r2, #24
+ 111 0028 1A66     		str	r2, [r3, #96]
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CMSTIM2 = 0xFCFCFCFC;
+ 112              		.loc 1 85 9 is_stmt 1 view .LVU27
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CMSTIM2 = 0xFCFCFCFC;
+ 113              		.loc 1 85 29 is_stmt 0 view .LVU28
+ 114 002a 4022     		movs	r2, #64
+ 115 002c 5A66     		str	r2, [r3, #100]
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->AMSTIM2 = 0xFCFCFCFC;
+ 116              		.loc 1 86 9 is_stmt 1 view .LVU29
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->AMSTIM2 = 0xFCFCFCFC;
+ 117              		.loc 1 86 29 is_stmt 0 view .LVU30
+ 118 002e 4FF0FC32 		mov	r2, #-50529028
+ 119 0032 9A66     		str	r2, [r3, #104]
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 120              		.loc 1 87 9 is_stmt 1 view .LVU31
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 121              		.loc 1 87 29 is_stmt 0 view .LVU32
+ 122 0034 DA66     		str	r2, [r3, #108]
+ 123 0036 7047     		bx	lr
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 5
+
+
+ 124              		.cfi_endproc
+ 125              	.LFE66:
+ 127              		.section	.text.EMMC_ResetPCCard,"ax",%progbits
+ 128              		.align	1
+ 129              		.global	EMMC_ResetPCCard
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 134              	EMMC_ResetPCCard:
+ 135              	.LFB67:
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Reset the EMMMC PCCARD Banks registers
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     None
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ResetPCCard(void)
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 136              		.loc 1 108 1 is_stmt 1 view -0
+ 137              		.cfi_startproc
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              		@ link register save eliminated.
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set the EMMC_Bank4 registers to their reset values */
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->CTRL4 = 0x00000018;
+ 141              		.loc 1 110 5 view .LVU34
+ 142              		.loc 1 110 23 is_stmt 0 view .LVU35
+ 143 0000 4FF02043 		mov	r3, #-1610612736
+ 144 0004 1822     		movs	r2, #24
+ 145 0006 C3F8A020 		str	r2, [r3, #160]
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->STSINT4 = 0x00000040;
+ 146              		.loc 1 111 5 is_stmt 1 view .LVU36
+ 147              		.loc 1 111 25 is_stmt 0 view .LVU37
+ 148 000a 4022     		movs	r2, #64
+ 149 000c C3F8A420 		str	r2, [r3, #164]
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->CMSTIM4 = 0xFCFCFCFC;
+ 150              		.loc 1 112 5 is_stmt 1 view .LVU38
+ 151              		.loc 1 112 25 is_stmt 0 view .LVU39
+ 152 0010 4FF0FC32 		mov	r2, #-50529028
+ 153 0014 C3F8A820 		str	r2, [r3, #168]
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->AMSTIM4 = 0xFCFCFCFC;
+ 154              		.loc 1 113 5 is_stmt 1 view .LVU40
+ 155              		.loc 1 113 25 is_stmt 0 view .LVU41
+ 156 0018 C3F8AC20 		str	r2, [r3, #172]
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->IOSTIM4 = 0xFCFCFCFC;
+ 157              		.loc 1 114 5 is_stmt 1 view .LVU42
+ 158              		.loc 1 114 25 is_stmt 0 view .LVU43
+ 159 001c C3F8B020 		str	r2, [r3, #176]
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 160              		.loc 1 115 1 view .LVU44
+ 161 0020 7047     		bx	lr
+ 162              		.cfi_endproc
+ 163              	.LFE67:
+ 165              		.section	.text.EMMC_ConfigNORSRAM,"ax",%progbits
+ 166              		.align	1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 6
+
+
+ 167              		.global	EMMC_ConfigNORSRAM
+ 168              		.syntax unified
+ 169              		.thumb
+ 170              		.thumb_func
+ 172              	EMMC_ConfigNORSRAM:
+ 173              	.LVL4:
+ 174              	.LFB68:
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Config the EMMC NOR/SRAM Banks according to the specified parameters in the emmcNORSR
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     emmcNORSRAMConfig: Point to a EMMC_NORSRAMConfig_T structure
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ConfigNORSRAM(EMMC_NORSRAMConfig_T* emmcNORSRAMConfig)
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 175              		.loc 1 125 1 is_stmt 1 view -0
+ 176              		.cfi_startproc
+ 177              		@ args = 0, pretend = 0, frame = 0
+ 178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 179              		@ link register save eliminated.
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Bank1 NOR/SRAM control register configuration */
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank1->SNCTRL_T[emmcNORSRAMConfig->bank] =
+ 180              		.loc 1 127 5 view .LVU46
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->dataAddressMux |
+ 181              		.loc 1 128 36 is_stmt 0 view .LVU47
+ 182 0000 4278     		ldrb	r2, [r0, #1]	@ zero_extendqisi2
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->memoryType |
+ 183              		.loc 1 129 26 view .LVU48
+ 184 0002 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->memoryDataWidth |
+ 185              		.loc 1 130 26 view .LVU49
+ 186 0004 C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->memoryType |
+ 187              		.loc 1 129 39 view .LVU50
+ 188 0006 0A43     		orrs	r2, r2, r1
+ 189 0008 1343     		orrs	r3, r3, r2
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->burstAcceesMode |
+ 190              		.loc 1 131 26 view .LVU51
+ 191 000a 8288     		ldrh	r2, [r0, #4]
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->memoryDataWidth |
+ 192              		.loc 1 130 44 view .LVU52
+ 193 000c 1343     		orrs	r3, r3, r2
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->asynchronousWait |
+ 194              		.loc 1 132 26 view .LVU53
+ 195 000e C288     		ldrh	r2, [r0, #6]
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->burstAcceesMode |
+ 196              		.loc 1 131 44 view .LVU54
+ 197 0010 1343     		orrs	r3, r3, r2
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->waitSignalPolarity |
+ 198              		.loc 1 133 26 view .LVU55
+ 199 0012 0289     		ldrh	r2, [r0, #8]
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->asynchronousWait |
+ 200              		.loc 1 132 45 view .LVU56
+ 201 0014 1343     		orrs	r3, r3, r2
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->wrapMode |
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 7
+
+
+ 202              		.loc 1 134 26 view .LVU57
+ 203 0016 4289     		ldrh	r2, [r0, #10]
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->waitSignalPolarity |
+ 204              		.loc 1 133 47 view .LVU58
+ 205 0018 1343     		orrs	r3, r3, r2
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->waitSignalActive |
+ 206              		.loc 1 135 26 view .LVU59
+ 207 001a 8289     		ldrh	r2, [r0, #12]
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->wrapMode |
+ 208              		.loc 1 134 37 view .LVU60
+ 209 001c 1343     		orrs	r3, r3, r2
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->writeOperation |
+ 210              		.loc 1 136 26 view .LVU61
+ 211 001e C289     		ldrh	r2, [r0, #14]
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->waitSignalActive |
+ 212              		.loc 1 135 45 view .LVU62
+ 213 0020 1343     		orrs	r3, r3, r2
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->waiteSignal |
+ 214              		.loc 1 137 26 view .LVU63
+ 215 0022 028A     		ldrh	r2, [r0, #16]
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->writeOperation |
+ 216              		.loc 1 136 43 view .LVU64
+ 217 0024 1343     		orrs	r3, r3, r2
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->extendedMode |
+ 218              		.loc 1 138 26 view .LVU65
+ 219 0026 428A     		ldrh	r2, [r0, #18]
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->waiteSignal |
+ 220              		.loc 1 137 40 view .LVU66
+ 221 0028 1343     		orrs	r3, r3, r2
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->writeBurst;
+ 222              		.loc 1 139 26 view .LVU67
+ 223 002a 4269     		ldr	r2, [r0, #20]
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->dataAddressMux |
+ 224              		.loc 1 127 43 view .LVU68
+ 225 002c 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->extendedMode |
+ 226              		.loc 1 138 41 view .LVU69
+ 227 002e 1343     		orrs	r3, r3, r2
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->dataAddressMux |
+ 228              		.loc 1 127 51 view .LVU70
+ 229 0030 4FF02042 		mov	r2, #-1610612736
+ 230 0034 42F82130 		str	r3, [r2, r1, lsl #2]
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(emmcNORSRAMConfig->memoryType == EMMC_MEMORY_TYPE_NOR)
+ 231              		.loc 1 141 5 is_stmt 1 view .LVU71
+ 232              		.loc 1 141 25 is_stmt 0 view .LVU72
+ 233 0038 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 234              		.loc 1 141 7 view .LVU73
+ 235 003a 082B     		cmp	r3, #8
+ 236 003c 25D0     		beq	.L13
+ 237              	.L10:
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank1->SNCTRL_T[emmcNORSRAMConfig->bank] |= 0x00000040;
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Bank1 NOR/SRAM timing register configuration */
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank1->SNCTRL_T[emmcNORSRAMConfig->bank + 1] =
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 8
+
+
+ 238              		.loc 1 147 5 is_stmt 1 view .LVU74
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->readWriteTimingStruct->addressSetupTime |
+ 239              		.loc 1 148 36 is_stmt 0 view .LVU75
+ 240 003e 8269     		ldr	r2, [r0, #24]
+ 241              		.loc 1 148 59 view .LVU76
+ 242 0040 1368     		ldr	r3, [r2]
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->addressHodeTime << 4) |
+ 243              		.loc 1 149 50 view .LVU77
+ 244 0042 5168     		ldr	r1, [r2, #4]
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->readWriteTimingStruct->addressSetupTime |
+ 245              		.loc 1 148 78 view .LVU78
+ 246 0044 43EA0113 		orr	r3, r3, r1, lsl #4
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->dataSetupTime << 8) |
+ 247              		.loc 1 150 50 view .LVU79
+ 248 0048 9168     		ldr	r1, [r2, #8]
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->addressHodeTime << 4) |
+ 249              		.loc 1 149 74 view .LVU80
+ 250 004a 43EA0123 		orr	r3, r3, r1, lsl #8
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->busTurnaroundTime << 16) |
+ 251              		.loc 1 151 50 view .LVU81
+ 252 004e D168     		ldr	r1, [r2, #12]
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->dataSetupTime << 8) |
+ 253              		.loc 1 150 72 view .LVU82
+ 254 0050 43EA0143 		orr	r3, r3, r1, lsl #16
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->clockDivision << 20) |
+ 255              		.loc 1 152 50 view .LVU83
+ 256 0054 1169     		ldr	r1, [r2, #16]
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->busTurnaroundTime << 16) |
+ 257              		.loc 1 151 77 view .LVU84
+ 258 0056 43EA0153 		orr	r3, r3, r1, lsl #20
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->dataLatency << 24) |
+ 259              		.loc 1 153 50 view .LVU85
+ 260 005a 5169     		ldr	r1, [r2, #20]
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->clockDivision << 20) |
+ 261              		.loc 1 152 73 view .LVU86
+ 262 005c 43EA0163 		orr	r3, r3, r1, lsl #24
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         emmcNORSRAMConfig->readWriteTimingStruct->accessMode;
+ 263              		.loc 1 154 49 view .LVU87
+ 264 0060 9169     		ldr	r1, [r2, #24]
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->readWriteTimingStruct->addressSetupTime |
+ 265              		.loc 1 147 43 view .LVU88
+ 266 0062 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->readWriteTimingStruct->addressSetupTime |
+ 267              		.loc 1 147 50 view .LVU89
+ 268 0064 0132     		adds	r2, r2, #1
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (emmcNORSRAMConfig->readWriteTimingStruct->dataLatency << 24) |
+ 269              		.loc 1 153 71 view .LVU90
+ 270 0066 0B43     		orrs	r3, r3, r1
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         (uint32_t)emmcNORSRAMConfig->readWriteTimingStruct->addressSetupTime |
+ 271              		.loc 1 147 55 view .LVU91
+ 272 0068 4FF02041 		mov	r1, #-1610612736
+ 273 006c 41F82230 		str	r3, [r1, r2, lsl #2]
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Bank1 NOR/SRAM timing register for write configuration, if extended mode is used */
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(emmcNORSRAMConfig->extendedMode == EMMC_EXTENDEN_MODE_ENABLE)
+ 274              		.loc 1 157 5 is_stmt 1 view .LVU92
+ 275              		.loc 1 157 25 is_stmt 0 view .LVU93
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 9
+
+
+ 276 0070 438A     		ldrh	r3, [r0, #18]
+ 277              		.loc 1 157 7 view .LVU94
+ 278 0072 B3F5804F 		cmp	r3, #16384
+ 279 0076 10D0     		beq	.L14
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank1E->WRTTIM[emmcNORSRAMConfig->bank] =
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (uint32_t)emmcNORSRAMConfig->writeTimingStruct->addressSetupTime |
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->addressHodeTime << 4) |
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->dataSetupTime << 8) |
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->clockDivision << 20) |
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->dataLatency << 24) |
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             emmcNORSRAMConfig->writeTimingStruct->accessMode;
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank1E->WRTTIM[emmcNORSRAMConfig->bank] = 0x0FFFFFFF;
+ 280              		.loc 1 169 9 is_stmt 1 view .LVU95
+ 281              		.loc 1 169 46 is_stmt 0 view .LVU96
+ 282 0078 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 283              		.loc 1 169 54 view .LVU97
+ 284 007a 9B00     		lsls	r3, r3, #2
+ 285 007c 03F12043 		add	r3, r3, #-1610612736
+ 286 0080 6FF07042 		mvn	r2, #-268435456
+ 287 0084 C3F80421 		str	r2, [r3, #260]
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 288              		.loc 1 171 1 view .LVU98
+ 289 0088 7047     		bx	lr
+ 290              	.L13:
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 291              		.loc 1 143 9 is_stmt 1 view .LVU99
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 292              		.loc 1 143 47 is_stmt 0 view .LVU100
+ 293 008a 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 294              		.loc 1 143 55 view .LVU101
+ 295 008c 52F82130 		ldr	r3, [r2, r1, lsl #2]
+ 296 0090 43F04003 		orr	r3, r3, #64
+ 297 0094 42F82130 		str	r3, [r2, r1, lsl #2]
+ 298 0098 D1E7     		b	.L10
+ 299              	.L14:
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (uint32_t)emmcNORSRAMConfig->writeTimingStruct->addressSetupTime |
+ 300              		.loc 1 159 9 is_stmt 1 view .LVU102
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->addressHodeTime << 4) |
+ 301              		.loc 1 160 40 is_stmt 0 view .LVU103
+ 302 009a C269     		ldr	r2, [r0, #28]
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->addressHodeTime << 4) |
+ 303              		.loc 1 160 59 view .LVU104
+ 304 009c 1368     		ldr	r3, [r2]
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->dataSetupTime << 8) |
+ 305              		.loc 1 161 50 view .LVU105
+ 306 009e 5168     		ldr	r1, [r2, #4]
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->addressHodeTime << 4) |
+ 307              		.loc 1 160 78 view .LVU106
+ 308 00a0 43EA0113 		orr	r3, r3, r1, lsl #4
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->clockDivision << 20) |
+ 309              		.loc 1 162 50 view .LVU107
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 10
+
+
+ 310 00a4 9168     		ldr	r1, [r2, #8]
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->dataSetupTime << 8) |
+ 311              		.loc 1 161 74 view .LVU108
+ 312 00a6 43EA0123 		orr	r3, r3, r1, lsl #8
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->dataLatency << 24) |
+ 313              		.loc 1 163 50 view .LVU109
+ 314 00aa 1169     		ldr	r1, [r2, #16]
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->clockDivision << 20) |
+ 315              		.loc 1 162 72 view .LVU110
+ 316 00ac 43EA0153 		orr	r3, r3, r1, lsl #20
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             emmcNORSRAMConfig->writeTimingStruct->accessMode;
+ 317              		.loc 1 164 50 view .LVU111
+ 318 00b0 5169     		ldr	r1, [r2, #20]
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (emmcNORSRAMConfig->writeTimingStruct->dataLatency << 24) |
+ 319              		.loc 1 163 73 view .LVU112
+ 320 00b2 43EA0163 		orr	r3, r3, r1, lsl #24
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 321              		.loc 1 165 49 view .LVU113
+ 322 00b6 9169     		ldr	r1, [r2, #24]
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (uint32_t)emmcNORSRAMConfig->writeTimingStruct->addressSetupTime |
+ 323              		.loc 1 159 46 view .LVU114
+ 324 00b8 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             emmcNORSRAMConfig->writeTimingStruct->accessMode;
+ 325              		.loc 1 164 71 view .LVU115
+ 326 00ba 0B43     		orrs	r3, r3, r1
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****             (uint32_t)emmcNORSRAMConfig->writeTimingStruct->addressSetupTime |
+ 327              		.loc 1 159 54 view .LVU116
+ 328 00bc 9200     		lsls	r2, r2, #2
+ 329 00be 02F12042 		add	r2, r2, #-1610612736
+ 330 00c2 C2F80431 		str	r3, [r2, #260]
+ 331 00c6 7047     		bx	lr
+ 332              		.cfi_endproc
+ 333              	.LFE68:
+ 335              		.section	.text.EMMC_ConfigNAND,"ax",%progbits
+ 336              		.align	1
+ 337              		.global	EMMC_ConfigNAND
+ 338              		.syntax unified
+ 339              		.thumb
+ 340              		.thumb_func
+ 342              	EMMC_ConfigNAND:
+ 343              	.LVL5:
+ 344              	.LFB69:
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Config the EMMC NAND Banks according to the specified parameters in the emmcNANDConfi
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     emmcNANDConfig : Point to a EMMC_NANDConfig_T structure.
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ConfigNAND(EMMC_NANDConfig_T* emmcNANDConfig)
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 345              		.loc 1 181 1 is_stmt 1 view -0
+ 346              		.cfi_startproc
+ 347              		@ args = 0, pretend = 0, frame = 0
+ 348              		@ frame_needed = 0, uses_anonymous_args = 0
+ 349              		@ link register save eliminated.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 11
+
+
+ 350              		.loc 1 181 1 is_stmt 0 view .LVU118
+ 351 0000 10B4     		push	{r4}
+ 352              	.LCFI0:
+ 353              		.cfi_def_cfa_offset 4
+ 354              		.cfi_offset 4, -4
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     uint32_t tmppcr = 0x00000000, tmppmem = 0x00000000, tmppatt = 0x00000000;
+ 355              		.loc 1 182 5 is_stmt 1 view .LVU119
+ 356              	.LVL6:
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set the tmppcr value according to EMMC_NANDInitStruct parameters */
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     tmppcr = (uint32_t)emmcNANDConfig->waitFeature | 0x00000008 |
+ 357              		.loc 1 185 5 view .LVU120
+ 358              		.loc 1 185 38 is_stmt 0 view .LVU121
+ 359 0002 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              emmcNANDConfig->memoryDataWidth |
+ 360              		.loc 1 186 28 view .LVU122
+ 361 0004 C178     		ldrb	r1, [r0, #3]	@ zero_extendqisi2
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              emmcNANDConfig->ECC |
+ 362              		.loc 1 187 28 view .LVU123
+ 363 0006 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              emmcNANDConfig->memoryDataWidth |
+ 364              		.loc 1 186 46 view .LVU124
+ 365 0008 0A43     		orrs	r2, r2, r1
+ 366 000a 1343     		orrs	r3, r3, r2
+ 367 000c 43F00803 		orr	r3, r3, #8
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              emmcNANDConfig->ECCPageSize |
+ 368              		.loc 1 188 28 view .LVU125
+ 369 0010 8268     		ldr	r2, [r0, #8]
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              emmcNANDConfig->ECC |
+ 370              		.loc 1 187 34 view .LVU126
+ 371 0012 1343     		orrs	r3, r3, r2
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              (emmcNANDConfig->TCLRSetupTime << 9) |
+ 372              		.loc 1 189 29 view .LVU127
+ 373 0014 C268     		ldr	r2, [r0, #12]
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              emmcNANDConfig->ECCPageSize |
+ 374              		.loc 1 188 42 view .LVU128
+ 375 0016 43EA4223 		orr	r3, r3, r2, lsl #9
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              (emmcNANDConfig->TARSetupTime << 13);
+ 376              		.loc 1 190 29 view .LVU129
+ 377 001a 0269     		ldr	r2, [r0, #16]
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****              emmcNANDConfig->memoryDataWidth |
+ 378              		.loc 1 185 12 view .LVU130
+ 379 001c 43EA4233 		orr	r3, r3, r2, lsl #13
+ 380              	.LVL7:
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set tmppmem value according to EMMC_CommonSpaceTimingStructure parameters */
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     tmppmem = (uint32_t)emmcNANDConfig->commonSpaceTimingStruct->setupTime |
+ 381              		.loc 1 193 5 is_stmt 1 view .LVU131
+ 382              		.loc 1 193 39 is_stmt 0 view .LVU132
+ 383 0020 4469     		ldr	r4, [r0, #20]
+ 384              		.loc 1 193 64 view .LVU133
+ 385 0022 2268     		ldr	r2, [r4]
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->commonSpaceTimingStruct->waitSetupTime << 8) |
+ 386              		.loc 1 194 55 view .LVU134
+ 387 0024 6168     		ldr	r1, [r4, #4]
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->commonSpaceTimingStruct->waitSetupTime << 8) |
+ 388              		.loc 1 193 76 view .LVU135
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 12
+
+
+ 389 0026 42EA0121 		orr	r1, r2, r1, lsl #8
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->commonSpaceTimingStruct->holdSetupTime << 16) |
+ 390              		.loc 1 195 55 view .LVU136
+ 391 002a A268     		ldr	r2, [r4, #8]
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->commonSpaceTimingStruct->waitSetupTime << 8) |
+ 392              		.loc 1 194 77 view .LVU137
+ 393 002c 41EA0241 		orr	r1, r1, r2, lsl #16
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->commonSpaceTimingStruct->HiZSetupTime << 24);
+ 394              		.loc 1 196 55 view .LVU138
+ 395 0030 E268     		ldr	r2, [r4, #12]
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->commonSpaceTimingStruct->waitSetupTime << 8) |
+ 396              		.loc 1 193 13 view .LVU139
+ 397 0032 41EA0261 		orr	r1, r1, r2, lsl #24
+ 398              	.LVL8:
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set tmppatt value according to EMMC_AttributeSpaceTimingStructure parameters */
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     tmppatt = (uint32_t)emmcNANDConfig->attributeSpaceTimingStruct->setupTime |
+ 399              		.loc 1 199 5 is_stmt 1 view .LVU140
+ 400              		.loc 1 199 39 is_stmt 0 view .LVU141
+ 401 0036 8469     		ldr	r4, [r0, #24]
+ 402              		.loc 1 199 67 view .LVU142
+ 403 0038 2268     		ldr	r2, [r4]
+ 404              		.loc 1 199 79 view .LVU143
+ 405 003a D4F804C0 		ldr	ip, [r4, #4]
+ 406 003e 42EA0C22 		orr	r2, r2, ip, lsl #8
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->attributeSpaceTimingStruct->waitSetupTime << 8) |
+ 407              		.loc 1 200 80 view .LVU144
+ 408 0042 D4F808C0 		ldr	ip, [r4, #8]
+ 409 0046 42EA0C42 		orr	r2, r2, ip, lsl #16
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->attributeSpaceTimingStruct->holdSetupTime << 16) |
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->attributeSpaceTimingStruct->HiZSetupTime << 24);
+ 410              		.loc 1 202 58 view .LVU145
+ 411 004a E468     		ldr	r4, [r4, #12]
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****               (emmcNANDConfig->attributeSpaceTimingStruct->waitSetupTime << 8) |
+ 412              		.loc 1 199 13 view .LVU146
+ 413 004c 42EA0462 		orr	r2, r2, r4, lsl #24
+ 414              	.LVL9:
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(emmcNANDConfig->bank == EMMC_BANK2_NAND)
+ 415              		.loc 1 204 5 is_stmt 1 view .LVU147
+ 416              		.loc 1 204 22 is_stmt 0 view .LVU148
+ 417 0050 0088     		ldrh	r0, [r0]
+ 418              	.LVL10:
+ 419              		.loc 1 204 7 view .LVU149
+ 420 0052 1028     		cmp	r0, #16
+ 421 0054 09D0     		beq	.L19
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         /** EMMC_BANK2_NAND registers configuration */
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CTRL2 = tmppcr;
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CMSTIM2 = tmppmem;
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->AMSTIM2 = tmppatt;
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         /** EMMC_BANK3_NAND registers configuration */
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CTRL3 = tmppcr;
+ 422              		.loc 1 214 9 is_stmt 1 view .LVU150
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 13
+
+
+ 423              		.loc 1 214 27 is_stmt 0 view .LVU151
+ 424 0056 4FF02040 		mov	r0, #-1610612736
+ 425 005a C0F88030 		str	r3, [r0, #128]
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CMSTIM3 = tmppmem;
+ 426              		.loc 1 215 9 is_stmt 1 view .LVU152
+ 427              		.loc 1 215 29 is_stmt 0 view .LVU153
+ 428 005e C0F88810 		str	r1, [r0, #136]
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->AMSTIM3 = tmppatt;
+ 429              		.loc 1 216 9 is_stmt 1 view .LVU154
+ 430              		.loc 1 216 29 is_stmt 0 view .LVU155
+ 431 0062 C0F88C20 		str	r2, [r0, #140]
+ 432              	.L15:
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 433              		.loc 1 219 1 view .LVU156
+ 434 0066 10BC     		pop	{r4}
+ 435              	.LCFI1:
+ 436              		.cfi_remember_state
+ 437              		.cfi_restore 4
+ 438              		.cfi_def_cfa_offset 0
+ 439 0068 7047     		bx	lr
+ 440              	.L19:
+ 441              	.LCFI2:
+ 442              		.cfi_restore_state
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CMSTIM2 = tmppmem;
+ 443              		.loc 1 207 9 is_stmt 1 view .LVU157
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CMSTIM2 = tmppmem;
+ 444              		.loc 1 207 27 is_stmt 0 view .LVU158
+ 445 006a 4FF02040 		mov	r0, #-1610612736
+ 446 006e 0366     		str	r3, [r0, #96]
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->AMSTIM2 = tmppatt;
+ 447              		.loc 1 208 9 is_stmt 1 view .LVU159
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->AMSTIM2 = tmppatt;
+ 448              		.loc 1 208 29 is_stmt 0 view .LVU160
+ 449 0070 8166     		str	r1, [r0, #104]
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 450              		.loc 1 209 9 is_stmt 1 view .LVU161
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 451              		.loc 1 209 29 is_stmt 0 view .LVU162
+ 452 0072 C266     		str	r2, [r0, #108]
+ 453 0074 F7E7     		b	.L15
+ 454              		.cfi_endproc
+ 455              	.LFE69:
+ 457              		.section	.text.EMMC_ConfigPCCard,"ax",%progbits
+ 458              		.align	1
+ 459              		.global	EMMC_ConfigPCCard
+ 460              		.syntax unified
+ 461              		.thumb
+ 462              		.thumb_func
+ 464              	EMMC_ConfigPCCard:
+ 465              	.LVL11:
+ 466              	.LFB70:
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Config the EMMC PCCARD according to the specified parameters in the emmcPCCardConfig.
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 14
+
+
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     emmcPCCardConfig: Point to a EMMC_PCCARDConfig_T structure.
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ConfigPCCard(EMMC_PCCARDConfig_T* emmcPCCardConfig)
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 467              		.loc 1 229 1 is_stmt 1 view -0
+ 468              		.cfi_startproc
+ 469              		@ args = 0, pretend = 0, frame = 0
+ 470              		@ frame_needed = 0, uses_anonymous_args = 0
+ 471              		@ link register save eliminated.
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set the PCR4 register value according to EMMC_PCCARDInitStruct parameters */
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->CTRL4 = (uint32_t)emmcPCCardConfig->waitFeature | EMMC_MEMORY_DATA_WIDTH_16BIT |
+ 472              		.loc 1 231 5 view .LVU164
+ 473              		.loc 1 231 51 is_stmt 0 view .LVU165
+ 474 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 475              		.loc 1 231 65 view .LVU166
+ 476 0002 43F01003 		orr	r3, r3, #16
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                           (emmcPCCardConfig->TCLRSetupTime << 9) |
+ 477              		.loc 1 232 44 view .LVU167
+ 478 0006 4268     		ldr	r2, [r0, #4]
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                           (emmcPCCardConfig->TCLRSetupTime << 9) |
+ 479              		.loc 1 231 96 view .LVU168
+ 480 0008 43EA4223 		orr	r3, r3, r2, lsl #9
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                           (emmcPCCardConfig->TARSetupTime << 13);
+ 481              		.loc 1 233 44 view .LVU169
+ 482 000c 8268     		ldr	r2, [r0, #8]
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                           (emmcPCCardConfig->TCLRSetupTime << 9) |
+ 483              		.loc 1 232 66 view .LVU170
+ 484 000e 43EA4233 		orr	r3, r3, r2, lsl #13
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                           (emmcPCCardConfig->TCLRSetupTime << 9) |
+ 485              		.loc 1 231 23 view .LVU171
+ 486 0012 4FF02042 		mov	r2, #-1610612736
+ 487 0016 C2F8A030 		str	r3, [r2, #160]
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set PMEM4 register value according to EMMC_CommonSpaceTimingStructure parameters */
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->CMSTIM4 = (uint32_t)emmcPCCardConfig->commonSpaceTimingStruct->setupTime |
+ 488              		.loc 1 236 5 is_stmt 1 view .LVU172
+ 489              		.loc 1 236 53 is_stmt 0 view .LVU173
+ 490 001a C168     		ldr	r1, [r0, #12]
+ 491              		.loc 1 236 78 view .LVU174
+ 492 001c 0B68     		ldr	r3, [r1]
+ 493              		.loc 1 236 90 view .LVU175
+ 494 001e D1F804C0 		ldr	ip, [r1, #4]
+ 495 0022 43EA0C23 		orr	r3, r3, ip, lsl #8
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->commonSpaceTimingStruct->waitSetupTime << 8) |
+ 496              		.loc 1 237 89 view .LVU176
+ 497 0026 D1F808C0 		ldr	ip, [r1, #8]
+ 498 002a 43EA0C43 		orr	r3, r3, ip, lsl #16
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->commonSpaceTimingStruct->holdSetupTime << 16) |
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->commonSpaceTimingStruct->HiZSetupTime << 24);
+ 499              		.loc 1 239 67 view .LVU177
+ 500 002e C968     		ldr	r1, [r1, #12]
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->commonSpaceTimingStruct->holdSetupTime << 16) |
+ 501              		.loc 1 238 90 view .LVU178
+ 502 0030 43EA0163 		orr	r3, r3, r1, lsl #24
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->commonSpaceTimingStruct->waitSetupTime << 8) |
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 15
+
+
+ 503              		.loc 1 236 25 view .LVU179
+ 504 0034 C2F8A830 		str	r3, [r2, #168]
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set PATT4 register value according to EMMC_AttributeSpaceTimingStructure parameters */
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->AMSTIM4 = (uint32_t)emmcPCCardConfig->attributeSpaceTimingStruct->setupTime |
+ 505              		.loc 1 242 5 is_stmt 1 view .LVU180
+ 506              		.loc 1 242 53 is_stmt 0 view .LVU181
+ 507 0038 0169     		ldr	r1, [r0, #16]
+ 508              		.loc 1 242 81 view .LVU182
+ 509 003a 0B68     		ldr	r3, [r1]
+ 510              		.loc 1 242 93 view .LVU183
+ 511 003c D1F804C0 		ldr	ip, [r1, #4]
+ 512 0040 43EA0C23 		orr	r3, r3, ip, lsl #8
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->attributeSpaceTimingStruct->waitSetupTime << 8) |
+ 513              		.loc 1 243 92 view .LVU184
+ 514 0044 D1F808C0 		ldr	ip, [r1, #8]
+ 515 0048 43EA0C43 		orr	r3, r3, ip, lsl #16
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->attributeSpaceTimingStruct->holdSetupTime << 16) |
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->attributeSpaceTimingStruct->HiZSetupTime << 24);
+ 516              		.loc 1 245 70 view .LVU185
+ 517 004c C968     		ldr	r1, [r1, #12]
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->attributeSpaceTimingStruct->holdSetupTime << 16) |
+ 518              		.loc 1 244 93 view .LVU186
+ 519 004e 43EA0163 		orr	r3, r3, r1, lsl #24
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->attributeSpaceTimingStruct->waitSetupTime << 8) |
+ 520              		.loc 1 242 25 view .LVU187
+ 521 0052 C2F8AC30 		str	r3, [r2, #172]
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Set PIO4 register value according to EMMC_IOSpaceTimingStructure parameters */
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->IOSTIM4 = (uint32_t)emmcPCCardConfig->IOSpaceTimingStruct->setupTime |
+ 522              		.loc 1 248 5 is_stmt 1 view .LVU188
+ 523              		.loc 1 248 53 is_stmt 0 view .LVU189
+ 524 0056 4169     		ldr	r1, [r0, #20]
+ 525              		.loc 1 248 74 view .LVU190
+ 526 0058 0B68     		ldr	r3, [r1]
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->IOSpaceTimingStruct->waitSetupTime << 8) |
+ 527              		.loc 1 249 63 view .LVU191
+ 528 005a 4868     		ldr	r0, [r1, #4]
+ 529              	.LVL12:
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->IOSpaceTimingStruct->waitSetupTime << 8) |
+ 530              		.loc 1 248 86 view .LVU192
+ 531 005c 43EA0023 		orr	r3, r3, r0, lsl #8
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->IOSpaceTimingStruct->holdSetupTime << 16) |
+ 532              		.loc 1 250 63 view .LVU193
+ 533 0060 8868     		ldr	r0, [r1, #8]
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->IOSpaceTimingStruct->waitSetupTime << 8) |
+ 534              		.loc 1 249 85 view .LVU194
+ 535 0062 43EA0043 		orr	r3, r3, r0, lsl #16
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->IOSpaceTimingStruct->HiZSetupTime << 24);
+ 536              		.loc 1 251 63 view .LVU195
+ 537 0066 C968     		ldr	r1, [r1, #12]
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->IOSpaceTimingStruct->holdSetupTime << 16) |
+ 538              		.loc 1 250 86 view .LVU196
+ 539 0068 43EA0163 		orr	r3, r3, r1, lsl #24
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****                         (emmcPCCardConfig->IOSpaceTimingStruct->waitSetupTime << 8) |
+ 540              		.loc 1 248 25 view .LVU197
+ 541 006c C2F8B030 		str	r3, [r2, #176]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 16
+
+
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 542              		.loc 1 252 1 view .LVU198
+ 543 0070 7047     		bx	lr
+ 544              		.cfi_endproc
+ 545              	.LFE70:
+ 547              		.section	.text.EMMC_ConfigNORSRAMStructInit,"ax",%progbits
+ 548              		.align	1
+ 549              		.global	EMMC_ConfigNORSRAMStructInit
+ 550              		.syntax unified
+ 551              		.thumb
+ 552              		.thumb_func
+ 554              	EMMC_ConfigNORSRAMStructInit:
+ 555              	.LVL13:
+ 556              	.LFB71:
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Fills each emmcNORSRAMConfig member with its default value.
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     emmcNORSRAMConfig : Point to a EMMC_NORSRAMConfig_T structure.
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ConfigNORSRAMStructInit(EMMC_NORSRAMConfig_T* emmcNORSRAMConfig)
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 557              		.loc 1 262 1 is_stmt 1 view -0
+ 558              		.cfi_startproc
+ 559              		@ args = 0, pretend = 0, frame = 0
+ 560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 561              		@ link register save eliminated.
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Reset NOR/SRAM Init structure parameters values */
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->bank = EMMC_BANK1_NORSRAM_1;
+ 562              		.loc 1 264 5 view .LVU200
+ 563              		.loc 1 264 29 is_stmt 0 view .LVU201
+ 564 0000 0023     		movs	r3, #0
+ 565 0002 0370     		strb	r3, [r0]
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->dataAddressMux = EMMC_DATA_ADDRESS_MUX_ENABLE;
+ 566              		.loc 1 265 5 is_stmt 1 view .LVU202
+ 567              		.loc 1 265 39 is_stmt 0 view .LVU203
+ 568 0004 0222     		movs	r2, #2
+ 569 0006 4270     		strb	r2, [r0, #1]
+ 266:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->memoryType = EMMC_MEMORY_TYPE_SRAM;
+ 570              		.loc 1 266 5 is_stmt 1 view .LVU204
+ 571              		.loc 1 266 35 is_stmt 0 view .LVU205
+ 572 0008 8370     		strb	r3, [r0, #2]
+ 267:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->memoryDataWidth = EMMC_MEMORY_DATA_WIDTH_8BIT;
+ 573              		.loc 1 267 5 is_stmt 1 view .LVU206
+ 574              		.loc 1 267 40 is_stmt 0 view .LVU207
+ 575 000a C370     		strb	r3, [r0, #3]
+ 268:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->burstAcceesMode = EMMC_BURST_ACCESS_MODE_DISABLE;
+ 576              		.loc 1 268 5 is_stmt 1 view .LVU208
+ 577              		.loc 1 268 40 is_stmt 0 view .LVU209
+ 578 000c 8380     		strh	r3, [r0, #4]	@ movhi
+ 269:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->asynchronousWait = EMMC_ASYNCHRONOUS_WAIT_DISABLE;
+ 579              		.loc 1 269 5 is_stmt 1 view .LVU210
+ 580              		.loc 1 269 41 is_stmt 0 view .LVU211
+ 581 000e C380     		strh	r3, [r0, #6]	@ movhi
+ 270:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->waitSignalPolarity = EMMC_WAIT_SIGNAL_POLARITY_LOW;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 17
+
+
+ 582              		.loc 1 270 5 is_stmt 1 view .LVU212
+ 583              		.loc 1 270 43 is_stmt 0 view .LVU213
+ 584 0010 0381     		strh	r3, [r0, #8]	@ movhi
+ 271:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->wrapMode = EMMC_WRAP_MODE_DISABLE;
+ 585              		.loc 1 271 5 is_stmt 1 view .LVU214
+ 586              		.loc 1 271 33 is_stmt 0 view .LVU215
+ 587 0012 4381     		strh	r3, [r0, #10]	@ movhi
+ 272:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->waitSignalActive = EMMC_WAIT_SIGNAL_ACTIVE_BEFORE_WAIT;
+ 588              		.loc 1 272 5 is_stmt 1 view .LVU216
+ 589              		.loc 1 272 41 is_stmt 0 view .LVU217
+ 590 0014 8381     		strh	r3, [r0, #12]	@ movhi
+ 273:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeOperation = EMMC_WRITE_OPERATION_ENABLE;
+ 591              		.loc 1 273 5 is_stmt 1 view .LVU218
+ 592              		.loc 1 273 39 is_stmt 0 view .LVU219
+ 593 0016 4FF48052 		mov	r2, #4096
+ 594 001a C281     		strh	r2, [r0, #14]	@ movhi
+ 274:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->waiteSignal = EMMC_WAITE_SIGNAL_ENABLE;
+ 595              		.loc 1 274 5 is_stmt 1 view .LVU220
+ 596              		.loc 1 274 36 is_stmt 0 view .LVU221
+ 597 001c 4FF40052 		mov	r2, #8192
+ 598 0020 0282     		strh	r2, [r0, #16]	@ movhi
+ 275:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->extendedMode = EMMC_EXTENDEN_MODE_DISABLE;
+ 599              		.loc 1 275 5 is_stmt 1 view .LVU222
+ 600              		.loc 1 275 37 is_stmt 0 view .LVU223
+ 601 0022 4382     		strh	r3, [r0, #18]	@ movhi
+ 276:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeBurst = EMMC_WRITE_BURST_DISABLE;
+ 602              		.loc 1 276 5 is_stmt 1 view .LVU224
+ 603              		.loc 1 276 35 is_stmt 0 view .LVU225
+ 604 0024 4361     		str	r3, [r0, #20]
+ 277:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->readWriteTimingStruct->addressSetupTime = 0xF;
+ 605              		.loc 1 277 5 is_stmt 1 view .LVU226
+ 606              		.loc 1 277 22 is_stmt 0 view .LVU227
+ 607 0026 8169     		ldr	r1, [r0, #24]
+ 608              		.loc 1 277 64 view .LVU228
+ 609 0028 0F22     		movs	r2, #15
+ 610 002a 0A60     		str	r2, [r1]
+ 278:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->readWriteTimingStruct->addressHodeTime = 0xF;
+ 611              		.loc 1 278 5 is_stmt 1 view .LVU229
+ 612              		.loc 1 278 22 is_stmt 0 view .LVU230
+ 613 002c 8169     		ldr	r1, [r0, #24]
+ 614              		.loc 1 278 63 view .LVU231
+ 615 002e 4A60     		str	r2, [r1, #4]
+ 279:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->readWriteTimingStruct->dataSetupTime = 0xFF;
+ 616              		.loc 1 279 5 is_stmt 1 view .LVU232
+ 617              		.loc 1 279 61 is_stmt 0 view .LVU233
+ 618 0030 FF21     		movs	r1, #255
+ 619 0032 D0F818C0 		ldr	ip, [r0, #24]
+ 620 0036 CCF80810 		str	r1, [ip, #8]
+ 280:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->readWriteTimingStruct->busTurnaroundTime = 0xF;
+ 621              		.loc 1 280 5 is_stmt 1 view .LVU234
+ 622              		.loc 1 280 65 is_stmt 0 view .LVU235
+ 623 003a D0F818C0 		ldr	ip, [r0, #24]
+ 624 003e CCF80C20 		str	r2, [ip, #12]
+ 281:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->readWriteTimingStruct->clockDivision = 0xF;
+ 625              		.loc 1 281 5 is_stmt 1 view .LVU236
+ 626              		.loc 1 281 61 is_stmt 0 view .LVU237
+ 627 0042 D0F818C0 		ldr	ip, [r0, #24]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 18
+
+
+ 628 0046 CCF81020 		str	r2, [ip, #16]
+ 282:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->readWriteTimingStruct->dataLatency = 0xF;
+ 629              		.loc 1 282 5 is_stmt 1 view .LVU238
+ 630              		.loc 1 282 59 is_stmt 0 view .LVU239
+ 631 004a D0F818C0 		ldr	ip, [r0, #24]
+ 632 004e CCF81420 		str	r2, [ip, #20]
+ 283:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->readWriteTimingStruct->accessMode = EMMC_ACCESS_MODE_A;
+ 633              		.loc 1 283 5 is_stmt 1 view .LVU240
+ 634              		.loc 1 283 58 is_stmt 0 view .LVU241
+ 635 0052 D0F818C0 		ldr	ip, [r0, #24]
+ 636 0056 CCF81830 		str	r3, [ip, #24]
+ 284:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeTimingStruct->addressSetupTime = 0xF;
+ 637              		.loc 1 284 5 is_stmt 1 view .LVU242
+ 638              		.loc 1 284 60 is_stmt 0 view .LVU243
+ 639 005a D0F81CC0 		ldr	ip, [r0, #28]
+ 640 005e CCF80020 		str	r2, [ip]
+ 285:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeTimingStruct->addressHodeTime = 0xF;
+ 641              		.loc 1 285 5 is_stmt 1 view .LVU244
+ 642              		.loc 1 285 59 is_stmt 0 view .LVU245
+ 643 0062 D0F81CC0 		ldr	ip, [r0, #28]
+ 644 0066 CCF80420 		str	r2, [ip, #4]
+ 286:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeTimingStruct->dataSetupTime = 0xFF;
+ 645              		.loc 1 286 5 is_stmt 1 view .LVU246
+ 646              		.loc 1 286 57 is_stmt 0 view .LVU247
+ 647 006a D0F81CC0 		ldr	ip, [r0, #28]
+ 648 006e CCF80810 		str	r1, [ip, #8]
+ 287:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeTimingStruct->busTurnaroundTime = 0xF;
+ 649              		.loc 1 287 5 is_stmt 1 view .LVU248
+ 650              		.loc 1 287 22 is_stmt 0 view .LVU249
+ 651 0072 C169     		ldr	r1, [r0, #28]
+ 652              		.loc 1 287 61 view .LVU250
+ 653 0074 CA60     		str	r2, [r1, #12]
+ 288:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeTimingStruct->clockDivision = 0xF;
+ 654              		.loc 1 288 5 is_stmt 1 view .LVU251
+ 655              		.loc 1 288 22 is_stmt 0 view .LVU252
+ 656 0076 C169     		ldr	r1, [r0, #28]
+ 657              		.loc 1 288 57 view .LVU253
+ 658 0078 0A61     		str	r2, [r1, #16]
+ 289:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeTimingStruct->dataLatency = 0xF;
+ 659              		.loc 1 289 5 is_stmt 1 view .LVU254
+ 660              		.loc 1 289 22 is_stmt 0 view .LVU255
+ 661 007a C169     		ldr	r1, [r0, #28]
+ 662              		.loc 1 289 55 view .LVU256
+ 663 007c 4A61     		str	r2, [r1, #20]
+ 290:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNORSRAMConfig->writeTimingStruct->accessMode = EMMC_ACCESS_MODE_A;
+ 664              		.loc 1 290 5 is_stmt 1 view .LVU257
+ 665              		.loc 1 290 22 is_stmt 0 view .LVU258
+ 666 007e C269     		ldr	r2, [r0, #28]
+ 667              		.loc 1 290 54 view .LVU259
+ 668 0080 9361     		str	r3, [r2, #24]
+ 291:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 292:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 669              		.loc 1 292 1 view .LVU260
+ 670 0082 7047     		bx	lr
+ 671              		.cfi_endproc
+ 672              	.LFE71:
+ 674              		.section	.text.EMMC_ConfigNANDStructInit,"ax",%progbits
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 19
+
+
+ 675              		.align	1
+ 676              		.global	EMMC_ConfigNANDStructInit
+ 677              		.syntax unified
+ 678              		.thumb
+ 679              		.thumb_func
+ 681              	EMMC_ConfigNANDStructInit:
+ 682              	.LVL14:
+ 683              	.LFB72:
+ 293:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 294:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 295:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Fills each emmcNANDConfig member with its default value.
+ 296:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 297:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     emmcNANDConfig : Point to a EMMC_NANDConfig_T structure.
+ 298:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 299:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 300:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 301:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ConfigNANDStructInit(EMMC_NANDConfig_T* emmcNANDConfig)
+ 302:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 684              		.loc 1 302 1 is_stmt 1 view -0
+ 685              		.cfi_startproc
+ 686              		@ args = 0, pretend = 0, frame = 0
+ 687              		@ frame_needed = 0, uses_anonymous_args = 0
+ 688              		@ link register save eliminated.
+ 303:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Reset NAND Init structure parameters values */
+ 304:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->bank = EMMC_BANK2_NAND;
+ 689              		.loc 1 304 5 view .LVU262
+ 690              		.loc 1 304 26 is_stmt 0 view .LVU263
+ 691 0000 1023     		movs	r3, #16
+ 692 0002 0380     		strh	r3, [r0]	@ movhi
+ 305:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->waitFeature = EMMC_WAIT_FEATURE_DISABLE;
+ 693              		.loc 1 305 5 is_stmt 1 view .LVU264
+ 694              		.loc 1 305 33 is_stmt 0 view .LVU265
+ 695 0004 0023     		movs	r3, #0
+ 696 0006 8370     		strb	r3, [r0, #2]
+ 306:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->memoryDataWidth = EMMC_MEMORY_DATA_WIDTH_8BIT;
+ 697              		.loc 1 306 5 is_stmt 1 view .LVU266
+ 698              		.loc 1 306 37 is_stmt 0 view .LVU267
+ 699 0008 C370     		strb	r3, [r0, #3]
+ 307:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->ECC = EMMC_ECC_DISABLE;
+ 700              		.loc 1 307 5 is_stmt 1 view .LVU268
+ 701              		.loc 1 307 25 is_stmt 0 view .LVU269
+ 702 000a 0371     		strb	r3, [r0, #4]
+ 308:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->ECCPageSize = EMMC_ECC_PAGE_SIZE_BYTE_256;
+ 703              		.loc 1 308 5 is_stmt 1 view .LVU270
+ 704              		.loc 1 308 33 is_stmt 0 view .LVU271
+ 705 000c 8360     		str	r3, [r0, #8]
+ 309:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->TCLRSetupTime = 0x0;
+ 706              		.loc 1 309 5 is_stmt 1 view .LVU272
+ 707              		.loc 1 309 35 is_stmt 0 view .LVU273
+ 708 000e C360     		str	r3, [r0, #12]
+ 310:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->TARSetupTime = 0x0;
+ 709              		.loc 1 310 5 is_stmt 1 view .LVU274
+ 710              		.loc 1 310 34 is_stmt 0 view .LVU275
+ 711 0010 0361     		str	r3, [r0, #16]
+ 311:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->commonSpaceTimingStruct->setupTime = 0xFC;
+ 712              		.loc 1 311 5 is_stmt 1 view .LVU276
+ 713              		.loc 1 311 19 is_stmt 0 view .LVU277
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 20
+
+
+ 714 0012 4269     		ldr	r2, [r0, #20]
+ 715              		.loc 1 311 56 view .LVU278
+ 716 0014 FC23     		movs	r3, #252
+ 717 0016 1360     		str	r3, [r2]
+ 312:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->commonSpaceTimingStruct->waitSetupTime = 0xFC;
+ 718              		.loc 1 312 5 is_stmt 1 view .LVU279
+ 719              		.loc 1 312 19 is_stmt 0 view .LVU280
+ 720 0018 4269     		ldr	r2, [r0, #20]
+ 721              		.loc 1 312 60 view .LVU281
+ 722 001a 5360     		str	r3, [r2, #4]
+ 313:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->commonSpaceTimingStruct->holdSetupTime = 0xFC;
+ 723              		.loc 1 313 5 is_stmt 1 view .LVU282
+ 724              		.loc 1 313 19 is_stmt 0 view .LVU283
+ 725 001c 4269     		ldr	r2, [r0, #20]
+ 726              		.loc 1 313 60 view .LVU284
+ 727 001e 9360     		str	r3, [r2, #8]
+ 314:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->commonSpaceTimingStruct->HiZSetupTime = 0xFC;
+ 728              		.loc 1 314 5 is_stmt 1 view .LVU285
+ 729              		.loc 1 314 19 is_stmt 0 view .LVU286
+ 730 0020 4269     		ldr	r2, [r0, #20]
+ 731              		.loc 1 314 59 view .LVU287
+ 732 0022 D360     		str	r3, [r2, #12]
+ 315:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->attributeSpaceTimingStruct->setupTime = 0xFC;
+ 733              		.loc 1 315 5 is_stmt 1 view .LVU288
+ 734              		.loc 1 315 19 is_stmt 0 view .LVU289
+ 735 0024 8269     		ldr	r2, [r0, #24]
+ 736              		.loc 1 315 59 view .LVU290
+ 737 0026 1360     		str	r3, [r2]
+ 316:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->attributeSpaceTimingStruct->waitSetupTime = 0xFC;
+ 738              		.loc 1 316 5 is_stmt 1 view .LVU291
+ 739              		.loc 1 316 19 is_stmt 0 view .LVU292
+ 740 0028 8269     		ldr	r2, [r0, #24]
+ 741              		.loc 1 316 63 view .LVU293
+ 742 002a 5360     		str	r3, [r2, #4]
+ 317:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->attributeSpaceTimingStruct->holdSetupTime = 0xFC;
+ 743              		.loc 1 317 5 is_stmt 1 view .LVU294
+ 744              		.loc 1 317 19 is_stmt 0 view .LVU295
+ 745 002c 8269     		ldr	r2, [r0, #24]
+ 746              		.loc 1 317 63 view .LVU296
+ 747 002e 9360     		str	r3, [r2, #8]
+ 318:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcNANDConfig->attributeSpaceTimingStruct->HiZSetupTime = 0xFC;
+ 748              		.loc 1 318 5 is_stmt 1 view .LVU297
+ 749              		.loc 1 318 19 is_stmt 0 view .LVU298
+ 750 0030 8269     		ldr	r2, [r0, #24]
+ 751              		.loc 1 318 62 view .LVU299
+ 752 0032 D360     		str	r3, [r2, #12]
+ 319:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 753              		.loc 1 319 1 view .LVU300
+ 754 0034 7047     		bx	lr
+ 755              		.cfi_endproc
+ 756              	.LFE72:
+ 758              		.section	.text.EMMC_ConfigPCCardStructInit,"ax",%progbits
+ 759              		.align	1
+ 760              		.global	EMMC_ConfigPCCardStructInit
+ 761              		.syntax unified
+ 762              		.thumb
+ 763              		.thumb_func
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 21
+
+
+ 765              	EMMC_ConfigPCCardStructInit:
+ 766              	.LVL15:
+ 767              	.LFB73:
+ 320:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 321:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Fills each emmcPCCardConfig member with its default value.
+ 323:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 324:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     emmcPCCardConfig : Point to a EMMC_PCCARDConfig_T structure.
+ 325:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 326:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 327:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 328:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ConfigPCCardStructInit(EMMC_PCCARDConfig_T* emmcPCCardConfig)
+ 329:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 768              		.loc 1 329 1 is_stmt 1 view -0
+ 769              		.cfi_startproc
+ 770              		@ args = 0, pretend = 0, frame = 0
+ 771              		@ frame_needed = 0, uses_anonymous_args = 0
+ 772              		@ link register save eliminated.
+ 330:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Reset PCCARD Init structure parameters values */
+ 331:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->waitFeature = EMMC_WAIT_FEATURE_DISABLE;
+ 773              		.loc 1 331 5 view .LVU302
+ 774              		.loc 1 331 35 is_stmt 0 view .LVU303
+ 775 0000 0023     		movs	r3, #0
+ 776 0002 0370     		strb	r3, [r0]
+ 332:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->TCLRSetupTime = 0x0;
+ 777              		.loc 1 332 5 is_stmt 1 view .LVU304
+ 778              		.loc 1 332 37 is_stmt 0 view .LVU305
+ 779 0004 4360     		str	r3, [r0, #4]
+ 333:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->TARSetupTime = 0x0;
+ 780              		.loc 1 333 5 is_stmt 1 view .LVU306
+ 781              		.loc 1 333 36 is_stmt 0 view .LVU307
+ 782 0006 8360     		str	r3, [r0, #8]
+ 334:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->commonSpaceTimingStruct->setupTime = 0xFC;
+ 783              		.loc 1 334 5 is_stmt 1 view .LVU308
+ 784              		.loc 1 334 21 is_stmt 0 view .LVU309
+ 785 0008 C268     		ldr	r2, [r0, #12]
+ 786              		.loc 1 334 58 view .LVU310
+ 787 000a FC23     		movs	r3, #252
+ 788 000c 1360     		str	r3, [r2]
+ 335:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->commonSpaceTimingStruct->waitSetupTime = 0xFC;
+ 789              		.loc 1 335 5 is_stmt 1 view .LVU311
+ 790              		.loc 1 335 21 is_stmt 0 view .LVU312
+ 791 000e C268     		ldr	r2, [r0, #12]
+ 792              		.loc 1 335 62 view .LVU313
+ 793 0010 5360     		str	r3, [r2, #4]
+ 336:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->commonSpaceTimingStruct->holdSetupTime = 0xFC;
+ 794              		.loc 1 336 5 is_stmt 1 view .LVU314
+ 795              		.loc 1 336 21 is_stmt 0 view .LVU315
+ 796 0012 C268     		ldr	r2, [r0, #12]
+ 797              		.loc 1 336 62 view .LVU316
+ 798 0014 9360     		str	r3, [r2, #8]
+ 337:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->commonSpaceTimingStruct->HiZSetupTime = 0xFC;
+ 799              		.loc 1 337 5 is_stmt 1 view .LVU317
+ 800              		.loc 1 337 21 is_stmt 0 view .LVU318
+ 801 0016 C268     		ldr	r2, [r0, #12]
+ 802              		.loc 1 337 61 view .LVU319
+ 803 0018 D360     		str	r3, [r2, #12]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 22
+
+
+ 338:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->attributeSpaceTimingStruct->setupTime = 0xFC;
+ 804              		.loc 1 338 5 is_stmt 1 view .LVU320
+ 805              		.loc 1 338 21 is_stmt 0 view .LVU321
+ 806 001a 0269     		ldr	r2, [r0, #16]
+ 807              		.loc 1 338 61 view .LVU322
+ 808 001c 1360     		str	r3, [r2]
+ 339:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->attributeSpaceTimingStruct->waitSetupTime = 0xFC;
+ 809              		.loc 1 339 5 is_stmt 1 view .LVU323
+ 810              		.loc 1 339 21 is_stmt 0 view .LVU324
+ 811 001e 0269     		ldr	r2, [r0, #16]
+ 812              		.loc 1 339 65 view .LVU325
+ 813 0020 5360     		str	r3, [r2, #4]
+ 340:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->attributeSpaceTimingStruct->holdSetupTime = 0xFC;
+ 814              		.loc 1 340 5 is_stmt 1 view .LVU326
+ 815              		.loc 1 340 21 is_stmt 0 view .LVU327
+ 816 0022 0269     		ldr	r2, [r0, #16]
+ 817              		.loc 1 340 65 view .LVU328
+ 818 0024 9360     		str	r3, [r2, #8]
+ 341:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->attributeSpaceTimingStruct->HiZSetupTime = 0xFC;
+ 819              		.loc 1 341 5 is_stmt 1 view .LVU329
+ 820              		.loc 1 341 21 is_stmt 0 view .LVU330
+ 821 0026 0269     		ldr	r2, [r0, #16]
+ 822              		.loc 1 341 64 view .LVU331
+ 823 0028 D360     		str	r3, [r2, #12]
+ 342:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->IOSpaceTimingStruct->setupTime = 0xFC;
+ 824              		.loc 1 342 5 is_stmt 1 view .LVU332
+ 825              		.loc 1 342 21 is_stmt 0 view .LVU333
+ 826 002a 4269     		ldr	r2, [r0, #20]
+ 827              		.loc 1 342 54 view .LVU334
+ 828 002c 1360     		str	r3, [r2]
+ 343:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->IOSpaceTimingStruct->waitSetupTime = 0xFC;
+ 829              		.loc 1 343 5 is_stmt 1 view .LVU335
+ 830              		.loc 1 343 21 is_stmt 0 view .LVU336
+ 831 002e 4269     		ldr	r2, [r0, #20]
+ 832              		.loc 1 343 58 view .LVU337
+ 833 0030 5360     		str	r3, [r2, #4]
+ 344:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->IOSpaceTimingStruct->holdSetupTime = 0xFC;
+ 834              		.loc 1 344 5 is_stmt 1 view .LVU338
+ 835              		.loc 1 344 21 is_stmt 0 view .LVU339
+ 836 0032 4269     		ldr	r2, [r0, #20]
+ 837              		.loc 1 344 58 view .LVU340
+ 838 0034 9360     		str	r3, [r2, #8]
+ 345:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     emmcPCCardConfig->IOSpaceTimingStruct->HiZSetupTime = 0xFC;
+ 839              		.loc 1 345 5 is_stmt 1 view .LVU341
+ 840              		.loc 1 345 21 is_stmt 0 view .LVU342
+ 841 0036 4269     		ldr	r2, [r0, #20]
+ 842              		.loc 1 345 57 view .LVU343
+ 843 0038 D360     		str	r3, [r2, #12]
+ 346:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 844              		.loc 1 346 1 view .LVU344
+ 845 003a 7047     		bx	lr
+ 846              		.cfi_endproc
+ 847              	.LFE73:
+ 849              		.section	.text.EMMC_EnableNORSRAM,"ax",%progbits
+ 850              		.align	1
+ 851              		.global	EMMC_EnableNORSRAM
+ 852              		.syntax unified
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 23
+
+
+ 853              		.thumb
+ 854              		.thumb_func
+ 856              	EMMC_EnableNORSRAM:
+ 857              	.LVL16:
+ 858              	.LFB74:
+ 347:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 348:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 349:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Enables the specified NOR/SRAM Memory Bank.
+ 350:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 351:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+ 352:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+ 353:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_1: EMMC Bank1 NOR/SRAM1
+ 354:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_2: EMMC Bank1 NOR/SRAM2
+ 355:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_3: EMMC Bank1 NOR/SRAM3
+ 356:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_4: EMMC Bank1 NOR/SRAM4
+ 357:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 358:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 359:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 360:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_EnableNORSRAM(EMMC_BANK1_NORSRAM_T bank)
+ 361:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 859              		.loc 1 361 1 is_stmt 1 view -0
+ 860              		.cfi_startproc
+ 861              		@ args = 0, pretend = 0, frame = 0
+ 862              		@ frame_needed = 0, uses_anonymous_args = 0
+ 863              		@ link register save eliminated.
+ 362:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank1->SNCTRL_T[bank] |= 0x00000001;
+ 864              		.loc 1 362 5 view .LVU346
+ 865              		.loc 1 362 32 is_stmt 0 view .LVU347
+ 866 0000 4FF02042 		mov	r2, #-1610612736
+ 867 0004 52F82030 		ldr	r3, [r2, r0, lsl #2]
+ 868 0008 43F00103 		orr	r3, r3, #1
+ 869 000c 42F82030 		str	r3, [r2, r0, lsl #2]
+ 363:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 870              		.loc 1 363 1 view .LVU348
+ 871 0010 7047     		bx	lr
+ 872              		.cfi_endproc
+ 873              	.LFE74:
+ 875              		.section	.text.EMMC_DisableNORSRAM,"ax",%progbits
+ 876              		.align	1
+ 877              		.global	EMMC_DisableNORSRAM
+ 878              		.syntax unified
+ 879              		.thumb
+ 880              		.thumb_func
+ 882              	EMMC_DisableNORSRAM:
+ 883              	.LVL17:
+ 884              	.LFB75:
+ 364:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 365:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 366:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Disbles the specified NOR/SRAM Memory Bank.
+ 367:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 368:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+ 369:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+ 370:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_1: EMMC Bank1 NOR/SRAM1
+ 371:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_2: EMMC Bank1 NOR/SRAM2
+ 372:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_3: EMMC Bank1 NOR/SRAM3
+ 373:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK1_NORSRAM_4: EMMC Bank1 NOR/SRAM4
+ 374:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 24
+
+
+ 375:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 376:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 377:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_DisableNORSRAM(EMMC_BANK1_NORSRAM_T bank)
+ 378:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 885              		.loc 1 378 1 is_stmt 1 view -0
+ 886              		.cfi_startproc
+ 887              		@ args = 0, pretend = 0, frame = 0
+ 888              		@ frame_needed = 0, uses_anonymous_args = 0
+ 889              		@ link register save eliminated.
+ 379:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank1->SNCTRL_T[bank] &= 0x000FFFFE;
+ 890              		.loc 1 379 5 view .LVU350
+ 891              		.loc 1 379 32 is_stmt 0 view .LVU351
+ 892 0000 4FF02042 		mov	r2, #-1610612736
+ 893 0004 52F82010 		ldr	r1, [r2, r0, lsl #2]
+ 894 0008 024B     		ldr	r3, .L26
+ 895 000a 0B40     		ands	r3, r3, r1
+ 896 000c 42F82030 		str	r3, [r2, r0, lsl #2]
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 897              		.loc 1 380 1 view .LVU352
+ 898 0010 7047     		bx	lr
+ 899              	.L27:
+ 900 0012 00BF     		.align	2
+ 901              	.L26:
+ 902 0014 FEFF0F00 		.word	1048574
+ 903              		.cfi_endproc
+ 904              	.LFE75:
+ 906              		.section	.text.EMMC_EnableNAND,"ax",%progbits
+ 907              		.align	1
+ 908              		.global	EMMC_EnableNAND
+ 909              		.syntax unified
+ 910              		.thumb
+ 911              		.thumb_func
+ 913              	EMMC_EnableNAND:
+ 914              	.LVL18:
+ 915              	.LFB76:
+ 381:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 382:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 383:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Enables the specified NAND Memory Bank.
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK2_NAND: FSMC Bank2 NAND
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK3_NAND: FSMC Bank3 NAND
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 390:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 391:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 392:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_EnableNAND(EMMC_BANK_NAND_T bank)
+ 393:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 916              		.loc 1 393 1 is_stmt 1 view -0
+ 917              		.cfi_startproc
+ 918              		@ args = 0, pretend = 0, frame = 0
+ 919              		@ frame_needed = 0, uses_anonymous_args = 0
+ 920              		@ link register save eliminated.
+ 394:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 921              		.loc 1 394 5 view .LVU354
+ 922              		.loc 1 394 7 is_stmt 0 view .LVU355
+ 923 0000 1028     		cmp	r0, #16
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 25
+
+
+ 924 0002 08D0     		beq	.L31
+ 395:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CTRL2_B.MBKEN = BIT_SET;
+ 397:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 398:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 399:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 400:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CTRL3_B.MBKEN = BIT_SET;
+ 925              		.loc 1 400 9 is_stmt 1 view .LVU356
+ 926              		.loc 1 400 35 is_stmt 0 view .LVU357
+ 927 0004 4FF02042 		mov	r2, #-1610612736
+ 928 0008 D2F88030 		ldr	r3, [r2, #128]
+ 929 000c 43F00403 		orr	r3, r3, #4
+ 930 0010 C2F88030 		str	r3, [r2, #128]
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 402:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 931              		.loc 1 402 1 view .LVU358
+ 932 0014 7047     		bx	lr
+ 933              	.L31:
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 934              		.loc 1 396 9 is_stmt 1 view .LVU359
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 935              		.loc 1 396 35 is_stmt 0 view .LVU360
+ 936 0016 4FF02042 		mov	r2, #-1610612736
+ 937 001a 136E     		ldr	r3, [r2, #96]
+ 938 001c 43F00403 		orr	r3, r3, #4
+ 939 0020 1366     		str	r3, [r2, #96]
+ 940 0022 7047     		bx	lr
+ 941              		.cfi_endproc
+ 942              	.LFE76:
+ 944              		.section	.text.EMMC_DisableNAND,"ax",%progbits
+ 945              		.align	1
+ 946              		.global	EMMC_DisableNAND
+ 947              		.syntax unified
+ 948              		.thumb
+ 949              		.thumb_func
+ 951              	EMMC_DisableNAND:
+ 952              	.LVL19:
+ 953              	.LFB77:
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Disbles the specified NAND Memory Bank.
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+ 409:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK2_NAND: FSMC Bank2 NAND
+ 410:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK3_NAND: FSMC Bank3 NAND
+ 411:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_DisableNAND(EMMC_BANK_NAND_T bank)
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 954              		.loc 1 415 1 is_stmt 1 view -0
+ 955              		.cfi_startproc
+ 956              		@ args = 0, pretend = 0, frame = 0
+ 957              		@ frame_needed = 0, uses_anonymous_args = 0
+ 958              		@ link register save eliminated.
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 26
+
+
+ 959              		.loc 1 416 5 view .LVU362
+ 960              		.loc 1 416 7 is_stmt 0 view .LVU363
+ 961 0000 1028     		cmp	r0, #16
+ 962 0002 08D0     		beq	.L35
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CTRL2_B.MBKEN = BIT_RESET;
+ 419:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 420:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 421:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 422:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CTRL3_B.MBKEN = BIT_RESET;
+ 963              		.loc 1 422 9 is_stmt 1 view .LVU364
+ 964              		.loc 1 422 35 is_stmt 0 view .LVU365
+ 965 0004 4FF02043 		mov	r3, #-1610612736
+ 966 0008 D3F88020 		ldr	r2, [r3, #128]
+ 967 000c 6FF38202 		bfc	r2, #2, #1
+ 968 0010 C3F88020 		str	r2, [r3, #128]
+ 423:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 424:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 969              		.loc 1 424 1 view .LVU366
+ 970 0014 7047     		bx	lr
+ 971              	.L35:
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 972              		.loc 1 418 9 is_stmt 1 view .LVU367
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 973              		.loc 1 418 35 is_stmt 0 view .LVU368
+ 974 0016 4FF02043 		mov	r3, #-1610612736
+ 975 001a 1A6E     		ldr	r2, [r3, #96]
+ 976 001c 6FF38202 		bfc	r2, #2, #1
+ 977 0020 1A66     		str	r2, [r3, #96]
+ 978 0022 7047     		bx	lr
+ 979              		.cfi_endproc
+ 980              	.LFE77:
+ 982              		.section	.text.EMMC_EnablePCCARD,"ax",%progbits
+ 983              		.align	1
+ 984              		.global	EMMC_EnablePCCARD
+ 985              		.syntax unified
+ 986              		.thumb
+ 987              		.thumb_func
+ 989              	EMMC_EnablePCCARD:
+ 990              	.LFB78:
+ 425:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 426:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 427:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Enables the specified PC Card Memory Bank.
+ 428:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 429:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     None
+ 430:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 431:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 432:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 433:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_EnablePCCARD(void)
+ 434:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 991              		.loc 1 434 1 is_stmt 1 view -0
+ 992              		.cfi_startproc
+ 993              		@ args = 0, pretend = 0, frame = 0
+ 994              		@ frame_needed = 0, uses_anonymous_args = 0
+ 995              		@ link register save eliminated.
+ 435:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->CTRL4_B.MBKEN = BIT_SET;
+ 996              		.loc 1 435 5 view .LVU370
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 27
+
+
+ 997              		.loc 1 435 31 is_stmt 0 view .LVU371
+ 998 0000 4FF02042 		mov	r2, #-1610612736
+ 999 0004 D2F8A030 		ldr	r3, [r2, #160]
+ 1000 0008 43F00403 		orr	r3, r3, #4
+ 1001 000c C2F8A030 		str	r3, [r2, #160]
+ 436:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1002              		.loc 1 436 1 view .LVU372
+ 1003 0010 7047     		bx	lr
+ 1004              		.cfi_endproc
+ 1005              	.LFE78:
+ 1007              		.section	.text.EMMC_DisablePCCARD,"ax",%progbits
+ 1008              		.align	1
+ 1009              		.global	EMMC_DisablePCCARD
+ 1010              		.syntax unified
+ 1011              		.thumb
+ 1012              		.thumb_func
+ 1014              	EMMC_DisablePCCARD:
+ 1015              	.LFB79:
+ 437:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 438:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 439:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Disables the specified PC Card Memory Bank.
+ 440:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 441:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     None
+ 442:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 443:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 444:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 445:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_DisablePCCARD(void)
+ 446:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1016              		.loc 1 446 1 is_stmt 1 view -0
+ 1017              		.cfi_startproc
+ 1018              		@ args = 0, pretend = 0, frame = 0
+ 1019              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1020              		@ link register save eliminated.
+ 447:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     EMMC_Bank4->CTRL4_B.MBKEN = BIT_RESET;
+ 1021              		.loc 1 447 5 view .LVU374
+ 1022              		.loc 1 447 31 is_stmt 0 view .LVU375
+ 1023 0000 4FF02043 		mov	r3, #-1610612736
+ 1024 0004 D3F8A020 		ldr	r2, [r3, #160]
+ 1025 0008 6FF38202 		bfc	r2, #2, #1
+ 1026 000c C3F8A020 		str	r2, [r3, #160]
+ 448:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1027              		.loc 1 448 1 view .LVU376
+ 1028 0010 7047     		bx	lr
+ 1029              		.cfi_endproc
+ 1030              	.LFE79:
+ 1032              		.section	.text.EMMC_EnableNANDECC,"ax",%progbits
+ 1033              		.align	1
+ 1034              		.global	EMMC_EnableNANDECC
+ 1035              		.syntax unified
+ 1036              		.thumb
+ 1037              		.thumb_func
+ 1039              	EMMC_EnableNANDECC:
+ 1040              	.LVL20:
+ 1041              	.LFB80:
+ 449:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 450:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 451:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Enbles the EMMC NAND ECC feature.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 28
+
+
+ 452:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 453:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+ 454:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+ 455:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK2_NAND: FSMC Bank2 NAND
+ 456:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK3_NAND: FSMC Bank3 NAND
+ 457:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 458:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 459:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 460:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_EnableNANDECC(EMMC_BANK_NAND_T bank)
+ 461:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1042              		.loc 1 461 1 is_stmt 1 view -0
+ 1043              		.cfi_startproc
+ 1044              		@ args = 0, pretend = 0, frame = 0
+ 1045              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1046              		@ link register save eliminated.
+ 462:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1047              		.loc 1 462 5 view .LVU378
+ 1048              		.loc 1 462 7 is_stmt 0 view .LVU379
+ 1049 0000 1028     		cmp	r0, #16
+ 1050 0002 08D0     		beq	.L41
+ 463:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CTRL2 |= 0x00000040;
+ 465:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 466:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 467:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 468:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CTRL3 |= 0x00000040;
+ 1051              		.loc 1 468 9 is_stmt 1 view .LVU380
+ 1052              		.loc 1 468 27 is_stmt 0 view .LVU381
+ 1053 0004 4FF02042 		mov	r2, #-1610612736
+ 1054 0008 D2F88030 		ldr	r3, [r2, #128]
+ 1055 000c 43F04003 		orr	r3, r3, #64
+ 1056 0010 C2F88030 		str	r3, [r2, #128]
+ 469:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 470:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1057              		.loc 1 470 1 view .LVU382
+ 1058 0014 7047     		bx	lr
+ 1059              	.L41:
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1060              		.loc 1 464 9 is_stmt 1 view .LVU383
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1061              		.loc 1 464 27 is_stmt 0 view .LVU384
+ 1062 0016 4FF02042 		mov	r2, #-1610612736
+ 1063 001a 136E     		ldr	r3, [r2, #96]
+ 1064 001c 43F04003 		orr	r3, r3, #64
+ 1065 0020 1366     		str	r3, [r2, #96]
+ 1066 0022 7047     		bx	lr
+ 1067              		.cfi_endproc
+ 1068              	.LFE80:
+ 1070              		.section	.text.EMMC_DisableNANDECC,"ax",%progbits
+ 1071              		.align	1
+ 1072              		.global	EMMC_DisableNANDECC
+ 1073              		.syntax unified
+ 1074              		.thumb
+ 1075              		.thumb_func
+ 1077              	EMMC_DisableNANDECC:
+ 1078              	.LVL21:
+ 1079              	.LFB81:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 29
+
+
+ 471:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 472:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 473:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Disbles or disables the EMMC NAND ECC feature.
+ 474:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+ 476:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+ 477:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK2_NAND: FSMC Bank2 NAND
+ 478:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK3_NAND: FSMC Bank3 NAND
+ 479:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 480:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ 481:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 482:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 483:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_DisableNANDECC(EMMC_BANK_NAND_T bank)
+ 484:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1080              		.loc 1 484 1 is_stmt 1 view -0
+ 1081              		.cfi_startproc
+ 1082              		@ args = 0, pretend = 0, frame = 0
+ 1083              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1084              		@ link register save eliminated.
+ 485:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1085              		.loc 1 485 5 view .LVU386
+ 1086              		.loc 1 485 7 is_stmt 0 view .LVU387
+ 1087 0000 1028     		cmp	r0, #16
+ 1088 0002 08D0     		beq	.L45
+ 486:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->CTRL2 &= 0x000FFFBF;
+ 488:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 489:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 490:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 491:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->CTRL3 &= 0x000FFFBF;
+ 1089              		.loc 1 491 9 is_stmt 1 view .LVU388
+ 1090              		.loc 1 491 27 is_stmt 0 view .LVU389
+ 1091 0004 4FF02042 		mov	r2, #-1610612736
+ 1092 0008 D2F88010 		ldr	r1, [r2, #128]
+ 1093 000c 054B     		ldr	r3, .L46
+ 1094 000e 0B40     		ands	r3, r3, r1
+ 1095 0010 C2F88030 		str	r3, [r2, #128]
+ 492:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 493:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1096              		.loc 1 493 1 view .LVU390
+ 1097 0014 7047     		bx	lr
+ 1098              	.L45:
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1099              		.loc 1 487 9 is_stmt 1 view .LVU391
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1100              		.loc 1 487 27 is_stmt 0 view .LVU392
+ 1101 0016 4FF02042 		mov	r2, #-1610612736
+ 1102 001a 116E     		ldr	r1, [r2, #96]
+ 1103 001c 014B     		ldr	r3, .L46
+ 1104 001e 0B40     		ands	r3, r3, r1
+ 1105 0020 1366     		str	r3, [r2, #96]
+ 1106 0022 7047     		bx	lr
+ 1107              	.L47:
+ 1108              		.align	2
+ 1109              	.L46:
+ 1110 0024 BFFF0F00 		.word	1048511
+ 1111              		.cfi_endproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 30
+
+
+ 1112              	.LFE81:
+ 1114              		.section	.text.EMMC_ReadECC,"ax",%progbits
+ 1115              		.align	1
+ 1116              		.global	EMMC_ReadECC
+ 1117              		.syntax unified
+ 1118              		.thumb
+ 1119              		.thumb_func
+ 1121              	EMMC_ReadECC:
+ 1122              	.LVL22:
+ 1123              	.LFB82:
+ 494:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 495:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 496:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief     Read the error correction code register value.
+ 497:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 498:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param     bank: Selects the EMMMC Bank.
+ 499:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  The parameter can be one of following values:
+ 500:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK2_NAND: FSMC Bank2 NAND
+ 501:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                  @arg EMMC_BANK3_NAND: FSMC Bank3 NAND
+ 502:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 503:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    The value of Error Correction Code (ECC).
+ 504:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 505:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** uint32_t  EMMC_ReadECC(EMMC_BANK_NAND_T bank)
+ 506:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1124              		.loc 1 506 1 is_stmt 1 view -0
+ 1125              		.cfi_startproc
+ 1126              		@ args = 0, pretend = 0, frame = 0
+ 1127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1128              		@ link register save eliminated.
+ 507:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     uint32_t eccval = 0x00000000;
+ 1129              		.loc 1 507 5 view .LVU394
+ 508:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 509:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1130              		.loc 1 509 5 view .LVU395
+ 1131              		.loc 1 509 7 is_stmt 0 view .LVU396
+ 1132 0000 1028     		cmp	r0, #16
+ 1133 0002 04D0     		beq	.L51
+ 510:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         eccval = EMMC_Bank2->ECCRS2;
+ 512:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 513:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 514:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 515:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         eccval = EMMC_Bank3->ECCRS3;
+ 1134              		.loc 1 515 9 is_stmt 1 view .LVU397
+ 1135              		.loc 1 515 16 is_stmt 0 view .LVU398
+ 1136 0004 4FF02043 		mov	r3, #-1610612736
+ 1137 0008 D3F89400 		ldr	r0, [r3, #148]
+ 1138              	.LVL23:
+ 516:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 517:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     return eccval;
+ 1139              		.loc 1 517 5 is_stmt 1 view .LVU399
+ 518:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1140              		.loc 1 518 1 is_stmt 0 view .LVU400
+ 1141 000c 7047     		bx	lr
+ 1142              	.LVL24:
+ 1143              	.L51:
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1144              		.loc 1 511 9 is_stmt 1 view .LVU401
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 31
+
+
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1145              		.loc 1 511 16 is_stmt 0 view .LVU402
+ 1146 000e 4FF02043 		mov	r3, #-1610612736
+ 1147 0012 586F     		ldr	r0, [r3, #116]
+ 1148              	.LVL25:
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1149              		.loc 1 511 16 view .LVU403
+ 1150 0014 7047     		bx	lr
+ 1151              		.cfi_endproc
+ 1152              	.LFE82:
+ 1154              		.section	.text.EMMC_EnableInterrupt,"ax",%progbits
+ 1155              		.align	1
+ 1156              		.global	EMMC_EnableInterrupt
+ 1157              		.syntax unified
+ 1158              		.thumb
+ 1159              		.thumb_func
+ 1161              	EMMC_EnableInterrupt:
+ 1162              	.LVL26:
+ 1163              	.LFB83:
+ 519:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 520:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 521:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief    Enables the specified EMMC interrupts.
+ 522:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 523:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    bank: Selects the EMMMC Bank.
+ 524:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 The parameter can be one of following values:
+ 525:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK2_NAND  : FSMC Bank2 NAND
+ 526:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK3_NAND  : FSMC Bank3 NAND
+ 527:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK4_PCCARD: FSMC Bank4 PCCARD
+ 528:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 529:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    interrupt: Select the EMMC interrupt sources.
+ 530:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      This parameter can be any combination of the following values:
+ 531:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_RISING : Rising edge detection interrupt.
+ 532:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_LEVEL_HIGH  : High level detection interrupt.
+ 533:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_FALLING: Falling edge detection interrupt.
+ 534:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 535:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval   None
+ 536:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 537:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_EnableInterrupt(EMMC_BANK_NAND_T bank, uint32_t interrupt)
+ 538:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1164              		.loc 1 538 1 is_stmt 1 view -0
+ 1165              		.cfi_startproc
+ 1166              		@ args = 0, pretend = 0, frame = 0
+ 1167              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1168              		@ link register save eliminated.
+ 539:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1169              		.loc 1 539 5 view .LVU405
+ 1170              		.loc 1 539 7 is_stmt 0 view .LVU406
+ 1171 0000 1028     		cmp	r0, #16
+ 1172 0002 0AD0     		beq	.L56
+ 540:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->STSINT2 |= interrupt;
+ 542:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 543:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else if(bank == EMMC_BANK3_NAND)
+ 1173              		.loc 1 543 10 is_stmt 1 view .LVU407
+ 1174              		.loc 1 543 12 is_stmt 0 view .LVU408
+ 1175 0004 B0F5807F 		cmp	r0, #256
+ 1176 0008 0DD0     		beq	.L57
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 32
+
+
+ 544:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->STSINT3 |= interrupt;
+ 546:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 547:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 548:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 549:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank4->STSINT4 |= interrupt;
+ 1177              		.loc 1 549 9 is_stmt 1 view .LVU409
+ 1178              		.loc 1 549 29 is_stmt 0 view .LVU410
+ 1179 000a 4FF02042 		mov	r2, #-1610612736
+ 1180 000e D2F8A430 		ldr	r3, [r2, #164]
+ 1181 0012 1943     		orrs	r1, r1, r3
+ 1182              	.LVL27:
+ 1183              		.loc 1 549 29 view .LVU411
+ 1184 0014 C2F8A410 		str	r1, [r2, #164]
+ 550:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 551:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1185              		.loc 1 551 1 view .LVU412
+ 1186 0018 7047     		bx	lr
+ 1187              	.LVL28:
+ 1188              	.L56:
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1189              		.loc 1 541 9 is_stmt 1 view .LVU413
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1190              		.loc 1 541 29 is_stmt 0 view .LVU414
+ 1191 001a 4FF02042 		mov	r2, #-1610612736
+ 1192 001e 536E     		ldr	r3, [r2, #100]
+ 1193 0020 1943     		orrs	r1, r1, r3
+ 1194              	.LVL29:
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1195              		.loc 1 541 29 view .LVU415
+ 1196 0022 5166     		str	r1, [r2, #100]
+ 1197 0024 7047     		bx	lr
+ 1198              	.LVL30:
+ 1199              	.L57:
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1200              		.loc 1 545 9 is_stmt 1 view .LVU416
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1201              		.loc 1 545 29 is_stmt 0 view .LVU417
+ 1202 0026 4FF02042 		mov	r2, #-1610612736
+ 1203 002a D2F88430 		ldr	r3, [r2, #132]
+ 1204 002e 1943     		orrs	r1, r1, r3
+ 1205              	.LVL31:
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1206              		.loc 1 545 29 view .LVU418
+ 1207 0030 C2F88410 		str	r1, [r2, #132]
+ 1208 0034 7047     		bx	lr
+ 1209              		.cfi_endproc
+ 1210              	.LFE83:
+ 1212              		.section	.text.EMMC_DisableInterrupt,"ax",%progbits
+ 1213              		.align	1
+ 1214              		.global	EMMC_DisableInterrupt
+ 1215              		.syntax unified
+ 1216              		.thumb
+ 1217              		.thumb_func
+ 1219              	EMMC_DisableInterrupt:
+ 1220              	.LVL32:
+ 1221              	.LFB84:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 33
+
+
+ 552:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 553:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 554:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief    Enables the specified EMMC interrupts.
+ 555:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 556:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    bank: Selects the EMMMC Bank.
+ 557:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 The parameter can be one of following values:
+ 558:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK2_NAND  : FSMC Bank2 NAND
+ 559:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK3_NAND  : FSMC Bank3 NAND
+ 560:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK4_PCCARD: FSMC Bank4 PCCARD
+ 561:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 562:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    interrupt: Select the EMMC interrupt sources.
+ 563:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      This parameter can be any combination of the following values:
+ 564:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_RISING : Rising edge detection interrupt.
+ 565:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_LEVEL_HIGH  : High level edge detection interrupt.
+ 566:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_FALLING: Falling edge detection interrupt.
+ 567:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 568:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval   None
+ 569:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 570:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_DisableInterrupt(EMMC_BANK_NAND_T bank, uint32_t interrupt)
+ 571:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1222              		.loc 1 571 1 is_stmt 1 view -0
+ 1223              		.cfi_startproc
+ 1224              		@ args = 0, pretend = 0, frame = 0
+ 1225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1226              		@ link register save eliminated.
+ 572:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1227              		.loc 1 572 5 view .LVU420
+ 1228              		.loc 1 572 7 is_stmt 0 view .LVU421
+ 1229 0000 1028     		cmp	r0, #16
+ 1230 0002 0BD0     		beq	.L62
+ 573:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->STSINT2 &= ~interrupt;
+ 575:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 576:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else if(bank == EMMC_BANK3_NAND)
+ 1231              		.loc 1 576 10 is_stmt 1 view .LVU422
+ 1232              		.loc 1 576 12 is_stmt 0 view .LVU423
+ 1233 0004 B0F5807F 		cmp	r0, #256
+ 1234 0008 0FD0     		beq	.L63
+ 577:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->STSINT3 &= ~interrupt;
+ 579:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 580:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 581:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 582:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank4->STSINT4 &= ~interrupt;
+ 1235              		.loc 1 582 9 is_stmt 1 view .LVU424
+ 1236              		.loc 1 582 29 is_stmt 0 view .LVU425
+ 1237 000a 4FF02042 		mov	r2, #-1610612736
+ 1238 000e D2F8A430 		ldr	r3, [r2, #164]
+ 1239 0012 23EA0101 		bic	r1, r3, r1
+ 1240              	.LVL33:
+ 1241              		.loc 1 582 29 view .LVU426
+ 1242 0016 C2F8A410 		str	r1, [r2, #164]
+ 583:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 584:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1243              		.loc 1 584 1 view .LVU427
+ 1244 001a 7047     		bx	lr
+ 1245              	.LVL34:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 34
+
+
+ 1246              	.L62:
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1247              		.loc 1 574 9 is_stmt 1 view .LVU428
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1248              		.loc 1 574 29 is_stmt 0 view .LVU429
+ 1249 001c 4FF02042 		mov	r2, #-1610612736
+ 1250 0020 536E     		ldr	r3, [r2, #100]
+ 1251 0022 23EA0101 		bic	r1, r3, r1
+ 1252              	.LVL35:
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1253              		.loc 1 574 29 view .LVU430
+ 1254 0026 5166     		str	r1, [r2, #100]
+ 1255 0028 7047     		bx	lr
+ 1256              	.LVL36:
+ 1257              	.L63:
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1258              		.loc 1 578 9 is_stmt 1 view .LVU431
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1259              		.loc 1 578 29 is_stmt 0 view .LVU432
+ 1260 002a 4FF02042 		mov	r2, #-1610612736
+ 1261 002e D2F88430 		ldr	r3, [r2, #132]
+ 1262 0032 23EA0101 		bic	r1, r3, r1
+ 1263              	.LVL37:
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1264              		.loc 1 578 29 view .LVU433
+ 1265 0036 C2F88410 		str	r1, [r2, #132]
+ 1266 003a 7047     		bx	lr
+ 1267              		.cfi_endproc
+ 1268              	.LFE84:
+ 1270              		.section	.text.EMMC_ReadStatusFlag,"ax",%progbits
+ 1271              		.align	1
+ 1272              		.global	EMMC_ReadStatusFlag
+ 1273              		.syntax unified
+ 1274              		.thumb
+ 1275              		.thumb_func
+ 1277              	EMMC_ReadStatusFlag:
+ 1278              	.LVL38:
+ 1279              	.LFB85:
+ 585:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 586:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 587:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief    Read the status of specified EMMC flag.
+ 588:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 589:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    bank: Selects the EMMMC Bank.
+ 590:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 The parameter can be one of following values:
+ 591:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK2_NAND  : FSMC Bank2 NAND
+ 592:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK3_NAND  : FSMC Bank3 NAND
+ 593:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK4_PCCARD: FSMC Bank4 PCCARD
+ 594:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 595:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    flag: Select the EMMC interrupt sources.
+ 596:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 This parameter can be one of the following values:
+ 597:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_FLAG_EDGE_RISING : Rising egde detection Flag.
+ 598:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_FLAG_LEVEL_HIGH  : High level detection Flag.
+ 599:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_FLAG_EDGE_FALLING: Falling egde detection Flag.
+ 600:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_FLAG_FIFO_EMPTY  : FIFO empty Flag.
+ 601:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 602:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    SET or RESET
+ 603:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 35
+
+
+ 604:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 605:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** uint8_t EMMC_ReadStatusFlag(EMMC_BANK_NAND_T bank, EMMC_FLAG_T flag)
+ 606:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1280              		.loc 1 606 1 is_stmt 1 view -0
+ 1281              		.cfi_startproc
+ 1282              		@ args = 0, pretend = 0, frame = 0
+ 1283              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1284              		@ link register save eliminated.
+ 607:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     uint32_t tmpsr = 0x00000000;
+ 1285              		.loc 1 607 5 view .LVU435
+ 608:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 609:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1286              		.loc 1 609 5 view .LVU436
+ 1287              		.loc 1 609 7 is_stmt 0 view .LVU437
+ 1288 0000 1028     		cmp	r0, #16
+ 1289 0002 0AD0     		beq	.L70
+ 610:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         tmpsr = EMMC_Bank2->STSINT2;
+ 612:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 613:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else if(bank == EMMC_BANK3_NAND)
+ 1290              		.loc 1 613 10 is_stmt 1 view .LVU438
+ 1291              		.loc 1 613 12 is_stmt 0 view .LVU439
+ 1292 0004 B0F5807F 		cmp	r0, #256
+ 1293 0008 0BD0     		beq	.L71
+ 614:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         tmpsr = EMMC_Bank3->STSINT3;
+ 616:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 617:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 618:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 619:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         tmpsr = EMMC_Bank4->STSINT4;
+ 1294              		.loc 1 619 9 is_stmt 1 view .LVU440
+ 1295              		.loc 1 619 15 is_stmt 0 view .LVU441
+ 1296 000a 4FF02043 		mov	r3, #-1610612736
+ 1297 000e D3F8A430 		ldr	r3, [r3, #164]
+ 1298              	.LVL39:
+ 1299              	.L66:
+ 620:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 621:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     /** Get the flag status */
+ 622:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if((tmpsr & flag) != RESET)
+ 1300              		.loc 1 622 5 is_stmt 1 view .LVU442
+ 1301              		.loc 1 622 7 is_stmt 0 view .LVU443
+ 1302 0012 1942     		tst	r1, r3
+ 1303 0014 0AD0     		beq	.L69
+ 623:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 624:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         return SET;
+ 1304              		.loc 1 624 16 view .LVU444
+ 1305 0016 0120     		movs	r0, #1
+ 1306              	.LVL40:
+ 1307              		.loc 1 624 16 view .LVU445
+ 1308 0018 7047     		bx	lr
+ 1309              	.LVL41:
+ 1310              	.L70:
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1311              		.loc 1 611 9 is_stmt 1 view .LVU446
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1312              		.loc 1 611 15 is_stmt 0 view .LVU447
+ 1313 001a 4FF02043 		mov	r3, #-1610612736
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 36
+
+
+ 1314 001e 5B6E     		ldr	r3, [r3, #100]
+ 1315              	.LVL42:
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1316              		.loc 1 611 15 view .LVU448
+ 1317 0020 F7E7     		b	.L66
+ 1318              	.LVL43:
+ 1319              	.L71:
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1320              		.loc 1 615 9 is_stmt 1 view .LVU449
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1321              		.loc 1 615 15 is_stmt 0 view .LVU450
+ 1322 0022 4FF02043 		mov	r3, #-1610612736
+ 1323 0026 D3F88430 		ldr	r3, [r3, #132]
+ 1324              	.LVL44:
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1325              		.loc 1 615 15 view .LVU451
+ 1326 002a F2E7     		b	.L66
+ 1327              	.L69:
+ 625:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 626:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 627:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 628:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         return RESET;
+ 1328              		.loc 1 628 16 view .LVU452
+ 1329 002c 0020     		movs	r0, #0
+ 1330              	.LVL45:
+ 629:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 630:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1331              		.loc 1 630 1 view .LVU453
+ 1332 002e 7047     		bx	lr
+ 1333              		.cfi_endproc
+ 1334              	.LFE85:
+ 1336              		.section	.text.EMMC_ClearStatusFlag,"ax",%progbits
+ 1337              		.align	1
+ 1338              		.global	EMMC_ClearStatusFlag
+ 1339              		.syntax unified
+ 1340              		.thumb
+ 1341              		.thumb_func
+ 1343              	EMMC_ClearStatusFlag:
+ 1344              	.LVL46:
+ 1345              	.LFB86:
+ 631:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 632:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 633:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief    Clears the EMMC's pending flags.
+ 634:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 635:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    bank: Selects the EMMMC Bank.
+ 636:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 The parameter can be one of following values:
+ 637:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK2_NAND  : FSMC Bank2 NAND
+ 638:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK3_NAND  : FSMC Bank3 NAND
+ 639:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK4_PCCARD: FSMC Bank4 PCCARD
+ 640:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 641:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    flag: Select the EMMC interrupt sources.
+ 642:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 This parameter can be any combination of the following values:
+ 643:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_FLAG_EDGE_RISING : Rising egde detection Flag.
+ 644:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_FLAG_LEVEL_HIGH  : High level detection Flag.
+ 645:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_FLAG_EDGE_FALLING: Falling egde detection Flag.
+ 646:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 647:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval    None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 37
+
+
+ 648:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 649:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ClearStatusFlag(EMMC_BANK_NAND_T bank, uint32_t flag)
+ 650:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1346              		.loc 1 650 1 is_stmt 1 view -0
+ 1347              		.cfi_startproc
+ 1348              		@ args = 0, pretend = 0, frame = 0
+ 1349              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1350              		@ link register save eliminated.
+ 651:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1351              		.loc 1 651 5 view .LVU455
+ 1352              		.loc 1 651 7 is_stmt 0 view .LVU456
+ 1353 0000 1028     		cmp	r0, #16
+ 1354 0002 0BD0     		beq	.L76
+ 652:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->STSINT2 &= ~flag;
+ 654:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 655:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else if(bank == EMMC_BANK3_NAND)
+ 1355              		.loc 1 655 10 is_stmt 1 view .LVU457
+ 1356              		.loc 1 655 12 is_stmt 0 view .LVU458
+ 1357 0004 B0F5807F 		cmp	r0, #256
+ 1358 0008 0FD0     		beq	.L77
+ 656:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->STSINT3 &= ~flag;
+ 658:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 659:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 660:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 661:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank4->STSINT4 &= ~flag;
+ 1359              		.loc 1 661 9 is_stmt 1 view .LVU459
+ 1360              		.loc 1 661 29 is_stmt 0 view .LVU460
+ 1361 000a 4FF02042 		mov	r2, #-1610612736
+ 1362 000e D2F8A430 		ldr	r3, [r2, #164]
+ 1363 0012 23EA0101 		bic	r1, r3, r1
+ 1364              	.LVL47:
+ 1365              		.loc 1 661 29 view .LVU461
+ 1366 0016 C2F8A410 		str	r1, [r2, #164]
+ 662:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 663:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1367              		.loc 1 663 1 view .LVU462
+ 1368 001a 7047     		bx	lr
+ 1369              	.LVL48:
+ 1370              	.L76:
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1371              		.loc 1 653 9 is_stmt 1 view .LVU463
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1372              		.loc 1 653 29 is_stmt 0 view .LVU464
+ 1373 001c 4FF02042 		mov	r2, #-1610612736
+ 1374 0020 536E     		ldr	r3, [r2, #100]
+ 1375 0022 23EA0101 		bic	r1, r3, r1
+ 1376              	.LVL49:
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1377              		.loc 1 653 29 view .LVU465
+ 1378 0026 5166     		str	r1, [r2, #100]
+ 1379 0028 7047     		bx	lr
+ 1380              	.LVL50:
+ 1381              	.L77:
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1382              		.loc 1 657 9 is_stmt 1 view .LVU466
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 38
+
+
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1383              		.loc 1 657 29 is_stmt 0 view .LVU467
+ 1384 002a 4FF02042 		mov	r2, #-1610612736
+ 1385 002e D2F88430 		ldr	r3, [r2, #132]
+ 1386 0032 23EA0101 		bic	r1, r3, r1
+ 1387              	.LVL51:
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1388              		.loc 1 657 29 view .LVU468
+ 1389 0036 C2F88410 		str	r1, [r2, #132]
+ 1390 003a 7047     		bx	lr
+ 1391              		.cfi_endproc
+ 1392              	.LFE86:
+ 1394              		.section	.text.EMMC_ReadIntFlag,"ax",%progbits
+ 1395              		.align	1
+ 1396              		.global	EMMC_ReadIntFlag
+ 1397              		.syntax unified
+ 1398              		.thumb
+ 1399              		.thumb_func
+ 1401              	EMMC_ReadIntFlag:
+ 1402              	.LVL52:
+ 1403              	.LFB87:
+ 664:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 665:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 666:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief    Read the specified EMMC interrupt has occurred or not.
+ 667:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 668:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    bank: Selects the EMMMC Bank.
+ 669:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 The parameter can be one of following values:
+ 670:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK2_NAND  : FSMC Bank2 NAND
+ 671:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK3_NAND  : FSMC Bank3 NAND
+ 672:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK4_PCCARD: FSMC Bank4 PCCARD
+ 673:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 674:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    interrupt: Select the EMMC interrupt source.
+ 675:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      This parameter can be one of the following values:
+ 676:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_RISING : Rising edge detection interrupt.
+ 677:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_LEVEL_HIGH  : High level edge detection interrupt.
+ 678:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_FALLING: Falling edge detection interrupt.
+ 679:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 680:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval   The status of specified EMMC interrupt source.
+ 681:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 682:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** uint8_t EMMC_ReadIntFlag(EMMC_BANK_NAND_T bank, EMMC_INT_T flag)
+ 683:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1404              		.loc 1 683 1 is_stmt 1 view -0
+ 1405              		.cfi_startproc
+ 1406              		@ args = 0, pretend = 0, frame = 0
+ 1407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1408              		@ link register save eliminated.
+ 684:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     uint32_t tmpsr = 0x0, itstatus = 0x0, itenable = 0x0;
+ 1409              		.loc 1 684 5 view .LVU470
+ 685:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 686:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1410              		.loc 1 686 5 view .LVU471
+ 1411              		.loc 1 686 7 is_stmt 0 view .LVU472
+ 1412 0000 1028     		cmp	r0, #16
+ 1413 0002 0DD0     		beq	.L85
+ 687:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         tmpsr = EMMC_Bank2->STSINT2;
+ 689:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 39
+
+
+ 690:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else if(bank == EMMC_BANK3_NAND)
+ 1414              		.loc 1 690 10 is_stmt 1 view .LVU473
+ 1415              		.loc 1 690 12 is_stmt 0 view .LVU474
+ 1416 0004 B0F5807F 		cmp	r0, #256
+ 1417 0008 0ED0     		beq	.L86
+ 691:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         tmpsr = EMMC_Bank3->STSINT3;
+ 693:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 694:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 695:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 696:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         tmpsr = EMMC_Bank4->STSINT4;
+ 1418              		.loc 1 696 9 is_stmt 1 view .LVU475
+ 1419              		.loc 1 696 15 is_stmt 0 view .LVU476
+ 1420 000a 4FF02043 		mov	r3, #-1610612736
+ 1421 000e D3F8A430 		ldr	r3, [r3, #164]
+ 1422              	.LVL53:
+ 1423              	.L80:
+ 697:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 698:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 699:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     itstatus = tmpsr & flag;
+ 1424              		.loc 1 699 5 is_stmt 1 view .LVU477
+ 700:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     itenable = tmpsr & (flag >> 3);
+ 1425              		.loc 1 700 5 view .LVU478
+ 1426              		.loc 1 700 14 is_stmt 0 view .LVU479
+ 1427 0012 03EAD102 		and	r2, r3, r1, lsr #3
+ 1428              	.LVL54:
+ 701:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if((itstatus != RESET) && (itenable != RESET))
+ 1429              		.loc 1 702 5 is_stmt 1 view .LVU480
+ 1430              		.loc 1 702 7 is_stmt 0 view .LVU481
+ 1431 0016 1942     		tst	r1, r3
+ 1432 0018 0BD0     		beq	.L83
+ 1433              		.loc 1 702 28 discriminator 1 view .LVU482
+ 1434 001a 62B9     		cbnz	r2, .L84
+ 703:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         return SET;
+ 705:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 706:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 707:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 708:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         return RESET;
+ 1435              		.loc 1 708 16 view .LVU483
+ 1436 001c 0020     		movs	r0, #0
+ 1437              	.LVL55:
+ 1438              		.loc 1 708 16 view .LVU484
+ 1439 001e 7047     		bx	lr
+ 1440              	.LVL56:
+ 1441              	.L85:
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1442              		.loc 1 688 9 is_stmt 1 view .LVU485
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1443              		.loc 1 688 15 is_stmt 0 view .LVU486
+ 1444 0020 4FF02043 		mov	r3, #-1610612736
+ 1445 0024 5B6E     		ldr	r3, [r3, #100]
+ 1446              	.LVL57:
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1447              		.loc 1 688 15 view .LVU487
+ 1448 0026 F4E7     		b	.L80
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 40
+
+
+ 1449              	.LVL58:
+ 1450              	.L86:
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1451              		.loc 1 692 9 is_stmt 1 view .LVU488
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1452              		.loc 1 692 15 is_stmt 0 view .LVU489
+ 1453 0028 4FF02043 		mov	r3, #-1610612736
+ 1454 002c D3F88430 		ldr	r3, [r3, #132]
+ 1455              	.LVL59:
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1456              		.loc 1 692 15 view .LVU490
+ 1457 0030 EFE7     		b	.L80
+ 1458              	.LVL60:
+ 1459              	.L83:
+ 1460              		.loc 1 708 16 view .LVU491
+ 1461 0032 0020     		movs	r0, #0
+ 1462              	.LVL61:
+ 1463              		.loc 1 708 16 view .LVU492
+ 1464 0034 7047     		bx	lr
+ 1465              	.LVL62:
+ 1466              	.L84:
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1467              		.loc 1 704 16 view .LVU493
+ 1468 0036 0120     		movs	r0, #1
+ 1469              	.LVL63:
+ 709:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 710:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1470              		.loc 1 710 1 view .LVU494
+ 1471 0038 7047     		bx	lr
+ 1472              		.cfi_endproc
+ 1473              	.LFE87:
+ 1475              		.section	.text.EMMC_ClearIntFlag,"ax",%progbits
+ 1476              		.align	1
+ 1477              		.global	EMMC_ClearIntFlag
+ 1478              		.syntax unified
+ 1479              		.thumb
+ 1480              		.thumb_func
+ 1482              	EMMC_ClearIntFlag:
+ 1483              	.LVL64:
+ 1484              	.LFB88:
+ 711:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** 
+ 712:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** /*!
+ 713:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @brief    Clears the EMMC's interrupt Flag.
+ 714:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 715:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    bank: Selects the EMMMC Bank.
+ 716:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 The parameter can be one of following values:
+ 717:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK2_NAND  : FSMC Bank2 NAND
+ 718:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK3_NAND  : FSMC Bank3 NAND
+ 719:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                 @arg EMMC_BANK4_PCCARD: FSMC Bank4 PCCARD
+ 720:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 721:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @param    interrupt: Select the EMMC interrupt sources.
+ 722:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      This parameter can be any combination of the following values:
+ 723:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_RISING : Rising edge detection interrupt.
+ 724:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_LEVEL_HIGH  : High level edge detection interrupt.
+ 725:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *                      @arg EMMC_INT_EDGE_FALLING: Falling edge detection interrupt.
+ 726:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  *
+ 727:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  * @retval   None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 41
+
+
+ 728:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****  */
+ 729:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** void EMMC_ClearIntFlag(EMMC_BANK_NAND_T bank, uint32_t flag)
+ 730:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** {
+ 1485              		.loc 1 730 1 is_stmt 1 view -0
+ 1486              		.cfi_startproc
+ 1487              		@ args = 0, pretend = 0, frame = 0
+ 1488              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1489              		@ link register save eliminated.
+ 731:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     if(bank == EMMC_BANK2_NAND)
+ 1490              		.loc 1 731 5 view .LVU496
+ 1491              		.loc 1 731 7 is_stmt 0 view .LVU497
+ 1492 0000 1028     		cmp	r0, #16
+ 1493 0002 0BD0     		beq	.L91
+ 732:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 733:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank2->STSINT2 &= ~(flag >> 3);
+ 734:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 735:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else if(bank == EMMC_BANK3_NAND)
+ 1494              		.loc 1 735 10 is_stmt 1 view .LVU498
+ 1495              		.loc 1 735 12 is_stmt 0 view .LVU499
+ 1496 0004 B0F5807F 		cmp	r0, #256
+ 1497 0008 0FD0     		beq	.L92
+ 736:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 737:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank3->STSINT3 &= ~(flag >> 3);
+ 738:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 739:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     else
+ 740:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     {
+ 741:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****         EMMC_Bank4->STSINT4 &= ~(flag >> 3);
+ 1498              		.loc 1 741 9 is_stmt 1 view .LVU500
+ 1499              		.loc 1 741 29 is_stmt 0 view .LVU501
+ 1500 000a 4FF02042 		mov	r2, #-1610612736
+ 1501 000e D2F8A430 		ldr	r3, [r2, #164]
+ 1502 0012 23EAD101 		bic	r1, r3, r1, lsr #3
+ 1503              	.LVL65:
+ 1504              		.loc 1 741 29 view .LVU502
+ 1505 0016 C2F8A410 		str	r1, [r2, #164]
+ 742:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 743:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c **** }
+ 1506              		.loc 1 743 1 view .LVU503
+ 1507 001a 7047     		bx	lr
+ 1508              	.LVL66:
+ 1509              	.L91:
+ 733:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1510              		.loc 1 733 9 is_stmt 1 view .LVU504
+ 733:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1511              		.loc 1 733 29 is_stmt 0 view .LVU505
+ 1512 001c 4FF02042 		mov	r2, #-1610612736
+ 1513 0020 536E     		ldr	r3, [r2, #100]
+ 1514 0022 23EAD101 		bic	r1, r3, r1, lsr #3
+ 1515              	.LVL67:
+ 733:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1516              		.loc 1 733 29 view .LVU506
+ 1517 0026 5166     		str	r1, [r2, #100]
+ 1518 0028 7047     		bx	lr
+ 1519              	.LVL68:
+ 1520              	.L92:
+ 737:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1521              		.loc 1 737 9 is_stmt 1 view .LVU507
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 42
+
+
+ 737:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1522              		.loc 1 737 29 is_stmt 0 view .LVU508
+ 1523 002a 4FF02042 		mov	r2, #-1610612736
+ 1524 002e D2F88430 		ldr	r3, [r2, #132]
+ 1525 0032 23EAD101 		bic	r1, r3, r1, lsr #3
+ 1526              	.LVL69:
+ 737:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_emmc.c ****     }
+ 1527              		.loc 1 737 29 view .LVU509
+ 1528 0036 C2F88410 		str	r1, [r2, #132]
+ 1529 003a 7047     		bx	lr
+ 1530              		.cfi_endproc
+ 1531              	.LFE88:
+ 1533              		.text
+ 1534              	.Letext0:
+ 1535              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1536              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1537              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 1538              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_emmc.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s 			page 43
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_emmc.c
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:18     .text.EMMC_ResetNORSRAM:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:24     .text.EMMC_ResetNORSRAM:00000000 EMMC_ResetNORSRAM
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:70     .text.EMMC_ResetNAND:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:76     .text.EMMC_ResetNAND:00000000 EMMC_ResetNAND
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:128    .text.EMMC_ResetPCCard:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:134    .text.EMMC_ResetPCCard:00000000 EMMC_ResetPCCard
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:166    .text.EMMC_ConfigNORSRAM:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:172    .text.EMMC_ConfigNORSRAM:00000000 EMMC_ConfigNORSRAM
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:336    .text.EMMC_ConfigNAND:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:342    .text.EMMC_ConfigNAND:00000000 EMMC_ConfigNAND
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:458    .text.EMMC_ConfigPCCard:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:464    .text.EMMC_ConfigPCCard:00000000 EMMC_ConfigPCCard
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:548    .text.EMMC_ConfigNORSRAMStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:554    .text.EMMC_ConfigNORSRAMStructInit:00000000 EMMC_ConfigNORSRAMStructInit
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:675    .text.EMMC_ConfigNANDStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:681    .text.EMMC_ConfigNANDStructInit:00000000 EMMC_ConfigNANDStructInit
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:759    .text.EMMC_ConfigPCCardStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:765    .text.EMMC_ConfigPCCardStructInit:00000000 EMMC_ConfigPCCardStructInit
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:850    .text.EMMC_EnableNORSRAM:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:856    .text.EMMC_EnableNORSRAM:00000000 EMMC_EnableNORSRAM
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:876    .text.EMMC_DisableNORSRAM:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:882    .text.EMMC_DisableNORSRAM:00000000 EMMC_DisableNORSRAM
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:902    .text.EMMC_DisableNORSRAM:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:907    .text.EMMC_EnableNAND:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:913    .text.EMMC_EnableNAND:00000000 EMMC_EnableNAND
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:945    .text.EMMC_DisableNAND:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:951    .text.EMMC_DisableNAND:00000000 EMMC_DisableNAND
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:983    .text.EMMC_EnablePCCARD:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:989    .text.EMMC_EnablePCCARD:00000000 EMMC_EnablePCCARD
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1008   .text.EMMC_DisablePCCARD:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1014   .text.EMMC_DisablePCCARD:00000000 EMMC_DisablePCCARD
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1033   .text.EMMC_EnableNANDECC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1039   .text.EMMC_EnableNANDECC:00000000 EMMC_EnableNANDECC
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1071   .text.EMMC_DisableNANDECC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1077   .text.EMMC_DisableNANDECC:00000000 EMMC_DisableNANDECC
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1110   .text.EMMC_DisableNANDECC:00000024 $d
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1115   .text.EMMC_ReadECC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1121   .text.EMMC_ReadECC:00000000 EMMC_ReadECC
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1155   .text.EMMC_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1161   .text.EMMC_EnableInterrupt:00000000 EMMC_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1213   .text.EMMC_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1219   .text.EMMC_DisableInterrupt:00000000 EMMC_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1271   .text.EMMC_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1277   .text.EMMC_ReadStatusFlag:00000000 EMMC_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1337   .text.EMMC_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1343   .text.EMMC_ClearStatusFlag:00000000 EMMC_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1395   .text.EMMC_ReadIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1401   .text.EMMC_ReadIntFlag:00000000 EMMC_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1476   .text.EMMC_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccKS4tnV.s:1482   .text.EMMC_ClearIntFlag:00000000 EMMC_ClearIntFlag
+
+NO UNDEFINED SYMBOLS

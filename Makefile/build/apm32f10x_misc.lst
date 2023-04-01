@@ -1,0 +1,675 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_misc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.NVIC_ConfigPriorityGroup,"ax",%progbits
+  18              		.align	1
+  19              		.global	NVIC_ConfigPriorityGroup
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	NVIC_ConfigPriorityGroup:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @file        apm32f10x_misc.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief       This file provides all the miscellaneous firmware functions.
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *             Include NVIC,SystemTick and Power management.
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @version     V1.0.2
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @date        2022-01-05
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @attention
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  You may not use this file except in compliance with the
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  The program is only for reference, which is distributed in the hope
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  that it will be usefull and instructional for customers to develop
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  their software. Unless required by applicable law or agreed to in
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *  and limitations under the License.
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** #include "apm32f10x_misc.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 2
+
+
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /** @addtogroup MISC_Driver MISC Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /** @addtogroup MISC_Macros Macros
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** #define AIRCR_VECTKEY_MASK    ((uint32_t)0x05FA0000)
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /**@} end of group MISC_Macros*/
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /** @addtogroup MISC_Fuctions Fuctions
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****   @{
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** */
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief     Configures the priority grouping: pre-emption priority and subpriority.
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     priorityGroup : specifies the priority grouping bits length.
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                            This parameter can be one of the following values:
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                            @arg NVIC_PRIORITY_GROUP_0
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                            @arg NVIC_PRIORITY_GROUP_1
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                            @arg NVIC_PRIORITY_GROUP_2
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                            @arg NVIC_PRIORITY_GROUP_3
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                            @arg NVIC_PRIORITY_GROUP_4
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @retval    None
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** void NVIC_ConfigPriorityGroup(NVIC_PRIORITY_GROUP_T priorityGroup)
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** {
+  28              		.loc 1 64 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    SCB->AIRCR = AIRCR_VECTKEY_MASK | priorityGroup;
+  33              		.loc 1 65 4 view .LVU1
+  34              		.loc 1 65 36 is_stmt 0 view .LVU2
+  35 0000 40F0BF60 		orr	r0, r0, #100139008
+  36              	.LVL1:
+  37              		.loc 1 65 36 view .LVU3
+  38 0004 40F40030 		orr	r0, r0, #131072
+  39              		.loc 1 65 15 view .LVU4
+  40 0008 014B     		ldr	r3, .L2
+  41 000a D860     		str	r0, [r3, #12]
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** }
+  42              		.loc 1 66 1 view .LVU5
+  43 000c 7047     		bx	lr
+  44              	.L3:
+  45 000e 00BF     		.align	2
+  46              	.L2:
+  47 0010 00ED00E0 		.word	-536810240
+  48              		.cfi_endproc
+  49              	.LFE65:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 3
+
+
+  51              		.section	.text.NVIC_EnableIRQRequest,"ax",%progbits
+  52              		.align	1
+  53              		.global	NVIC_EnableIRQRequest
+  54              		.syntax unified
+  55              		.thumb
+  56              		.thumb_func
+  58              	NVIC_EnableIRQRequest:
+  59              	.LVL2:
+  60              	.LFB66:
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief     Enable NVIC request
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     irq: the NVIC interrupt request, detailed in IRQn_Type
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *            For the complete APM32 Devices IRQ Channels list,please refer to apm32f10x.h file
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     preemptionPriority: the pre-emption priority needed to set
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     subPriority: the subpriority needed to set
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @retval    None
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** void NVIC_EnableIRQRequest(IRQn_Type irq, uint8_t preemptionPriority, uint8_t subPriority)
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** {
+  61              		.loc 1 81 1 is_stmt 1 view -0
+  62              		.cfi_startproc
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65              		.loc 1 81 1 is_stmt 0 view .LVU7
+  66 0000 70B5     		push	{r4, r5, r6, lr}
+  67              	.LCFI0:
+  68              		.cfi_def_cfa_offset 16
+  69              		.cfi_offset 4, -16
+  70              		.cfi_offset 5, -12
+  71              		.cfi_offset 6, -8
+  72              		.cfi_offset 14, -4
+  73 0002 0546     		mov	r5, r0
+  74 0004 0E46     		mov	r6, r1
+  75 0006 1446     		mov	r4, r2
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    uint32_t tempPriority, tempPrePri, tempSubPri;
+  76              		.loc 1 82 4 is_stmt 1 view .LVU8
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    uint32_t priorityGrp;
+  77              		.loc 1 83 4 view .LVU9
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    /** Get priority group */
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    priorityGrp = (SCB->AIRCR) & (uint32_t)0x700U;
+  78              		.loc 1 86 4 view .LVU10
+  79              		.loc 1 86 22 is_stmt 0 view .LVU11
+  80 0008 204B     		ldr	r3, .L15
+  81 000a DB68     		ldr	r3, [r3, #12]
+  82              		.loc 1 86 16 view .LVU12
+  83 000c 03F4E063 		and	r3, r3, #1792
+  84              	.LVL3:
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    /** get pre-emption priority and subpriority */
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    switch(priorityGrp)
+  85              		.loc 1 89 4 is_stmt 1 view .LVU13
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 4
+
+
+  86 0010 B3F5A06F 		cmp	r3, #1280
+  87 0014 31D0     		beq	.L8
+  88 0016 08D9     		bls	.L14
+  89 0018 B3F5C06F 		cmp	r3, #1536
+  90 001c 33D0     		beq	.L11
+  91 001e B3F5E06F 		cmp	r3, #1792
+  92 0022 23D1     		bne	.L7
+  93 0024 0423     		movs	r3, #4
+  94              	.LVL4:
+  95              		.loc 1 89 4 is_stmt 0 view .LVU14
+  96 0026 0022     		movs	r2, #0
+  97              	.LVL5:
+  98              		.loc 1 89 4 view .LVU15
+  99 0028 07E0     		b	.L5
+ 100              	.LVL6:
+ 101              	.L14:
+ 102              		.loc 1 89 4 view .LVU16
+ 103 002a B3F5407F 		cmp	r3, #768
+ 104 002e 27D0     		beq	.L9
+ 105 0030 B3F5806F 		cmp	r3, #1024
+ 106 0034 1AD1     		bne	.L7
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    {
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       case NVIC_PRIORITY_GROUP_0:
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 0;
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 4;
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       case NVIC_PRIORITY_GROUP_1:
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 1;
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 3;
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       case NVIC_PRIORITY_GROUP_2:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 2;
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 2;
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       case NVIC_PRIORITY_GROUP_3:
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 3;
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 1;
+ 107              		.loc 1 108 21 view .LVU17
+ 108 0036 0123     		movs	r3, #1
+ 109              	.LVL7:
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 1;
+ 110              		.loc 1 107 21 view .LVU18
+ 111 0038 0322     		movs	r2, #3
+ 112              	.LVL8:
+ 113              	.L5:
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       case NVIC_PRIORITY_GROUP_4:
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 4;
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 0;
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       default:
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          NVIC_ConfigPriorityGroup(NVIC_PRIORITY_GROUP_0);
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 5
+
+
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 0;
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 4;
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    }
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    tempPrePri = 4 - tempPrePri;
+ 114              		.loc 1 123 4 is_stmt 1 view .LVU19
+ 115              		.loc 1 123 15 is_stmt 0 view .LVU20
+ 116 003a C2F10402 		rsb	r2, r2, #4
+ 117              	.LVL9:
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    tempSubPri = 4 - tempSubPri;
+ 118              		.loc 1 124 4 is_stmt 1 view .LVU21
+ 119              		.loc 1 124 15 is_stmt 0 view .LVU22
+ 120 003e C3F10403 		rsb	r3, r3, #4
+ 121              	.LVL10:
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    tempPriority = preemptionPriority << tempPrePri;
+ 122              		.loc 1 125 4 is_stmt 1 view .LVU23
+ 123              		.loc 1 125 38 is_stmt 0 view .LVU24
+ 124 0042 06FA02F2 		lsl	r2, r6, r2
+ 125              	.LVL11:
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    tempPriority |= subPriority & (0x0f >> tempSubPri);
+ 126              		.loc 1 126 4 is_stmt 1 view .LVU25
+ 127              		.loc 1 126 40 is_stmt 0 view .LVU26
+ 128 0046 0F21     		movs	r1, #15
+ 129 0048 41FA03F3 		asr	r3, r1, r3
+ 130              	.LVL12:
+ 131              		.loc 1 126 32 view .LVU27
+ 132 004c 1C40     		ands	r4, r4, r3
+ 133              		.loc 1 126 17 view .LVU28
+ 134 004e 1443     		orrs	r4, r4, r2
+ 135              	.LVL13:
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    tempPriority <<= 4;
+ 136              		.loc 1 127 4 is_stmt 1 view .LVU29
+ 137              		.loc 1 127 17 is_stmt 0 view .LVU30
+ 138 0050 2401     		lsls	r4, r4, #4
+ 139              	.LVL14:
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    NVIC->IP[irq] = (uint8_t)tempPriority;
+ 140              		.loc 1 128 4 is_stmt 1 view .LVU31
+ 141              		.loc 1 128 20 is_stmt 0 view .LVU32
+ 142 0052 E4B2     		uxtb	r4, r4
+ 143              	.LVL15:
+ 144              		.loc 1 128 18 view .LVU33
+ 145 0054 0E4A     		ldr	r2, .L15+4
+ 146 0056 5319     		adds	r3, r2, r5
+ 147 0058 83F80043 		strb	r4, [r3, #768]
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****     /** enable the selected IRQ */
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****     NVIC->ISER[irq >> 0x05U] = (uint32_t)0x01U << (irq & (uint8_t)0x1FU);
+ 148              		.loc 1 131 5 is_stmt 1 view .LVU34
+ 149              		.loc 1 131 56 is_stmt 0 view .LVU35
+ 150 005c 05F01F01 		and	r1, r5, #31
+ 151              		.loc 1 131 20 view .LVU36
+ 152 0060 6D11     		asrs	r5, r5, #5
+ 153              		.loc 1 131 48 view .LVU37
+ 154 0062 0123     		movs	r3, #1
+ 155 0064 8B40     		lsls	r3, r3, r1
+ 156              		.loc 1 131 30 view .LVU38
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 6
+
+
+ 157 0066 42F82530 		str	r3, [r2, r5, lsl #2]
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** }
+ 158              		.loc 1 132 1 view .LVU39
+ 159 006a 70BD     		pop	{r4, r5, r6, pc}
+ 160              	.LVL16:
+ 161              	.L7:
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 0;
+ 162              		.loc 1 117 10 is_stmt 1 view .LVU40
+ 163 006c 4FF4E060 		mov	r0, #1792
+ 164              	.LVL17:
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempPrePri = 0;
+ 165              		.loc 1 117 10 is_stmt 0 view .LVU41
+ 166 0070 FFF7FEFF 		bl	NVIC_ConfigPriorityGroup
+ 167              	.LVL18:
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 4;
+ 168              		.loc 1 118 10 is_stmt 1 view .LVU42
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 169              		.loc 1 119 10 view .LVU43
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    }
+ 170              		.loc 1 120 10 view .LVU44
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 171              		.loc 1 119 21 is_stmt 0 view .LVU45
+ 172 0074 0423     		movs	r3, #4
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 4;
+ 173              		.loc 1 118 21 view .LVU46
+ 174 0076 0022     		movs	r2, #0
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    }
+ 175              		.loc 1 120 10 view .LVU47
+ 176 0078 DFE7     		b	.L5
+ 177              	.LVL19:
+ 178              	.L8:
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 179              		.loc 1 103 21 view .LVU48
+ 180 007a 0223     		movs	r3, #2
+ 181              	.LVL20:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 2;
+ 182              		.loc 1 102 21 view .LVU49
+ 183 007c 1A46     		mov	r2, r3
+ 184              	.LVL21:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 2;
+ 185              		.loc 1 102 21 view .LVU50
+ 186 007e DCE7     		b	.L5
+ 187              	.LVL22:
+ 188              	.L9:
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 189              		.loc 1 113 21 view .LVU51
+ 190 0080 0023     		movs	r3, #0
+ 191              	.LVL23:
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 0;
+ 192              		.loc 1 112 21 view .LVU52
+ 193 0082 0422     		movs	r2, #4
+ 194              	.LVL24:
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 0;
+ 195              		.loc 1 112 21 view .LVU53
+ 196 0084 D9E7     		b	.L5
+ 197              	.LVL25:
+ 198              	.L11:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 7
+
+
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          break;
+ 199              		.loc 1 98 21 view .LVU54
+ 200 0086 0323     		movs	r3, #3
+ 201              	.LVL26:
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 3;
+ 202              		.loc 1 97 21 view .LVU55
+ 203 0088 0122     		movs	r2, #1
+ 204              	.LVL27:
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****          tempSubPri = 3;
+ 205              		.loc 1 97 21 view .LVU56
+ 206 008a D6E7     		b	.L5
+ 207              	.L16:
+ 208              		.align	2
+ 209              	.L15:
+ 210 008c 00ED00E0 		.word	-536810240
+ 211 0090 00E100E0 		.word	-536813312
+ 212              		.cfi_endproc
+ 213              	.LFE66:
+ 215              		.section	.text.NVIC_DisableIRQRequest,"ax",%progbits
+ 216              		.align	1
+ 217              		.global	NVIC_DisableIRQRequest
+ 218              		.syntax unified
+ 219              		.thumb
+ 220              		.thumb_func
+ 222              	NVIC_DisableIRQRequest:
+ 223              	.LVL28:
+ 224              	.LFB67:
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief     Disable NVIC request
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     irq: the NVIC interrupt request, detailed in IRQn_Type
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @retval    None
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** void NVIC_DisableIRQRequest(IRQn_Type irq)
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** {
+ 225              		.loc 1 142 1 is_stmt 1 view -0
+ 226              		.cfi_startproc
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ 229              		@ link register save eliminated.
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****     /** disable the selected IRQ.*/
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****     NVIC->ICER[irq >> 0x05U] = (uint32_t)0x01U << (irq & (uint8_t)0x1FU);
+ 230              		.loc 1 144 5 view .LVU58
+ 231              		.loc 1 144 56 is_stmt 0 view .LVU59
+ 232 0000 00F01F02 		and	r2, r0, #31
+ 233              		.loc 1 144 20 view .LVU60
+ 234 0004 4011     		asrs	r0, r0, #5
+ 235              	.LVL29:
+ 236              		.loc 1 144 48 view .LVU61
+ 237 0006 0123     		movs	r3, #1
+ 238 0008 9340     		lsls	r3, r3, r2
+ 239              		.loc 1 144 30 view .LVU62
+ 240 000a 2030     		adds	r0, r0, #32
+ 241 000c 014A     		ldr	r2, .L18
+ 242 000e 42F82030 		str	r3, [r2, r0, lsl #2]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 8
+
+
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** }
+ 243              		.loc 1 145 1 view .LVU63
+ 244 0012 7047     		bx	lr
+ 245              	.L19:
+ 246              		.align	2
+ 247              	.L18:
+ 248 0014 00E100E0 		.word	-536813312
+ 249              		.cfi_endproc
+ 250              	.LFE67:
+ 252              		.section	.text.NVIC_ConfigVectorTable,"ax",%progbits
+ 253              		.align	1
+ 254              		.global	NVIC_ConfigVectorTable
+ 255              		.syntax unified
+ 256              		.thumb
+ 257              		.thumb_func
+ 259              	NVIC_ConfigVectorTable:
+ 260              	.LVL30:
+ 261              	.LFB68:
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief     Configs the vector table location and Offset.
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     vectTab: specifies if the vector table is in RAM or FLASH memory
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                     This parameter can be one of the following values:
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                     @arg NVIC_VECT_TAB_RAM
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                     @arg NVIC_VECT_TAB_FLASH
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     Offset   Vector Table base offset field. This value must be a multiple of 0x200
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @retval    None
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** void NVIC_ConfigVectorTable(NVIC_VECT_TAB_T vectTab, uint32_t offset)
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** {
+ 262              		.loc 1 160 1 is_stmt 1 view -0
+ 263              		.cfi_startproc
+ 264              		@ args = 0, pretend = 0, frame = 0
+ 265              		@ frame_needed = 0, uses_anonymous_args = 0
+ 266              		@ link register save eliminated.
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****     SCB->VTOR = vectTab | (offset & (uint32_t)0x1FFFFF80);
+ 267              		.loc 1 161 5 view .LVU65
+ 268              		.loc 1 161 35 is_stmt 0 view .LVU66
+ 269 0000 21F06041 		bic	r1, r1, #-536870912
+ 270              	.LVL31:
+ 271              		.loc 1 161 35 view .LVU67
+ 272 0004 21F07F01 		bic	r1, r1, #127
+ 273              		.loc 1 161 25 view .LVU68
+ 274 0008 0143     		orrs	r1, r1, r0
+ 275              		.loc 1 161 15 view .LVU69
+ 276 000a 014B     		ldr	r3, .L21
+ 277 000c 9960     		str	r1, [r3, #8]
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** }
+ 278              		.loc 1 162 1 view .LVU70
+ 279 000e 7047     		bx	lr
+ 280              	.L22:
+ 281              		.align	2
+ 282              	.L21:
+ 283 0010 00ED00E0 		.word	-536810240
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 9
+
+
+ 284              		.cfi_endproc
+ 285              	.LFE68:
+ 287              		.section	.text.NVIC_SetSystemLowPower,"ax",%progbits
+ 288              		.align	1
+ 289              		.global	NVIC_SetSystemLowPower
+ 290              		.syntax unified
+ 291              		.thumb
+ 292              		.thumb_func
+ 294              	NVIC_SetSystemLowPower:
+ 295              	.LVL32:
+ 296              	.LFB69:
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief     set the state of the low power mode
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     lowPowerMode: the low power mode state
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          This parameter can be one of the following values:
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          @arg NVIC_LOWPOWER_SEVONPEND
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          @arg NVIC_LOWPOWER_SLEEPDEEP
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          @arg NVIC_LOWPOWER_SLEEPONEXIT
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @retval    None
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** void NVIC_SetSystemLowPower(NVIC_LOWPOWER_T lowPowerMode)
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** {
+ 297              		.loc 1 176 1 is_stmt 1 view -0
+ 298              		.cfi_startproc
+ 299              		@ args = 0, pretend = 0, frame = 0
+ 300              		@ frame_needed = 0, uses_anonymous_args = 0
+ 301              		@ link register save eliminated.
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    SCB->SCR |= lowPowerMode;
+ 302              		.loc 1 177 4 view .LVU72
+ 303              		.loc 1 177 13 is_stmt 0 view .LVU73
+ 304 0000 024B     		ldr	r3, .L24
+ 305 0002 1A69     		ldr	r2, [r3, #16]
+ 306 0004 1043     		orrs	r0, r0, r2
+ 307              	.LVL33:
+ 308              		.loc 1 177 13 view .LVU74
+ 309 0006 1861     		str	r0, [r3, #16]
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** }
+ 310              		.loc 1 178 1 view .LVU75
+ 311 0008 7047     		bx	lr
+ 312              	.L25:
+ 313 000a 00BF     		.align	2
+ 314              	.L24:
+ 315 000c 00ED00E0 		.word	-536810240
+ 316              		.cfi_endproc
+ 317              	.LFE69:
+ 319              		.section	.text.NVIC_ResetystemLowPower,"ax",%progbits
+ 320              		.align	1
+ 321              		.global	NVIC_ResetystemLowPower
+ 322              		.syntax unified
+ 323              		.thumb
+ 324              		.thumb_func
+ 326              	NVIC_ResetystemLowPower:
+ 327              	.LVL34:
+ 328              	.LFB70:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 10
+
+
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief     reset the state of the low power mode
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     lowPowerMode: the low power mode state
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          This parameter can be one of the following values:
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          @arg NVIC_LOWPOWER_SEVONPEND
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          @arg NVIC_LOWPOWER_SLEEPDEEP
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                          @arg NVIC_LOWPOWER_SLEEPONEXIT
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @retval    None
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** void NVIC_ResetystemLowPower(NVIC_LOWPOWER_T lowPowerMode)
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** {
+ 329              		.loc 1 192 1 is_stmt 1 view -0
+ 330              		.cfi_startproc
+ 331              		@ args = 0, pretend = 0, frame = 0
+ 332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 333              		@ link register save eliminated.
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    SCB->SCR &= (uint32_t)(~(uint32_t)lowPowerMode);
+ 334              		.loc 1 193 4 view .LVU77
+ 335              		.loc 1 193 13 is_stmt 0 view .LVU78
+ 336 0000 024A     		ldr	r2, .L27
+ 337 0002 1369     		ldr	r3, [r2, #16]
+ 338 0004 23EA0003 		bic	r3, r3, r0
+ 339 0008 1361     		str	r3, [r2, #16]
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** }
+ 340              		.loc 1 194 1 view .LVU79
+ 341 000a 7047     		bx	lr
+ 342              	.L28:
+ 343              		.align	2
+ 344              	.L27:
+ 345 000c 00ED00E0 		.word	-536810240
+ 346              		.cfi_endproc
+ 347              	.LFE70:
+ 349              		.section	.text.SysTick_ConfigCLKSource,"ax",%progbits
+ 350              		.align	1
+ 351              		.global	SysTick_ConfigCLKSource
+ 352              		.syntax unified
+ 353              		.thumb
+ 354              		.thumb_func
+ 356              	SysTick_ConfigCLKSource:
+ 357              	.LVL35:
+ 358              	.LFB71:
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** 
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** /*!
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @brief     Configures the SysTick clock source
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @param     clkSource: specifies the SysTick clock source
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                       This parameter can be one of the following values:
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                       @arg SYSTICK_CLK_SOURCE_HCLK_DIV8: AHB clock divided by 8 selected as SysT
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *                       @arg SYSTICK_CLK_SOURCE_HCLK: AHB clock selected as SysTick clock source.
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  *
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  * @retval    None
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****  */
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** void SysTick_ConfigCLKSource(SYSTICK_CLK_SOURCE_T clkSource)
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** {
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 11
+
+
+ 359              		.loc 1 207 1 is_stmt 1 view -0
+ 360              		.cfi_startproc
+ 361              		@ args = 0, pretend = 0, frame = 0
+ 362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 363              		@ link register save eliminated.
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    if (clkSource == SYSTICK_CLK_SOURCE_HCLK)
+ 364              		.loc 1 208 4 view .LVU81
+ 365              		.loc 1 208 7 is_stmt 0 view .LVU82
+ 366 0000 0128     		cmp	r0, #1
+ 367 0002 06D0     		beq	.L32
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    {
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       SysTick->CTRL |= (uint32_t)BIT2;
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    }
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    else
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    {
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****       SysTick->CTRL &= (uint32_t)(~BIT2);
+ 368              		.loc 1 214 7 is_stmt 1 view .LVU83
+ 369              		.loc 1 214 21 is_stmt 0 view .LVU84
+ 370 0004 4FF0E022 		mov	r2, #-536813568
+ 371 0008 1369     		ldr	r3, [r2, #16]
+ 372 000a 23F00403 		bic	r3, r3, #4
+ 373 000e 1361     		str	r3, [r2, #16]
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    }
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c **** }
+ 374              		.loc 1 216 1 view .LVU85
+ 375 0010 7047     		bx	lr
+ 376              	.L32:
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    }
+ 377              		.loc 1 210 7 is_stmt 1 view .LVU86
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_misc.c ****    }
+ 378              		.loc 1 210 21 is_stmt 0 view .LVU87
+ 379 0012 4FF0E022 		mov	r2, #-536813568
+ 380 0016 1369     		ldr	r3, [r2, #16]
+ 381 0018 43F00403 		orr	r3, r3, #4
+ 382 001c 1361     		str	r3, [r2, #16]
+ 383 001e 7047     		bx	lr
+ 384              		.cfi_endproc
+ 385              	.LFE71:
+ 387              		.text
+ 388              	.Letext0:
+ 389              		.file 2 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 390              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 391              		.file 4 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 392              		.file 5 "Library/CMSIS/Include/core_cm3.h"
+ 393              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_misc.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_misc.c
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:18     .text.NVIC_ConfigPriorityGroup:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:24     .text.NVIC_ConfigPriorityGroup:00000000 NVIC_ConfigPriorityGroup
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:47     .text.NVIC_ConfigPriorityGroup:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:52     .text.NVIC_EnableIRQRequest:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:58     .text.NVIC_EnableIRQRequest:00000000 NVIC_EnableIRQRequest
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:210    .text.NVIC_EnableIRQRequest:0000008c $d
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:216    .text.NVIC_DisableIRQRequest:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:222    .text.NVIC_DisableIRQRequest:00000000 NVIC_DisableIRQRequest
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:248    .text.NVIC_DisableIRQRequest:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:253    .text.NVIC_ConfigVectorTable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:259    .text.NVIC_ConfigVectorTable:00000000 NVIC_ConfigVectorTable
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:283    .text.NVIC_ConfigVectorTable:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:288    .text.NVIC_SetSystemLowPower:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:294    .text.NVIC_SetSystemLowPower:00000000 NVIC_SetSystemLowPower
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:315    .text.NVIC_SetSystemLowPower:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:320    .text.NVIC_ResetystemLowPower:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:326    .text.NVIC_ResetystemLowPower:00000000 NVIC_ResetystemLowPower
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:345    .text.NVIC_ResetystemLowPower:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:350    .text.SysTick_ConfigCLKSource:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccbc5sk8.s:356    .text.SysTick_ConfigCLKSource:00000000 SysTick_ConfigCLKSource
+
+NO UNDEFINED SYMBOLS

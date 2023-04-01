@@ -1,0 +1,3136 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_adc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.ADC_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	ADC_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	ADC_Reset:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @file        apm32f10x_adc.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief       This file provides all the ADC firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** #include "apm32f10x_adc.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 2
+
+
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /** @addtogroup ADC_Driver ADC Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /** @addtogroup ADC_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief       Reset ADC peripheral registers to their default reset values.
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param       adc: Select ADC peripheral.
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval      None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note        adc can be ADC1, ADC2 or ADC3.
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_Reset(ADC_T* adc)
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+  28              		.loc 1 51 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 51 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     if(adc == ADC1)
+  38              		.loc 1 52 5 is_stmt 1 view .LVU2
+  39              		.loc 1 52 7 is_stmt 0 view .LVU3
+  40 0002 124B     		ldr	r3, .L9
+  41 0004 9842     		cmp	r0, r3
+  42 0006 06D0     		beq	.L6
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_EnableAPB2PeriphReset(RCM_APB2_PERIPH_ADC1);
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC1);
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     else if(adc == ADC2)
+  43              		.loc 1 57 10 is_stmt 1 view .LVU4
+  44              		.loc 1 57 12 is_stmt 0 view .LVU5
+  45 0008 114B     		ldr	r3, .L9+4
+  46 000a 9842     		cmp	r0, r3
+  47 000c 0CD0     		beq	.L7
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_EnableAPB2PeriphReset(RCM_APB2_PERIPH_ADC2);
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC2);
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     else if (adc == ADC3)
+  48              		.loc 1 62 10 is_stmt 1 view .LVU6
+  49              		.loc 1 62 13 is_stmt 0 view .LVU7
+  50 000e 114B     		ldr	r3, .L9+8
+  51 0010 9842     		cmp	r0, r3
+  52 0012 12D0     		beq	.L8
+  53              	.LVL1:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 3
+
+
+  54              	.L1:
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_EnableAPB2PeriphReset(RCM_APB2_PERIPH_ADC3);
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC3);
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+  55              		.loc 1 67 1 view .LVU8
+  56 0014 08BD     		pop	{r3, pc}
+  57              	.LVL2:
+  58              	.L6:
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC1);
+  59              		.loc 1 54 9 is_stmt 1 view .LVU9
+  60 0016 4FF40070 		mov	r0, #512
+  61              	.LVL3:
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC1);
+  62              		.loc 1 54 9 is_stmt 0 view .LVU10
+  63 001a FFF7FEFF 		bl	RCM_EnableAPB2PeriphReset
+  64              	.LVL4:
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+  65              		.loc 1 55 9 is_stmt 1 view .LVU11
+  66 001e 4FF40070 		mov	r0, #512
+  67 0022 FFF7FEFF 		bl	RCM_DisableAPB2PeriphReset
+  68              	.LVL5:
+  69 0026 F5E7     		b	.L1
+  70              	.LVL6:
+  71              	.L7:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC2);
+  72              		.loc 1 59 9 view .LVU12
+  73 0028 4FF48060 		mov	r0, #1024
+  74              	.LVL7:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC2);
+  75              		.loc 1 59 9 is_stmt 0 view .LVU13
+  76 002c FFF7FEFF 		bl	RCM_EnableAPB2PeriphReset
+  77              	.LVL8:
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+  78              		.loc 1 60 9 is_stmt 1 view .LVU14
+  79 0030 4FF48060 		mov	r0, #1024
+  80 0034 FFF7FEFF 		bl	RCM_DisableAPB2PeriphReset
+  81              	.LVL9:
+  82 0038 ECE7     		b	.L1
+  83              	.LVL10:
+  84              	.L8:
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC3);
+  85              		.loc 1 64 9 view .LVU15
+  86 003a 4FF40040 		mov	r0, #32768
+  87              	.LVL11:
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         RCM_DisableAPB2PeriphReset(RCM_APB2_PERIPH_ADC3);
+  88              		.loc 1 64 9 is_stmt 0 view .LVU16
+  89 003e FFF7FEFF 		bl	RCM_EnableAPB2PeriphReset
+  90              	.LVL12:
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+  91              		.loc 1 65 9 is_stmt 1 view .LVU17
+  92 0042 4FF40040 		mov	r0, #32768
+  93 0046 FFF7FEFF 		bl	RCM_DisableAPB2PeriphReset
+  94              	.LVL13:
+  95              		.loc 1 67 1 is_stmt 0 view .LVU18
+  96 004a E3E7     		b	.L1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 4
+
+
+  97              	.L10:
+  98              		.align	2
+  99              	.L9:
+ 100 004c 00240140 		.word	1073816576
+ 101 0050 00280140 		.word	1073817600
+ 102 0054 003C0140 		.word	1073822720
+ 103              		.cfi_endproc
+ 104              	.LFE65:
+ 106              		.section	.text.ADC_Config,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	ADC_Config
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	ADC_Config:
+ 114              	.LVL14:
+ 115              	.LFB66:
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief       Config the ADC peripheral according to the specified parameters in the adcConfig.
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param       adc: Select ADC peripheral.
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param       adcConfig: pointer to a ADC_Config_T structure.
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval      None
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note        adc can be ADC1, ADC2 or ADC3.
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_Config(ADC_T* adc, ADC_Config_T* adcConfig)
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 116              		.loc 1 81 1 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		@ link register save eliminated.
+ 121              		.loc 1 81 1 is_stmt 0 view .LVU20
+ 122 0000 10B4     		push	{r4}
+ 123              	.LCFI1:
+ 124              		.cfi_def_cfa_offset 4
+ 125              		.cfi_offset 4, -4
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t reg;
+ 126              		.loc 1 82 5 is_stmt 1 view .LVU21
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg = adc->CTRL1;
+ 127              		.loc 1 84 5 view .LVU22
+ 128              		.loc 1 84 9 is_stmt 0 view .LVU23
+ 129 0002 4268     		ldr	r2, [r0, #4]
+ 130              	.LVL15:
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg &= 0xFFF0FEFF;
+ 131              		.loc 1 85 5 is_stmt 1 view .LVU24
+ 132              		.loc 1 85 9 is_stmt 0 view .LVU25
+ 133 0004 22F47022 		bic	r2, r2, #983040
+ 134              	.LVL16:
+ 135              		.loc 1 85 9 view .LVU26
+ 136 0008 22F48072 		bic	r2, r2, #256
+ 137              	.LVL17:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 5
+
+
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg |= (uint32_t)((adcConfig->mode) | ((uint32_t)adcConfig->scanConvMode << 8));
+ 138              		.loc 1 86 5 is_stmt 1 view .LVU27
+ 139              		.loc 1 86 33 is_stmt 0 view .LVU28
+ 140 000c 0B68     		ldr	r3, [r1]
+ 141              		.loc 1 86 63 view .LVU29
+ 142 000e 91F804C0 		ldrb	ip, [r1, #4]	@ zero_extendqisi2
+ 143              		.loc 1 86 12 view .LVU30
+ 144 0012 43EA0C23 		orr	r3, r3, ip, lsl #8
+ 145              		.loc 1 86 9 view .LVU31
+ 146 0016 1343     		orrs	r3, r3, r2
+ 147              	.LVL18:
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1 = reg;
+ 148              		.loc 1 87 5 is_stmt 1 view .LVU32
+ 149              		.loc 1 87 16 is_stmt 0 view .LVU33
+ 150 0018 4360     		str	r3, [r0, #4]
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg = adc->CTRL2;
+ 151              		.loc 1 89 5 is_stmt 1 view .LVU34
+ 152              		.loc 1 89 9 is_stmt 0 view .LVU35
+ 153 001a 8368     		ldr	r3, [r0, #8]
+ 154              	.LVL19:
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg &= 0xFFF1F7FD;
+ 155              		.loc 1 90 5 is_stmt 1 view .LVU36
+ 156              		.loc 1 90 9 is_stmt 0 view .LVU37
+ 157 001c 0A4A     		ldr	r2, .L13
+ 158 001e 1A40     		ands	r2, r2, r3
+ 159              	.LVL20:
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg |= (uint32_t)adcConfig->dataAlign | \
+ 160              		.loc 1 91 5 is_stmt 1 view .LVU38
+ 161              		.loc 1 91 31 is_stmt 0 view .LVU39
+ 162 0020 8B89     		ldrh	r3, [r1, #12]
+ 163              		.loc 1 91 43 view .LVU40
+ 164 0022 8C68     		ldr	r4, [r1, #8]
+ 165 0024 2343     		orrs	r3, r3, r4
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****            (uint32_t)adcConfig->externalTrigConv | \
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****            ((uint32_t)adcConfig->continuosConvMode << 1);
+ 166              		.loc 1 93 32 view .LVU41
+ 167 0026 91F805C0 		ldrb	ip, [r1, #5]	@ zero_extendqisi2
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****            (uint32_t)adcConfig->externalTrigConv | \
+ 168              		.loc 1 92 50 view .LVU42
+ 169 002a 43EA4C03 		orr	r3, r3, ip, lsl #1
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg |= (uint32_t)adcConfig->dataAlign | \
+ 170              		.loc 1 91 9 view .LVU43
+ 171 002e 1343     		orrs	r3, r3, r2
+ 172              	.LVL21:
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2 = reg;
+ 173              		.loc 1 95 5 is_stmt 1 view .LVU44
+ 174              		.loc 1 95 16 is_stmt 0 view .LVU45
+ 175 0030 8360     		str	r3, [r0, #8]
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg = adc->REGSEQ1;
+ 176              		.loc 1 97 5 is_stmt 1 view .LVU46
+ 177              		.loc 1 97 9 is_stmt 0 view .LVU47
+ 178 0032 C36A     		ldr	r3, [r0, #44]
+ 179              	.LVL22:
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg &= 0xFF0FFFFF;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 6
+
+
+ 180              		.loc 1 98 5 is_stmt 1 view .LVU48
+ 181              		.loc 1 98 9 is_stmt 0 view .LVU49
+ 182 0034 23F47003 		bic	r3, r3, #15728640
+ 183              	.LVL23:
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     reg |= (uint32_t)((adcConfig->nbrOfChannel - (uint8_t)1) << 20);
+ 184              		.loc 1 99 5 is_stmt 1 view .LVU50
+ 185              		.loc 1 99 33 is_stmt 0 view .LVU51
+ 186 0038 8A7B     		ldrb	r2, [r1, #14]	@ zero_extendqisi2
+ 187              		.loc 1 99 48 view .LVU52
+ 188 003a 013A     		subs	r2, r2, #1
+ 189              		.loc 1 99 9 view .LVU53
+ 190 003c 43EA0253 		orr	r3, r3, r2, lsl #20
+ 191              	.LVL24:
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->REGSEQ1 = reg;
+ 192              		.loc 1 100 5 is_stmt 1 view .LVU54
+ 193              		.loc 1 100 18 is_stmt 0 view .LVU55
+ 194 0040 C362     		str	r3, [r0, #44]
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 195              		.loc 1 101 1 view .LVU56
+ 196 0042 10BC     		pop	{r4}
+ 197              	.LCFI2:
+ 198              		.cfi_restore 4
+ 199              		.cfi_def_cfa_offset 0
+ 200 0044 7047     		bx	lr
+ 201              	.L14:
+ 202 0046 00BF     		.align	2
+ 203              	.L13:
+ 204 0048 FDF7F1FF 		.word	-919555
+ 205              		.cfi_endproc
+ 206              	.LFE66:
+ 208              		.section	.text.ADC_ConfigStructInit,"ax",%progbits
+ 209              		.align	1
+ 210              		.global	ADC_ConfigStructInit
+ 211              		.syntax unified
+ 212              		.thumb
+ 213              		.thumb_func
+ 215              	ADC_ConfigStructInit:
+ 216              	.LVL25:
+ 217              	.LFB67:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief       Fills each ADC_Config_T member with its default value.
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param       adcConfig: pointer to a ADC_Config_T structure which will be initialized.
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval      None
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigStructInit(ADC_Config_T* adcConfig)
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 218              		.loc 1 111 1 is_stmt 1 view -0
+ 219              		.cfi_startproc
+ 220              		@ args = 0, pretend = 0, frame = 0
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222              		@ link register save eliminated.
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adcConfig->mode = ADC_MODE_INDEPENDENT;
+ 223              		.loc 1 112 5 view .LVU58
+ 224              		.loc 1 112 21 is_stmt 0 view .LVU59
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 7
+
+
+ 225 0000 0023     		movs	r3, #0
+ 226 0002 0360     		str	r3, [r0]
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adcConfig->scanConvMode = DISABLE;
+ 227              		.loc 1 113 5 is_stmt 1 view .LVU60
+ 228              		.loc 1 113 29 is_stmt 0 view .LVU61
+ 229 0004 0371     		strb	r3, [r0, #4]
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adcConfig->continuosConvMode = DISABLE;
+ 230              		.loc 1 114 5 is_stmt 1 view .LVU62
+ 231              		.loc 1 114 34 is_stmt 0 view .LVU63
+ 232 0006 4371     		strb	r3, [r0, #5]
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adcConfig->externalTrigConv = ADC_EXT_TRIG_CONV_TMR1_CC1;
+ 233              		.loc 1 115 5 is_stmt 1 view .LVU64
+ 234              		.loc 1 115 33 is_stmt 0 view .LVU65
+ 235 0008 8360     		str	r3, [r0, #8]
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adcConfig->dataAlign = ADC_DATA_ALIGN_RIGHT;
+ 236              		.loc 1 116 5 is_stmt 1 view .LVU66
+ 237              		.loc 1 116 26 is_stmt 0 view .LVU67
+ 238 000a 8381     		strh	r3, [r0, #12]	@ movhi
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adcConfig->nbrOfChannel = 1;
+ 239              		.loc 1 117 5 is_stmt 1 view .LVU68
+ 240              		.loc 1 117 29 is_stmt 0 view .LVU69
+ 241 000c 0123     		movs	r3, #1
+ 242 000e 8373     		strb	r3, [r0, #14]
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 243              		.loc 1 118 1 view .LVU70
+ 244 0010 7047     		bx	lr
+ 245              		.cfi_endproc
+ 246              	.LFE67:
+ 248              		.section	.text.ADC_Enable,"ax",%progbits
+ 249              		.align	1
+ 250              		.global	ADC_Enable
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 255              	ADC_Enable:
+ 256              	.LVL26:
+ 257              	.LFB68:
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief       Enables the specified ADC peripheral.
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param       adc: Select the ADC peripheral.
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval      None
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note        adc can be ADC1, ADC2 or ADC3.
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_Enable(ADC_T* adc)
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 258              		.loc 1 130 1 is_stmt 1 view -0
+ 259              		.cfi_startproc
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 262              		@ link register save eliminated.
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.ADCEN = BIT_SET;
+ 263              		.loc 1 131 5 view .LVU72
+ 264              		.loc 1 131 24 is_stmt 0 view .LVU73
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 8
+
+
+ 265 0000 8368     		ldr	r3, [r0, #8]
+ 266 0002 43F00103 		orr	r3, r3, #1
+ 267 0006 8360     		str	r3, [r0, #8]
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 268              		.loc 1 132 1 view .LVU74
+ 269 0008 7047     		bx	lr
+ 270              		.cfi_endproc
+ 271              	.LFE68:
+ 273              		.section	.text.ADC_Disable,"ax",%progbits
+ 274              		.align	1
+ 275              		.global	ADC_Disable
+ 276              		.syntax unified
+ 277              		.thumb
+ 278              		.thumb_func
+ 280              	ADC_Disable:
+ 281              	.LVL27:
+ 282              	.LFB69:
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC peripheral.
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_Disable(ADC_T* adc)
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 283              		.loc 1 144 1 is_stmt 1 view -0
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 287              		@ link register save eliminated.
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.ADCEN = BIT_RESET;
+ 288              		.loc 1 145 5 view .LVU76
+ 289              		.loc 1 145 24 is_stmt 0 view .LVU77
+ 290 0000 8368     		ldr	r3, [r0, #8]
+ 291 0002 6FF30003 		bfc	r3, #0, #1
+ 292 0006 8360     		str	r3, [r0, #8]
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 293              		.loc 1 146 1 view .LVU78
+ 294 0008 7047     		bx	lr
+ 295              		.cfi_endproc
+ 296              	.LFE69:
+ 298              		.section	.text.ADC_EnableDMA,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	ADC_EnableDMA
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 305              	ADC_EnableDMA:
+ 306              	.LVL28:
+ 307              	.LFB70:
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC DMA request.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 9
+
+
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableDMA(ADC_T* adc)
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 308              		.loc 1 158 1 is_stmt 1 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		@ link register save eliminated.
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.DMAEN = BIT_SET;
+ 313              		.loc 1 159 5 view .LVU80
+ 314              		.loc 1 159 24 is_stmt 0 view .LVU81
+ 315 0000 8368     		ldr	r3, [r0, #8]
+ 316 0002 43F48073 		orr	r3, r3, #256
+ 317 0006 8360     		str	r3, [r0, #8]
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 318              		.loc 1 160 1 view .LVU82
+ 319 0008 7047     		bx	lr
+ 320              		.cfi_endproc
+ 321              	.LFE70:
+ 323              		.section	.text.ADC_DisableDMA,"ax",%progbits
+ 324              		.align	1
+ 325              		.global	ADC_DisableDMA
+ 326              		.syntax unified
+ 327              		.thumb
+ 328              		.thumb_func
+ 330              	ADC_DisableDMA:
+ 331              	.LVL29:
+ 332              	.LFB71:
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC DMA request.
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableDMA(ADC_T* adc)
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 333              		.loc 1 172 1 is_stmt 1 view -0
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 0
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337              		@ link register save eliminated.
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.DMAEN = BIT_RESET;
+ 338              		.loc 1 173 5 view .LVU84
+ 339              		.loc 1 173 24 is_stmt 0 view .LVU85
+ 340 0000 8368     		ldr	r3, [r0, #8]
+ 341 0002 6FF30823 		bfc	r3, #8, #1
+ 342 0006 8360     		str	r3, [r0, #8]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 10
+
+
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 343              		.loc 1 174 1 view .LVU86
+ 344 0008 7047     		bx	lr
+ 345              		.cfi_endproc
+ 346              	.LFE71:
+ 348              		.section	.text.ADC_ResetCalibration,"ax",%progbits
+ 349              		.align	1
+ 350              		.global	ADC_ResetCalibration
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 355              	ADC_ResetCalibration:
+ 356              	.LVL30:
+ 357              	.LFB72:
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reset the specified ADC calibration registers.
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ResetCalibration(ADC_T* adc)
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 358              		.loc 1 186 1 is_stmt 1 view -0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 0
+ 361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.CALRST = BIT_SET;
+ 363              		.loc 1 187 5 view .LVU88
+ 364              		.loc 1 187 25 is_stmt 0 view .LVU89
+ 365 0000 8368     		ldr	r3, [r0, #8]
+ 366 0002 43F00803 		orr	r3, r3, #8
+ 367 0006 8360     		str	r3, [r0, #8]
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 368              		.loc 1 188 1 view .LVU90
+ 369 0008 7047     		bx	lr
+ 370              		.cfi_endproc
+ 371              	.LFE72:
+ 373              		.section	.text.ADC_ReadResetCalibrationStatus,"ax",%progbits
+ 374              		.align	1
+ 375              		.global	ADC_ReadResetCalibrationStatus
+ 376              		.syntax unified
+ 377              		.thumb
+ 378              		.thumb_func
+ 380              	ADC_ReadResetCalibrationStatus:
+ 381              	.LVL31:
+ 382              	.LFB73:
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reads the specified ADC calibration reset status.
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 11
+
+
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       The status of ADC calibration reset.
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint8_t ADC_ReadResetCalibrationStatus(ADC_T* adc)
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 383              		.loc 1 200 1 is_stmt 1 view -0
+ 384              		.cfi_startproc
+ 385              		@ args = 0, pretend = 0, frame = 0
+ 386              		@ frame_needed = 0, uses_anonymous_args = 0
+ 387              		@ link register save eliminated.
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t ret;
+ 388              		.loc 1 201 5 view .LVU92
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     ret = (adc->CTRL2_B.CALRST) ? BIT_SET : BIT_RESET;
+ 389              		.loc 1 202 5 view .LVU93
+ 390              		.loc 1 202 24 is_stmt 0 view .LVU94
+ 391 0000 8068     		ldr	r0, [r0, #8]
+ 392              	.LVL32:
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return ret;
+ 393              		.loc 1 203 5 is_stmt 1 view .LVU95
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 394              		.loc 1 204 1 is_stmt 0 view .LVU96
+ 395 0002 C0F3C000 		ubfx	r0, r0, #3, #1
+ 396              	.LVL33:
+ 397              		.loc 1 204 1 view .LVU97
+ 398 0006 7047     		bx	lr
+ 399              		.cfi_endproc
+ 400              	.LFE73:
+ 402              		.section	.text.ADC_StartCalibration,"ax",%progbits
+ 403              		.align	1
+ 404              		.global	ADC_StartCalibration
+ 405              		.syntax unified
+ 406              		.thumb
+ 407              		.thumb_func
+ 409              	ADC_StartCalibration:
+ 410              	.LVL34:
+ 411              	.LFB74:
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Starts the specified ADC calibration.
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_StartCalibration(ADC_T* adc)
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 412              		.loc 1 216 1 is_stmt 1 view -0
+ 413              		.cfi_startproc
+ 414              		@ args = 0, pretend = 0, frame = 0
+ 415              		@ frame_needed = 0, uses_anonymous_args = 0
+ 416              		@ link register save eliminated.
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.CAL = BIT_SET;
+ 417              		.loc 1 217 5 view .LVU99
+ 418              		.loc 1 217 22 is_stmt 0 view .LVU100
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 12
+
+
+ 419 0000 8368     		ldr	r3, [r0, #8]
+ 420 0002 43F00403 		orr	r3, r3, #4
+ 421 0006 8360     		str	r3, [r0, #8]
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 422              		.loc 1 218 1 view .LVU101
+ 423 0008 7047     		bx	lr
+ 424              		.cfi_endproc
+ 425              	.LFE74:
+ 427              		.section	.text.ADC_ReadCalibrationStartFlag,"ax",%progbits
+ 428              		.align	1
+ 429              		.global	ADC_ReadCalibrationStartFlag
+ 430              		.syntax unified
+ 431              		.thumb
+ 432              		.thumb_func
+ 434              	ADC_ReadCalibrationStartFlag:
+ 435              	.LVL35:
+ 436              	.LFB75:
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reads the specified ADC calibration start flag.
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       The status of ADC calibration start.
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint8_t ADC_ReadCalibrationStartFlag(ADC_T* adc)
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 437              		.loc 1 230 1 is_stmt 1 view -0
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 0
+ 440              		@ frame_needed = 0, uses_anonymous_args = 0
+ 441              		@ link register save eliminated.
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t ret;
+ 442              		.loc 1 231 5 view .LVU103
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     ret = (adc->CTRL2_B.CAL) ? BIT_SET : BIT_RESET;
+ 443              		.loc 1 232 5 view .LVU104
+ 444              		.loc 1 232 24 is_stmt 0 view .LVU105
+ 445 0000 8068     		ldr	r0, [r0, #8]
+ 446              	.LVL36:
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return ret;
+ 447              		.loc 1 233 5 is_stmt 1 view .LVU106
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 448              		.loc 1 234 1 is_stmt 0 view .LVU107
+ 449 0002 C0F38000 		ubfx	r0, r0, #2, #1
+ 450              	.LVL37:
+ 451              		.loc 1 234 1 view .LVU108
+ 452 0006 7047     		bx	lr
+ 453              		.cfi_endproc
+ 454              	.LFE75:
+ 456              		.section	.text.ADC_EnableSoftwareStartConv,"ax",%progbits
+ 457              		.align	1
+ 458              		.global	ADC_EnableSoftwareStartConv
+ 459              		.syntax unified
+ 460              		.thumb
+ 461              		.thumb_func
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 13
+
+
+ 463              	ADC_EnableSoftwareStartConv:
+ 464              	.LVL38:
+ 465              	.LFB76:
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Enables the specified ADC software start conversion.
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableSoftwareStartConv(ADC_T* adc)
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 466              		.loc 1 246 1 is_stmt 1 view -0
+ 467              		.cfi_startproc
+ 468              		@ args = 0, pretend = 0, frame = 0
+ 469              		@ frame_needed = 0, uses_anonymous_args = 0
+ 470              		@ link register save eliminated.
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2 |= 0x00500000;
+ 471              		.loc 1 247 5 view .LVU110
+ 472              		.loc 1 247 16 is_stmt 0 view .LVU111
+ 473 0000 8368     		ldr	r3, [r0, #8]
+ 474 0002 43F4A003 		orr	r3, r3, #5242880
+ 475 0006 8360     		str	r3, [r0, #8]
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 476              		.loc 1 248 1 view .LVU112
+ 477 0008 7047     		bx	lr
+ 478              		.cfi_endproc
+ 479              	.LFE76:
+ 481              		.section	.text.ADC_DisableSoftwareStartConv,"ax",%progbits
+ 482              		.align	1
+ 483              		.global	ADC_DisableSoftwareStartConv
+ 484              		.syntax unified
+ 485              		.thumb
+ 486              		.thumb_func
+ 488              	ADC_DisableSoftwareStartConv:
+ 489              	.LVL39:
+ 490              	.LFB77:
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC software start conversion.
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableSoftwareStartConv(ADC_T* adc)
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 491              		.loc 1 260 1 is_stmt 1 view -0
+ 492              		.cfi_startproc
+ 493              		@ args = 0, pretend = 0, frame = 0
+ 494              		@ frame_needed = 0, uses_anonymous_args = 0
+ 495              		@ link register save eliminated.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 14
+
+
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2 &= 0xFFAFFFFF;
+ 496              		.loc 1 261 5 view .LVU114
+ 497              		.loc 1 261 16 is_stmt 0 view .LVU115
+ 498 0000 8368     		ldr	r3, [r0, #8]
+ 499 0002 23F4A003 		bic	r3, r3, #5242880
+ 500 0006 8360     		str	r3, [r0, #8]
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 501              		.loc 1 262 1 view .LVU116
+ 502 0008 7047     		bx	lr
+ 503              		.cfi_endproc
+ 504              	.LFE77:
+ 506              		.section	.text.ADC_ReadSoftwareStartConvStatus,"ax",%progbits
+ 507              		.align	1
+ 508              		.global	ADC_ReadSoftwareStartConvStatus
+ 509              		.syntax unified
+ 510              		.thumb
+ 511              		.thumb_func
+ 513              	ADC_ReadSoftwareStartConvStatus:
+ 514              	.LVL40:
+ 515              	.LFB78:
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reads the specified ADC Software start conversion Status.
+ 266:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 267:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 268:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 269:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       The status of ADC Software start conversion registers.
+ 270:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 271:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 272:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 273:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint8_t ADC_ReadSoftwareStartConvStatus(ADC_T* adc)
+ 274:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 516              		.loc 1 274 1 is_stmt 1 view -0
+ 517              		.cfi_startproc
+ 518              		@ args = 0, pretend = 0, frame = 0
+ 519              		@ frame_needed = 0, uses_anonymous_args = 0
+ 520              		@ link register save eliminated.
+ 275:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t ret;
+ 521              		.loc 1 275 5 view .LVU118
+ 276:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     ret = (adc->CTRL2_B.REGSWSC) ? BIT_SET : BIT_RESET;
+ 522              		.loc 1 276 5 view .LVU119
+ 523              		.loc 1 276 24 is_stmt 0 view .LVU120
+ 524 0000 8068     		ldr	r0, [r0, #8]
+ 525              	.LVL41:
+ 277:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return ret;
+ 526              		.loc 1 277 5 is_stmt 1 view .LVU121
+ 278:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 527              		.loc 1 278 1 is_stmt 0 view .LVU122
+ 528 0002 C0F38050 		ubfx	r0, r0, #22, #1
+ 529              	.LVL42:
+ 530              		.loc 1 278 1 view .LVU123
+ 531 0006 7047     		bx	lr
+ 532              		.cfi_endproc
+ 533              	.LFE78:
+ 535              		.section	.text.ADC_ConfigDiscMode,"ax",%progbits
+ 536              		.align	1
+ 537              		.global	ADC_ConfigDiscMode
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 15
+
+
+ 538              		.syntax unified
+ 539              		.thumb
+ 540              		.thumb_func
+ 542              	ADC_ConfigDiscMode:
+ 543              	.LVL43:
+ 544              	.LFB79:
+ 279:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 280:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 281:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Configures the specified ADC regular discontinuous mode.
+ 282:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 283:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 284:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 285:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        number: The number of the discontinuous mode regular channels.
+ 286:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                       This parameter can be between 1 and 8.
+ 287:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 288:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 289:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 290:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 291:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 292:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigDiscMode(ADC_T* adc, uint8_t number)
+ 293:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 545              		.loc 1 293 1 is_stmt 1 view -0
+ 546              		.cfi_startproc
+ 547              		@ args = 0, pretend = 0, frame = 0
+ 548              		@ frame_needed = 0, uses_anonymous_args = 0
+ 549              		@ link register save eliminated.
+ 294:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.DISCNUMCFG |= number - 1;
+ 550              		.loc 1 294 5 view .LVU125
+ 551              		.loc 1 294 29 is_stmt 0 view .LVU126
+ 552 0000 4368     		ldr	r3, [r0, #4]
+ 553 0002 C3F34233 		ubfx	r3, r3, #13, #3
+ 554              		.loc 1 294 39 view .LVU127
+ 555 0006 0139     		subs	r1, r1, #1
+ 556              	.LVL44:
+ 557              		.loc 1 294 39 view .LVU128
+ 558 0008 49B2     		sxtb	r1, r1
+ 559              		.loc 1 294 29 view .LVU129
+ 560 000a 1943     		orrs	r1, r1, r3
+ 561 000c 4368     		ldr	r3, [r0, #4]
+ 562 000e 61F34F33 		bfi	r3, r1, #13, #3
+ 563 0012 4360     		str	r3, [r0, #4]
+ 295:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 564              		.loc 1 295 1 view .LVU130
+ 565 0014 7047     		bx	lr
+ 566              		.cfi_endproc
+ 567              	.LFE79:
+ 569              		.section	.text.ADC_EnableDiscMode,"ax",%progbits
+ 570              		.align	1
+ 571              		.global	ADC_EnableDiscMode
+ 572              		.syntax unified
+ 573              		.thumb
+ 574              		.thumb_func
+ 576              	ADC_EnableDiscMode:
+ 577              	.LVL45:
+ 578              	.LFB80:
+ 296:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 297:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 16
+
+
+ 298:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Enable the specified ADC regular discontinuous mode.
+ 299:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 300:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 301:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 302:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 303:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 304:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 305:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 306:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableDiscMode(ADC_T* adc)
+ 307:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 579              		.loc 1 307 1 is_stmt 1 view -0
+ 580              		.cfi_startproc
+ 581              		@ args = 0, pretend = 0, frame = 0
+ 582              		@ frame_needed = 0, uses_anonymous_args = 0
+ 583              		@ link register save eliminated.
+ 308:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.REGDISCEN = BIT_SET;
+ 584              		.loc 1 308 5 view .LVU132
+ 585              		.loc 1 308 28 is_stmt 0 view .LVU133
+ 586 0000 4368     		ldr	r3, [r0, #4]
+ 587 0002 43F40063 		orr	r3, r3, #2048
+ 588 0006 4360     		str	r3, [r0, #4]
+ 309:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 589              		.loc 1 309 1 view .LVU134
+ 590 0008 7047     		bx	lr
+ 591              		.cfi_endproc
+ 592              	.LFE80:
+ 594              		.section	.text.ADC_DisableDiscMode,"ax",%progbits
+ 595              		.align	1
+ 596              		.global	ADC_DisableDiscMode
+ 597              		.syntax unified
+ 598              		.thumb
+ 599              		.thumb_func
+ 601              	ADC_DisableDiscMode:
+ 602              	.LVL46:
+ 603              	.LFB81:
+ 310:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 311:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 312:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC regular discontinuous mode.
+ 313:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 314:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 315:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 316:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 317:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 318:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 319:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 320:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableDiscMode(ADC_T* adc)
+ 321:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 604              		.loc 1 321 1 is_stmt 1 view -0
+ 605              		.cfi_startproc
+ 606              		@ args = 0, pretend = 0, frame = 0
+ 607              		@ frame_needed = 0, uses_anonymous_args = 0
+ 608              		@ link register save eliminated.
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.REGDISCEN = BIT_RESET;
+ 609              		.loc 1 322 5 view .LVU136
+ 610              		.loc 1 322 28 is_stmt 0 view .LVU137
+ 611 0000 4368     		ldr	r3, [r0, #4]
+ 612 0002 6FF3CB23 		bfc	r3, #11, #1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 17
+
+
+ 613 0006 4360     		str	r3, [r0, #4]
+ 323:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 614              		.loc 1 323 1 view .LVU138
+ 615 0008 7047     		bx	lr
+ 616              		.cfi_endproc
+ 617              	.LFE81:
+ 619              		.section	.text.ADC_ConfigRegularChannel,"ax",%progbits
+ 620              		.align	1
+ 621              		.global	ADC_ConfigRegularChannel
+ 622              		.syntax unified
+ 623              		.thumb
+ 624              		.thumb_func
+ 626              	ADC_ConfigRegularChannel:
+ 627              	.LVL47:
+ 628              	.LFB82:
+ 324:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 325:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 326:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Configures the specified ADC regular channel.
+ 327:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 328:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 329:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 330:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        channel: Select the ADC channel.
+ 331:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        This parameter can be one of the following values:
+ 332:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_0:  ADC channel 0
+ 333:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_1:  ADC channel 1
+ 334:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_2:  ADC channel 2
+ 335:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_3:  ADC channel 3
+ 336:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_4:  ADC channel 4
+ 337:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_5:  ADC channel 5
+ 338:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_6:  ADC channel 6
+ 339:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_7:  ADC channel 7
+ 340:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_8:  ADC channel 8
+ 341:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_9:  ADC channel 9
+ 342:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_10: ADC channel 10
+ 343:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_11: ADC channel 11
+ 344:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_12: ADC channel 12
+ 345:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_13: ADC channel 13
+ 346:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_14: ADC channel 14
+ 347:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_15: ADC channel 15
+ 348:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_16: ADC channel 16 which is connected to TempSensor
+ 349:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_17: ADC channel 17 which is connected to Vrefint
+ 350:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 351:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        rank: The rank in the regular group sequencer
+ 352:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     This parameter must be between 1 to 16.
+ 353:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 354:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        sampleTime: the specified ADC channel SampleTime
+ 355:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           The parameter can be one of following values:
+ 356:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_1CYCLES5:   ADC 1.5 clock cycles
+ 357:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_7CYCLES5:   ADC 7.5 clock cycles
+ 358:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_13CYCLES5:  ADC 13.5 clock cycles
+ 359:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_28CYCLES5:  ADC 28.5 clock cycles
+ 360:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_41CYCLES5:  ADC 41.5 clock cycles
+ 361:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_55CYCLES5:  ADC 55.5 clock cycles
+ 362:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_71CYCLES5:  ADC 71.5 clock cycles
+ 363:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_239CYCLES5: ADC 239.5 clock cycles
+ 364:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 365:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 18
+
+
+ 366:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 367:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 368:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 369:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigRegularChannel(ADC_T* adc, uint8_t channel,uint8_t rank, uint8_t sampleTime)
+ 370:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 629              		.loc 1 370 1 is_stmt 1 view -0
+ 630              		.cfi_startproc
+ 631              		@ args = 0, pretend = 0, frame = 0
+ 632              		@ frame_needed = 0, uses_anonymous_args = 0
+ 633              		.loc 1 370 1 is_stmt 0 view .LVU140
+ 634 0000 10B5     		push	{r4, lr}
+ 635              	.LCFI3:
+ 636              		.cfi_def_cfa_offset 8
+ 637              		.cfi_offset 4, -8
+ 638              		.cfi_offset 14, -4
+ 371:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t temp1 = 0;
+ 639              		.loc 1 371 5 is_stmt 1 view .LVU141
+ 640              	.LVL48:
+ 372:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t temp2 = 0;
+ 641              		.loc 1 372 5 view .LVU142
+ 373:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     if(channel > ADC_CHANNEL_9)
+ 642              		.loc 1 373 5 view .LVU143
+ 643              		.loc 1 373 7 is_stmt 0 view .LVU144
+ 644 0002 0929     		cmp	r1, #9
+ 645 0004 1DD9     		bls	.L31
+ 374:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 375:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 = adc->SMPTIM1;
+ 646              		.loc 1 375 9 is_stmt 1 view .LVU145
+ 647              		.loc 1 375 15 is_stmt 0 view .LVU146
+ 648 0006 C468     		ldr	r4, [r0, #12]
+ 649              	.LVL49:
+ 376:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM1 << (3 * (channel - 10));
+ 650              		.loc 1 376 9 is_stmt 1 view .LVU147
+ 651              		.loc 1 376 56 is_stmt 0 view .LVU148
+ 652 0008 A1F10A0C 		sub	ip, r1, #10
+ 653              		.loc 1 376 45 view .LVU149
+ 654 000c 0CEB4C0C 		add	ip, ip, ip, lsl #1
+ 655              		.loc 1 376 15 view .LVU150
+ 656 0010 4FF0070E 		mov	lr, #7
+ 657 0014 0EFA0CFE 		lsl	lr, lr, ip
+ 658              	.LVL50:
+ 377:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 659              		.loc 1 377 9 is_stmt 1 view .LVU151
+ 660              		.loc 1 377 15 is_stmt 0 view .LVU152
+ 661 0018 24EA0E04 		bic	r4, r4, lr
+ 662              	.LVL51:
+ 378:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3 * (channel - 10));
+ 663              		.loc 1 378 9 is_stmt 1 view .LVU153
+ 664              		.loc 1 378 15 is_stmt 0 view .LVU154
+ 665 001c 03FA0CF3 		lsl	r3, r3, ip
+ 666              	.LVL52:
+ 379:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 667              		.loc 1 379 9 is_stmt 1 view .LVU155
+ 668              		.loc 1 379 15 is_stmt 0 view .LVU156
+ 669 0020 2343     		orrs	r3, r3, r4
+ 670              	.LVL53:
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM1 = temp1;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 19
+
+
+ 671              		.loc 1 380 9 is_stmt 1 view .LVU157
+ 672              		.loc 1 380 22 is_stmt 0 view .LVU158
+ 673 0022 C360     		str	r3, [r0, #12]
+ 674              	.L32:
+ 381:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 382:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     else
+ 383:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 = adc->SMPTIM2;
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM2 << (3 * channel);
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3 * channel);
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM2 = temp1;
+ 390:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 391:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 392:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     if(rank < 7)
+ 675              		.loc 1 392 5 is_stmt 1 view .LVU159
+ 676              		.loc 1 392 7 is_stmt 0 view .LVU160
+ 677 0024 062A     		cmp	r2, #6
+ 678 0026 1BD8     		bhi	.L33
+ 393:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 394:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 = adc->REGSEQ3;
+ 679              		.loc 1 394 9 is_stmt 1 view .LVU161
+ 680              		.loc 1 394 15 is_stmt 0 view .LVU162
+ 681 0028 436B     		ldr	r3, [r0, #52]
+ 682              	.LVL54:
+ 395:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = REGSEQC_SET_REGSEQ3 << (5 * (rank - 1));
+ 683              		.loc 1 395 9 is_stmt 1 view .LVU163
+ 684              		.loc 1 395 51 is_stmt 0 view .LVU164
+ 685 002a 013A     		subs	r2, r2, #1
+ 686              	.LVL55:
+ 687              		.loc 1 395 43 view .LVU165
+ 688 002c 02EB8202 		add	r2, r2, r2, lsl #2
+ 689              		.loc 1 395 15 view .LVU166
+ 690 0030 1F24     		movs	r4, #31
+ 691 0032 9440     		lsls	r4, r4, r2
+ 692              	.LVL56:
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 693              		.loc 1 396 9 is_stmt 1 view .LVU167
+ 694              		.loc 1 396 15 is_stmt 0 view .LVU168
+ 695 0034 23EA0403 		bic	r3, r3, r4
+ 696              	.LVL57:
+ 397:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)channel << (5 * (rank - 1));
+ 697              		.loc 1 397 9 is_stmt 1 view .LVU169
+ 698              		.loc 1 397 15 is_stmt 0 view .LVU170
+ 699 0038 01FA02F2 		lsl	r2, r1, r2
+ 700              	.LVL58:
+ 398:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 701              		.loc 1 398 9 is_stmt 1 view .LVU171
+ 702              		.loc 1 398 15 is_stmt 0 view .LVU172
+ 703 003c 1A43     		orrs	r2, r2, r3
+ 704              	.LVL59:
+ 399:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->REGSEQ3 = temp1;
+ 705              		.loc 1 399 9 is_stmt 1 view .LVU173
+ 706              		.loc 1 399 22 is_stmt 0 view .LVU174
+ 707 003e 4263     		str	r2, [r0, #52]
+ 708              	.L30:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 20
+
+
+ 400:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     else if(rank < 13)
+ 402:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 = adc->REGSEQ2;
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = REGSEQC_SET_REGSEQ2 << (5 * (rank - 7));
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)channel << (5 * (rank - 7));
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->REGSEQ2 = temp1;
+ 409:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 410:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     else
+ 411:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 = adc->REGSEQ1;
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = REGSEQC_SET_REGSEQ1 << (5 * (rank - 13));
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)channel << (5 * (rank - 13));
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->REGSEQ1 = temp1;
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 419:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 709              		.loc 1 419 1 view .LVU175
+ 710 0040 10BD     		pop	{r4, pc}
+ 711              	.LVL60:
+ 712              	.L31:
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM2 << (3 * channel);
+ 713              		.loc 1 384 9 is_stmt 1 view .LVU176
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM2 << (3 * channel);
+ 714              		.loc 1 384 15 is_stmt 0 view .LVU177
+ 715 0042 0469     		ldr	r4, [r0, #16]
+ 716              	.LVL61:
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 717              		.loc 1 385 9 is_stmt 1 view .LVU178
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 718              		.loc 1 385 45 is_stmt 0 view .LVU179
+ 719 0044 01EB410E 		add	lr, r1, r1, lsl #1
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 720              		.loc 1 385 15 view .LVU180
+ 721 0048 4FF0070C 		mov	ip, #7
+ 722 004c 0CFA0EFC 		lsl	ip, ip, lr
+ 723              	.LVL62:
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3 * channel);
+ 724              		.loc 1 386 9 is_stmt 1 view .LVU181
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3 * channel);
+ 725              		.loc 1 386 15 is_stmt 0 view .LVU182
+ 726 0050 24EA0C0C 		bic	ip, r4, ip
+ 727              	.LVL63:
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 728              		.loc 1 387 9 is_stmt 1 view .LVU183
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 729              		.loc 1 387 15 is_stmt 0 view .LVU184
+ 730 0054 03FA0EF3 		lsl	r3, r3, lr
+ 731              	.LVL64:
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM2 = temp1;
+ 732              		.loc 1 388 9 is_stmt 1 view .LVU185
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM2 = temp1;
+ 733              		.loc 1 388 15 is_stmt 0 view .LVU186
+ 734 0058 4CEA0303 		orr	r3, ip, r3
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 21
+
+
+ 735              	.LVL65:
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 736              		.loc 1 389 9 is_stmt 1 view .LVU187
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 737              		.loc 1 389 22 is_stmt 0 view .LVU188
+ 738 005c 0361     		str	r3, [r0, #16]
+ 739 005e E1E7     		b	.L32
+ 740              	.L33:
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 741              		.loc 1 401 10 is_stmt 1 view .LVU189
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 742              		.loc 1 401 12 is_stmt 0 view .LVU190
+ 743 0060 0C2A     		cmp	r2, #12
+ 744 0062 0CD8     		bhi	.L35
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = REGSEQC_SET_REGSEQ2 << (5 * (rank - 7));
+ 745              		.loc 1 403 9 is_stmt 1 view .LVU191
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = REGSEQC_SET_REGSEQ2 << (5 * (rank - 7));
+ 746              		.loc 1 403 15 is_stmt 0 view .LVU192
+ 747 0064 036B     		ldr	r3, [r0, #48]
+ 748              	.LVL66:
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 749              		.loc 1 404 9 is_stmt 1 view .LVU193
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 750              		.loc 1 404 51 is_stmt 0 view .LVU194
+ 751 0066 073A     		subs	r2, r2, #7
+ 752              	.LVL67:
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 753              		.loc 1 404 43 view .LVU195
+ 754 0068 02EB8202 		add	r2, r2, r2, lsl #2
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 755              		.loc 1 404 15 view .LVU196
+ 756 006c 1F24     		movs	r4, #31
+ 757 006e 9440     		lsls	r4, r4, r2
+ 758              	.LVL68:
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)channel << (5 * (rank - 7));
+ 759              		.loc 1 405 9 is_stmt 1 view .LVU197
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)channel << (5 * (rank - 7));
+ 760              		.loc 1 405 15 is_stmt 0 view .LVU198
+ 761 0070 23EA0403 		bic	r3, r3, r4
+ 762              	.LVL69:
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 763              		.loc 1 406 9 is_stmt 1 view .LVU199
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 764              		.loc 1 406 15 is_stmt 0 view .LVU200
+ 765 0074 01FA02F2 		lsl	r2, r1, r2
+ 766              	.LVL70:
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->REGSEQ2 = temp1;
+ 767              		.loc 1 407 9 is_stmt 1 view .LVU201
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->REGSEQ2 = temp1;
+ 768              		.loc 1 407 15 is_stmt 0 view .LVU202
+ 769 0078 1A43     		orrs	r2, r2, r3
+ 770              	.LVL71:
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 771              		.loc 1 408 9 is_stmt 1 view .LVU203
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 772              		.loc 1 408 22 is_stmt 0 view .LVU204
+ 773 007a 0263     		str	r2, [r0, #48]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 22
+
+
+ 774 007c E0E7     		b	.L30
+ 775              	.LVL72:
+ 776              	.L35:
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = REGSEQC_SET_REGSEQ1 << (5 * (rank - 13));
+ 777              		.loc 1 412 9 is_stmt 1 view .LVU205
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = REGSEQC_SET_REGSEQ1 << (5 * (rank - 13));
+ 778              		.loc 1 412 15 is_stmt 0 view .LVU206
+ 779 007e C36A     		ldr	r3, [r0, #44]
+ 780              	.LVL73:
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 781              		.loc 1 413 9 is_stmt 1 view .LVU207
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 782              		.loc 1 413 51 is_stmt 0 view .LVU208
+ 783 0080 0D3A     		subs	r2, r2, #13
+ 784              	.LVL74:
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 785              		.loc 1 413 43 view .LVU209
+ 786 0082 02EB8202 		add	r2, r2, r2, lsl #2
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 787              		.loc 1 413 15 view .LVU210
+ 788 0086 1F24     		movs	r4, #31
+ 789 0088 9440     		lsls	r4, r4, r2
+ 790              	.LVL75:
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)channel << (5 * (rank - 13));
+ 791              		.loc 1 414 9 is_stmt 1 view .LVU211
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)channel << (5 * (rank - 13));
+ 792              		.loc 1 414 15 is_stmt 0 view .LVU212
+ 793 008a 23EA0403 		bic	r3, r3, r4
+ 794              	.LVL76:
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 795              		.loc 1 415 9 is_stmt 1 view .LVU213
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 796              		.loc 1 415 15 is_stmt 0 view .LVU214
+ 797 008e 01FA02F2 		lsl	r2, r1, r2
+ 798              	.LVL77:
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->REGSEQ1 = temp1;
+ 799              		.loc 1 416 9 is_stmt 1 view .LVU215
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->REGSEQ1 = temp1;
+ 800              		.loc 1 416 15 is_stmt 0 view .LVU216
+ 801 0092 1A43     		orrs	r2, r2, r3
+ 802              	.LVL78:
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 803              		.loc 1 417 9 is_stmt 1 view .LVU217
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 804              		.loc 1 417 22 is_stmt 0 view .LVU218
+ 805 0094 C262     		str	r2, [r0, #44]
+ 806              		.loc 1 419 1 view .LVU219
+ 807 0096 D3E7     		b	.L30
+ 808              		.cfi_endproc
+ 809              	.LFE82:
+ 811              		.section	.text.ADC_EnableExternalTrigConv,"ax",%progbits
+ 812              		.align	1
+ 813              		.global	ADC_EnableExternalTrigConv
+ 814              		.syntax unified
+ 815              		.thumb
+ 816              		.thumb_func
+ 818              	ADC_EnableExternalTrigConv:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 23
+
+
+ 819              	.LVL79:
+ 820              	.LFB83:
+ 420:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 421:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 422:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Enable the specified ADC regular channel external trigger.
+ 423:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 424:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 425:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 426:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 427:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 428:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 429:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 430:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableExternalTrigConv(ADC_T* adc)
+ 431:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 821              		.loc 1 431 1 is_stmt 1 view -0
+ 822              		.cfi_startproc
+ 823              		@ args = 0, pretend = 0, frame = 0
+ 824              		@ frame_needed = 0, uses_anonymous_args = 0
+ 825              		@ link register save eliminated.
+ 432:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.REGEXTTRGEN = BIT_SET;
+ 826              		.loc 1 432 5 view .LVU221
+ 827              		.loc 1 432 30 is_stmt 0 view .LVU222
+ 828 0000 8368     		ldr	r3, [r0, #8]
+ 829 0002 43F48013 		orr	r3, r3, #1048576
+ 830 0006 8360     		str	r3, [r0, #8]
+ 433:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 831              		.loc 1 433 1 view .LVU223
+ 832 0008 7047     		bx	lr
+ 833              		.cfi_endproc
+ 834              	.LFE83:
+ 836              		.section	.text.ADC_DisableExternalTrigConv,"ax",%progbits
+ 837              		.align	1
+ 838              		.global	ADC_DisableExternalTrigConv
+ 839              		.syntax unified
+ 840              		.thumb
+ 841              		.thumb_func
+ 843              	ADC_DisableExternalTrigConv:
+ 844              	.LVL80:
+ 845              	.LFB84:
+ 434:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 435:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 436:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC regular channel external trigger.
+ 437:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 438:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 439:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 440:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 441:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 442:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 443:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 444:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableExternalTrigConv(ADC_T* adc)
+ 445:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 846              		.loc 1 445 1 is_stmt 1 view -0
+ 847              		.cfi_startproc
+ 848              		@ args = 0, pretend = 0, frame = 0
+ 849              		@ frame_needed = 0, uses_anonymous_args = 0
+ 850              		@ link register save eliminated.
+ 446:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.REGEXTTRGEN = BIT_RESET;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 24
+
+
+ 851              		.loc 1 446 5 view .LVU225
+ 852              		.loc 1 446 30 is_stmt 0 view .LVU226
+ 853 0000 8368     		ldr	r3, [r0, #8]
+ 854 0002 6FF31453 		bfc	r3, #20, #1
+ 855 0006 8360     		str	r3, [r0, #8]
+ 447:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 856              		.loc 1 447 1 view .LVU227
+ 857 0008 7047     		bx	lr
+ 858              		.cfi_endproc
+ 859              	.LFE84:
+ 861              		.section	.text.ADC_ReadConversionValue,"ax",%progbits
+ 862              		.align	1
+ 863              		.global	ADC_ReadConversionValue
+ 864              		.syntax unified
+ 865              		.thumb
+ 866              		.thumb_func
+ 868              	ADC_ReadConversionValue:
+ 869              	.LVL81:
+ 870              	.LFB85:
+ 448:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 449:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 450:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reads the specified ADC conversion result data.
+ 451:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 452:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 453:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 454:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       The Data conversion value.
+ 455:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 456:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 457:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 458:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint16_t ADC_ReadConversionValue(ADC_T* adc)
+ 459:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 871              		.loc 1 459 1 is_stmt 1 view -0
+ 872              		.cfi_startproc
+ 873              		@ args = 0, pretend = 0, frame = 0
+ 874              		@ frame_needed = 0, uses_anonymous_args = 0
+ 875              		@ link register save eliminated.
+ 460:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return (uint16_t) adc->REGDATA;
+ 876              		.loc 1 460 5 view .LVU229
+ 877              		.loc 1 460 26 is_stmt 0 view .LVU230
+ 878 0000 C06C     		ldr	r0, [r0, #76]
+ 879              	.LVL82:
+ 461:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 880              		.loc 1 461 1 view .LVU231
+ 881 0002 80B2     		uxth	r0, r0
+ 882 0004 7047     		bx	lr
+ 883              		.cfi_endproc
+ 884              	.LFE85:
+ 886              		.section	.text.ADC_ReadDualModeConversionValue,"ax",%progbits
+ 887              		.align	1
+ 888              		.global	ADC_ReadDualModeConversionValue
+ 889              		.syntax unified
+ 890              		.thumb
+ 891              		.thumb_func
+ 893              	ADC_ReadDualModeConversionValue:
+ 894              	.LVL83:
+ 895              	.LFB86:
+ 462:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 25
+
+
+ 463:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reads the specified ADC conversion result data in dual mode.
+ 465:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 466:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 467:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 468:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       The Data conversion value.
+ 469:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 470:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 471:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 472:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint32_t ADC_ReadDualModeConversionValue(ADC_T* adc)
+ 473:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 896              		.loc 1 473 1 is_stmt 1 view -0
+ 897              		.cfi_startproc
+ 898              		@ args = 0, pretend = 0, frame = 0
+ 899              		@ frame_needed = 0, uses_anonymous_args = 0
+ 900              		@ link register save eliminated.
+ 474:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return (*(__IOM uint32_t *) RDG_ADDRESS);
+ 901              		.loc 1 474 5 view .LVU233
+ 902              		.loc 1 474 13 is_stmt 0 view .LVU234
+ 903 0000 014B     		ldr	r3, .L41
+ 904 0002 D3F84C04 		ldr	r0, [r3, #1100]
+ 905              	.LVL84:
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 906              		.loc 1 475 1 view .LVU235
+ 907 0006 7047     		bx	lr
+ 908              	.L42:
+ 909              		.align	2
+ 910              	.L41:
+ 911 0008 00200140 		.word	1073815552
+ 912              		.cfi_endproc
+ 913              	.LFE86:
+ 915              		.section	.text.ADC_EnableAutoInjectedConv,"ax",%progbits
+ 916              		.align	1
+ 917              		.global	ADC_EnableAutoInjectedConv
+ 918              		.syntax unified
+ 919              		.thumb
+ 920              		.thumb_func
+ 922              	ADC_EnableAutoInjectedConv:
+ 923              	.LVL85:
+ 924              	.LFB87:
+ 476:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 477:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 478:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Enable the specified ADC automatic injected group.
+ 479:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 480:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 481:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 482:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 483:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 484:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 485:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 486:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableAutoInjectedConv(ADC_T* adc)
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 925              		.loc 1 487 1 is_stmt 1 view -0
+ 926              		.cfi_startproc
+ 927              		@ args = 0, pretend = 0, frame = 0
+ 928              		@ frame_needed = 0, uses_anonymous_args = 0
+ 929              		@ link register save eliminated.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 26
+
+
+ 488:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.INJGACEN = BIT_SET;
+ 930              		.loc 1 488 5 view .LVU237
+ 931              		.loc 1 488 27 is_stmt 0 view .LVU238
+ 932 0000 4368     		ldr	r3, [r0, #4]
+ 933 0002 43F48063 		orr	r3, r3, #1024
+ 934 0006 4360     		str	r3, [r0, #4]
+ 489:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 935              		.loc 1 489 1 view .LVU239
+ 936 0008 7047     		bx	lr
+ 937              		.cfi_endproc
+ 938              	.LFE87:
+ 940              		.section	.text.ADC_DisableAutoInjectedConv,"ax",%progbits
+ 941              		.align	1
+ 942              		.global	ADC_DisableAutoInjectedConv
+ 943              		.syntax unified
+ 944              		.thumb
+ 945              		.thumb_func
+ 947              	ADC_DisableAutoInjectedConv:
+ 948              	.LVL86:
+ 949              	.LFB88:
+ 490:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 491:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 492:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC automatic injected group.
+ 493:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 494:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 495:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 496:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 497:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 498:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 499:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 500:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableAutoInjectedConv(ADC_T* adc)
+ 501:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 950              		.loc 1 501 1 is_stmt 1 view -0
+ 951              		.cfi_startproc
+ 952              		@ args = 0, pretend = 0, frame = 0
+ 953              		@ frame_needed = 0, uses_anonymous_args = 0
+ 954              		@ link register save eliminated.
+ 502:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.INJGACEN = BIT_RESET;
+ 955              		.loc 1 502 5 view .LVU241
+ 956              		.loc 1 502 27 is_stmt 0 view .LVU242
+ 957 0000 4368     		ldr	r3, [r0, #4]
+ 958 0002 6FF38A23 		bfc	r3, #10, #1
+ 959 0006 4360     		str	r3, [r0, #4]
+ 503:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 960              		.loc 1 503 1 view .LVU243
+ 961 0008 7047     		bx	lr
+ 962              		.cfi_endproc
+ 963              	.LFE88:
+ 965              		.section	.text.ADC_EnableInjectedDiscMode,"ax",%progbits
+ 966              		.align	1
+ 967              		.global	ADC_EnableInjectedDiscMode
+ 968              		.syntax unified
+ 969              		.thumb
+ 970              		.thumb_func
+ 972              	ADC_EnableInjectedDiscMode:
+ 973              	.LVL87:
+ 974              	.LFB89:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 27
+
+
+ 504:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 505:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 506:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Enable the specified ADC discontinuous mode for injected group.
+ 507:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 508:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 509:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 510:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 512:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 513:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 514:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableInjectedDiscMode(ADC_T* adc)
+ 515:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 975              		.loc 1 515 1 is_stmt 1 view -0
+ 976              		.cfi_startproc
+ 977              		@ args = 0, pretend = 0, frame = 0
+ 978              		@ frame_needed = 0, uses_anonymous_args = 0
+ 979              		@ link register save eliminated.
+ 516:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.INJDISCEN = BIT_SET;
+ 980              		.loc 1 516 5 view .LVU245
+ 981              		.loc 1 516 28 is_stmt 0 view .LVU246
+ 982 0000 4368     		ldr	r3, [r0, #4]
+ 983 0002 43F48053 		orr	r3, r3, #4096
+ 984 0006 4360     		str	r3, [r0, #4]
+ 517:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 985              		.loc 1 517 1 view .LVU247
+ 986 0008 7047     		bx	lr
+ 987              		.cfi_endproc
+ 988              	.LFE89:
+ 990              		.section	.text.ADC_DisableInjectedDiscMode,"ax",%progbits
+ 991              		.align	1
+ 992              		.global	ADC_DisableInjectedDiscMode
+ 993              		.syntax unified
+ 994              		.thumb
+ 995              		.thumb_func
+ 997              	ADC_DisableInjectedDiscMode:
+ 998              	.LVL88:
+ 999              	.LFB90:
+ 518:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 519:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 520:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC discontinuous mode for injected group.
+ 521:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 522:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 523:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 524:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 525:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 526:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 527:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 528:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableInjectedDiscMode(ADC_T* adc)
+ 529:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1000              		.loc 1 529 1 is_stmt 1 view -0
+ 1001              		.cfi_startproc
+ 1002              		@ args = 0, pretend = 0, frame = 0
+ 1003              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1004              		@ link register save eliminated.
+ 530:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.INJDISCEN = BIT_RESET;
+ 1005              		.loc 1 530 5 view .LVU249
+ 1006              		.loc 1 530 28 is_stmt 0 view .LVU250
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 28
+
+
+ 1007 0000 4368     		ldr	r3, [r0, #4]
+ 1008 0002 6FF30C33 		bfc	r3, #12, #1
+ 1009 0006 4360     		str	r3, [r0, #4]
+ 531:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1010              		.loc 1 531 1 view .LVU251
+ 1011 0008 7047     		bx	lr
+ 1012              		.cfi_endproc
+ 1013              	.LFE90:
+ 1015              		.section	.text.ADC_ConfigExternalTrigInjectedConv,"ax",%progbits
+ 1016              		.align	1
+ 1017              		.global	ADC_ConfigExternalTrigInjectedConv
+ 1018              		.syntax unified
+ 1019              		.thumb
+ 1020              		.thumb_func
+ 1022              	ADC_ConfigExternalTrigInjectedConv:
+ 1023              	.LVL89:
+ 1024              	.LFB91:
+ 532:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 533:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 534:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief   Configures the specified ADC external trigger for injected channels conversion
+ 535:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 536:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param   adc: Select the ADC peripheral
+ 537:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 538:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param   extTrigInjecConv: Select the ADC trigger to start injected conversion
+ 539:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *             This parameter can be one of the following values:
+ 540:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR1_TRGO      : Select Timer1 TRGO event (for ADC1, 
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR1_CC4       : Select Timer1 capture compare4 (for 
+ 542:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR2_TRGO      : Select Timer2 TRGO event (for ADC1 a
+ 543:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR2_CC1       : Select Timer2 capture compare1 (for 
+ 544:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR3_CC4       : Select Timer3 capture compare4 (for 
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR4_TRGO      : Select Timer4 TRGO event selected (f
+ 546:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_EINT15_T8_CC4: External interrupt line 15 or Timer8 c
+ 547:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                                                          (for ADC1 and ADC2)
+ 548:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 549:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR4_CC3 : Timer4 capture compare3 selected (for ADC3
+ 550:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR8_CC2 : Timer8 capture compare2 selected (for ADC3
+ 551:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR8_CC4 : Timer8 capture compare4 selected (for ADC3
+ 552:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR5_TRGO: Timer5 TRGO event selected (for ADC3 only)
+ 553:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_TMR5_CC4 : Timer5 capture compare4 selected (for ADC3
+ 554:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *               @arg ADC_EXT_TRIG_INJEC_CONV_NONE   : Injected conversion started by software inst
+ 555:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                                                     (for ADC1, ADC2 and ADC3)
+ 556:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 557:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval  None
+ 558:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 559:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note    adc can be ADC1, ADC2 or ADC3.
+ 560:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 561:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigExternalTrigInjectedConv(ADC_T* adc, ADC_EXT_TRIG_INJEC_CONV_T extTrigInjecConv)
+ 562:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1025              		.loc 1 562 1 is_stmt 1 view -0
+ 1026              		.cfi_startproc
+ 1027              		@ args = 0, pretend = 0, frame = 0
+ 1028              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1029              		@ link register save eliminated.
+ 563:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJGEXTTRGSEL = RESET;
+ 1030              		.loc 1 563 5 view .LVU253
+ 1031              		.loc 1 563 32 is_stmt 0 view .LVU254
+ 1032 0000 8268     		ldr	r2, [r0, #8]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 29
+
+
+ 1033 0002 6FF30E32 		bfc	r2, #12, #3
+ 1034 0006 8260     		str	r2, [r0, #8]
+ 564:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJGEXTTRGSEL |= extTrigInjecConv;
+ 1035              		.loc 1 564 5 is_stmt 1 view .LVU255
+ 1036              		.loc 1 564 32 is_stmt 0 view .LVU256
+ 1037 0008 8368     		ldr	r3, [r0, #8]
+ 1038 000a C3F30233 		ubfx	r3, r3, #12, #3
+ 1039 000e 0B43     		orrs	r3, r3, r1
+ 1040 0010 8268     		ldr	r2, [r0, #8]
+ 1041 0012 63F30E32 		bfi	r2, r3, #12, #3
+ 1042 0016 8260     		str	r2, [r0, #8]
+ 565:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1043              		.loc 1 565 1 view .LVU257
+ 1044 0018 7047     		bx	lr
+ 1045              		.cfi_endproc
+ 1046              	.LFE91:
+ 1048              		.section	.text.ADC_EnableExternalTrigInjectedConv,"ax",%progbits
+ 1049              		.align	1
+ 1050              		.global	ADC_EnableExternalTrigInjectedConv
+ 1051              		.syntax unified
+ 1052              		.thumb
+ 1053              		.thumb_func
+ 1055              	ADC_EnableExternalTrigInjectedConv:
+ 1056              	.LVL90:
+ 1057              	.LFB92:
+ 566:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 567:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 568:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Ensable the specified ADC injected channels conversion through
+ 569:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 570:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral
+ 571:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 572:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 573:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 575:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 576:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableExternalTrigInjectedConv(ADC_T* adc)
+ 577:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1058              		.loc 1 577 1 is_stmt 1 view -0
+ 1059              		.cfi_startproc
+ 1060              		@ args = 0, pretend = 0, frame = 0
+ 1061              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1062              		@ link register save eliminated.
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJEXTTRGEN = BIT_SET;
+ 1063              		.loc 1 578 5 view .LVU259
+ 1064              		.loc 1 578 30 is_stmt 0 view .LVU260
+ 1065 0000 8368     		ldr	r3, [r0, #8]
+ 1066 0002 43F40043 		orr	r3, r3, #32768
+ 1067 0006 8360     		str	r3, [r0, #8]
+ 579:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1068              		.loc 1 579 1 view .LVU261
+ 1069 0008 7047     		bx	lr
+ 1070              		.cfi_endproc
+ 1071              	.LFE92:
+ 1073              		.section	.text.ADC_DisableExternalTrigInjectedConv,"ax",%progbits
+ 1074              		.align	1
+ 1075              		.global	ADC_DisableExternalTrigInjectedConv
+ 1076              		.syntax unified
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 30
+
+
+ 1077              		.thumb
+ 1078              		.thumb_func
+ 1080              	ADC_DisableExternalTrigInjectedConv:
+ 1081              	.LVL91:
+ 1082              	.LFB93:
+ 580:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 581:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 582:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC injected channels conversion through
+ 583:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 584:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral
+ 585:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 586:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 587:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 588:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 589:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 590:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableExternalTrigInjectedConv(ADC_T* adc)
+ 591:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1083              		.loc 1 591 1 is_stmt 1 view -0
+ 1084              		.cfi_startproc
+ 1085              		@ args = 0, pretend = 0, frame = 0
+ 1086              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1087              		@ link register save eliminated.
+ 592:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJEXTTRGEN = BIT_RESET;
+ 1088              		.loc 1 592 5 view .LVU263
+ 1089              		.loc 1 592 30 is_stmt 0 view .LVU264
+ 1090 0000 8368     		ldr	r3, [r0, #8]
+ 1091 0002 6FF3CF33 		bfc	r3, #15, #1
+ 1092 0006 8360     		str	r3, [r0, #8]
+ 593:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1093              		.loc 1 593 1 view .LVU265
+ 1094 0008 7047     		bx	lr
+ 1095              		.cfi_endproc
+ 1096              	.LFE93:
+ 1098              		.section	.text.ADC_EnableSoftwareStartInjectedConv,"ax",%progbits
+ 1099              		.align	1
+ 1100              		.global	ADC_EnableSoftwareStartInjectedConv
+ 1101              		.syntax unified
+ 1102              		.thumb
+ 1103              		.thumb_func
+ 1105              	ADC_EnableSoftwareStartInjectedConv:
+ 1106              	.LVL92:
+ 1107              	.LFB94:
+ 594:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 595:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 596:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Enable the specified ADC start of the injected
+ 597:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 598:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral
+ 599:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 600:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 601:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 602:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 603:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 604:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableSoftwareStartInjectedConv(ADC_T* adc)
+ 605:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1108              		.loc 1 605 1 is_stmt 1 view -0
+ 1109              		.cfi_startproc
+ 1110              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 31
+
+
+ 1111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1112              		@ link register save eliminated.
+ 606:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJEXTTRGEN = BIT_SET;
+ 1113              		.loc 1 606 5 view .LVU267
+ 1114              		.loc 1 606 30 is_stmt 0 view .LVU268
+ 1115 0000 8368     		ldr	r3, [r0, #8]
+ 1116 0002 43F40043 		orr	r3, r3, #32768
+ 1117 0006 8360     		str	r3, [r0, #8]
+ 607:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJSWSC = BIT_SET;
+ 1118              		.loc 1 607 5 is_stmt 1 view .LVU269
+ 1119              		.loc 1 607 26 is_stmt 0 view .LVU270
+ 1120 0008 8368     		ldr	r3, [r0, #8]
+ 1121 000a 43F40013 		orr	r3, r3, #2097152
+ 1122 000e 8360     		str	r3, [r0, #8]
+ 608:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1123              		.loc 1 608 1 view .LVU271
+ 1124 0010 7047     		bx	lr
+ 1125              		.cfi_endproc
+ 1126              	.LFE94:
+ 1128              		.section	.text.ADC_DisableSoftwareStartInjectedConv,"ax",%progbits
+ 1129              		.align	1
+ 1130              		.global	ADC_DisableSoftwareStartInjectedConv
+ 1131              		.syntax unified
+ 1132              		.thumb
+ 1133              		.thumb_func
+ 1135              	ADC_DisableSoftwareStartInjectedConv:
+ 1136              	.LVL93:
+ 1137              	.LFB95:
+ 609:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 610:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC start of the injected
+ 612:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 613:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral
+ 614:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 616:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 617:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 618:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 619:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableSoftwareStartInjectedConv(ADC_T* adc)
+ 620:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1138              		.loc 1 620 1 is_stmt 1 view -0
+ 1139              		.cfi_startproc
+ 1140              		@ args = 0, pretend = 0, frame = 0
+ 1141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1142              		@ link register save eliminated.
+ 621:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJEXTTRGEN = BIT_RESET;
+ 1143              		.loc 1 621 5 view .LVU273
+ 1144              		.loc 1 621 30 is_stmt 0 view .LVU274
+ 1145 0000 8368     		ldr	r3, [r0, #8]
+ 1146 0002 6FF3CF33 		bfc	r3, #15, #1
+ 1147 0006 8360     		str	r3, [r0, #8]
+ 622:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.INJSWSC = BIT_RESET;
+ 1148              		.loc 1 622 5 is_stmt 1 view .LVU275
+ 1149              		.loc 1 622 26 is_stmt 0 view .LVU276
+ 1150 0008 8368     		ldr	r3, [r0, #8]
+ 1151 000a 6FF35553 		bfc	r3, #21, #1
+ 1152 000e 8360     		str	r3, [r0, #8]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 32
+
+
+ 623:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1153              		.loc 1 623 1 view .LVU277
+ 1154 0010 7047     		bx	lr
+ 1155              		.cfi_endproc
+ 1156              	.LFE95:
+ 1158              		.section	.text.ADC_ReadSoftwareStartInjectedConvStatus,"ax",%progbits
+ 1159              		.align	1
+ 1160              		.global	ADC_ReadSoftwareStartInjectedConvStatus
+ 1161              		.syntax unified
+ 1162              		.thumb
+ 1163              		.thumb_func
+ 1165              	ADC_ReadSoftwareStartInjectedConvStatus:
+ 1166              	.LVL94:
+ 1167              	.LFB96:
+ 624:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 625:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 626:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reads the specified ADC Software start injected conversion Status
+ 627:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 628:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral
+ 629:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 630:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       The status of ADC Software start injected conversion
+ 631:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 632:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 633:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 634:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint8_t ADC_ReadSoftwareStartInjectedConvStatus(ADC_T* adc)
+ 635:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1168              		.loc 1 635 1 is_stmt 1 view -0
+ 1169              		.cfi_startproc
+ 1170              		@ args = 0, pretend = 0, frame = 0
+ 1171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1172              		@ link register save eliminated.
+ 636:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t ret;
+ 1173              		.loc 1 636 5 view .LVU279
+ 637:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     ret = (adc->CTRL2_B.INJSWSC) ? BIT_SET : BIT_RESET;
+ 1174              		.loc 1 637 5 view .LVU280
+ 1175              		.loc 1 637 24 is_stmt 0 view .LVU281
+ 1176 0000 8068     		ldr	r0, [r0, #8]
+ 1177              	.LVL95:
+ 638:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return ret;
+ 1178              		.loc 1 638 5 is_stmt 1 view .LVU282
+ 639:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1179              		.loc 1 639 1 is_stmt 0 view .LVU283
+ 1180 0002 C0F34050 		ubfx	r0, r0, #21, #1
+ 1181              	.LVL96:
+ 1182              		.loc 1 639 1 view .LVU284
+ 1183 0006 7047     		bx	lr
+ 1184              		.cfi_endproc
+ 1185              	.LFE96:
+ 1187              		.section	.text.ADC_ConfigInjectedChannel,"ax",%progbits
+ 1188              		.align	1
+ 1189              		.global	ADC_ConfigInjectedChannel
+ 1190              		.syntax unified
+ 1191              		.thumb
+ 1192              		.thumb_func
+ 1194              	ADC_ConfigInjectedChannel:
+ 1195              	.LVL97:
+ 1196              	.LFB97:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 33
+
+
+ 640:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 641:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 642:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Configures the specified ADC injected channel.
+ 643:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 644:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 645:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 646:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        channel: Select the ADC injected channel.
+ 647:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        This parameter can be one of the following values:
+ 648:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_0:  ADC channel 0
+ 649:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_1:  ADC channel 1
+ 650:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_2:  ADC channel 2
+ 651:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_3:  ADC channel 3
+ 652:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_4:  ADC channel 4
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_5:  ADC channel 5
+ 654:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_6:  ADC channel 6
+ 655:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_7:  ADC channel 7
+ 656:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_8:  ADC channel 8
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_9:  ADC channel 9
+ 658:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_10: ADC channel 10
+ 659:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_11: ADC channel 11
+ 660:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_12: ADC channel 12
+ 661:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_13: ADC channel 13
+ 662:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_14: ADC channel 14
+ 663:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_15: ADC channel 15
+ 664:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_16: ADC channel 16 which is connected to TempSensor
+ 665:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_CHANNEL_17: ADC channel 17 which is connected to Vrefint
+ 666:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 667:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        rank: The rank in the injected group sequencer.
+ 668:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     This parameter must be between 1 to 4.
+ 669:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 670:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        sampleTime: the specified ADC channel SampleTime
+ 671:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           The parameter can be one of following values:
+ 672:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_1CYCLES5:   ADC 1.5 clock cycles
+ 673:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_7CYCLES5:   ADC 7.5 clock cycles
+ 674:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_13CYCLES5:  ADC 13.5 clock cycles
+ 675:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_28CYCLES5:  ADC 28.5 clock cycles
+ 676:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_41CYCLES5:  ADC 41.5 clock cycles
+ 677:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_55CYCLES5:  ADC 55.5 clock cycles
+ 678:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_71CYCLES5:  ADC 71.5 clock cycles
+ 679:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                           @arg ADC_SAMPLETIME_239CYCLES5: ADC 239.5 clock cycles
+ 680:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 681:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 682:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 683:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 684:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 685:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigInjectedChannel(ADC_T* adc, uint8_t channel, uint8_t rank, uint8_t sampleTime)
+ 686:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1197              		.loc 1 686 1 is_stmt 1 view -0
+ 1198              		.cfi_startproc
+ 1199              		@ args = 0, pretend = 0, frame = 0
+ 1200              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1201              		@ link register save eliminated.
+ 1202              		.loc 1 686 1 is_stmt 0 view .LVU286
+ 1203 0000 30B4     		push	{r4, r5}
+ 1204              	.LCFI4:
+ 1205              		.cfi_def_cfa_offset 8
+ 1206              		.cfi_offset 4, -8
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 34
+
+
+ 1207              		.cfi_offset 5, -4
+ 687:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t temp1 = 0;
+ 1208              		.loc 1 687 5 is_stmt 1 view .LVU287
+ 1209              	.LVL98:
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t temp2 = 0;
+ 1210              		.loc 1 688 5 view .LVU288
+ 689:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t temp3 = 0;
+ 1211              		.loc 1 689 5 view .LVU289
+ 690:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     if (channel > ADC_CHANNEL_9)
+ 1212              		.loc 1 690 5 view .LVU290
+ 1213              		.loc 1 690 8 is_stmt 0 view .LVU291
+ 1214 0002 0929     		cmp	r1, #9
+ 1215 0004 20D9     		bls	.L54
+ 691:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 = adc->SMPTIM1;
+ 1216              		.loc 1 692 9 is_stmt 1 view .LVU292
+ 1217              		.loc 1 692 15 is_stmt 0 view .LVU293
+ 1218 0006 C568     		ldr	r5, [r0, #12]
+ 1219              	.LVL99:
+ 693:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM1 << (3*(channel - 10));
+ 1220              		.loc 1 693 9 is_stmt 1 view .LVU294
+ 1221              		.loc 1 693 54 is_stmt 0 view .LVU295
+ 1222 0008 A1F10A04 		sub	r4, r1, #10
+ 1223              		.loc 1 693 44 view .LVU296
+ 1224 000c 04EB4404 		add	r4, r4, r4, lsl #1
+ 1225              		.loc 1 693 15 view .LVU297
+ 1226 0010 4FF0070C 		mov	ip, #7
+ 1227 0014 0CFA04FC 		lsl	ip, ip, r4
+ 1228              	.LVL100:
+ 694:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 1229              		.loc 1 694 9 is_stmt 1 view .LVU298
+ 1230              		.loc 1 694 15 is_stmt 0 view .LVU299
+ 1231 0018 25EA0C0C 		bic	ip, r5, ip
+ 1232              	.LVL101:
+ 695:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3*(channel - 10));
+ 1233              		.loc 1 695 9 is_stmt 1 view .LVU300
+ 1234              		.loc 1 695 15 is_stmt 0 view .LVU301
+ 1235 001c A340     		lsls	r3, r3, r4
+ 1236              	.LVL102:
+ 696:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 1237              		.loc 1 696 9 is_stmt 1 view .LVU302
+ 1238              		.loc 1 696 15 is_stmt 0 view .LVU303
+ 1239 001e 4CEA0303 		orr	r3, ip, r3
+ 1240              	.LVL103:
+ 697:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM1 = temp1;
+ 1241              		.loc 1 697 9 is_stmt 1 view .LVU304
+ 1242              		.loc 1 697 22 is_stmt 0 view .LVU305
+ 1243 0022 C360     		str	r3, [r0, #12]
+ 1244              	.L55:
+ 698:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 699:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     else
+ 700:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+ 701:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 = adc->SMPTIM2;
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM2 << (3 * channel);
+ 703:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3 * channel);
+ 705:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 35
+
+
+ 706:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM2 = temp1;
+ 707:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 708:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp1 = adc->INJSEQ;
+ 1245              		.loc 1 708 5 is_stmt 1 view .LVU306
+ 1246              		.loc 1 708 11 is_stmt 0 view .LVU307
+ 1247 0024 846B     		ldr	r4, [r0, #56]
+ 1248              	.LVL104:
+ 709:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp3 =  (temp1 & INJSEQ_SET_INJSEQLEN)>> 20;
+ 1249              		.loc 1 709 5 is_stmt 1 view .LVU308
+ 1250              		.loc 1 709 11 is_stmt 0 view .LVU309
+ 1251 0026 C4F30153 		ubfx	r3, r4, #20, #2
+ 1252              	.LVL105:
+ 710:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp2 = INJSEQ_SET_INJSEQC << (5 * (uint8_t)((rank + 3) - (temp3 + 1)));
+ 1253              		.loc 1 710 5 is_stmt 1 view .LVU310
+ 1254              		.loc 1 710 61 is_stmt 0 view .LVU311
+ 1255 002a D31A     		subs	r3, r2, r3
+ 1256              	.LVL106:
+ 1257              		.loc 1 710 61 view .LVU312
+ 1258 002c DBB2     		uxtb	r3, r3
+ 1259              		.loc 1 710 40 view .LVU313
+ 1260 002e 0233     		adds	r3, r3, #2
+ 1261 0030 DBB2     		uxtb	r3, r3
+ 1262              		.loc 1 710 38 view .LVU314
+ 1263 0032 03EB8303 		add	r3, r3, r3, lsl #2
+ 1264              		.loc 1 710 11 view .LVU315
+ 1265 0036 1F22     		movs	r2, #31
+ 1266              	.LVL107:
+ 1267              		.loc 1 710 11 view .LVU316
+ 1268 0038 9A40     		lsls	r2, r2, r3
+ 1269              	.LVL108:
+ 711:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp1 &= ~temp2;
+ 1270              		.loc 1 711 5 is_stmt 1 view .LVU317
+ 1271              		.loc 1 711 11 is_stmt 0 view .LVU318
+ 1272 003a 24EA0204 		bic	r4, r4, r2
+ 1273              	.LVL109:
+ 712:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp2 = (uint32_t)channel << (5 * (uint8_t)((rank + 3) - (temp3 + 1)));
+ 1274              		.loc 1 712 5 is_stmt 1 view .LVU319
+ 1275              		.loc 1 712 11 is_stmt 0 view .LVU320
+ 1276 003e 9940     		lsls	r1, r1, r3
+ 1277              	.LVL110:
+ 713:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp1 |= temp2;
+ 1278              		.loc 1 713 5 is_stmt 1 view .LVU321
+ 1279              		.loc 1 713 11 is_stmt 0 view .LVU322
+ 1280 0040 2143     		orrs	r1, r1, r4
+ 1281              	.LVL111:
+ 714:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->INJSEQ = temp1;
+ 1282              		.loc 1 714 5 is_stmt 1 view .LVU323
+ 1283              		.loc 1 714 17 is_stmt 0 view .LVU324
+ 1284 0042 8163     		str	r1, [r0, #56]
+ 715:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1285              		.loc 1 715 1 view .LVU325
+ 1286 0044 30BC     		pop	{r4, r5}
+ 1287              	.LCFI5:
+ 1288              		.cfi_remember_state
+ 1289              		.cfi_restore 5
+ 1290              		.cfi_restore 4
+ 1291              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 36
+
+
+ 1292 0046 7047     		bx	lr
+ 1293              	.LVL112:
+ 1294              	.L54:
+ 1295              	.LCFI6:
+ 1296              		.cfi_restore_state
+ 701:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM2 << (3 * channel);
+ 1297              		.loc 1 701 9 is_stmt 1 view .LVU326
+ 701:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = SMPCYCCFG_SET_SMPTIM2 << (3 * channel);
+ 1298              		.loc 1 701 15 is_stmt 0 view .LVU327
+ 1299 0048 0469     		ldr	r4, [r0, #16]
+ 1300              	.LVL113:
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 1301              		.loc 1 702 9 is_stmt 1 view .LVU328
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 1302              		.loc 1 702 45 is_stmt 0 view .LVU329
+ 1303 004a 01EB410C 		add	ip, r1, r1, lsl #1
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 &= ~temp2;
+ 1304              		.loc 1 702 15 view .LVU330
+ 1305 004e 0725     		movs	r5, #7
+ 1306 0050 05FA0CF5 		lsl	r5, r5, ip
+ 1307              	.LVL114:
+ 703:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3 * channel);
+ 1308              		.loc 1 703 9 is_stmt 1 view .LVU331
+ 703:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp2 = (uint32_t)sampleTime << (3 * channel);
+ 1309              		.loc 1 703 15 is_stmt 0 view .LVU332
+ 1310 0054 24EA0504 		bic	r4, r4, r5
+ 1311              	.LVL115:
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 1312              		.loc 1 704 9 is_stmt 1 view .LVU333
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         temp1 |= temp2;
+ 1313              		.loc 1 704 15 is_stmt 0 view .LVU334
+ 1314 0058 03FA0CF3 		lsl	r3, r3, ip
+ 1315              	.LVL116:
+ 705:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM2 = temp1;
+ 1316              		.loc 1 705 9 is_stmt 1 view .LVU335
+ 705:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         adc->SMPTIM2 = temp1;
+ 1317              		.loc 1 705 15 is_stmt 0 view .LVU336
+ 1318 005c 2343     		orrs	r3, r3, r4
+ 1319              	.LVL117:
+ 706:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 1320              		.loc 1 706 9 is_stmt 1 view .LVU337
+ 706:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 1321              		.loc 1 706 22 is_stmt 0 view .LVU338
+ 1322 005e 0361     		str	r3, [r0, #16]
+ 1323 0060 E0E7     		b	.L55
+ 1324              		.cfi_endproc
+ 1325              	.LFE97:
+ 1327              		.section	.text.ADC_ConfigInjectedSequencerLength,"ax",%progbits
+ 1328              		.align	1
+ 1329              		.global	ADC_ConfigInjectedSequencerLength
+ 1330              		.syntax unified
+ 1331              		.thumb
+ 1332              		.thumb_func
+ 1334              	ADC_ConfigInjectedSequencerLength:
+ 1335              	.LVL118:
+ 1336              	.LFB98:
+ 716:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 37
+
+
+ 717:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 718:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief    Configures the specified ADC injected channel.
+ 719:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 720:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param    adc: Select the ADC peripheral.
+ 721:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 722:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param    length: The sequencer length.
+ 723:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                   This parameter must be a number between 1 to 4.
+ 724:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 725:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval   None
+ 726:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 727:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note     adc can be ADC1, ADC2 or ADC3.
+ 728:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 729:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigInjectedSequencerLength(ADC_T* adc, uint8_t length)
+ 730:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1337              		.loc 1 730 1 is_stmt 1 view -0
+ 1338              		.cfi_startproc
+ 1339              		@ args = 0, pretend = 0, frame = 0
+ 1340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1341              		@ link register save eliminated.
+ 731:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->INJSEQ_B.INJSEQLEN = RESET;
+ 1342              		.loc 1 731 5 view .LVU340
+ 1343              		.loc 1 731 29 is_stmt 0 view .LVU341
+ 1344 0000 836B     		ldr	r3, [r0, #56]
+ 1345 0002 6FF31553 		bfc	r3, #20, #2
+ 1346 0006 8363     		str	r3, [r0, #56]
+ 732:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->INJSEQ_B.INJSEQLEN |= length - 1;
+ 1347              		.loc 1 732 5 is_stmt 1 view .LVU342
+ 1348              		.loc 1 732 29 is_stmt 0 view .LVU343
+ 1349 0008 836B     		ldr	r3, [r0, #56]
+ 1350 000a C3F30153 		ubfx	r3, r3, #20, #2
+ 1351              		.loc 1 732 39 view .LVU344
+ 1352 000e 0139     		subs	r1, r1, #1
+ 1353              	.LVL119:
+ 1354              		.loc 1 732 39 view .LVU345
+ 1355 0010 49B2     		sxtb	r1, r1
+ 1356              		.loc 1 732 29 view .LVU346
+ 1357 0012 1943     		orrs	r1, r1, r3
+ 1358 0014 836B     		ldr	r3, [r0, #56]
+ 1359 0016 61F31553 		bfi	r3, r1, #20, #2
+ 1360 001a 8363     		str	r3, [r0, #56]
+ 733:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1361              		.loc 1 733 1 view .LVU347
+ 1362 001c 7047     		bx	lr
+ 1363              		.cfi_endproc
+ 1364              	.LFE98:
+ 1366              		.section	.text.ADC_ConfigInjectedOffset,"ax",%progbits
+ 1367              		.align	1
+ 1368              		.global	ADC_ConfigInjectedOffset
+ 1369              		.syntax unified
+ 1370              		.thumb
+ 1371              		.thumb_func
+ 1373              	ADC_ConfigInjectedOffset:
+ 1374              	.LVL120:
+ 1375              	.LFB99:
+ 734:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 735:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 736:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief     Configures the specified ADC injected channel conversion value offset.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 38
+
+
+ 737:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 738:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     adc: Select the ADC peripheral.
+ 739:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 740:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     channel: Select the ADC injected channel.
+ 741:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     This parameter can be one of the following values:
+ 742:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_1: select Injected Channel 1
+ 743:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_2: select Injected Channel 2
+ 744:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_3: select Injected Channel 3
+ 745:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_4: select Injected Channel 4
+ 746:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 747:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     offSet: The specified ADC injected channel offset.
+ 748:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                    This parameter must be a 12bit value.
+ 749:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 750:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval    None
+ 751:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 752:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note      adc can be ADC1, ADC2 or ADC3.
+ 753:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 754:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigInjectedOffset(ADC_T* adc, ADC_INJEC_CHANNEL_T channel, uint16_t offSet)
+ 755:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1376              		.loc 1 755 1 is_stmt 1 view -0
+ 1377              		.cfi_startproc
+ 1378              		@ args = 0, pretend = 0, frame = 8
+ 1379              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1380              		@ link register save eliminated.
+ 1381              		.loc 1 755 1 is_stmt 0 view .LVU349
+ 1382 0000 82B0     		sub	sp, sp, #8
+ 1383              	.LCFI7:
+ 1384              		.cfi_def_cfa_offset 8
+ 756:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     __IOM uint32_t tmp = 0;
+ 1385              		.loc 1 756 5 is_stmt 1 view .LVU350
+ 1386              		.loc 1 756 20 is_stmt 0 view .LVU351
+ 1387 0002 0023     		movs	r3, #0
+ 1388 0004 0193     		str	r3, [sp, #4]
+ 757:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 758:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     tmp = (uint32_t)adc;
+ 1389              		.loc 1 758 5 is_stmt 1 view .LVU352
+ 1390              		.loc 1 758 9 is_stmt 0 view .LVU353
+ 1391 0006 0190     		str	r0, [sp, #4]
+ 759:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     tmp += channel;
+ 1392              		.loc 1 759 5 is_stmt 1 view .LVU354
+ 1393              		.loc 1 759 9 is_stmt 0 view .LVU355
+ 1394 0008 019B     		ldr	r3, [sp, #4]
+ 1395 000a 1944     		add	r1, r1, r3
+ 1396              	.LVL121:
+ 1397              		.loc 1 759 9 view .LVU356
+ 1398 000c 0191     		str	r1, [sp, #4]
+ 760:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 761:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     *(__IOM uint32_t *) tmp = (uint32_t)offSet;
+ 1399              		.loc 1 761 5 is_stmt 1 view .LVU357
+ 1400              		.loc 1 761 6 is_stmt 0 view .LVU358
+ 1401 000e 019B     		ldr	r3, [sp, #4]
+ 1402              		.loc 1 761 29 view .LVU359
+ 1403 0010 1A60     		str	r2, [r3]
+ 762:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1404              		.loc 1 762 1 view .LVU360
+ 1405 0012 02B0     		add	sp, sp, #8
+ 1406              	.LCFI8:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 39
+
+
+ 1407              		.cfi_def_cfa_offset 0
+ 1408              		@ sp needed
+ 1409 0014 7047     		bx	lr
+ 1410              		.cfi_endproc
+ 1411              	.LFE99:
+ 1413              		.section	.text.ADC_ReadInjectedConversionValue,"ax",%progbits
+ 1414              		.align	1
+ 1415              		.global	ADC_ReadInjectedConversionValue
+ 1416              		.syntax unified
+ 1417              		.thumb
+ 1418              		.thumb_func
+ 1420              	ADC_ReadInjectedConversionValue:
+ 1421              	.LVL122:
+ 1422              	.LFB100:
+ 763:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 764:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 765:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief     Reads the ADC injected channel conversion value.
+ 766:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 767:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     adc: Select the ADC peripheral.
+ 768:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 769:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     channel: Select the ADC injected channel.
+ 770:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     This parameter can be one of the following values:
+ 771:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_1: select Injected Channel 1
+ 772:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_2: select Injected Channel 2
+ 773:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_3: select Injected Channel 3
+ 774:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                     @arg ADC_INJEC_CHANNEL_4: select Injected Channel 4
+ 775:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 776:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval    The Data of conversion value.
+ 777:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 778:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note      adc can be ADC1, ADC2 or ADC3.
+ 779:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 780:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint16_t ADC_ReadInjectedConversionValue(ADC_T* adc, ADC_INJEC_CHANNEL_T channel)
+ 781:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1423              		.loc 1 781 1 is_stmt 1 view -0
+ 1424              		.cfi_startproc
+ 1425              		@ args = 0, pretend = 0, frame = 8
+ 1426              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1427              		@ link register save eliminated.
+ 1428              		.loc 1 781 1 is_stmt 0 view .LVU362
+ 1429 0000 82B0     		sub	sp, sp, #8
+ 1430              	.LCFI9:
+ 1431              		.cfi_def_cfa_offset 8
+ 782:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     __IOM uint32_t temp = 0;
+ 1432              		.loc 1 782 5 is_stmt 1 view .LVU363
+ 1433              		.loc 1 782 20 is_stmt 0 view .LVU364
+ 1434 0002 0023     		movs	r3, #0
+ 1435 0004 0193     		str	r3, [sp, #4]
+ 783:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp = (uint32_t)adc;
+ 1436              		.loc 1 784 5 is_stmt 1 view .LVU365
+ 1437              		.loc 1 784 10 is_stmt 0 view .LVU366
+ 1438 0006 0190     		str	r0, [sp, #4]
+ 785:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     temp += channel + INJDATA_OFFSET;
+ 1439              		.loc 1 785 5 is_stmt 1 view .LVU367
+ 1440              		.loc 1 785 10 is_stmt 0 view .LVU368
+ 1441 0008 019B     		ldr	r3, [sp, #4]
+ 1442 000a 1944     		add	r1, r1, r3
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 40
+
+
+ 1443              	.LVL123:
+ 1444              		.loc 1 785 10 view .LVU369
+ 1445 000c 2831     		adds	r1, r1, #40
+ 1446 000e 0191     		str	r1, [sp, #4]
+ 786:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 787:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return (uint16_t) (*(__IOM uint32_t*)  temp);
+ 1447              		.loc 1 787 5 is_stmt 1 view .LVU370
+ 1448              		.loc 1 787 25 is_stmt 0 view .LVU371
+ 1449 0010 019B     		ldr	r3, [sp, #4]
+ 1450              		.loc 1 787 24 view .LVU372
+ 1451 0012 1868     		ldr	r0, [r3]
+ 1452              	.LVL124:
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1453              		.loc 1 788 1 view .LVU373
+ 1454 0014 80B2     		uxth	r0, r0
+ 1455 0016 02B0     		add	sp, sp, #8
+ 1456              	.LCFI10:
+ 1457              		.cfi_def_cfa_offset 0
+ 1458              		@ sp needed
+ 1459 0018 7047     		bx	lr
+ 1460              		.cfi_endproc
+ 1461              	.LFE100:
+ 1463              		.section	.text.ADC_EnableAnalogWatchdog,"ax",%progbits
+ 1464              		.align	1
+ 1465              		.global	ADC_EnableAnalogWatchdog
+ 1466              		.syntax unified
+ 1467              		.thumb
+ 1468              		.thumb_func
+ 1470              	ADC_EnableAnalogWatchdog:
+ 1471              	.LVL125:
+ 1472              	.LFB101:
+ 789:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 790:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 791:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Enable the specified ADC analog watchdog.
+ 792:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 793:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 794:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 795:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        analogWatchdog: The ADC analog watchdog configuration
+ 796:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  This parameter can be one of the following values:
+ 797:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_ANALOG_WATCHDOG_SINGLE_REG        : Analog watchdog on a single regula
+ 798:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_ANALOG_WATCHDOG_SINGLE_INJEC      : Analog watchdog on a single inject
+ 799:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_ANALOG_WATCHDOG_SINGLE_REG_INJEC  : Analog watchdog on a single regula
+ 800:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_ANALOG_WATCHDOG_ALL_REG           : Analog watchdog on  all regular ch
+ 801:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_ANALOG_WATCHDOG_ALL_INJEC         : Analog watchdog on  all injected c
+ 802:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_ANALOG_WATCHDOG_ALL_REG_ALL_INJEC : Analog watchdog on all regular and
+ 803:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_ANALOG_WATCHDOG_NONE              : No channel guarded by the analog w
+ 804:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 805:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 806:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 807:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 808:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 809:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableAnalogWatchdog(ADC_T* adc, uint32_t analogWatchdog)
+ 810:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1473              		.loc 1 810 1 is_stmt 1 view -0
+ 1474              		.cfi_startproc
+ 1475              		@ args = 0, pretend = 0, frame = 0
+ 1476              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 41
+
+
+ 1477              		@ link register save eliminated.
+ 811:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1 &= 0xFF3FFDFF;
+ 1478              		.loc 1 811 5 view .LVU375
+ 1479              		.loc 1 811 16 is_stmt 0 view .LVU376
+ 1480 0000 4368     		ldr	r3, [r0, #4]
+ 1481 0002 23F44003 		bic	r3, r3, #12582912
+ 1482 0006 23F40073 		bic	r3, r3, #512
+ 1483 000a 4360     		str	r3, [r0, #4]
+ 812:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1 |= analogWatchdog;
+ 1484              		.loc 1 812 5 is_stmt 1 view .LVU377
+ 1485              		.loc 1 812 16 is_stmt 0 view .LVU378
+ 1486 000c 4368     		ldr	r3, [r0, #4]
+ 1487 000e 0B43     		orrs	r3, r3, r1
+ 1488 0010 4360     		str	r3, [r0, #4]
+ 813:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1489              		.loc 1 813 1 view .LVU379
+ 1490 0012 7047     		bx	lr
+ 1491              		.cfi_endproc
+ 1492              	.LFE101:
+ 1494              		.section	.text.ADC_DisableAnalogWatchdog,"ax",%progbits
+ 1495              		.align	1
+ 1496              		.global	ADC_DisableAnalogWatchdog
+ 1497              		.syntax unified
+ 1498              		.thumb
+ 1499              		.thumb_func
+ 1501              	ADC_DisableAnalogWatchdog:
+ 1502              	.LVL126:
+ 1503              	.LFB102:
+ 814:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 815:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 816:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Disable the specified ADC analog watchdog.
+ 817:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 818:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 819:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 820:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 821:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 822:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 823:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 824:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableAnalogWatchdog(ADC_T* adc)
+ 825:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1504              		.loc 1 825 1 is_stmt 1 view -0
+ 1505              		.cfi_startproc
+ 1506              		@ args = 0, pretend = 0, frame = 0
+ 1507              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1508              		@ link register save eliminated.
+ 826:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1 &= 0xFF3FFDFF;
+ 1509              		.loc 1 826 5 view .LVU381
+ 1510              		.loc 1 826 16 is_stmt 0 view .LVU382
+ 1511 0000 4368     		ldr	r3, [r0, #4]
+ 1512 0002 23F44003 		bic	r3, r3, #12582912
+ 1513 0006 23F40073 		bic	r3, r3, #512
+ 1514 000a 4360     		str	r3, [r0, #4]
+ 827:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1515              		.loc 1 827 1 view .LVU383
+ 1516 000c 7047     		bx	lr
+ 1517              		.cfi_endproc
+ 1518              	.LFE102:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 42
+
+
+ 1520              		.section	.text.ADC_ConfigAnalogWatchdogThresholds,"ax",%progbits
+ 1521              		.align	1
+ 1522              		.global	ADC_ConfigAnalogWatchdogThresholds
+ 1523              		.syntax unified
+ 1524              		.thumb
+ 1525              		.thumb_func
+ 1527              	ADC_ConfigAnalogWatchdogThresholds:
+ 1528              	.LVL127:
+ 1529              	.LFB103:
+ 828:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 829:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 830:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Configures the specified ADC high and low thresholds of the analog watchdog.
+ 831:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 832:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+ 833:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 834:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        highThreshold: The ADC analog watchdog High threshold value.
+ 835:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                              This parameter must be a 12bit value.
+ 836:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 837:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        lowThreshold: The ADC analog watchdog Low threshold value.
+ 838:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                             This parameter must be a 12bit value.
+ 839:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 840:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+ 841:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 842:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+ 843:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 844:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigAnalogWatchdogThresholds(ADC_T* adc, uint16_t highThreshold, uint16_t lowThreshold)
+ 845:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1530              		.loc 1 845 1 is_stmt 1 view -0
+ 1531              		.cfi_startproc
+ 1532              		@ args = 0, pretend = 0, frame = 0
+ 1533              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1534              		@ link register save eliminated.
+ 846:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->AWDHT = highThreshold;
+ 1535              		.loc 1 846 5 view .LVU385
+ 1536              		.loc 1 846 16 is_stmt 0 view .LVU386
+ 1537 0000 4162     		str	r1, [r0, #36]
+ 847:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->AWDLT = lowThreshold;
+ 1538              		.loc 1 847 5 is_stmt 1 view .LVU387
+ 1539              		.loc 1 847 16 is_stmt 0 view .LVU388
+ 1540 0002 8262     		str	r2, [r0, #40]
+ 848:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1541              		.loc 1 848 1 view .LVU389
+ 1542 0004 7047     		bx	lr
+ 1543              		.cfi_endproc
+ 1544              	.LFE103:
+ 1546              		.section	.text.ADC_ConfigAnalogWatchdogSingleChannel,"ax",%progbits
+ 1547              		.align	1
+ 1548              		.global	ADC_ConfigAnalogWatchdogSingleChannel
+ 1549              		.syntax unified
+ 1550              		.thumb
+ 1551              		.thumb_func
+ 1553              	ADC_ConfigAnalogWatchdogSingleChannel:
+ 1554              	.LVL128:
+ 1555              	.LFB104:
+ 849:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 850:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 851:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief      Configures the specified ADC analog watchdog guarded single channel
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 43
+
+
+ 852:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 853:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      adc: Select the ADC peripheral
+ 854:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 855:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      channel: Select the ADC channel
+ 856:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                      This parameter can be one of the following values:
+ 857:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_0:  Select ADC Channel 0
+ 858:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_1:  Select ADC Channel 1
+ 859:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_2:  Select ADC Channel 2
+ 860:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_3:  Select ADC Channel 3
+ 861:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_4:  Select ADC Channel 4
+ 862:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_5:  Select ADC Channel 5
+ 863:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_6:  Select ADC Channel 6
+ 864:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_7:  Select ADC Channel 7
+ 865:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_8:  Select ADC Channel 8
+ 866:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_9:  Select ADC Channel 9
+ 867:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_10: Select ADC Channel 10
+ 868:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_11: Select ADC Channel 11
+ 869:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_12: Select ADC Channel 12
+ 870:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_13: Select ADC Channel 13
+ 871:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_14: Select ADC Channel 14
+ 872:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_15: Select ADC Channel 15
+ 873:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_16: Select ADC Channel 16 which is connected to TempSens
+ 874:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_Channel_17: Select ADC Channel 17 which is connected to Vrefint
+ 875:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 876:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval     None
+ 877:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 878:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note       adc can be ADC1, ADC2 or ADC3.
+ 879:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 880:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ConfigAnalogWatchdogSingleChannel(ADC_T* adc, uint8_t channel)
+ 881:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1556              		.loc 1 881 1 is_stmt 1 view -0
+ 1557              		.cfi_startproc
+ 1558              		@ args = 0, pretend = 0, frame = 0
+ 1559              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1560              		@ link register save eliminated.
+ 882:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1_B.AWDCHSEL = BIT_RESET;
+ 1561              		.loc 1 882 5 view .LVU391
+ 1562              		.loc 1 882 27 is_stmt 0 view .LVU392
+ 1563 0000 4368     		ldr	r3, [r0, #4]
+ 1564 0002 6FF30403 		bfc	r3, #0, #5
+ 1565 0006 4360     		str	r3, [r0, #4]
+ 883:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1 |= channel;
+ 1566              		.loc 1 883 5 is_stmt 1 view .LVU393
+ 1567              		.loc 1 883 16 is_stmt 0 view .LVU394
+ 1568 0008 4368     		ldr	r3, [r0, #4]
+ 1569 000a 1943     		orrs	r1, r1, r3
+ 1570              	.LVL129:
+ 1571              		.loc 1 883 16 view .LVU395
+ 1572 000c 4160     		str	r1, [r0, #4]
+ 884:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1573              		.loc 1 884 1 view .LVU396
+ 1574 000e 7047     		bx	lr
+ 1575              		.cfi_endproc
+ 1576              	.LFE104:
+ 1578              		.section	.text.ADC_EnableTempSensorVrefint,"ax",%progbits
+ 1579              		.align	1
+ 1580              		.global	ADC_EnableTempSensorVrefint
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 44
+
+
+ 1581              		.syntax unified
+ 1582              		.thumb
+ 1583              		.thumb_func
+ 1585              	ADC_EnableTempSensorVrefint:
+ 1586              	.LVL130:
+ 1587              	.LFB105:
+ 885:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 886:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 887:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief      Enable the specified ADC temperature sensor and Vrefint channel.
+ 888:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 889:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      adc: Select the ADC peripheral.
+ 890:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 891:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval     None
+ 892:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 893:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note       adc can be ADC1, ADC2 or ADC3.
+ 894:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 895:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableTempSensorVrefint(ADC_T* adc)
+ 896:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1588              		.loc 1 896 1 is_stmt 1 view -0
+ 1589              		.cfi_startproc
+ 1590              		@ args = 0, pretend = 0, frame = 0
+ 1591              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1592              		@ link register save eliminated.
+ 897:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.TSVREFEN = BIT_SET;
+ 1593              		.loc 1 897 5 view .LVU398
+ 1594              		.loc 1 897 27 is_stmt 0 view .LVU399
+ 1595 0000 8368     		ldr	r3, [r0, #8]
+ 1596 0002 43F40003 		orr	r3, r3, #8388608
+ 1597 0006 8360     		str	r3, [r0, #8]
+ 898:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1598              		.loc 1 898 1 view .LVU400
+ 1599 0008 7047     		bx	lr
+ 1600              		.cfi_endproc
+ 1601              	.LFE105:
+ 1603              		.section	.text.ADC_DisableTempSensorVrefint,"ax",%progbits
+ 1604              		.align	1
+ 1605              		.global	ADC_DisableTempSensorVrefint
+ 1606              		.syntax unified
+ 1607              		.thumb
+ 1608              		.thumb_func
+ 1610              	ADC_DisableTempSensorVrefint:
+ 1611              	.LVL131:
+ 1612              	.LFB106:
+ 899:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 900:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 901:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief      Disable the specified ADC temperature sensor and Vrefint channel.
+ 902:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 903:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      adc: Select the ADC peripheral
+ 904:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 905:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval     None
+ 906:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 907:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note       adc can be ADC1, ADC2 or ADC3.
+ 908:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 909:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableTempSensorVrefint(ADC_T* adc)
+ 910:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1613              		.loc 1 910 1 is_stmt 1 view -0
+ 1614              		.cfi_startproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 45
+
+
+ 1615              		@ args = 0, pretend = 0, frame = 0
+ 1616              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1617              		@ link register save eliminated.
+ 911:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL2_B.TSVREFEN = BIT_RESET;
+ 1618              		.loc 1 911 5 view .LVU402
+ 1619              		.loc 1 911 27 is_stmt 0 view .LVU403
+ 1620 0000 8368     		ldr	r3, [r0, #8]
+ 1621 0002 6FF3D753 		bfc	r3, #23, #1
+ 1622 0006 8360     		str	r3, [r0, #8]
+ 912:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1623              		.loc 1 912 1 view .LVU404
+ 1624 0008 7047     		bx	lr
+ 1625              		.cfi_endproc
+ 1626              	.LFE106:
+ 1628              		.section	.text.ADC_EnableInterrupt,"ax",%progbits
+ 1629              		.align	1
+ 1630              		.global	ADC_EnableInterrupt
+ 1631              		.syntax unified
+ 1632              		.thumb
+ 1633              		.thumb_func
+ 1635              	ADC_EnableInterrupt:
+ 1636              	.LVL132:
+ 1637              	.LFB107:
+ 913:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 914:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 915:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief      Enable the specified ADC interrupt.
+ 916:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 917:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      adc: Select the ADC peripheral.
+ 918:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 919:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      interrupt: Select the ADC interrupt sources
+ 920:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        This parameter can be any combination of the following values:
+ 921:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_INT_AWD    : Enable Analog watchdog interrupt
+ 922:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_INT_EOC    : Enable End of conversion interrupt
+ 923:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_INT_INJEOC : Enable End of injected conversion interrupt
+ 924:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 925:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval     None
+ 926:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 927:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note       adc can be ADC1, ADC2 or ADC3.
+ 928:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 929:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_EnableInterrupt(ADC_T* adc, uint16_t interrupt)
+ 930:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1638              		.loc 1 930 1 is_stmt 1 view -0
+ 1639              		.cfi_startproc
+ 1640              		@ args = 0, pretend = 0, frame = 0
+ 1641              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1642              		@ link register save eliminated.
+ 931:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t mask;
+ 1643              		.loc 1 931 5 view .LVU406
+ 932:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 933:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     mask = (uint8_t)interrupt;
+ 1644              		.loc 1 933 5 view .LVU407
+ 1645              		.loc 1 933 10 is_stmt 0 view .LVU408
+ 1646 0000 CBB2     		uxtb	r3, r1
+ 1647              	.LVL133:
+ 934:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1 |= (uint8_t)mask;
+ 1648              		.loc 1 934 5 is_stmt 1 view .LVU409
+ 1649              		.loc 1 934 16 is_stmt 0 view .LVU410
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 46
+
+
+ 1650 0002 4168     		ldr	r1, [r0, #4]
+ 1651              	.LVL134:
+ 1652              		.loc 1 934 16 view .LVU411
+ 1653 0004 1943     		orrs	r1, r1, r3
+ 1654 0006 4160     		str	r1, [r0, #4]
+ 935:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1655              		.loc 1 935 1 view .LVU412
+ 1656 0008 7047     		bx	lr
+ 1657              		.cfi_endproc
+ 1658              	.LFE107:
+ 1660              		.section	.text.ADC_DisableInterrupt,"ax",%progbits
+ 1661              		.align	1
+ 1662              		.global	ADC_DisableInterrupt
+ 1663              		.syntax unified
+ 1664              		.thumb
+ 1665              		.thumb_func
+ 1667              	ADC_DisableInterrupt:
+ 1668              	.LVL135:
+ 1669              	.LFB108:
+ 936:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 937:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 938:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief      Disable the specified ADC interrupt.
+ 939:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 940:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      adc: Select the ADC peripheral.
+ 941:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 942:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param      interrupt: Select the ADC interrupt sources
+ 943:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        This parameter can be any combination of the following values:
+ 944:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_INT_AWD    : Disable Analog watchdog interrupt
+ 945:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_INT_EOC    : Disable End of conversion interrupt
+ 946:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                        @arg ADC_INT_INJEOC : Disable End of injected conversion interrupt
+ 947:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 948:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval     None
+ 949:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 950:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note       adc can be ADC1, ADC2 or ADC3.
+ 951:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 952:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_DisableInterrupt(ADC_T* adc, uint16_t interrupt)
+ 953:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1670              		.loc 1 953 1 is_stmt 1 view -0
+ 1671              		.cfi_startproc
+ 1672              		@ args = 0, pretend = 0, frame = 0
+ 1673              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1674              		@ link register save eliminated.
+ 954:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t mask;
+ 1675              		.loc 1 954 5 view .LVU414
+ 955:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 956:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     mask = (uint8_t)interrupt;
+ 1676              		.loc 1 956 5 view .LVU415
+ 1677              		.loc 1 956 10 is_stmt 0 view .LVU416
+ 1678 0000 CBB2     		uxtb	r3, r1
+ 1679              	.LVL136:
+ 957:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->CTRL1 &= (~(uint32_t)mask);
+ 1680              		.loc 1 957 5 is_stmt 1 view .LVU417
+ 1681              		.loc 1 957 16 is_stmt 0 view .LVU418
+ 1682 0002 4168     		ldr	r1, [r0, #4]
+ 1683              	.LVL137:
+ 1684              		.loc 1 957 16 view .LVU419
+ 1685 0004 21EA0301 		bic	r1, r1, r3
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 47
+
+
+ 1686 0008 4160     		str	r1, [r0, #4]
+ 958:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1687              		.loc 1 958 1 view .LVU420
+ 1688 000a 7047     		bx	lr
+ 1689              		.cfi_endproc
+ 1690              	.LFE108:
+ 1692              		.section	.text.ADC_ReadStatusFlag,"ax",%progbits
+ 1693              		.align	1
+ 1694              		.global	ADC_ReadStatusFlag
+ 1695              		.syntax unified
+ 1696              		.thumb
+ 1697              		.thumb_func
+ 1699              	ADC_ReadStatusFlag:
+ 1700              	.LVL138:
+ 1701              	.LFB109:
+ 959:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 960:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 961:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief     Reads the specified ADC flag
+ 962:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 963:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     adc: Select the ADC peripheral
+ 964:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 965:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     flag: Select the flag to check
+ 966:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  This parameter can be one of the following values:
+ 967:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_AWD   : Analog watchdog flag
+ 968:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_EOC   : End of conversion flag
+ 969:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_INJEOC: End of injected group conversion flag
+ 970:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_INJCS : Injected group conversion Start flag
+ 971:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_REGCS : Regular group conversion Start flag
+ 972:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 973:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval    The status of ADC flag
+ 974:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 975:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note      adc can be ADC1, ADC2 or ADC3.
+ 976:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 977:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint8_t ADC_ReadStatusFlag(ADC_T* adc, ADC_FLAG_T flag)
+ 978:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1702              		.loc 1 978 1 is_stmt 1 view -0
+ 1703              		.cfi_startproc
+ 1704              		@ args = 0, pretend = 0, frame = 0
+ 1705              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1706              		@ link register save eliminated.
+ 979:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return (adc->STS & flag) ? SET : RESET;
+ 1707              		.loc 1 979 5 view .LVU422
+ 1708              		.loc 1 979 16 is_stmt 0 view .LVU423
+ 1709 0000 0368     		ldr	r3, [r0]
+ 1710              		.loc 1 979 36 view .LVU424
+ 1711 0002 1942     		tst	r1, r3
+ 980:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1712              		.loc 1 980 1 view .LVU425
+ 1713 0004 14BF     		ite	ne
+ 1714 0006 0120     		movne	r0, #1
+ 1715              	.LVL139:
+ 1716              		.loc 1 980 1 view .LVU426
+ 1717 0008 0020     		moveq	r0, #0
+ 1718 000a 7047     		bx	lr
+ 1719              		.cfi_endproc
+ 1720              	.LFE109:
+ 1722              		.section	.text.ADC_ClearStatusFlag,"ax",%progbits
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 48
+
+
+ 1723              		.align	1
+ 1724              		.global	ADC_ClearStatusFlag
+ 1725              		.syntax unified
+ 1726              		.thumb
+ 1727              		.thumb_func
+ 1729              	ADC_ClearStatusFlag:
+ 1730              	.LVL140:
+ 1731              	.LFB110:
+ 981:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+ 982:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+ 983:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief     Clears the specified ADC flag
+ 984:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 985:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     adc: Select the ADC peripheral
+ 986:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 987:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param     flag: Select the flag to clear
+ 988:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  This parameter can be any combination of the following values:
+ 989:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_AWD   : Analog watchdog flag
+ 990:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_EOC   : End of conversion flag
+ 991:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_INJEOC: End of injected group conversion flag
+ 992:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_INJCS : Injected group conversion Start flag
+ 993:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                  @arg ADC_FLAG_REGCS : Regular group conversion Start flag
+ 994:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 995:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval    None
+ 996:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+ 997:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note      adc can be ADC1, ADC2 or ADC3.
+ 998:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+ 999:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ClearStatusFlag(ADC_T* adc, uint8_t flag)
+1000:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1732              		.loc 1 1000 1 is_stmt 1 view -0
+ 1733              		.cfi_startproc
+ 1734              		@ args = 0, pretend = 0, frame = 0
+ 1735              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1736              		@ link register save eliminated.
+1001:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->STS = ~(uint32_t)flag;
+ 1737              		.loc 1 1001 5 view .LVU428
+ 1738              		.loc 1 1001 16 is_stmt 0 view .LVU429
+ 1739 0000 C943     		mvns	r1, r1
+ 1740              	.LVL141:
+ 1741              		.loc 1 1001 14 view .LVU430
+ 1742 0002 0160     		str	r1, [r0]
+1002:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1743              		.loc 1 1002 1 view .LVU431
+ 1744 0004 7047     		bx	lr
+ 1745              		.cfi_endproc
+ 1746              	.LFE110:
+ 1748              		.section	.text.ADC_ReadIntFlag,"ax",%progbits
+ 1749              		.align	1
+ 1750              		.global	ADC_ReadIntFlag
+ 1751              		.syntax unified
+ 1752              		.thumb
+ 1753              		.thumb_func
+ 1755              	ADC_ReadIntFlag:
+ 1756              	.LVL142:
+ 1757              	.LFB111:
+1003:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+1004:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+1005:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Reads the specified ADC Interrupt flag.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 49
+
+
+1006:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1007:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+1008:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1009:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        interrupt: Select the ADC interrupt source.
+1010:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          This parameter can be one of the following values:
+1011:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          @arg ADC_INT_AWD    : Enable Analog watchdog interrupt
+1012:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          @arg ADC_INT_EOC    : Enable End of conversion interrupt
+1013:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          @arg ADC_INT_INJEOC : Enable End of injected conversion interrupt
+1014:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1015:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       The status of ADC interrupt
+1016:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1017:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+1018:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+1019:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** uint8_t ADC_ReadIntFlag(ADC_T* adc, ADC_INT_T flag)
+1020:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1758              		.loc 1 1020 1 is_stmt 1 view -0
+ 1759              		.cfi_startproc
+ 1760              		@ args = 0, pretend = 0, frame = 0
+ 1761              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1762              		@ link register save eliminated.
+1021:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t bitStatus = RESET;
+ 1763              		.loc 1 1021 5 view .LVU433
+1022:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t itmask = 0;
+ 1764              		.loc 1 1022 5 view .LVU434
+1023:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint32_t enableStatus = 0;
+ 1765              		.loc 1 1023 5 view .LVU435
+1024:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+1025:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     itmask = flag >> 8;
+ 1766              		.loc 1 1025 5 view .LVU436
+1026:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     enableStatus = (adc->CTRL1 & (uint8_t)flag);
+ 1767              		.loc 1 1026 5 view .LVU437
+ 1768              		.loc 1 1026 24 is_stmt 0 view .LVU438
+ 1769 0000 4368     		ldr	r3, [r0, #4]
+ 1770              		.loc 1 1026 34 view .LVU439
+ 1771 0002 CAB2     		uxtb	r2, r1
+ 1772              		.loc 1 1026 18 view .LVU440
+ 1773 0004 1340     		ands	r3, r3, r2
+ 1774              	.LVL143:
+1027:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+1028:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     if (((adc->STS & itmask) != (uint32_t)RESET) && enableStatus)
+ 1775              		.loc 1 1028 5 is_stmt 1 view .LVU441
+ 1776              		.loc 1 1028 14 is_stmt 0 view .LVU442
+ 1777 0006 0268     		ldr	r2, [r0]
+ 1778              		.loc 1 1028 8 view .LVU443
+ 1779 0008 12EA1122 		ands	r2, r2, r1, lsr #8
+ 1780 000c 02D0     		beq	.L74
+ 1781              		.loc 1 1028 50 discriminator 1 view .LVU444
+ 1782 000e 1BB9     		cbnz	r3, .L75
+1029:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+1030:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         bitStatus = SET;
+1031:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+1032:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     else
+1033:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     {
+1034:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****         bitStatus = RESET;
+ 1783              		.loc 1 1034 19 view .LVU445
+ 1784 0010 0020     		movs	r0, #0
+ 1785              	.LVL144:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 50
+
+
+ 1786              		.loc 1 1034 19 view .LVU446
+ 1787 0012 7047     		bx	lr
+ 1788              	.LVL145:
+ 1789              	.L74:
+ 1790              		.loc 1 1034 19 view .LVU447
+ 1791 0014 0020     		movs	r0, #0
+ 1792              	.LVL146:
+ 1793              		.loc 1 1034 19 view .LVU448
+ 1794 0016 7047     		bx	lr
+ 1795              	.LVL147:
+ 1796              	.L75:
+1030:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+ 1797              		.loc 1 1030 19 view .LVU449
+ 1798 0018 0120     		movs	r0, #1
+ 1799              	.LVL148:
+1035:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     }
+1036:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     return  bitStatus;
+ 1800              		.loc 1 1036 5 is_stmt 1 view .LVU450
+1037:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1801              		.loc 1 1037 1 is_stmt 0 view .LVU451
+ 1802 001a 7047     		bx	lr
+ 1803              		.cfi_endproc
+ 1804              	.LFE111:
+ 1806              		.section	.text.ADC_ClearIntFlag,"ax",%progbits
+ 1807              		.align	1
+ 1808              		.global	ADC_ClearIntFlag
+ 1809              		.syntax unified
+ 1810              		.thumb
+ 1811              		.thumb_func
+ 1813              	ADC_ClearIntFlag:
+ 1814              	.LVL149:
+ 1815              	.LFB112:
+1038:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+1039:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** /*!
+1040:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @brief        Clears the specified ADC Interrupt pending bits.
+1041:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1042:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        adc: Select the ADC peripheral.
+1043:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1044:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @param        interrupt: Select the ADC interrupt source.
+1045:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          This parameter can be any combination of the following values:
+1046:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          @arg ADC_INT_AWD    : Enable Analog watchdog interrupt
+1047:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          @arg ADC_INT_EOC    : Enable End of conversion interrupt
+1048:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *                          @arg ADC_INT_INJEOC : Enable End of injected conversion interrupt
+1049:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1050:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @retval       None
+1051:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  *
+1052:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  * @note         adc can be ADC1, ADC2 or ADC3.
+1053:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****  */
+1054:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** void ADC_ClearIntFlag(ADC_T* adc, uint16_t flag)
+1055:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** {
+ 1816              		.loc 1 1055 1 is_stmt 1 view -0
+ 1817              		.cfi_startproc
+ 1818              		@ args = 0, pretend = 0, frame = 0
+ 1819              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1820              		@ link register save eliminated.
+1056:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     uint8_t mask = 0;
+ 1821              		.loc 1 1056 5 view .LVU453
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 51
+
+
+1057:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** 
+1058:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     mask = (uint8_t)(flag >> 8);
+ 1822              		.loc 1 1058 5 view .LVU454
+1059:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c ****     adc->STS = ~(uint32_t)mask;
+ 1823              		.loc 1 1059 5 view .LVU455
+ 1824              		.loc 1 1059 16 is_stmt 0 view .LVU456
+ 1825 0000 6FEA1121 		mvn	r1, r1, lsr #8
+ 1826              	.LVL150:
+ 1827              		.loc 1 1059 14 view .LVU457
+ 1828 0004 0160     		str	r1, [r0]
+1060:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_adc.c **** }
+ 1829              		.loc 1 1060 1 view .LVU458
+ 1830 0006 7047     		bx	lr
+ 1831              		.cfi_endproc
+ 1832              	.LFE112:
+ 1834              		.text
+ 1835              	.Letext0:
+ 1836              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1837              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1838              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 1839              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_adc.h"
+ 1840              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rcm.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 52
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_adc.c
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:18     .text.ADC_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:24     .text.ADC_Reset:00000000 ADC_Reset
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:100    .text.ADC_Reset:0000004c $d
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:107    .text.ADC_Config:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:113    .text.ADC_Config:00000000 ADC_Config
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:204    .text.ADC_Config:00000048 $d
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:209    .text.ADC_ConfigStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:215    .text.ADC_ConfigStructInit:00000000 ADC_ConfigStructInit
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:249    .text.ADC_Enable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:255    .text.ADC_Enable:00000000 ADC_Enable
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:274    .text.ADC_Disable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:280    .text.ADC_Disable:00000000 ADC_Disable
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:299    .text.ADC_EnableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:305    .text.ADC_EnableDMA:00000000 ADC_EnableDMA
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:324    .text.ADC_DisableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:330    .text.ADC_DisableDMA:00000000 ADC_DisableDMA
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:349    .text.ADC_ResetCalibration:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:355    .text.ADC_ResetCalibration:00000000 ADC_ResetCalibration
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:374    .text.ADC_ReadResetCalibrationStatus:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:380    .text.ADC_ReadResetCalibrationStatus:00000000 ADC_ReadResetCalibrationStatus
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:403    .text.ADC_StartCalibration:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:409    .text.ADC_StartCalibration:00000000 ADC_StartCalibration
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:428    .text.ADC_ReadCalibrationStartFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:434    .text.ADC_ReadCalibrationStartFlag:00000000 ADC_ReadCalibrationStartFlag
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:457    .text.ADC_EnableSoftwareStartConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:463    .text.ADC_EnableSoftwareStartConv:00000000 ADC_EnableSoftwareStartConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:482    .text.ADC_DisableSoftwareStartConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:488    .text.ADC_DisableSoftwareStartConv:00000000 ADC_DisableSoftwareStartConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:507    .text.ADC_ReadSoftwareStartConvStatus:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:513    .text.ADC_ReadSoftwareStartConvStatus:00000000 ADC_ReadSoftwareStartConvStatus
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:536    .text.ADC_ConfigDiscMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:542    .text.ADC_ConfigDiscMode:00000000 ADC_ConfigDiscMode
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:570    .text.ADC_EnableDiscMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:576    .text.ADC_EnableDiscMode:00000000 ADC_EnableDiscMode
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:595    .text.ADC_DisableDiscMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:601    .text.ADC_DisableDiscMode:00000000 ADC_DisableDiscMode
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:620    .text.ADC_ConfigRegularChannel:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:626    .text.ADC_ConfigRegularChannel:00000000 ADC_ConfigRegularChannel
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:812    .text.ADC_EnableExternalTrigConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:818    .text.ADC_EnableExternalTrigConv:00000000 ADC_EnableExternalTrigConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:837    .text.ADC_DisableExternalTrigConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:843    .text.ADC_DisableExternalTrigConv:00000000 ADC_DisableExternalTrigConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:862    .text.ADC_ReadConversionValue:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:868    .text.ADC_ReadConversionValue:00000000 ADC_ReadConversionValue
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:887    .text.ADC_ReadDualModeConversionValue:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:893    .text.ADC_ReadDualModeConversionValue:00000000 ADC_ReadDualModeConversionValue
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:911    .text.ADC_ReadDualModeConversionValue:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:916    .text.ADC_EnableAutoInjectedConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:922    .text.ADC_EnableAutoInjectedConv:00000000 ADC_EnableAutoInjectedConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:941    .text.ADC_DisableAutoInjectedConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:947    .text.ADC_DisableAutoInjectedConv:00000000 ADC_DisableAutoInjectedConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:966    .text.ADC_EnableInjectedDiscMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:972    .text.ADC_EnableInjectedDiscMode:00000000 ADC_EnableInjectedDiscMode
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:991    .text.ADC_DisableInjectedDiscMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:997    .text.ADC_DisableInjectedDiscMode:00000000 ADC_DisableInjectedDiscMode
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s 			page 53
+
+
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1016   .text.ADC_ConfigExternalTrigInjectedConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1022   .text.ADC_ConfigExternalTrigInjectedConv:00000000 ADC_ConfigExternalTrigInjectedConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1049   .text.ADC_EnableExternalTrigInjectedConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1055   .text.ADC_EnableExternalTrigInjectedConv:00000000 ADC_EnableExternalTrigInjectedConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1074   .text.ADC_DisableExternalTrigInjectedConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1080   .text.ADC_DisableExternalTrigInjectedConv:00000000 ADC_DisableExternalTrigInjectedConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1099   .text.ADC_EnableSoftwareStartInjectedConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1105   .text.ADC_EnableSoftwareStartInjectedConv:00000000 ADC_EnableSoftwareStartInjectedConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1129   .text.ADC_DisableSoftwareStartInjectedConv:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1135   .text.ADC_DisableSoftwareStartInjectedConv:00000000 ADC_DisableSoftwareStartInjectedConv
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1159   .text.ADC_ReadSoftwareStartInjectedConvStatus:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1165   .text.ADC_ReadSoftwareStartInjectedConvStatus:00000000 ADC_ReadSoftwareStartInjectedConvStatus
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1188   .text.ADC_ConfigInjectedChannel:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1194   .text.ADC_ConfigInjectedChannel:00000000 ADC_ConfigInjectedChannel
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1328   .text.ADC_ConfigInjectedSequencerLength:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1334   .text.ADC_ConfigInjectedSequencerLength:00000000 ADC_ConfigInjectedSequencerLength
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1367   .text.ADC_ConfigInjectedOffset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1373   .text.ADC_ConfigInjectedOffset:00000000 ADC_ConfigInjectedOffset
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1414   .text.ADC_ReadInjectedConversionValue:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1420   .text.ADC_ReadInjectedConversionValue:00000000 ADC_ReadInjectedConversionValue
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1464   .text.ADC_EnableAnalogWatchdog:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1470   .text.ADC_EnableAnalogWatchdog:00000000 ADC_EnableAnalogWatchdog
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1495   .text.ADC_DisableAnalogWatchdog:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1501   .text.ADC_DisableAnalogWatchdog:00000000 ADC_DisableAnalogWatchdog
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1521   .text.ADC_ConfigAnalogWatchdogThresholds:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1527   .text.ADC_ConfigAnalogWatchdogThresholds:00000000 ADC_ConfigAnalogWatchdogThresholds
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1547   .text.ADC_ConfigAnalogWatchdogSingleChannel:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1553   .text.ADC_ConfigAnalogWatchdogSingleChannel:00000000 ADC_ConfigAnalogWatchdogSingleChannel
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1579   .text.ADC_EnableTempSensorVrefint:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1585   .text.ADC_EnableTempSensorVrefint:00000000 ADC_EnableTempSensorVrefint
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1604   .text.ADC_DisableTempSensorVrefint:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1610   .text.ADC_DisableTempSensorVrefint:00000000 ADC_DisableTempSensorVrefint
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1629   .text.ADC_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1635   .text.ADC_EnableInterrupt:00000000 ADC_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1661   .text.ADC_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1667   .text.ADC_DisableInterrupt:00000000 ADC_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1693   .text.ADC_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1699   .text.ADC_ReadStatusFlag:00000000 ADC_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1723   .text.ADC_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1729   .text.ADC_ClearStatusFlag:00000000 ADC_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1749   .text.ADC_ReadIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1755   .text.ADC_ReadIntFlag:00000000 ADC_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1807   .text.ADC_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\ccDJqVyb.s:1813   .text.ADC_ClearIntFlag:00000000 ADC_ClearIntFlag
+
+UNDEFINED SYMBOLS
+RCM_EnableAPB2PeriphReset
+RCM_DisableAPB2PeriphReset

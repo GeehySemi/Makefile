@@ -1,0 +1,2276 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_sdio.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.SDIO_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	SDIO_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	SDIO_Reset:
+  25              	.LFB65:
+  26              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @file        apm32f10x_sdio.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief       This file provides all the SDIO firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** #include "apm32f10x_sdio.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** */
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 2
+
+
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /** @addtogroup SDIO_Driver SDIO Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /** @addtogroup SDIO_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Reset sdio peripheral registers to their default reset values
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_Reset(void)
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+  27              		.loc 1 49 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->PWRCTRL  = 0x00000000;
+  32              		.loc 1 50 5 view .LVU1
+  33              		.loc 1 50 20 is_stmt 0 view .LVU2
+  34 0000 064B     		ldr	r3, .L2
+  35 0002 0022     		movs	r2, #0
+  36 0004 1A60     		str	r2, [r3]
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->CLKCTRL  = 0x00000000;
+  37              		.loc 1 51 5 is_stmt 1 view .LVU3
+  38              		.loc 1 51 20 is_stmt 0 view .LVU4
+  39 0006 5A60     		str	r2, [r3, #4]
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->ARG      = 0x00000000;
+  40              		.loc 1 52 5 is_stmt 1 view .LVU5
+  41              		.loc 1 52 20 is_stmt 0 view .LVU6
+  42 0008 9A60     		str	r2, [r3, #8]
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->CMD      = 0x00000000;
+  43              		.loc 1 53 5 is_stmt 1 view .LVU7
+  44              		.loc 1 53 20 is_stmt 0 view .LVU8
+  45 000a DA60     		str	r2, [r3, #12]
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->DATATIME = 0x00000000;
+  46              		.loc 1 54 5 is_stmt 1 view .LVU9
+  47              		.loc 1 54 20 is_stmt 0 view .LVU10
+  48 000c 5A62     		str	r2, [r3, #36]
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->DATALEN  = 0x00000000;
+  49              		.loc 1 55 5 is_stmt 1 view .LVU11
+  50              		.loc 1 55 20 is_stmt 0 view .LVU12
+  51 000e 9A62     		str	r2, [r3, #40]
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->DCTRL    = 0x00000000;
+  52              		.loc 1 56 5 is_stmt 1 view .LVU13
+  53              		.loc 1 56 20 is_stmt 0 view .LVU14
+  54 0010 DA62     		str	r2, [r3, #44]
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->ICF      = 0x00C007FF;
+  55              		.loc 1 57 5 is_stmt 1 view .LVU15
+  56              		.loc 1 57 20 is_stmt 0 view .LVU16
+  57 0012 0349     		ldr	r1, .L2+4
+  58 0014 9963     		str	r1, [r3, #56]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 3
+
+
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->MASK     = 0x00000000;
+  59              		.loc 1 58 5 is_stmt 1 view .LVU17
+  60              		.loc 1 58 20 is_stmt 0 view .LVU18
+  61 0016 DA63     		str	r2, [r3, #60]
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+  62              		.loc 1 59 1 view .LVU19
+  63 0018 7047     		bx	lr
+  64              	.L3:
+  65 001a 00BF     		.align	2
+  66              	.L2:
+  67 001c 00800140 		.word	1073840128
+  68 0020 FF07C000 		.word	12584959
+  69              		.cfi_endproc
+  70              	.LFE65:
+  72              		.section	.text.SDIO_Config,"ax",%progbits
+  73              		.align	1
+  74              		.global	SDIO_Config
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  79              	SDIO_Config:
+  80              	.LVL0:
+  81              	.LFB66:
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Config the SDIO peripheral according to the specified parameters in the sdioConfig
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        sdioConfig: pointer to a SDIO_Config_T structure
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_Config(SDIO_Config_T* sdioConfig)
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+  82              		.loc 1 69 1 is_stmt 1 view -0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  86              		@ link register save eliminated.
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     uint32_t tmp = 0;
+  87              		.loc 1 70 5 view .LVU21
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmp = SDIO->CLKCTRL;
+  88              		.loc 1 72 5 view .LVU22
+  89              		.loc 1 72 9 is_stmt 0 view .LVU23
+  90 0000 0D49     		ldr	r1, .L5
+  91 0002 4A68     		ldr	r2, [r1, #4]
+  92              	.LVL1:
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmp &= 0xFFFF8100;
+  93              		.loc 1 73 5 is_stmt 1 view .LVU24
+  94              		.loc 1 73 9 is_stmt 0 view .LVU25
+  95 0004 22F4FD42 		bic	r2, r2, #32384
+  96              	.LVL2:
+  97              		.loc 1 73 9 view .LVU26
+  98 0008 22F07F02 		bic	r2, r2, #127
+  99              	.LVL3:
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmp |= (sdioConfig->clockDiv  | sdioConfig->clockPowerSave | sdioConfig->clockBypass | sdioConf
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 4
+
+
+ 100              		.loc 1 75 5 is_stmt 1 view .LVU27
+ 101              		.loc 1 75 23 is_stmt 0 view .LVU28
+ 102 000c 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 103              		.loc 1 75 47 view .LVU29
+ 104 000e B0F804C0 		ldrh	ip, [r0, #4]
+ 105              		.loc 1 75 35 view .LVU30
+ 106 0012 43EA0C03 		orr	r3, r3, ip
+ 107              		.loc 1 75 76 view .LVU31
+ 108 0016 B0F802C0 		ldrh	ip, [r0, #2]
+ 109              		.loc 1 75 64 view .LVU32
+ 110 001a 43EA0C03 		orr	r3, r3, ip
+ 111              		.loc 1 75 102 view .LVU33
+ 112 001e B0F806C0 		ldrh	ip, [r0, #6]
+ 113              		.loc 1 75 90 view .LVU34
+ 114 0022 43EA0C03 		orr	r3, r3, ip
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     sdioConfig->clockEdge | sdioConfig->hardwareFlowControl);
+ 115              		.loc 1 76 15 view .LVU35
+ 116 0026 B0F800C0 		ldrh	ip, [r0]
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     sdioConfig->clockEdge | sdioConfig->hardwareFlowControl);
+ 117              		.loc 1 75 112 view .LVU36
+ 118 002a 43EA0C03 		orr	r3, r3, ip
+ 119              		.loc 1 76 39 view .LVU37
+ 120 002e 0089     		ldrh	r0, [r0, #8]
+ 121              	.LVL4:
+ 122              		.loc 1 76 27 view .LVU38
+ 123 0030 0343     		orrs	r3, r3, r0
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     sdioConfig->clockEdge | sdioConfig->hardwareFlowControl);
+ 124              		.loc 1 75 9 view .LVU39
+ 125 0032 1343     		orrs	r3, r3, r2
+ 126              	.LVL5:
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->CLKCTRL = tmp;
+ 127              		.loc 1 78 5 is_stmt 1 view .LVU40
+ 128              		.loc 1 78 19 is_stmt 0 view .LVU41
+ 129 0034 4B60     		str	r3, [r1, #4]
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 130              		.loc 1 79 1 view .LVU42
+ 131 0036 7047     		bx	lr
+ 132              	.L6:
+ 133              		.align	2
+ 134              	.L5:
+ 135 0038 00800140 		.word	1073840128
+ 136              		.cfi_endproc
+ 137              	.LFE66:
+ 139              		.section	.text.SDIO_ConfigStructInit,"ax",%progbits
+ 140              		.align	1
+ 141              		.global	SDIO_ConfigStructInit
+ 142              		.syntax unified
+ 143              		.thumb
+ 144              		.thumb_func
+ 146              	SDIO_ConfigStructInit:
+ 147              	.LVL6:
+ 148              	.LFB67:
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Fills each SDIO_Config_T member with its default value
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 5
+
+
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        sdioConfig: pointer to a SDIO_Config_T structure
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_ConfigStructInit(SDIO_Config_T* sdioConfig)
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 149              		.loc 1 89 1 is_stmt 1 view -0
+ 150              		.cfi_startproc
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153              		@ link register save eliminated.
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   sdioConfig->clockDiv = 0x00;
+ 154              		.loc 1 90 3 view .LVU44
+ 155              		.loc 1 90 24 is_stmt 0 view .LVU45
+ 156 0000 0023     		movs	r3, #0
+ 157 0002 8372     		strb	r3, [r0, #10]
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   sdioConfig->clockEdge = SDIO_CLOCK_EDGE_RISING;
+ 158              		.loc 1 91 3 is_stmt 1 view .LVU46
+ 159              		.loc 1 91 25 is_stmt 0 view .LVU47
+ 160 0004 0380     		strh	r3, [r0]	@ movhi
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   sdioConfig->clockBypass = SDIO_CLOCK_BYPASS_DISABLE;
+ 161              		.loc 1 92 3 is_stmt 1 view .LVU48
+ 162              		.loc 1 92 27 is_stmt 0 view .LVU49
+ 163 0006 4380     		strh	r3, [r0, #2]	@ movhi
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   sdioConfig->clockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
+ 164              		.loc 1 93 3 is_stmt 1 view .LVU50
+ 165              		.loc 1 93 30 is_stmt 0 view .LVU51
+ 166 0008 8380     		strh	r3, [r0, #4]	@ movhi
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   sdioConfig->busWide = SDIO_BUS_WIDE_1B;
+ 167              		.loc 1 94 3 is_stmt 1 view .LVU52
+ 168              		.loc 1 94 23 is_stmt 0 view .LVU53
+ 169 000a C380     		strh	r3, [r0, #6]	@ movhi
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   sdioConfig->hardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
+ 170              		.loc 1 95 3 is_stmt 1 view .LVU54
+ 171              		.loc 1 95 35 is_stmt 0 view .LVU55
+ 172 000c 0381     		strh	r3, [r0, #8]	@ movhi
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 173              		.loc 1 96 1 view .LVU56
+ 174 000e 7047     		bx	lr
+ 175              		.cfi_endproc
+ 176              	.LFE67:
+ 178              		.section	.text.SDIO_EnableClock,"ax",%progbits
+ 179              		.align	1
+ 180              		.global	SDIO_EnableClock
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 185              	SDIO_EnableClock:
+ 186              	.LFB68:
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Enables the SDIO clock
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 6
+
+
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableClock(void)
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 187              		.loc 1 106 1 is_stmt 1 view -0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191              		@ link register save eliminated.
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CLKCTRL_CLKEN_BB = (uint32_t)SET;
+ 192              		.loc 1 107 5 view .LVU58
+ 193              		.loc 1 107 41 is_stmt 0 view .LVU59
+ 194 0000 024B     		ldr	r3, .L9
+ 195 0002 0122     		movs	r2, #1
+ 196 0004 C3F8A020 		str	r2, [r3, #160]
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 197              		.loc 1 108 1 view .LVU60
+ 198 0008 7047     		bx	lr
+ 199              	.L10:
+ 200 000a 00BF     		.align	2
+ 201              	.L9:
+ 202 000c 00003042 		.word	1110441984
+ 203              		.cfi_endproc
+ 204              	.LFE68:
+ 206              		.section	.text.SDIO_DisableClock,"ax",%progbits
+ 207              		.align	1
+ 208              		.global	SDIO_DisableClock
+ 209              		.syntax unified
+ 210              		.thumb
+ 211              		.thumb_func
+ 213              	SDIO_DisableClock:
+ 214              	.LFB69:
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables the SDIO clock
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableClock(void)
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 215              		.loc 1 118 1 is_stmt 1 view -0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 0
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219              		@ link register save eliminated.
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CLKCTRL_CLKEN_BB = (uint32_t)RESET;
+ 220              		.loc 1 119 5 view .LVU62
+ 221              		.loc 1 119 41 is_stmt 0 view .LVU63
+ 222 0000 024B     		ldr	r3, .L12
+ 223 0002 0022     		movs	r2, #0
+ 224 0004 C3F8A020 		str	r2, [r3, #160]
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 225              		.loc 1 120 1 view .LVU64
+ 226 0008 7047     		bx	lr
+ 227              	.L13:
+ 228 000a 00BF     		.align	2
+ 229              	.L12:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 7
+
+
+ 230 000c 00003042 		.word	1110441984
+ 231              		.cfi_endproc
+ 232              	.LFE69:
+ 234              		.section	.text.SDIO_ConfigPowerState,"ax",%progbits
+ 235              		.align	1
+ 236              		.global	SDIO_ConfigPowerState
+ 237              		.syntax unified
+ 238              		.thumb
+ 239              		.thumb_func
+ 241              	SDIO_ConfigPowerState:
+ 242              	.LVL7:
+ 243              	.LFB70:
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Sets the power status of the controller
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        powerState: new state of the Power state
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     The parameter can be one of following values:
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_POWER_STATE_OFF
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_POWER_STATE_ON
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval    None
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_ConfigPowerState(SDIO_POWER_STATE_T powerState)
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 244              		.loc 1 132 1 is_stmt 1 view -0
+ 245              		.cfi_startproc
+ 246              		@ args = 0, pretend = 0, frame = 0
+ 247              		@ frame_needed = 0, uses_anonymous_args = 0
+ 248              		@ link register save eliminated.
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->PWRCTRL &= 0xFFFFFFFC;
+ 249              		.loc 1 133 5 view .LVU66
+ 250              		.loc 1 133 19 is_stmt 0 view .LVU67
+ 251 0000 044B     		ldr	r3, .L15
+ 252 0002 1A68     		ldr	r2, [r3]
+ 253 0004 22F00302 		bic	r2, r2, #3
+ 254 0008 1A60     		str	r2, [r3]
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->PWRCTRL |= powerState;
+ 255              		.loc 1 134 5 is_stmt 1 view .LVU68
+ 256              		.loc 1 134 19 is_stmt 0 view .LVU69
+ 257 000a 1A68     		ldr	r2, [r3]
+ 258 000c 1043     		orrs	r0, r0, r2
+ 259              	.LVL8:
+ 260              		.loc 1 134 19 view .LVU70
+ 261 000e 1860     		str	r0, [r3]
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 262              		.loc 1 135 1 view .LVU71
+ 263 0010 7047     		bx	lr
+ 264              	.L16:
+ 265 0012 00BF     		.align	2
+ 266              	.L15:
+ 267 0014 00800140 		.word	1073840128
+ 268              		.cfi_endproc
+ 269              	.LFE70:
+ 271              		.section	.text.SDIO_ReadPowerState,"ax",%progbits
+ 272              		.align	1
+ 273              		.global	SDIO_ReadPowerState
+ 274              		.syntax unified
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 8
+
+
+ 275              		.thumb
+ 276              		.thumb_func
+ 278              	SDIO_ReadPowerState:
+ 279              	.LFB71:
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Reads the SDIO power state
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       The new state SDIO power
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @note         0x00:Power OFF, 0x02:Power UP, 0x03:Power ON
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint32_t SDIO_ReadPowerState(void)
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 280              		.loc 1 147 1 is_stmt 1 view -0
+ 281              		.cfi_startproc
+ 282              		@ args = 0, pretend = 0, frame = 0
+ 283              		@ frame_needed = 0, uses_anonymous_args = 0
+ 284              		@ link register save eliminated.
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     return (SDIO->PWRCTRL & (~0xFFFFFFFC));
+ 285              		.loc 1 148 5 view .LVU73
+ 286              		.loc 1 148 17 is_stmt 0 view .LVU74
+ 287 0000 024B     		ldr	r3, .L18
+ 288 0002 1868     		ldr	r0, [r3]
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 289              		.loc 1 149 1 view .LVU75
+ 290 0004 00F00300 		and	r0, r0, #3
+ 291 0008 7047     		bx	lr
+ 292              	.L19:
+ 293 000a 00BF     		.align	2
+ 294              	.L18:
+ 295 000c 00800140 		.word	1073840128
+ 296              		.cfi_endproc
+ 297              	.LFE71:
+ 299              		.section	.text.SDIO_EnableDMA,"ax",%progbits
+ 300              		.align	1
+ 301              		.global	SDIO_EnableDMA
+ 302              		.syntax unified
+ 303              		.thumb
+ 304              		.thumb_func
+ 306              	SDIO_EnableDMA:
+ 307              	.LFB72:
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Enables the SDIO DMA request
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableDMA(void)
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 308              		.loc 1 159 1 is_stmt 1 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 9
+
+
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		@ link register save eliminated.
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) DCTRL_DMAEN_BB = (uint32_t)SET;
+ 313              		.loc 1 160 5 view .LVU77
+ 314              		.loc 1 160 39 is_stmt 0 view .LVU78
+ 315 0000 024B     		ldr	r3, .L21
+ 316 0002 0122     		movs	r2, #1
+ 317 0004 C3F88C25 		str	r2, [r3, #1420]
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 318              		.loc 1 161 1 view .LVU79
+ 319 0008 7047     		bx	lr
+ 320              	.L22:
+ 321 000a 00BF     		.align	2
+ 322              	.L21:
+ 323 000c 00003042 		.word	1110441984
+ 324              		.cfi_endproc
+ 325              	.LFE72:
+ 327              		.section	.text.SDIO_DisableDMA,"ax",%progbits
+ 328              		.align	1
+ 329              		.global	SDIO_DisableDMA
+ 330              		.syntax unified
+ 331              		.thumb
+ 332              		.thumb_func
+ 334              	SDIO_DisableDMA:
+ 335              	.LFB73:
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables the SDIO DMA request
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableDMA(void)
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 336              		.loc 1 171 1 is_stmt 1 view -0
+ 337              		.cfi_startproc
+ 338              		@ args = 0, pretend = 0, frame = 0
+ 339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 340              		@ link register save eliminated.
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) DCTRL_DMAEN_BB = (uint32_t)RESET;
+ 341              		.loc 1 172 5 view .LVU81
+ 342              		.loc 1 172 39 is_stmt 0 view .LVU82
+ 343 0000 024B     		ldr	r3, .L24
+ 344 0002 0022     		movs	r2, #0
+ 345 0004 C3F88C25 		str	r2, [r3, #1420]
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 346              		.loc 1 173 1 view .LVU83
+ 347 0008 7047     		bx	lr
+ 348              	.L25:
+ 349 000a 00BF     		.align	2
+ 350              	.L24:
+ 351 000c 00003042 		.word	1110441984
+ 352              		.cfi_endproc
+ 353              	.LFE73:
+ 355              		.section	.text.SDIO_TxCommand,"ax",%progbits
+ 356              		.align	1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 10
+
+
+ 357              		.global	SDIO_TxCommand
+ 358              		.syntax unified
+ 359              		.thumb
+ 360              		.thumb_func
+ 362              	SDIO_TxCommand:
+ 363              	.LVL9:
+ 364              	.LFB74:
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Configs the SDIO Command and send the command
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        cmdConfig: pointer to a SDIO_CmdConfig_T structure
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_TxCommand(SDIO_CmdConfig_T *cmdConfig)
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 365              		.loc 1 184 1 is_stmt 1 view -0
+ 366              		.cfi_startproc
+ 367              		@ args = 0, pretend = 0, frame = 0
+ 368              		@ frame_needed = 0, uses_anonymous_args = 0
+ 369              		@ link register save eliminated.
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     uint32_t tmpreg = 0;
+ 370              		.loc 1 185 5 view .LVU85
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->ARG = cmdConfig->argument;
+ 371              		.loc 1 187 5 view .LVU86
+ 372              		.loc 1 187 26 is_stmt 0 view .LVU87
+ 373 0000 0368     		ldr	r3, [r0]
+ 374              		.loc 1 187 15 view .LVU88
+ 375 0002 0A49     		ldr	r1, .L27
+ 376 0004 8B60     		str	r3, [r1, #8]
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmpreg = SDIO->CMD;
+ 377              		.loc 1 188 5 is_stmt 1 view .LVU89
+ 378              		.loc 1 188 12 is_stmt 0 view .LVU90
+ 379 0006 CA68     		ldr	r2, [r1, #12]
+ 380              	.LVL10:
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmpreg &= 0xFFFFF800;
+ 381              		.loc 1 189 5 is_stmt 1 view .LVU91
+ 382              		.loc 1 189 12 is_stmt 0 view .LVU92
+ 383 0008 22F4FF62 		bic	r2, r2, #2040
+ 384              	.LVL11:
+ 385              		.loc 1 189 12 view .LVU93
+ 386 000c 22F00702 		bic	r2, r2, #7
+ 387              	.LVL12:
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmpreg |= (uint32_t)cmdConfig->cmdIndex | cmdConfig->response
+ 388              		.loc 1 190 5 is_stmt 1 view .LVU94
+ 389              		.loc 1 190 34 is_stmt 0 view .LVU95
+ 390 0010 4368     		ldr	r3, [r0, #4]
+ 391              		.loc 1 190 56 view .LVU96
+ 392 0012 90F808C0 		ldrb	ip, [r0, #8]	@ zero_extendqisi2
+ 393              		.loc 1 190 45 view .LVU97
+ 394 0016 43EA0C03 		orr	r3, r3, ip
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****            | cmdConfig->wait | cmdConfig->CPSM;
+ 395              		.loc 1 191 23 view .LVU98
+ 396 001a B0F80AC0 		ldrh	ip, [r0, #10]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 11
+
+
+ 397              		.loc 1 191 12 view .LVU99
+ 398 001e 43EA0C03 		orr	r3, r3, ip
+ 399              		.loc 1 191 41 view .LVU100
+ 400 0022 8089     		ldrh	r0, [r0, #12]
+ 401              	.LVL13:
+ 402              		.loc 1 191 30 view .LVU101
+ 403 0024 0343     		orrs	r3, r3, r0
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmpreg |= (uint32_t)cmdConfig->cmdIndex | cmdConfig->response
+ 404              		.loc 1 190 12 view .LVU102
+ 405 0026 1343     		orrs	r3, r3, r2
+ 406              	.LVL14:
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->CMD = tmpreg;
+ 407              		.loc 1 192 5 is_stmt 1 view .LVU103
+ 408              		.loc 1 192 15 is_stmt 0 view .LVU104
+ 409 0028 CB60     		str	r3, [r1, #12]
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 410              		.loc 1 193 1 view .LVU105
+ 411 002a 7047     		bx	lr
+ 412              	.L28:
+ 413              		.align	2
+ 414              	.L27:
+ 415 002c 00800140 		.word	1073840128
+ 416              		.cfi_endproc
+ 417              	.LFE74:
+ 419              		.section	.text.SDIO_TxCommandStructInit,"ax",%progbits
+ 420              		.align	1
+ 421              		.global	SDIO_TxCommandStructInit
+ 422              		.syntax unified
+ 423              		.thumb
+ 424              		.thumb_func
+ 426              	SDIO_TxCommandStructInit:
+ 427              	.LVL15:
+ 428              	.LFB75:
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Fills each SDIO_CMD_ConfigStruct_T member with its default value
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        cmdConfig: pointer to a SDIO_CmdConfig_T structure
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_TxCommandStructInit(SDIO_CmdConfig_T* cmdConfig)
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 429              		.loc 1 204 1 is_stmt 1 view -0
+ 430              		.cfi_startproc
+ 431              		@ args = 0, pretend = 0, frame = 0
+ 432              		@ frame_needed = 0, uses_anonymous_args = 0
+ 433              		@ link register save eliminated.
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   cmdConfig->argument = 0x00;
+ 434              		.loc 1 205 3 view .LVU107
+ 435              		.loc 1 205 23 is_stmt 0 view .LVU108
+ 436 0000 0023     		movs	r3, #0
+ 437 0002 0360     		str	r3, [r0]
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   cmdConfig->cmdIndex = 0x00;
+ 438              		.loc 1 206 3 is_stmt 1 view .LVU109
+ 439              		.loc 1 206 23 is_stmt 0 view .LVU110
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 12
+
+
+ 440 0004 4360     		str	r3, [r0, #4]
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   cmdConfig->response = SDIO_RESPONSE_NO;
+ 441              		.loc 1 207 3 is_stmt 1 view .LVU111
+ 442              		.loc 1 207 23 is_stmt 0 view .LVU112
+ 443 0006 0372     		strb	r3, [r0, #8]
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   cmdConfig->wait = SDIO_WAIT_NO;
+ 444              		.loc 1 208 3 is_stmt 1 view .LVU113
+ 445              		.loc 1 208 19 is_stmt 0 view .LVU114
+ 446 0008 4381     		strh	r3, [r0, #10]	@ movhi
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   cmdConfig->CPSM = SDIO_CPSM_DISABLE;
+ 447              		.loc 1 209 3 is_stmt 1 view .LVU115
+ 448              		.loc 1 209 19 is_stmt 0 view .LVU116
+ 449 000a 8381     		strh	r3, [r0, #12]	@ movhi
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 450              		.loc 1 210 1 view .LVU117
+ 451 000c 7047     		bx	lr
+ 452              		.cfi_endproc
+ 453              	.LFE75:
+ 455              		.section	.text.SDIO_ReadCommandResponse,"ax",%progbits
+ 456              		.align	1
+ 457              		.global	SDIO_ReadCommandResponse
+ 458              		.syntax unified
+ 459              		.thumb
+ 460              		.thumb_func
+ 462              	SDIO_ReadCommandResponse:
+ 463              	.LFB76:
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Reads the SDIO command response
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       The command index of the last command response received
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint8_t SDIO_ReadCommandResponse(void)
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 464              		.loc 1 221 1 is_stmt 1 view -0
+ 465              		.cfi_startproc
+ 466              		@ args = 0, pretend = 0, frame = 0
+ 467              		@ frame_needed = 0, uses_anonymous_args = 0
+ 468              		@ link register save eliminated.
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     return (uint8_t)(SDIO->CMDRES);
+ 469              		.loc 1 222 5 view .LVU119
+ 470              		.loc 1 222 26 is_stmt 0 view .LVU120
+ 471 0000 014B     		ldr	r3, .L31
+ 472 0002 1869     		ldr	r0, [r3, #16]
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 473              		.loc 1 223 1 view .LVU121
+ 474 0004 C0B2     		uxtb	r0, r0
+ 475 0006 7047     		bx	lr
+ 476              	.L32:
+ 477              		.align	2
+ 478              	.L31:
+ 479 0008 00800140 		.word	1073840128
+ 480              		.cfi_endproc
+ 481              	.LFE76:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 13
+
+
+ 483              		.section	.text.SDIO_ReadResponse,"ax",%progbits
+ 484              		.align	1
+ 485              		.global	SDIO_ReadResponse
+ 486              		.syntax unified
+ 487              		.thumb
+ 488              		.thumb_func
+ 490              	SDIO_ReadResponse:
+ 491              	.LVL16:
+ 492              	.LFB77:
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Reads the SDIO response
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        res:  Specifies the SDIO response register
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     The parameter can be one of following values:
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_RES1: Response Register 1
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_RES2: Response Register 2
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_RES3: Response Register 3
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_RES4: Response Register 4
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       The Corresponding response register value
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint32_t SDIO_ReadResponse(SDIO_RES_T res)
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 493              		.loc 1 238 1 is_stmt 1 view -0
+ 494              		.cfi_startproc
+ 495              		@ args = 0, pretend = 0, frame = 8
+ 496              		@ frame_needed = 0, uses_anonymous_args = 0
+ 497              		@ link register save eliminated.
+ 498              		.loc 1 238 1 is_stmt 0 view .LVU123
+ 499 0000 82B0     		sub	sp, sp, #8
+ 500              	.LCFI0:
+ 501              		.cfi_def_cfa_offset 8
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   __IO uint32_t tmp = 0;
+ 502              		.loc 1 239 3 is_stmt 1 view .LVU124
+ 503              		.loc 1 239 17 is_stmt 0 view .LVU125
+ 504 0002 0023     		movs	r3, #0
+ 505 0004 0193     		str	r3, [sp, #4]
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   tmp = ((uint32_t)(SDIO_BASE + 0x14)) + res;
+ 506              		.loc 1 241 3 is_stmt 1 view .LVU126
+ 507              		.loc 1 241 40 is_stmt 0 view .LVU127
+ 508 0006 034B     		ldr	r3, .L35
+ 509 0008 0344     		add	r3, r3, r0
+ 510              		.loc 1 241 7 view .LVU128
+ 511 000a 0193     		str	r3, [sp, #4]
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   return (*(__IO uint32_t *) tmp);
+ 512              		.loc 1 243 3 is_stmt 1 view .LVU129
+ 513              		.loc 1 243 12 is_stmt 0 view .LVU130
+ 514 000c 019B     		ldr	r3, [sp, #4]
+ 515              		.loc 1 243 11 view .LVU131
+ 516 000e 1868     		ldr	r0, [r3]
+ 517              	.LVL17:
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 518              		.loc 1 244 1 view .LVU132
+ 519 0010 02B0     		add	sp, sp, #8
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 14
+
+
+ 520              	.LCFI1:
+ 521              		.cfi_def_cfa_offset 0
+ 522              		@ sp needed
+ 523 0012 7047     		bx	lr
+ 524              	.L36:
+ 525              		.align	2
+ 526              	.L35:
+ 527 0014 14800140 		.word	1073840148
+ 528              		.cfi_endproc
+ 529              	.LFE77:
+ 531              		.section	.text.SDIO_ConfigData,"ax",%progbits
+ 532              		.align	1
+ 533              		.global	SDIO_ConfigData
+ 534              		.syntax unified
+ 535              		.thumb
+ 536              		.thumb_func
+ 538              	SDIO_ConfigData:
+ 539              	.LVL18:
+ 540              	.LFB78:
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Configs the SDIO Dataaccording to the specified parameters in the dataConfig
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        dataConfig: pointer to a SDIO_DataConfig_T structure
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_ConfigData(SDIO_DataConfig_T* dataConfig)
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 541              		.loc 1 254 1 is_stmt 1 view -0
+ 542              		.cfi_startproc
+ 543              		@ args = 0, pretend = 0, frame = 0
+ 544              		@ frame_needed = 0, uses_anonymous_args = 0
+ 545              		.loc 1 254 1 is_stmt 0 view .LVU134
+ 546 0000 10B5     		push	{r4, lr}
+ 547              	.LCFI2:
+ 548              		.cfi_def_cfa_offset 8
+ 549              		.cfi_offset 4, -8
+ 550              		.cfi_offset 14, -4
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     uint32_t tmpreg = 0;
+ 551              		.loc 1 255 5 is_stmt 1 view .LVU135
+ 552              	.LVL19:
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->DATATIME = dataConfig->dataTimeOut;
+ 553              		.loc 1 257 5 view .LVU136
+ 554              		.loc 1 257 32 is_stmt 0 view .LVU137
+ 555 0002 0368     		ldr	r3, [r0]
+ 556              		.loc 1 257 20 view .LVU138
+ 557 0004 0A4A     		ldr	r2, .L39
+ 558 0006 5362     		str	r3, [r2, #36]
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->DATALEN = dataConfig->dataLength;
+ 559              		.loc 1 259 5 is_stmt 1 view .LVU139
+ 560              		.loc 1 259 31 is_stmt 0 view .LVU140
+ 561 0008 4368     		ldr	r3, [r0, #4]
+ 562              		.loc 1 259 19 view .LVU141
+ 563 000a 9362     		str	r3, [r2, #40]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 15
+
+
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmpreg = SDIO->DCTRL;
+ 564              		.loc 1 261 5 is_stmt 1 view .LVU142
+ 565              		.loc 1 261 12 is_stmt 0 view .LVU143
+ 566 000c D16A     		ldr	r1, [r2, #44]
+ 567              	.LVL20:
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmpreg &= 0xFFFFFF08;
+ 568              		.loc 1 263 5 is_stmt 1 view .LVU144
+ 569              		.loc 1 263 12 is_stmt 0 view .LVU145
+ 570 000e 21F0F701 		bic	r1, r1, #247
+ 571              	.LVL21:
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     tmpreg |= (uint32_t)dataConfig->dataBlockSize | dataConfig->transferDir
+ 572              		.loc 1 265 5 is_stmt 1 view .LVU146
+ 573              		.loc 1 265 35 is_stmt 0 view .LVU147
+ 574 0012 90F808E0 		ldrb	lr, [r0, #8]	@ zero_extendqisi2
+ 575              		.loc 1 265 63 view .LVU148
+ 576 0016 447A     		ldrb	r4, [r0, #9]	@ zero_extendqisi2
+ 266:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****            | dataConfig->transferMode | dataConfig->DPSM;
+ 577              		.loc 1 266 24 view .LVU149
+ 578 0018 90F80AC0 		ldrb	ip, [r0, #10]	@ zero_extendqisi2
+ 579              		.loc 1 266 51 view .LVU150
+ 580 001c C37A     		ldrb	r3, [r0, #11]	@ zero_extendqisi2
+ 581              		.loc 1 266 39 view .LVU151
+ 582 001e 4EEA0400 		orr	r0, lr, r4
+ 583              	.LVL22:
+ 584              		.loc 1 266 39 view .LVU152
+ 585 0022 4CEA0000 		orr	r0, ip, r0
+ 586 0026 0343     		orrs	r3, r3, r0
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****            | dataConfig->transferMode | dataConfig->DPSM;
+ 587              		.loc 1 265 12 view .LVU153
+ 588 0028 0B43     		orrs	r3, r3, r1
+ 589              	.LVL23:
+ 267:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 268:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->DCTRL = tmpreg;
+ 590              		.loc 1 268 5 is_stmt 1 view .LVU154
+ 591              		.loc 1 268 17 is_stmt 0 view .LVU155
+ 592 002a D362     		str	r3, [r2, #44]
+ 269:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 593              		.loc 1 269 1 view .LVU156
+ 594 002c 10BD     		pop	{r4, pc}
+ 595              	.L40:
+ 596 002e 00BF     		.align	2
+ 597              	.L39:
+ 598 0030 00800140 		.word	1073840128
+ 599              		.cfi_endproc
+ 600              	.LFE78:
+ 602              		.section	.text.SDIO_ConfigDataStructInit,"ax",%progbits
+ 603              		.align	1
+ 604              		.global	SDIO_ConfigDataStructInit
+ 605              		.syntax unified
+ 606              		.thumb
+ 607              		.thumb_func
+ 609              	SDIO_ConfigDataStructInit:
+ 610              	.LVL24:
+ 611              	.LFB79:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 16
+
+
+ 270:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 271:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 272:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Fills each SDIO_DataConfig_T member with its default value
+ 273:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 274:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        dataConfig: pointer to a SDIO_DataConfig_T structure
+ 275:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 276:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 277:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 278:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_ConfigDataStructInit(SDIO_DataConfig_T* dataConfig)
+ 279:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 612              		.loc 1 279 1 is_stmt 1 view -0
+ 613              		.cfi_startproc
+ 614              		@ args = 0, pretend = 0, frame = 0
+ 615              		@ frame_needed = 0, uses_anonymous_args = 0
+ 616              		@ link register save eliminated.
+ 280:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   dataConfig->dataTimeOut = 0xFFFFFFFF;
+ 617              		.loc 1 280 3 view .LVU158
+ 618              		.loc 1 280 27 is_stmt 0 view .LVU159
+ 619 0000 4FF0FF33 		mov	r3, #-1
+ 620 0004 0360     		str	r3, [r0]
+ 281:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   dataConfig->dataLength = 0x00;
+ 621              		.loc 1 281 3 is_stmt 1 view .LVU160
+ 622              		.loc 1 281 26 is_stmt 0 view .LVU161
+ 623 0006 0023     		movs	r3, #0
+ 624 0008 4360     		str	r3, [r0, #4]
+ 282:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   dataConfig->dataBlockSize = SDIO_DATA_BLOCKSIZE_1B;
+ 625              		.loc 1 282 3 is_stmt 1 view .LVU162
+ 626              		.loc 1 282 29 is_stmt 0 view .LVU163
+ 627 000a 0372     		strb	r3, [r0, #8]
+ 283:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   dataConfig->transferDir = SDIO_TRANSFER_DIR_TO_CARD;
+ 628              		.loc 1 283 3 is_stmt 1 view .LVU164
+ 629              		.loc 1 283 27 is_stmt 0 view .LVU165
+ 630 000c 4372     		strb	r3, [r0, #9]
+ 284:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   dataConfig->transferMode = SDIO_TRANSFER_MODE_BLOCK;
+ 631              		.loc 1 284 3 is_stmt 1 view .LVU166
+ 632              		.loc 1 284 28 is_stmt 0 view .LVU167
+ 633 000e 8372     		strb	r3, [r0, #10]
+ 285:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   dataConfig->DPSM = SDIO_DPSM_DISABLE;
+ 634              		.loc 1 285 3 is_stmt 1 view .LVU168
+ 635              		.loc 1 285 20 is_stmt 0 view .LVU169
+ 636 0010 C372     		strb	r3, [r0, #11]
+ 286:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 637              		.loc 1 286 1 view .LVU170
+ 638 0012 7047     		bx	lr
+ 639              		.cfi_endproc
+ 640              	.LFE79:
+ 642              		.section	.text.SDIO_ReadDataCounter,"ax",%progbits
+ 643              		.align	1
+ 644              		.global	SDIO_ReadDataCounter
+ 645              		.syntax unified
+ 646              		.thumb
+ 647              		.thumb_func
+ 649              	SDIO_ReadDataCounter:
+ 650              	.LFB80:
+ 287:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 288:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 289:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Reads the SDIO Data counter
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 17
+
+
+ 290:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 291:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 292:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 293:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       The SDIO Data counter value
+ 294:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 295:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint32_t SDIO_ReadDataCounter(void)
+ 296:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 651              		.loc 1 296 1 is_stmt 1 view -0
+ 652              		.cfi_startproc
+ 653              		@ args = 0, pretend = 0, frame = 0
+ 654              		@ frame_needed = 0, uses_anonymous_args = 0
+ 655              		@ link register save eliminated.
+ 297:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     return SDIO->DCNT;
+ 656              		.loc 1 297 5 view .LVU172
+ 657              		.loc 1 297 16 is_stmt 0 view .LVU173
+ 658 0000 014B     		ldr	r3, .L43
+ 659 0002 186B     		ldr	r0, [r3, #48]
+ 298:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 660              		.loc 1 298 1 view .LVU174
+ 661 0004 7047     		bx	lr
+ 662              	.L44:
+ 663 0006 00BF     		.align	2
+ 664              	.L43:
+ 665 0008 00800140 		.word	1073840128
+ 666              		.cfi_endproc
+ 667              	.LFE80:
+ 669              		.section	.text.SDIO_WriteData,"ax",%progbits
+ 670              		.align	1
+ 671              		.global	SDIO_WriteData
+ 672              		.syntax unified
+ 673              		.thumb
+ 674              		.thumb_func
+ 676              	SDIO_WriteData:
+ 677              	.LVL25:
+ 678              	.LFB81:
+ 299:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 300:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 301:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief       Write the SDIO Data
+ 302:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 303:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param       Data£ºWrite 32-bit data
+ 304:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 305:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval      None
+ 306:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 307:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_WriteData(uint32_t data)
+ 308:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 679              		.loc 1 308 1 is_stmt 1 view -0
+ 680              		.cfi_startproc
+ 681              		@ args = 0, pretend = 0, frame = 0
+ 682              		@ frame_needed = 0, uses_anonymous_args = 0
+ 683              		@ link register save eliminated.
+ 309:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->FIFODATA = data;
+ 684              		.loc 1 309 5 view .LVU176
+ 685              		.loc 1 309 20 is_stmt 0 view .LVU177
+ 686 0000 014B     		ldr	r3, .L46
+ 687 0002 C3F88000 		str	r0, [r3, #128]
+ 310:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 688              		.loc 1 310 1 view .LVU178
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 18
+
+
+ 689 0006 7047     		bx	lr
+ 690              	.L47:
+ 691              		.align	2
+ 692              	.L46:
+ 693 0008 00800140 		.word	1073840128
+ 694              		.cfi_endproc
+ 695              	.LFE81:
+ 697              		.section	.text.SDIO_ReadData,"ax",%progbits
+ 698              		.align	1
+ 699              		.global	SDIO_ReadData
+ 700              		.syntax unified
+ 701              		.thumb
+ 702              		.thumb_func
+ 704              	SDIO_ReadData:
+ 705              	.LFB82:
+ 311:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 312:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 313:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief       Reads the SDIO Data
+ 314:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 315:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param       None
+ 316:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 317:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval      The SDIO FIFO Data value
+ 318:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 319:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint32_t SDIO_ReadData(void)
+ 320:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 706              		.loc 1 320 1 is_stmt 1 view -0
+ 707              		.cfi_startproc
+ 708              		@ args = 0, pretend = 0, frame = 0
+ 709              		@ frame_needed = 0, uses_anonymous_args = 0
+ 710              		@ link register save eliminated.
+ 321:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     return SDIO->FIFODATA;
+ 711              		.loc 1 321 5 view .LVU180
+ 712              		.loc 1 321 16 is_stmt 0 view .LVU181
+ 713 0000 014B     		ldr	r3, .L49
+ 714 0002 D3F88000 		ldr	r0, [r3, #128]
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 715              		.loc 1 322 1 view .LVU182
+ 716 0006 7047     		bx	lr
+ 717              	.L50:
+ 718              		.align	2
+ 719              	.L49:
+ 720 0008 00800140 		.word	1073840128
+ 721              		.cfi_endproc
+ 722              	.LFE82:
+ 724              		.section	.text.SDIO_ReadFIFOCount,"ax",%progbits
+ 725              		.align	1
+ 726              		.global	SDIO_ReadFIFOCount
+ 727              		.syntax unified
+ 728              		.thumb
+ 729              		.thumb_func
+ 731              	SDIO_ReadFIFOCount:
+ 732              	.LFB83:
+ 323:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 324:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 325:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief       Reads the SDIO FIFO count value
+ 326:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 327:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param       None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 19
+
+
+ 328:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 329:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval      The SDIO FIFO count value
+ 330:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 331:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint32_t SDIO_ReadFIFOCount(void)
+ 332:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 733              		.loc 1 332 1 is_stmt 1 view -0
+ 734              		.cfi_startproc
+ 735              		@ args = 0, pretend = 0, frame = 0
+ 736              		@ frame_needed = 0, uses_anonymous_args = 0
+ 737              		@ link register save eliminated.
+ 333:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     return SDIO->FIFOCNT;
+ 738              		.loc 1 333 5 view .LVU184
+ 739              		.loc 1 333 16 is_stmt 0 view .LVU185
+ 740 0000 014B     		ldr	r3, .L52
+ 741 0002 986C     		ldr	r0, [r3, #72]
+ 334:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 742              		.loc 1 334 1 view .LVU186
+ 743 0004 7047     		bx	lr
+ 744              	.L53:
+ 745 0006 00BF     		.align	2
+ 746              	.L52:
+ 747 0008 00800140 		.word	1073840128
+ 748              		.cfi_endproc
+ 749              	.LFE83:
+ 751              		.section	.text.SDIO_EnableStartReadWait,"ax",%progbits
+ 752              		.align	1
+ 753              		.global	SDIO_EnableStartReadWait
+ 754              		.syntax unified
+ 755              		.thumb
+ 756              		.thumb_func
+ 758              	SDIO_EnableStartReadWait:
+ 759              	.LFB84:
+ 335:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 336:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 337:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Enables SDIO start read wait
+ 338:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 339:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 340:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 341:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 342:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 343:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableStartReadWait(void)
+ 344:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 760              		.loc 1 344 1 is_stmt 1 view -0
+ 761              		.cfi_startproc
+ 762              		@ args = 0, pretend = 0, frame = 0
+ 763              		@ frame_needed = 0, uses_anonymous_args = 0
+ 764              		@ link register save eliminated.
+ 345:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) DCTRL_RWSTR_BB = (uint32_t) SET;
+ 765              		.loc 1 345 5 view .LVU188
+ 766              		.loc 1 345 39 is_stmt 0 view .LVU189
+ 767 0000 024B     		ldr	r3, .L55
+ 768 0002 0122     		movs	r2, #1
+ 769 0004 C3F8A025 		str	r2, [r3, #1440]
+ 346:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 770              		.loc 1 346 1 view .LVU190
+ 771 0008 7047     		bx	lr
+ 772              	.L56:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 20
+
+
+ 773 000a 00BF     		.align	2
+ 774              	.L55:
+ 775 000c 00003042 		.word	1110441984
+ 776              		.cfi_endproc
+ 777              	.LFE84:
+ 779              		.section	.text.SDIO_DisableStopReadWait,"ax",%progbits
+ 780              		.align	1
+ 781              		.global	SDIO_DisableStopReadWait
+ 782              		.syntax unified
+ 783              		.thumb
+ 784              		.thumb_func
+ 786              	SDIO_DisableStopReadWait:
+ 787              	.LFB85:
+ 347:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 348:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 349:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables SDIO start read wait
+ 350:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 351:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 352:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 353:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 354:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 355:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableStopReadWait(void)
+ 356:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 788              		.loc 1 356 1 is_stmt 1 view -0
+ 789              		.cfi_startproc
+ 790              		@ args = 0, pretend = 0, frame = 0
+ 791              		@ frame_needed = 0, uses_anonymous_args = 0
+ 792              		@ link register save eliminated.
+ 357:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) DCTRL_RWSTR_BB = (uint32_t) RESET;
+ 793              		.loc 1 357 5 view .LVU192
+ 794              		.loc 1 357 39 is_stmt 0 view .LVU193
+ 795 0000 024B     		ldr	r3, .L58
+ 796 0002 0022     		movs	r2, #0
+ 797 0004 C3F8A025 		str	r2, [r3, #1440]
+ 358:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 798              		.loc 1 358 1 view .LVU194
+ 799 0008 7047     		bx	lr
+ 800              	.L59:
+ 801 000a 00BF     		.align	2
+ 802              	.L58:
+ 803 000c 00003042 		.word	1110441984
+ 804              		.cfi_endproc
+ 805              	.LFE85:
+ 807              		.section	.text.SDIO_EnableStopReadWait,"ax",%progbits
+ 808              		.align	1
+ 809              		.global	SDIO_EnableStopReadWait
+ 810              		.syntax unified
+ 811              		.thumb
+ 812              		.thumb_func
+ 814              	SDIO_EnableStopReadWait:
+ 815              	.LFB86:
+ 359:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 360:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 361:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Enables SDIO stop read wait
+ 362:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 363:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 364:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 21
+
+
+ 365:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 366:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 367:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableStopReadWait(void)
+ 368:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 816              		.loc 1 368 1 is_stmt 1 view -0
+ 817              		.cfi_startproc
+ 818              		@ args = 0, pretend = 0, frame = 0
+ 819              		@ frame_needed = 0, uses_anonymous_args = 0
+ 820              		@ link register save eliminated.
+ 369:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) DCTRL_RWSTOP_BB = (uint32_t) SET;
+ 821              		.loc 1 369 5 view .LVU196
+ 822              		.loc 1 369 40 is_stmt 0 view .LVU197
+ 823 0000 024B     		ldr	r3, .L61
+ 824 0002 0122     		movs	r2, #1
+ 825 0004 C3F8A425 		str	r2, [r3, #1444]
+ 370:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 826              		.loc 1 370 1 view .LVU198
+ 827 0008 7047     		bx	lr
+ 828              	.L62:
+ 829 000a 00BF     		.align	2
+ 830              	.L61:
+ 831 000c 00003042 		.word	1110441984
+ 832              		.cfi_endproc
+ 833              	.LFE86:
+ 835              		.section	.text.SDIO_DisableStartReadWait,"ax",%progbits
+ 836              		.align	1
+ 837              		.global	SDIO_DisableStartReadWait
+ 838              		.syntax unified
+ 839              		.thumb
+ 840              		.thumb_func
+ 842              	SDIO_DisableStartReadWait:
+ 843              	.LFB87:
+ 371:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 372:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 373:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables SDIO stop read wait
+ 374:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 375:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 376:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 377:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 378:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 379:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableStartReadWait(void)
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 844              		.loc 1 380 1 is_stmt 1 view -0
+ 845              		.cfi_startproc
+ 846              		@ args = 0, pretend = 0, frame = 0
+ 847              		@ frame_needed = 0, uses_anonymous_args = 0
+ 848              		@ link register save eliminated.
+ 381:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) DCTRL_RWSTOP_BB = (uint32_t) RESET;
+ 849              		.loc 1 381 5 view .LVU200
+ 850              		.loc 1 381 40 is_stmt 0 view .LVU201
+ 851 0000 024B     		ldr	r3, .L64
+ 852 0002 0022     		movs	r2, #0
+ 853 0004 C3F8A425 		str	r2, [r3, #1444]
+ 382:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 854              		.loc 1 382 1 view .LVU202
+ 855 0008 7047     		bx	lr
+ 856              	.L65:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 22
+
+
+ 857 000a 00BF     		.align	2
+ 858              	.L64:
+ 859 000c 00003042 		.word	1110441984
+ 860              		.cfi_endproc
+ 861              	.LFE87:
+ 863              		.section	.text.SDIO_ConfigSDIOReadWaitMode,"ax",%progbits
+ 864              		.align	1
+ 865              		.global	SDIO_ConfigSDIOReadWaitMode
+ 866              		.syntax unified
+ 867              		.thumb
+ 868              		.thumb_func
+ 870              	SDIO_ConfigSDIOReadWaitMode:
+ 871              	.LVL26:
+ 872              	.LFB88:
+ 383:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Sets the read wait interval
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        readWaitMode: SDIO read Wait Mode
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     The parameter can be one of following values:
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_READ_WAIT_MODE_CLK: Read Wait control by stopping SDIOCLK
+ 390:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *                     @arg SDIO_READ_WAIT_MODE_DATA2: Read Wait control using SDIO_DATA2
+ 391:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 392:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 393:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 394:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 395:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_ConfigSDIOReadWaitMode(SDIO_READ_WAIT_MODE_T readWaitMode)
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 873              		.loc 1 396 1 is_stmt 1 view -0
+ 874              		.cfi_startproc
+ 875              		@ args = 0, pretend = 0, frame = 0
+ 876              		@ frame_needed = 0, uses_anonymous_args = 0
+ 877              		@ link register save eliminated.
+ 397:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   *(__IO uint32_t *) DCTRL_RDWAIT_BB = readWaitMode;
+ 878              		.loc 1 397 3 view .LVU204
+ 879              		.loc 1 397 38 is_stmt 0 view .LVU205
+ 880 0000 014B     		ldr	r3, .L67
+ 881 0002 C3F8A805 		str	r0, [r3, #1448]
+ 398:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 882              		.loc 1 398 1 view .LVU206
+ 883 0006 7047     		bx	lr
+ 884              	.L68:
+ 885              		.align	2
+ 886              	.L67:
+ 887 0008 00003042 		.word	1110441984
+ 888              		.cfi_endproc
+ 889              	.LFE88:
+ 891              		.section	.text.SDIO_EnableSDIO,"ax",%progbits
+ 892              		.align	1
+ 893              		.global	SDIO_EnableSDIO
+ 894              		.syntax unified
+ 895              		.thumb
+ 896              		.thumb_func
+ 898              	SDIO_EnableSDIO:
+ 899              	.LFB89:
+ 399:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 400:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Enables SDIO SD I/O Mode Operation
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 23
+
+
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 402:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableSDIO(void)
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 900              		.loc 1 407 1 is_stmt 1 view -0
+ 901              		.cfi_startproc
+ 902              		@ args = 0, pretend = 0, frame = 0
+ 903              		@ frame_needed = 0, uses_anonymous_args = 0
+ 904              		@ link register save eliminated.
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   *(__IO uint32_t *) DCTRL_SDIOF_BB = (uint32_t)SET;
+ 905              		.loc 1 408 3 view .LVU208
+ 906              		.loc 1 408 37 is_stmt 0 view .LVU209
+ 907 0000 024B     		ldr	r3, .L70
+ 908 0002 0122     		movs	r2, #1
+ 909 0004 C3F8AC25 		str	r2, [r3, #1452]
+ 409:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 910              		.loc 1 409 1 view .LVU210
+ 911 0008 7047     		bx	lr
+ 912              	.L71:
+ 913 000a 00BF     		.align	2
+ 914              	.L70:
+ 915 000c 00003042 		.word	1110441984
+ 916              		.cfi_endproc
+ 917              	.LFE89:
+ 919              		.section	.text.SDIO_DisableSDIO,"ax",%progbits
+ 920              		.align	1
+ 921              		.global	SDIO_DisableSDIO
+ 922              		.syntax unified
+ 923              		.thumb
+ 924              		.thumb_func
+ 926              	SDIO_DisableSDIO:
+ 927              	.LFB90:
+ 410:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 411:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables SDIO SD I/O Mode Operation
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableSDIO(void)
+ 419:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 928              		.loc 1 419 1 is_stmt 1 view -0
+ 929              		.cfi_startproc
+ 930              		@ args = 0, pretend = 0, frame = 0
+ 931              		@ frame_needed = 0, uses_anonymous_args = 0
+ 932              		@ link register save eliminated.
+ 420:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****   *(__IO uint32_t *) DCTRL_SDIOF_BB = (uint32_t)RESET;
+ 933              		.loc 1 420 3 view .LVU212
+ 934              		.loc 1 420 37 is_stmt 0 view .LVU213
+ 935 0000 024B     		ldr	r3, .L73
+ 936 0002 0022     		movs	r2, #0
+ 937 0004 C3F8AC25 		str	r2, [r3, #1452]
+ 421:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 24
+
+
+ 938              		.loc 1 421 1 view .LVU214
+ 939 0008 7047     		bx	lr
+ 940              	.L74:
+ 941 000a 00BF     		.align	2
+ 942              	.L73:
+ 943 000c 00003042 		.word	1110441984
+ 944              		.cfi_endproc
+ 945              	.LFE90:
+ 947              		.section	.text.SDIO_EnableTxSDIOSuspend,"ax",%progbits
+ 948              		.align	1
+ 949              		.global	SDIO_EnableTxSDIOSuspend
+ 950              		.syntax unified
+ 951              		.thumb
+ 952              		.thumb_func
+ 954              	SDIO_EnableTxSDIOSuspend:
+ 955              	.LFB91:
+ 422:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 423:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 424:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Ensables SDIO SD I/O Mode suspend command sending
+ 425:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 426:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 427:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 428:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 429:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 430:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableTxSDIOSuspend(void)
+ 431:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 956              		.loc 1 431 1 is_stmt 1 view -0
+ 957              		.cfi_startproc
+ 958              		@ args = 0, pretend = 0, frame = 0
+ 959              		@ frame_needed = 0, uses_anonymous_args = 0
+ 960              		@ link register save eliminated.
+ 432:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_SDIOSC_BB = (uint32_t)SET;
+ 961              		.loc 1 432 5 view .LVU216
+ 962              		.loc 1 432 38 is_stmt 0 view .LVU217
+ 963 0000 024B     		ldr	r3, .L76
+ 964 0002 0122     		movs	r2, #1
+ 965 0004 C3F8AC21 		str	r2, [r3, #428]
+ 433:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 966              		.loc 1 433 1 view .LVU218
+ 967 0008 7047     		bx	lr
+ 968              	.L77:
+ 969 000a 00BF     		.align	2
+ 970              	.L76:
+ 971 000c 00003042 		.word	1110441984
+ 972              		.cfi_endproc
+ 973              	.LFE91:
+ 975              		.section	.text.SDIO_DisableTxSDIOSuspend,"ax",%progbits
+ 976              		.align	1
+ 977              		.global	SDIO_DisableTxSDIOSuspend
+ 978              		.syntax unified
+ 979              		.thumb
+ 980              		.thumb_func
+ 982              	SDIO_DisableTxSDIOSuspend:
+ 983              	.LFB92:
+ 434:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 435:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 436:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables SDIO SD I/O Mode suspend command sending
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 25
+
+
+ 437:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 438:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 439:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 440:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 441:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 442:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableTxSDIOSuspend(void)
+ 443:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 984              		.loc 1 443 1 is_stmt 1 view -0
+ 985              		.cfi_startproc
+ 986              		@ args = 0, pretend = 0, frame = 0
+ 987              		@ frame_needed = 0, uses_anonymous_args = 0
+ 988              		@ link register save eliminated.
+ 444:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_SDIOSC_BB = (uint32_t)RESET;
+ 989              		.loc 1 444 5 view .LVU220
+ 990              		.loc 1 444 38 is_stmt 0 view .LVU221
+ 991 0000 024B     		ldr	r3, .L79
+ 992 0002 0022     		movs	r2, #0
+ 993 0004 C3F8AC21 		str	r2, [r3, #428]
+ 445:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 994              		.loc 1 445 1 view .LVU222
+ 995 0008 7047     		bx	lr
+ 996              	.L80:
+ 997 000a 00BF     		.align	2
+ 998              	.L79:
+ 999 000c 00003042 		.word	1110441984
+ 1000              		.cfi_endproc
+ 1001              	.LFE92:
+ 1003              		.section	.text.SDIO_EnableCommandCompletion,"ax",%progbits
+ 1004              		.align	1
+ 1005              		.global	SDIO_EnableCommandCompletion
+ 1006              		.syntax unified
+ 1007              		.thumb
+ 1008              		.thumb_func
+ 1010              	SDIO_EnableCommandCompletion:
+ 1011              	.LFB93:
+ 446:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 447:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 448:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Enables the command completion signal
+ 449:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 450:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 451:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 452:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 453:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 454:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableCommandCompletion(void)
+ 455:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1012              		.loc 1 455 1 is_stmt 1 view -0
+ 1013              		.cfi_startproc
+ 1014              		@ args = 0, pretend = 0, frame = 0
+ 1015              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1016              		@ link register save eliminated.
+ 456:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_CMDCPEN_BB = (uint32_t)SET;
+ 1017              		.loc 1 456 5 view .LVU224
+ 1018              		.loc 1 456 39 is_stmt 0 view .LVU225
+ 1019 0000 024B     		ldr	r3, .L82
+ 1020 0002 0122     		movs	r2, #1
+ 1021 0004 C3F8B021 		str	r2, [r3, #432]
+ 457:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 26
+
+
+ 1022              		.loc 1 457 1 view .LVU226
+ 1023 0008 7047     		bx	lr
+ 1024              	.L83:
+ 1025 000a 00BF     		.align	2
+ 1026              	.L82:
+ 1027 000c 00003042 		.word	1110441984
+ 1028              		.cfi_endproc
+ 1029              	.LFE93:
+ 1031              		.section	.text.SDIO_DisableCommandCompletion,"ax",%progbits
+ 1032              		.align	1
+ 1033              		.global	SDIO_DisableCommandCompletion
+ 1034              		.syntax unified
+ 1035              		.thumb
+ 1036              		.thumb_func
+ 1038              	SDIO_DisableCommandCompletion:
+ 1039              	.LFB94:
+ 458:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 459:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 460:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables the command completion signal
+ 461:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 462:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 463:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 465:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 466:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableCommandCompletion(void)
+ 467:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1040              		.loc 1 467 1 is_stmt 1 view -0
+ 1041              		.cfi_startproc
+ 1042              		@ args = 0, pretend = 0, frame = 0
+ 1043              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1044              		@ link register save eliminated.
+ 468:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_CMDCPEN_BB = (uint32_t)RESET;
+ 1045              		.loc 1 468 5 view .LVU228
+ 1046              		.loc 1 468 39 is_stmt 0 view .LVU229
+ 1047 0000 024B     		ldr	r3, .L85
+ 1048 0002 0022     		movs	r2, #0
+ 1049 0004 C3F8B021 		str	r2, [r3, #432]
+ 469:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1050              		.loc 1 469 1 view .LVU230
+ 1051 0008 7047     		bx	lr
+ 1052              	.L86:
+ 1053 000a 00BF     		.align	2
+ 1054              	.L85:
+ 1055 000c 00003042 		.word	1110441984
+ 1056              		.cfi_endproc
+ 1057              	.LFE94:
+ 1059              		.section	.text.SDIO_EnableCEATAInterrupt,"ax",%progbits
+ 1060              		.align	1
+ 1061              		.global	SDIO_EnableCEATAInterrupt
+ 1062              		.syntax unified
+ 1063              		.thumb
+ 1064              		.thumb_func
+ 1066              	SDIO_EnableCEATAInterrupt:
+ 1067              	.LFB95:
+ 470:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 471:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 472:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Enables the CE-ATA interrupt
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 27
+
+
+ 473:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 474:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 476:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 477:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 478:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableCEATAInterrupt(void)
+ 479:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1068              		.loc 1 479 1 is_stmt 1 view -0
+ 1069              		.cfi_startproc
+ 1070              		@ args = 0, pretend = 0, frame = 0
+ 1071              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1072              		@ link register save eliminated.
+ 480:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_INTEN_BB = (uint32_t)((~((uint32_t)SET)) & ((uint32_t)0x1));
+ 1073              		.loc 1 480 5 view .LVU232
+ 1074              		.loc 1 480 37 is_stmt 0 view .LVU233
+ 1075 0000 024B     		ldr	r3, .L88
+ 1076 0002 0022     		movs	r2, #0
+ 1077 0004 C3F8B421 		str	r2, [r3, #436]
+ 481:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1078              		.loc 1 481 1 view .LVU234
+ 1079 0008 7047     		bx	lr
+ 1080              	.L89:
+ 1081 000a 00BF     		.align	2
+ 1082              	.L88:
+ 1083 000c 00003042 		.word	1110441984
+ 1084              		.cfi_endproc
+ 1085              	.LFE95:
+ 1087              		.section	.text.SDIO_DisableCEATAInterrupt,"ax",%progbits
+ 1088              		.align	1
+ 1089              		.global	SDIO_DisableCEATAInterrupt
+ 1090              		.syntax unified
+ 1091              		.thumb
+ 1092              		.thumb_func
+ 1094              	SDIO_DisableCEATAInterrupt:
+ 1095              	.LFB96:
+ 482:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 483:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 484:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables the CE-ATA interrupt
+ 485:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 486:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 488:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 489:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 490:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableCEATAInterrupt(void)
+ 491:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1096              		.loc 1 491 1 is_stmt 1 view -0
+ 1097              		.cfi_startproc
+ 1098              		@ args = 0, pretend = 0, frame = 0
+ 1099              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1100              		@ link register save eliminated.
+ 492:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_INTEN_BB = (uint32_t)((~((uint32_t)RESET)) & ((uint32_t)0x1));
+ 1101              		.loc 1 492 5 view .LVU236
+ 1102              		.loc 1 492 37 is_stmt 0 view .LVU237
+ 1103 0000 024B     		ldr	r3, .L91
+ 1104 0002 0122     		movs	r2, #1
+ 1105 0004 C3F8B421 		str	r2, [r3, #436]
+ 493:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 28
+
+
+ 1106              		.loc 1 493 1 view .LVU238
+ 1107 0008 7047     		bx	lr
+ 1108              	.L92:
+ 1109 000a 00BF     		.align	2
+ 1110              	.L91:
+ 1111 000c 00003042 		.word	1110441984
+ 1112              		.cfi_endproc
+ 1113              	.LFE96:
+ 1115              		.section	.text.SDIO_EnableTxCEATA,"ax",%progbits
+ 1116              		.align	1
+ 1117              		.global	SDIO_EnableTxCEATA
+ 1118              		.syntax unified
+ 1119              		.thumb
+ 1120              		.thumb_func
+ 1122              	SDIO_EnableTxCEATA:
+ 1123              	.LFB97:
+ 494:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 495:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 496:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Ensables Sends CE-ATA command
+ 497:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 498:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 499:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 500:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 501:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 502:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableTxCEATA(void)
+ 503:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1124              		.loc 1 503 1 is_stmt 1 view -0
+ 1125              		.cfi_startproc
+ 1126              		@ args = 0, pretend = 0, frame = 0
+ 1127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1128              		@ link register save eliminated.
+ 504:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_ATACMD_BB = (uint32_t)SET;
+ 1129              		.loc 1 504 5 view .LVU240
+ 1130              		.loc 1 504 38 is_stmt 0 view .LVU241
+ 1131 0000 024B     		ldr	r3, .L94
+ 1132 0002 0122     		movs	r2, #1
+ 1133 0004 C3F8B821 		str	r2, [r3, #440]
+ 505:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1134              		.loc 1 505 1 view .LVU242
+ 1135 0008 7047     		bx	lr
+ 1136              	.L95:
+ 1137 000a 00BF     		.align	2
+ 1138              	.L94:
+ 1139 000c 00003042 		.word	1110441984
+ 1140              		.cfi_endproc
+ 1141              	.LFE97:
+ 1143              		.section	.text.SDIO_DisableTxCEATA,"ax",%progbits
+ 1144              		.align	1
+ 1145              		.global	SDIO_DisableTxCEATA
+ 1146              		.syntax unified
+ 1147              		.thumb
+ 1148              		.thumb_func
+ 1150              	SDIO_DisableTxCEATA:
+ 1151              	.LFB98:
+ 506:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 507:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 508:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief        Disables Sends CE-ATA command
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 29
+
+
+ 509:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 510:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param        None
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 512:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval       None
+ 513:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 514:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableTxCEATA(void)
+ 515:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1152              		.loc 1 515 1 is_stmt 1 view -0
+ 1153              		.cfi_startproc
+ 1154              		@ args = 0, pretend = 0, frame = 0
+ 1155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1156              		@ link register save eliminated.
+ 516:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     *(__IO uint32_t *) CMD_ATACMD_BB = (uint32_t)RESET;
+ 1157              		.loc 1 516 5 view .LVU244
+ 1158              		.loc 1 516 38 is_stmt 0 view .LVU245
+ 1159 0000 024B     		ldr	r3, .L97
+ 1160 0002 0022     		movs	r2, #0
+ 1161 0004 C3F8B821 		str	r2, [r3, #440]
+ 517:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1162              		.loc 1 517 1 view .LVU246
+ 1163 0008 7047     		bx	lr
+ 1164              	.L98:
+ 1165 000a 00BF     		.align	2
+ 1166              	.L97:
+ 1167 000c 00003042 		.word	1110441984
+ 1168              		.cfi_endproc
+ 1169              	.LFE98:
+ 1171              		.section	.text.SDIO_EnableInterrupt,"ax",%progbits
+ 1172              		.align	1
+ 1173              		.global	SDIO_EnableInterrupt
+ 1174              		.syntax unified
+ 1175              		.thumb
+ 1176              		.thumb_func
+ 1178              	SDIO_EnableInterrupt:
+ 1179              	.LVL27:
+ 1180              	.LFB99:
+ 518:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 519:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 520:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief     Enables the specified SDIO interrupt
+ 521:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 522:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param     interrupt: Select the SDIO interrupt source
+ 523:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              The parameter can be any combination of following values:
+ 524:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_COMRESP:  Command response received (CRC check failed) interrupt
+ 525:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBDR:     Data block sent/received (CRC check failed) interrupt
+ 526:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRESTO: Command response timeout interrupt
+ 527:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATATO:   Data timeout interrupt
+ 528:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXUDRER:  Transmit FIFO underrun error interrupt
+ 529:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXOVRER:  Received FIFO overrun error interrupt
+ 530:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRES:   Command response received (CRC check passed) interrupt
+ 531:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDSENT:  Command sent (no response required) interrupt
+ 532:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATAEND:  Data end (data counter is zero) interrupt
+ 533:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SBE:      Start bit not detected on all data signals in wide bus mode
+ 534:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBCP:     Data block sent/received (CRC check passed) interrupt
+ 535:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDACT:   Command transfer in progress interrupt
+ 536:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXACT:    Data transmit in progress interrupt
+ 537:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXACT:    Data receive in progress interrupt
+ 538:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFHF:    Transmit FIFO Half Empty interrupt
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 30
+
+
+ 539:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFHF:    Receive FIFO Half Full interrupt
+ 540:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFF:     Transmit FIFO full interrupt
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFF:     Receive FIFO full interrupt
+ 542:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFE:     Transmit FIFO empty interrupt
+ 543:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFE:     Receive FIFO empty interrupt
+ 544:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXDA:     Data available in transmit FIFO interrupt
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXDA:     Data available in receive FIFO interrupt
+ 546:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SDIOINT:  SD I/O interrupt received interrupt
+ 547:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_ATAEND:   CE-ATA command completion signal received for CMD61 interru
+ 548:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval    None
+ 549:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 550:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_EnableInterrupt(uint32_t interrupt)
+ 551:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1181              		.loc 1 551 1 is_stmt 1 view -0
+ 1182              		.cfi_startproc
+ 1183              		@ args = 0, pretend = 0, frame = 0
+ 1184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1185              		@ link register save eliminated.
+ 552:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->MASK |= interrupt;
+ 1186              		.loc 1 552 5 view .LVU248
+ 1187              		.loc 1 552 16 is_stmt 0 view .LVU249
+ 1188 0000 024A     		ldr	r2, .L100
+ 1189 0002 D36B     		ldr	r3, [r2, #60]
+ 1190 0004 0343     		orrs	r3, r3, r0
+ 1191 0006 D363     		str	r3, [r2, #60]
+ 553:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1192              		.loc 1 553 1 view .LVU250
+ 1193 0008 7047     		bx	lr
+ 1194              	.L101:
+ 1195 000a 00BF     		.align	2
+ 1196              	.L100:
+ 1197 000c 00800140 		.word	1073840128
+ 1198              		.cfi_endproc
+ 1199              	.LFE99:
+ 1201              		.section	.text.SDIO_DisableInterrupt,"ax",%progbits
+ 1202              		.align	1
+ 1203              		.global	SDIO_DisableInterrupt
+ 1204              		.syntax unified
+ 1205              		.thumb
+ 1206              		.thumb_func
+ 1208              	SDIO_DisableInterrupt:
+ 1209              	.LVL28:
+ 1210              	.LFB100:
+ 554:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 555:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 556:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief     Disables the specified SDIO interrupt
+ 557:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 558:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param     interrupt: Select the SDIO interrupt source
+ 559:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              The parameter can be any combination of following values:
+ 560:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_COMRESP:  Command response received (CRC check failed) interrupt
+ 561:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBDR:     Data block sent/received (CRC check failed) interrupt
+ 562:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRESTO: Command response timeout interrupt
+ 563:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATATO:   Data timeout interrupt
+ 564:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXUDRER:  Transmit FIFO underrun error interrupt
+ 565:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXOVRER:  Received FIFO overrun error interrupt
+ 566:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRES:   Command response received (CRC check passed) interrupt
+ 567:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDSENT:  Command sent (no response required) interrupt
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 31
+
+
+ 568:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATAEND:  Data end (data counter is zero) interrupt
+ 569:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SBE:      Start bit not detected on all data signals in wide bus mode
+ 570:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBCP:     Data block sent/received (CRC check passed) interrupt
+ 571:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDACT:   Command transfer in progress interrupt
+ 572:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXACT:    Data transmit in progress interrupt
+ 573:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXACT:    Data receive in progress interrupt
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFHF:    Transmit FIFO Half Empty interrupt
+ 575:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFHF:    Receive FIFO Half Full interrupt
+ 576:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFF:     Transmit FIFO full interrupt
+ 577:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFF:     Receive FIFO full interrupt
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFE:     Transmit FIFO empty interrupt
+ 579:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFE:     Receive FIFO empty interrupt
+ 580:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXDA:     Data available in transmit FIFO interrupt
+ 581:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXDA:     Data available in receive FIFO interrupt
+ 582:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SDIOINT:  SD I/O interrupt received interrupt
+ 583:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_ATAEND:   CE-ATA command completion signal received for CMD61 interru
+ 584:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval    None
+ 585:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 586:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_DisableInterrupt(uint32_t interrupt)
+ 587:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1211              		.loc 1 587 1 is_stmt 1 view -0
+ 1212              		.cfi_startproc
+ 1213              		@ args = 0, pretend = 0, frame = 0
+ 1214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1215              		@ link register save eliminated.
+ 588:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->MASK &= ~interrupt;
+ 1216              		.loc 1 588 5 view .LVU252
+ 1217              		.loc 1 588 16 is_stmt 0 view .LVU253
+ 1218 0000 024A     		ldr	r2, .L103
+ 1219 0002 D36B     		ldr	r3, [r2, #60]
+ 1220 0004 23EA0003 		bic	r3, r3, r0
+ 1221 0008 D363     		str	r3, [r2, #60]
+ 589:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1222              		.loc 1 589 1 view .LVU254
+ 1223 000a 7047     		bx	lr
+ 1224              	.L104:
+ 1225              		.align	2
+ 1226              	.L103:
+ 1227 000c 00800140 		.word	1073840128
+ 1228              		.cfi_endproc
+ 1229              	.LFE100:
+ 1231              		.section	.text.SDIO_ReadStatusFlag,"ax",%progbits
+ 1232              		.align	1
+ 1233              		.global	SDIO_ReadStatusFlag
+ 1234              		.syntax unified
+ 1235              		.thumb
+ 1236              		.thumb_func
+ 1238              	SDIO_ReadStatusFlag:
+ 1239              	.LVL29:
+ 1240              	.LFB101:
+ 590:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 591:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 592:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief     Reads the specified SDIO flag
+ 593:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 594:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param     flag: Select the flag to read
+ 595:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              The parameter can be one of following values:
+ 596:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_COMRESP:  Command response received (CRC check failed) flag
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 32
+
+
+ 597:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DBDR:     Data block sent/received (CRC check failed) flag
+ 598:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_CMDRESTO: Command response timeout flag
+ 599:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DATATO:   Data timeout flag
+ 600:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_TXUDRER:  Transmit FIFO underrun error flag
+ 601:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_RXOVRER:  Received FIFO overrun error flag
+ 602:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_CMDRES:   Command response received (CRC check passed) flag
+ 603:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_CMDSENT:  Command sent (no response required) flag
+ 604:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DATAEND:  Data end (data counter is zero) flag
+ 605:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_SBE:      Start bit not detected on all data signals in wide bus mod
+ 606:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DBCP:     Data block sent/received (CRC check passed) flag
+ 607:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_CMDACT:   Command transfer in progress flag
+ 608:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_TXACT:    Data transmit in progress flag
+ 609:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_RXACT:    Data receive in progress flag
+ 610:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_TXFHF:    Transmit FIFO Half Empty flag
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_RXFHF:    Receive FIFO Half Full flag
+ 612:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_TXFF:     Transmit FIFO full flag
+ 613:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_RXFF:     Receive FIFO full flag
+ 614:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_TXFE:     Transmit FIFO empty flag
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_RXFE:     Receive FIFO empty flag
+ 616:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_TXDA:     Data available in transmit FIFO flag
+ 617:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_RXDA:     Data available in receive FIFO flag
+ 618:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_SDIOINT:  SD I/O interrupt received flag
+ 619:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_ATAEND:   CE-ATA command completion signal received for CMD61 flag
+ 620:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 621:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval    SET or RESET
+ 622:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 623:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint8_t SDIO_ReadStatusFlag(SDIO_FLAG_T flag)
+ 624:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1241              		.loc 1 624 1 is_stmt 1 view -0
+ 1242              		.cfi_startproc
+ 1243              		@ args = 0, pretend = 0, frame = 0
+ 1244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1245              		@ link register save eliminated.
+ 625:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     return (SDIO->STS & flag) ? SET : RESET;
+ 1246              		.loc 1 625 5 view .LVU256
+ 1247              		.loc 1 625 17 is_stmt 0 view .LVU257
+ 1248 0000 034B     		ldr	r3, .L106
+ 1249 0002 5B6B     		ldr	r3, [r3, #52]
+ 1250              		.loc 1 625 37 view .LVU258
+ 1251 0004 0342     		tst	r3, r0
+ 626:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1252              		.loc 1 626 1 view .LVU259
+ 1253 0006 14BF     		ite	ne
+ 1254 0008 0120     		movne	r0, #1
+ 1255              	.LVL30:
+ 1256              		.loc 1 626 1 view .LVU260
+ 1257 000a 0020     		moveq	r0, #0
+ 1258 000c 7047     		bx	lr
+ 1259              	.L107:
+ 1260 000e 00BF     		.align	2
+ 1261              	.L106:
+ 1262 0010 00800140 		.word	1073840128
+ 1263              		.cfi_endproc
+ 1264              	.LFE101:
+ 1266              		.section	.text.SDIO_ClearStatusFlag,"ax",%progbits
+ 1267              		.align	1
+ 1268              		.global	SDIO_ClearStatusFlag
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 33
+
+
+ 1269              		.syntax unified
+ 1270              		.thumb
+ 1271              		.thumb_func
+ 1273              	SDIO_ClearStatusFlag:
+ 1274              	.LVL31:
+ 1275              	.LFB102:
+ 627:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 628:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 629:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief     Clears the specified SDIO flag
+ 630:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 631:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param     flag: Select the flag to clear
+ 632:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              The parameter can be any combination of following values:
+ 633:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_COMRESP:  Command response received (CRC check failed) flag
+ 634:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DBDR:     Data block sent/received (CRC check failed) flag
+ 635:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_CMDRESTO: Command response timeout flag
+ 636:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DATATO:   Data timeout flag
+ 637:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_TXUDRER:  Transmit FIFO underrun error flag
+ 638:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_RXOVRER:  Received FIFO overrun error flag
+ 639:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_CMDRES:   Command response received (CRC check passed) flag
+ 640:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_CMDSENT:  Command sent (no response required) flag
+ 641:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DATAEND:  Data end (data counter is zero) flag
+ 642:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_SBE:      Start bit not detected on all data signals in wide bus mod
+ 643:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_DBCP:     Data block sent/received (CRC check passed) flag
+ 644:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_SDIOINT:  SD I/O interrupt received flag
+ 645:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_FLAG_ATAEND:   CE-ATA command completion signal received for CMD61 flag
+ 646:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 647:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval    None
+ 648:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 649:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_ClearStatusFlag(uint32_t flag)
+ 650:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1276              		.loc 1 650 1 is_stmt 1 view -0
+ 1277              		.cfi_startproc
+ 1278              		@ args = 0, pretend = 0, frame = 0
+ 1279              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1280              		@ link register save eliminated.
+ 651:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->ICF = flag;
+ 1281              		.loc 1 651 5 view .LVU262
+ 1282              		.loc 1 651 15 is_stmt 0 view .LVU263
+ 1283 0000 014B     		ldr	r3, .L109
+ 1284 0002 9863     		str	r0, [r3, #56]
+ 652:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1285              		.loc 1 652 1 view .LVU264
+ 1286 0004 7047     		bx	lr
+ 1287              	.L110:
+ 1288 0006 00BF     		.align	2
+ 1289              	.L109:
+ 1290 0008 00800140 		.word	1073840128
+ 1291              		.cfi_endproc
+ 1292              	.LFE102:
+ 1294              		.section	.text.SDIO_ReadIntFlag,"ax",%progbits
+ 1295              		.align	1
+ 1296              		.global	SDIO_ReadIntFlag
+ 1297              		.syntax unified
+ 1298              		.thumb
+ 1299              		.thumb_func
+ 1301              	SDIO_ReadIntFlag:
+ 1302              	.LVL32:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 34
+
+
+ 1303              	.LFB103:
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 654:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 655:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief     Reads the specified SDIO Interrupt flag
+ 656:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param     flag: Select the SDIO interrupt source
+ 658:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              The parameter can be one of following values:
+ 659:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_COMRESP:  Command response received (CRC check failed) interrupt
+ 660:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBDR:     Data block sent/received (CRC check failed) interrupt
+ 661:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRESTO: Command response timeout interrupt
+ 662:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATATO:   Data timeout interrupt
+ 663:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXUDRER:  Transmit FIFO underrun error interrupt
+ 664:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXOVRER:  Received FIFO overrun error interrupt
+ 665:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRES:   Command response received (CRC check passed) interrupt
+ 666:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDSENT:  Command sent (no response required) interrupt
+ 667:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATAEND:  Data end (data counter is zero) interrupt
+ 668:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SBE:      Start bit not detected on all data signals in wide bus mode
+ 669:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBCP:     Data block sent/received (CRC check passed) interrupt
+ 670:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDACT:   Command transfer in progress interrupt
+ 671:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXACT:    Data transmit in progress interrupt
+ 672:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXACT:    Data receive in progress interrupt
+ 673:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFHF:    Transmit FIFO Half Empty interrupt
+ 674:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFHF:    Receive FIFO Half Full interrupt
+ 675:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFF:     Transmit FIFO full interrupt
+ 676:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFF:     Receive FIFO full interrupt
+ 677:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXFE:     Transmit FIFO empty interrupt
+ 678:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXFE:     Receive FIFO empty interrupt
+ 679:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXDA:     Data available in transmit FIFO interrupt
+ 680:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXDA:     Data available in receive FIFO interrupt
+ 681:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SDIOINT:  SD I/O interrupt received interrupt
+ 682:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_ATAEND:   CE-ATA command completion signal received for CMD61 interru
+ 683:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 684:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval    SET or RESET
+ 685:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 686:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** uint8_t SDIO_ReadIntFlag(SDIO_INT_T flag)
+ 687:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1304              		.loc 1 687 1 is_stmt 1 view -0
+ 1305              		.cfi_startproc
+ 1306              		@ args = 0, pretend = 0, frame = 0
+ 1307              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1308              		@ link register save eliminated.
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     uint32_t intEnable;
+ 1309              		.loc 1 688 5 view .LVU266
+ 689:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     uint32_t intStatus;
+ 1310              		.loc 1 689 5 view .LVU267
+ 690:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 691:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     intEnable = (uint32_t)(SDIO->MASK & flag);
+ 1311              		.loc 1 691 5 view .LVU268
+ 1312              		.loc 1 691 32 is_stmt 0 view .LVU269
+ 1313 0000 064B     		ldr	r3, .L115
+ 1314 0002 DA6B     		ldr	r2, [r3, #60]
+ 1315              	.LVL33:
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     intStatus = (uint32_t)(SDIO->STS & flag);
+ 1316              		.loc 1 692 5 is_stmt 1 view .LVU270
+ 1317              		.loc 1 692 32 is_stmt 0 view .LVU271
+ 1318 0004 5B6B     		ldr	r3, [r3, #52]
+ 1319              		.loc 1 692 15 view .LVU272
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 35
+
+
+ 1320 0006 0340     		ands	r3, r3, r0
+ 1321              	.LVL34:
+ 693:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 694:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     if (intEnable && intStatus)
+ 1322              		.loc 1 694 5 is_stmt 1 view .LVU273
+ 1323              		.loc 1 694 8 is_stmt 0 view .LVU274
+ 1324 0008 0242     		tst	r2, r0
+ 1325 000a 02D0     		beq	.L113
+ 1326              		.loc 1 694 19 discriminator 1 view .LVU275
+ 1327 000c 1BB9     		cbnz	r3, .L114
+ 695:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     {
+ 696:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****         return SET;
+ 697:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     }
+ 698:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 699:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     return RESET;
+ 1328              		.loc 1 699 12 view .LVU276
+ 1329 000e 0020     		movs	r0, #0
+ 1330              	.LVL35:
+ 1331              		.loc 1 699 12 view .LVU277
+ 1332 0010 7047     		bx	lr
+ 1333              	.LVL36:
+ 1334              	.L113:
+ 1335              		.loc 1 699 12 view .LVU278
+ 1336 0012 0020     		movs	r0, #0
+ 1337              	.LVL37:
+ 1338              		.loc 1 699 12 view .LVU279
+ 1339 0014 7047     		bx	lr
+ 1340              	.LVL38:
+ 1341              	.L114:
+ 696:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     }
+ 1342              		.loc 1 696 16 view .LVU280
+ 1343 0016 0120     		movs	r0, #1
+ 1344              	.LVL39:
+ 700:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1345              		.loc 1 700 1 view .LVU281
+ 1346 0018 7047     		bx	lr
+ 1347              	.L116:
+ 1348 001a 00BF     		.align	2
+ 1349              	.L115:
+ 1350 001c 00800140 		.word	1073840128
+ 1351              		.cfi_endproc
+ 1352              	.LFE103:
+ 1354              		.section	.text.SDIO_ClearIntFlag,"ax",%progbits
+ 1355              		.align	1
+ 1356              		.global	SDIO_ClearIntFlag
+ 1357              		.syntax unified
+ 1358              		.thumb
+ 1359              		.thumb_func
+ 1361              	SDIO_ClearIntFlag:
+ 1362              	.LVL40:
+ 1363              	.LFB104:
+ 701:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** 
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** /*!
+ 703:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @brief     Clears the specified SDIO Interrupt pending bits
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 705:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @param     flag: Select the SDIO interrupt source
+ 706:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              The parameter can be any combination of following values:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 36
+
+
+ 707:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_COMRESP:  Command response received (CRC check failed) interrupt
+ 708:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBDR:     Data block sent/received (CRC check failed) interrupt
+ 709:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRESTO: Command response timeout interrupt
+ 710:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATATO:   Data timeout interrupt
+ 711:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_TXUDRER:  Transmit FIFO underrun error interrupt
+ 712:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_RXOVRER:  Received FIFO overrun error interrupt
+ 713:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDRES:   Command response received (CRC check passed) interrupt
+ 714:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_CMDSENT:  Command sent (no response required) interrupt
+ 715:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DATAEND:  Data end (data counter is zero) interrupt
+ 716:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SBE:      Start bit not detected on all data signals in wide bus mode
+ 717:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_DBCP:     Data block sent/received (CRC check passed) interrupt
+ 718:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_SDIOINT:  SD I/O interrupt received interrupt
+ 719:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *              @arg SDIO_INT_ATAEND:   CE-ATA command completion signal received for CMD61 interru
+ 720:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  *
+ 721:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  * @retval    None
+ 722:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****  */
+ 723:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** void SDIO_ClearIntFlag(uint32_t flag)
+ 724:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** {
+ 1364              		.loc 1 724 1 is_stmt 1 view -0
+ 1365              		.cfi_startproc
+ 1366              		@ args = 0, pretend = 0, frame = 0
+ 1367              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1368              		@ link register save eliminated.
+ 725:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c ****     SDIO->ICF = flag;
+ 1369              		.loc 1 725 5 view .LVU283
+ 1370              		.loc 1 725 15 is_stmt 0 view .LVU284
+ 1371 0000 014B     		ldr	r3, .L118
+ 1372 0002 9863     		str	r0, [r3, #56]
+ 726:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_sdio.c **** }
+ 1373              		.loc 1 726 1 view .LVU285
+ 1374 0004 7047     		bx	lr
+ 1375              	.L119:
+ 1376 0006 00BF     		.align	2
+ 1377              	.L118:
+ 1378 0008 00800140 		.word	1073840128
+ 1379              		.cfi_endproc
+ 1380              	.LFE104:
+ 1382              		.text
+ 1383              	.Letext0:
+ 1384              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1385              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 1386              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 1387              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_sdio.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 37
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_sdio.c
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:18     .text.SDIO_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:24     .text.SDIO_Reset:00000000 SDIO_Reset
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:67     .text.SDIO_Reset:0000001c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:73     .text.SDIO_Config:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:79     .text.SDIO_Config:00000000 SDIO_Config
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:135    .text.SDIO_Config:00000038 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:140    .text.SDIO_ConfigStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:146    .text.SDIO_ConfigStructInit:00000000 SDIO_ConfigStructInit
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:179    .text.SDIO_EnableClock:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:185    .text.SDIO_EnableClock:00000000 SDIO_EnableClock
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:202    .text.SDIO_EnableClock:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:207    .text.SDIO_DisableClock:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:213    .text.SDIO_DisableClock:00000000 SDIO_DisableClock
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:230    .text.SDIO_DisableClock:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:235    .text.SDIO_ConfigPowerState:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:241    .text.SDIO_ConfigPowerState:00000000 SDIO_ConfigPowerState
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:267    .text.SDIO_ConfigPowerState:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:272    .text.SDIO_ReadPowerState:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:278    .text.SDIO_ReadPowerState:00000000 SDIO_ReadPowerState
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:295    .text.SDIO_ReadPowerState:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:300    .text.SDIO_EnableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:306    .text.SDIO_EnableDMA:00000000 SDIO_EnableDMA
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:323    .text.SDIO_EnableDMA:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:328    .text.SDIO_DisableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:334    .text.SDIO_DisableDMA:00000000 SDIO_DisableDMA
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:351    .text.SDIO_DisableDMA:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:356    .text.SDIO_TxCommand:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:362    .text.SDIO_TxCommand:00000000 SDIO_TxCommand
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:415    .text.SDIO_TxCommand:0000002c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:420    .text.SDIO_TxCommandStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:426    .text.SDIO_TxCommandStructInit:00000000 SDIO_TxCommandStructInit
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:456    .text.SDIO_ReadCommandResponse:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:462    .text.SDIO_ReadCommandResponse:00000000 SDIO_ReadCommandResponse
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:479    .text.SDIO_ReadCommandResponse:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:484    .text.SDIO_ReadResponse:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:490    .text.SDIO_ReadResponse:00000000 SDIO_ReadResponse
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:527    .text.SDIO_ReadResponse:00000014 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:532    .text.SDIO_ConfigData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:538    .text.SDIO_ConfigData:00000000 SDIO_ConfigData
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:598    .text.SDIO_ConfigData:00000030 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:603    .text.SDIO_ConfigDataStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:609    .text.SDIO_ConfigDataStructInit:00000000 SDIO_ConfigDataStructInit
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:643    .text.SDIO_ReadDataCounter:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:649    .text.SDIO_ReadDataCounter:00000000 SDIO_ReadDataCounter
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:665    .text.SDIO_ReadDataCounter:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:670    .text.SDIO_WriteData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:676    .text.SDIO_WriteData:00000000 SDIO_WriteData
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:693    .text.SDIO_WriteData:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:698    .text.SDIO_ReadData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:704    .text.SDIO_ReadData:00000000 SDIO_ReadData
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:720    .text.SDIO_ReadData:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:725    .text.SDIO_ReadFIFOCount:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:731    .text.SDIO_ReadFIFOCount:00000000 SDIO_ReadFIFOCount
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:747    .text.SDIO_ReadFIFOCount:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:752    .text.SDIO_EnableStartReadWait:00000000 $t
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 38
+
+
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:758    .text.SDIO_EnableStartReadWait:00000000 SDIO_EnableStartReadWait
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:775    .text.SDIO_EnableStartReadWait:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:780    .text.SDIO_DisableStopReadWait:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:786    .text.SDIO_DisableStopReadWait:00000000 SDIO_DisableStopReadWait
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:803    .text.SDIO_DisableStopReadWait:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:808    .text.SDIO_EnableStopReadWait:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:814    .text.SDIO_EnableStopReadWait:00000000 SDIO_EnableStopReadWait
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:831    .text.SDIO_EnableStopReadWait:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:836    .text.SDIO_DisableStartReadWait:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:842    .text.SDIO_DisableStartReadWait:00000000 SDIO_DisableStartReadWait
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:859    .text.SDIO_DisableStartReadWait:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:864    .text.SDIO_ConfigSDIOReadWaitMode:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:870    .text.SDIO_ConfigSDIOReadWaitMode:00000000 SDIO_ConfigSDIOReadWaitMode
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:887    .text.SDIO_ConfigSDIOReadWaitMode:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:892    .text.SDIO_EnableSDIO:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:898    .text.SDIO_EnableSDIO:00000000 SDIO_EnableSDIO
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:915    .text.SDIO_EnableSDIO:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:920    .text.SDIO_DisableSDIO:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:926    .text.SDIO_DisableSDIO:00000000 SDIO_DisableSDIO
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:943    .text.SDIO_DisableSDIO:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:948    .text.SDIO_EnableTxSDIOSuspend:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:954    .text.SDIO_EnableTxSDIOSuspend:00000000 SDIO_EnableTxSDIOSuspend
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:971    .text.SDIO_EnableTxSDIOSuspend:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:976    .text.SDIO_DisableTxSDIOSuspend:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:982    .text.SDIO_DisableTxSDIOSuspend:00000000 SDIO_DisableTxSDIOSuspend
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:999    .text.SDIO_DisableTxSDIOSuspend:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1004   .text.SDIO_EnableCommandCompletion:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1010   .text.SDIO_EnableCommandCompletion:00000000 SDIO_EnableCommandCompletion
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1027   .text.SDIO_EnableCommandCompletion:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1032   .text.SDIO_DisableCommandCompletion:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1038   .text.SDIO_DisableCommandCompletion:00000000 SDIO_DisableCommandCompletion
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1055   .text.SDIO_DisableCommandCompletion:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1060   .text.SDIO_EnableCEATAInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1066   .text.SDIO_EnableCEATAInterrupt:00000000 SDIO_EnableCEATAInterrupt
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1083   .text.SDIO_EnableCEATAInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1088   .text.SDIO_DisableCEATAInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1094   .text.SDIO_DisableCEATAInterrupt:00000000 SDIO_DisableCEATAInterrupt
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1111   .text.SDIO_DisableCEATAInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1116   .text.SDIO_EnableTxCEATA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1122   .text.SDIO_EnableTxCEATA:00000000 SDIO_EnableTxCEATA
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1139   .text.SDIO_EnableTxCEATA:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1144   .text.SDIO_DisableTxCEATA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1150   .text.SDIO_DisableTxCEATA:00000000 SDIO_DisableTxCEATA
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1167   .text.SDIO_DisableTxCEATA:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1172   .text.SDIO_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1178   .text.SDIO_EnableInterrupt:00000000 SDIO_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1197   .text.SDIO_EnableInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1202   .text.SDIO_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1208   .text.SDIO_DisableInterrupt:00000000 SDIO_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1227   .text.SDIO_DisableInterrupt:0000000c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1232   .text.SDIO_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1238   .text.SDIO_ReadStatusFlag:00000000 SDIO_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1262   .text.SDIO_ReadStatusFlag:00000010 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1267   .text.SDIO_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1273   .text.SDIO_ClearStatusFlag:00000000 SDIO_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1290   .text.SDIO_ClearStatusFlag:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1295   .text.SDIO_ReadIntFlag:00000000 $t
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s 			page 39
+
+
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1301   .text.SDIO_ReadIntFlag:00000000 SDIO_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1350   .text.SDIO_ReadIntFlag:0000001c $d
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1355   .text.SDIO_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1361   .text.SDIO_ClearIntFlag:00000000 SDIO_ClearIntFlag
+C:\Users\geehy\AppData\Local\Temp\cc0b7Db9.s:1378   .text.SDIO_ClearIntFlag:00000008 $d
+
+NO UNDEFINED SYMBOLS

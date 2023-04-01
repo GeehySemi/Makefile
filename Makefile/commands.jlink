@@ -1,0 +1,6 @@
+r
+halt
+loadfile "build\SysTick_TimeBase.hex"
+r
+go
+exit

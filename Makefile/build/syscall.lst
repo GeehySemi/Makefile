@@ -1,0 +1,187 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"syscall.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.__io_putchar,"ax",%progbits
+  18              		.align	1
+  19              		.global	__io_putchar
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	__io_putchar:
+  25              	.LVL0:
+  26              	.LFB66:
+  27              		.file 1 "Source/syscall.c"
+   1:Source/syscall.c **** #include "apm32f10x_usart.h"
+   2:Source/syscall.c **** 
+   3:Source/syscall.c **** int _write(int file, char *ptr, int len)
+   4:Source/syscall.c **** {
+   5:Source/syscall.c ****     int DataIdx;
+   6:Source/syscall.c ****     for (DataIdx = 0; DataIdx < len; DataIdx++)
+   7:Source/syscall.c ****     {
+   8:Source/syscall.c ****         __io_putchar(*ptr++);
+   9:Source/syscall.c ****     }
+  10:Source/syscall.c ****     return len;
+  11:Source/syscall.c **** }
+  12:Source/syscall.c **** 
+  13:Source/syscall.c **** int __io_putchar(int ch)
+  14:Source/syscall.c **** {
+  28              		.loc 1 14 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 14 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 0446     		mov	r4, r0
+  15:Source/syscall.c ****     while (USART_ReadStatusFlag(USART1, USART_FLAG_TXBE) == RESET);
+  39              		.loc 1 15 5 is_stmt 1 view .LVU2
+  40              	.LVL1:
+  41              	.L2:
+  42              		.loc 1 15 67 discriminator 1 view .LVU3
+  43              		.loc 1 15 11 discriminator 1 view .LVU4
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s 			page 2
+
+
+  44              		.loc 1 15 12 is_stmt 0 discriminator 1 view .LVU5
+  45 0004 8021     		movs	r1, #128
+  46 0006 0548     		ldr	r0, .L4
+  47 0008 FFF7FEFF 		bl	USART_ReadStatusFlag
+  48              	.LVL2:
+  49              		.loc 1 15 11 discriminator 1 view .LVU6
+  50 000c 0028     		cmp	r0, #0
+  51 000e F9D0     		beq	.L2
+  16:Source/syscall.c ****     USART_TxData(USART1, ch);
+  52              		.loc 1 16 5 is_stmt 1 view .LVU7
+  53 0010 A1B2     		uxth	r1, r4
+  54 0012 0248     		ldr	r0, .L4
+  55 0014 FFF7FEFF 		bl	USART_TxData
+  56              	.LVL3:
+  17:Source/syscall.c ****     return ch;
+  57              		.loc 1 17 5 view .LVU8
+  18:Source/syscall.c **** }
+  58              		.loc 1 18 1 is_stmt 0 view .LVU9
+  59 0018 2046     		mov	r0, r4
+  60 001a 10BD     		pop	{r4, pc}
+  61              	.LVL4:
+  62              	.L5:
+  63              		.loc 1 18 1 view .LVU10
+  64              		.align	2
+  65              	.L4:
+  66 001c 00380140 		.word	1073821696
+  67              		.cfi_endproc
+  68              	.LFE66:
+  70              		.section	.text._write,"ax",%progbits
+  71              		.align	1
+  72              		.global	_write
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  77              	_write:
+  78              	.LVL5:
+  79              	.LFB65:
+   4:Source/syscall.c ****     int DataIdx;
+  80              		.loc 1 4 1 is_stmt 1 view -0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+   4:Source/syscall.c ****     int DataIdx;
+  84              		.loc 1 4 1 is_stmt 0 view .LVU12
+  85 0000 70B5     		push	{r4, r5, r6, lr}
+  86              	.LCFI1:
+  87              		.cfi_def_cfa_offset 16
+  88              		.cfi_offset 4, -16
+  89              		.cfi_offset 5, -12
+  90              		.cfi_offset 6, -8
+  91              		.cfi_offset 14, -4
+  92 0002 0C46     		mov	r4, r1
+  93 0004 1646     		mov	r6, r2
+   5:Source/syscall.c ****     for (DataIdx = 0; DataIdx < len; DataIdx++)
+  94              		.loc 1 5 5 is_stmt 1 view .LVU13
+   6:Source/syscall.c ****     {
+  95              		.loc 1 6 5 view .LVU14
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s 			page 3
+
+
+  96              	.LVL6:
+   6:Source/syscall.c ****     {
+  97              		.loc 1 6 18 is_stmt 0 view .LVU15
+  98 0006 0025     		movs	r5, #0
+   6:Source/syscall.c ****     {
+  99              		.loc 1 6 5 view .LVU16
+ 100 0008 04E0     		b	.L7
+ 101              	.LVL7:
+ 102              	.L8:
+ 103              	.LBB2:
+   8:Source/syscall.c ****     }
+ 104              		.loc 1 8 9 is_stmt 1 discriminator 3 view .LVU17
+   8:Source/syscall.c ****     }
+ 105              		.loc 1 8 9 is_stmt 0 discriminator 3 view .LVU18
+ 106 000a 14F8010B 		ldrb	r0, [r4], #1	@ zero_extendqisi2
+ 107              	.LVL8:
+   8:Source/syscall.c ****     }
+ 108              		.loc 1 8 9 discriminator 3 view .LVU19
+ 109 000e FFF7FEFF 		bl	__io_putchar
+ 110              	.LVL9:
+ 111              	.LBE2:
+   6:Source/syscall.c ****     {
+ 112              		.loc 1 6 38 is_stmt 1 discriminator 3 view .LVU20
+   6:Source/syscall.c ****     {
+ 113              		.loc 1 6 45 is_stmt 0 discriminator 3 view .LVU21
+ 114 0012 0135     		adds	r5, r5, #1
+ 115              	.LVL10:
+ 116              	.L7:
+   6:Source/syscall.c ****     {
+ 117              		.loc 1 6 23 is_stmt 1 discriminator 1 view .LVU22
+   6:Source/syscall.c ****     {
+ 118              		.loc 1 6 5 is_stmt 0 discriminator 1 view .LVU23
+ 119 0014 B542     		cmp	r5, r6
+ 120 0016 F8DB     		blt	.L8
+  10:Source/syscall.c **** }
+ 121              		.loc 1 10 5 is_stmt 1 view .LVU24
+  11:Source/syscall.c **** 
+ 122              		.loc 1 11 1 is_stmt 0 view .LVU25
+ 123 0018 3046     		mov	r0, r6
+ 124 001a 70BD     		pop	{r4, r5, r6, pc}
+  11:Source/syscall.c **** 
+ 125              		.loc 1 11 1 view .LVU26
+ 126              		.cfi_endproc
+ 127              	.LFE65:
+ 129              		.text
+ 130              	.Letext0:
+ 131              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 132              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 133              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 134              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_usart.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 syscall.c
+C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s:18     .text.__io_putchar:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s:24     .text.__io_putchar:00000000 __io_putchar
+C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s:66     .text.__io_putchar:0000001c $d
+C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s:71     .text._write:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cc61JOl5.s:77     .text._write:00000000 _write
+
+UNDEFINED SYMBOLS
+USART_ReadStatusFlag
+USART_TxData

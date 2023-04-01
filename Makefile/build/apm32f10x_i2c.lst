@@ -1,0 +1,3270 @@
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"apm32f10x_i2c.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.I2C_Reset,"ax",%progbits
+  18              		.align	1
+  19              		.global	I2C_Reset
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	I2C_Reset:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c"
+   1:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+   2:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @file        apm32f10x_i2c.c
+   3:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+   4:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief       This file provides all the I2C firmware functions
+   5:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+   6:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @version     V1.0.2
+   7:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+   8:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @date        2022-01-05
+   9:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  10:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @attention
+  11:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  12:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  Copyright (C) 2020-2022 Geehy Semiconductor
+  13:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  14:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  You may not use this file except in compliance with the
+  15:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
+  16:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  17:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  The program is only for reference, which is distributed in the hope
+  18:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  that it will be usefull and instructional for customers to develop
+  19:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  their software. Unless required by applicable law or agreed to in
+  20:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
+  21:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
+  22:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  See the GEEHY SOFTWARE PACKAGE LICENSE for the governing permissions
+  23:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *  and limitations under the License.
+  24:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+  25:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  26:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** #include "apm32f10x_i2c.h"
+  27:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** #include "apm32f10x_rcm.h"
+  28:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  29:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /** @addtogroup Peripherals_Library Standard Peripheral Library
+  30:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****   @{
+  31:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 2
+
+
+  32:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  33:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /** @addtogroup I2C_Driver I2C Driver
+  34:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****   @{
+  35:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** */
+  36:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  37:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /** @addtogroup I2C_Fuctions Fuctions
+  38:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****   @{
+  39:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** */
+  40:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  41:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+  42:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Reset I2C
+  43:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  44:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+  45:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  46:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+  47:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+  48:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_Reset(I2C_T* i2c)
+  49:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+  28              		.loc 1 49 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 49 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  50:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(i2c == I2C1)
+  38              		.loc 1 50 5 is_stmt 1 view .LVU2
+  39              		.loc 1 50 7 is_stmt 0 view .LVU3
+  40 0002 0A4B     		ldr	r3, .L6
+  41 0004 9842     		cmp	r0, r3
+  42 0006 08D0     		beq	.L5
+  51:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_I2C1);
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_I2C1);
+  54:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+  55:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     else
+  56:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+  57:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         RCM_EnableAPB1PeriphReset(RCM_APB1_PERIPH_I2C2);
+  43              		.loc 1 57 9 is_stmt 1 view .LVU4
+  44 0008 4FF48000 		mov	r0, #4194304
+  45              	.LVL1:
+  46              		.loc 1 57 9 is_stmt 0 view .LVU5
+  47 000c FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+  48              	.LVL2:
+  58:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_I2C2);
+  49              		.loc 1 58 9 is_stmt 1 view .LVU6
+  50 0010 4FF48000 		mov	r0, #4194304
+  51 0014 FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+  52              	.LVL3:
+  53              	.L1:
+  59:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+  60:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+  54              		.loc 1 60 1 is_stmt 0 view .LVU7
+  55 0018 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 3
+
+
+  56              	.LVL4:
+  57              	.L5:
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_I2C1);
+  58              		.loc 1 52 9 is_stmt 1 view .LVU8
+  59 001a 4FF40010 		mov	r0, #2097152
+  60              	.LVL5:
+  52:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         RCM_DisableAPB1PeriphReset(RCM_APB1_PERIPH_I2C1);
+  61              		.loc 1 52 9 is_stmt 0 view .LVU9
+  62 001e FFF7FEFF 		bl	RCM_EnableAPB1PeriphReset
+  63              	.LVL6:
+  53:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+  64              		.loc 1 53 9 is_stmt 1 view .LVU10
+  65 0022 4FF40010 		mov	r0, #2097152
+  66 0026 FFF7FEFF 		bl	RCM_DisableAPB1PeriphReset
+  67              	.LVL7:
+  68 002a F5E7     		b	.L1
+  69              	.L7:
+  70              		.align	2
+  71              	.L6:
+  72 002c 00540040 		.word	1073763328
+  73              		.cfi_endproc
+  74              	.LFE65:
+  76              		.section	.text.I2C_Config,"ax",%progbits
+  77              		.align	1
+  78              		.global	I2C_Config
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  83              	I2C_Config:
+  84              	.LVL8:
+  85              	.LFB66:
+  61:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  62:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+  63:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Configure I2C by configuring the structure
+  64:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  65:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+  66:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  67:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2cConfig: pointer to a I2C_Config_T structure
+  68:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+  69:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+  70:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+  71:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_Config(I2C_T* i2c, I2C_Config_T* i2cConfig)
+  72:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+  86              		.loc 1 72 1 view -0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 8
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  90              		.loc 1 72 1 is_stmt 0 view .LVU12
+  91 0000 70B5     		push	{r4, r5, r6, lr}
+  92              	.LCFI1:
+  93              		.cfi_def_cfa_offset 16
+  94              		.cfi_offset 4, -16
+  95              		.cfi_offset 5, -12
+  96              		.cfi_offset 6, -8
+  97              		.cfi_offset 14, -4
+  98 0002 82B0     		sub	sp, sp, #8
+  99              	.LCFI2:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 4
+
+
+ 100              		.cfi_def_cfa_offset 24
+ 101 0004 0446     		mov	r4, r0
+ 102 0006 0D46     		mov	r5, r1
+  73:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint16_t tmpreg = 0, freqrange = 0;
+ 103              		.loc 1 73 5 is_stmt 1 view .LVU13
+ 104              	.LVL9:
+  74:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint32_t PCLK1 = 8000000, PCLK2 = 0;
+ 105              		.loc 1 74 5 view .LVU14
+ 106              		.loc 1 74 14 is_stmt 0 view .LVU15
+ 107 0008 374B     		ldr	r3, .L18
+ 108 000a 0193     		str	r3, [sp, #4]
+ 109              		.loc 1 74 31 view .LVU16
+ 110 000c 0026     		movs	r6, #0
+ 111 000e 0096     		str	r6, [sp]
+  75:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint16_t result = 0x04;
+ 112              		.loc 1 75 5 is_stmt 1 view .LVU17
+ 113              	.LVL10:
+  76:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  77:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->SWITCH = 0;
+ 114              		.loc 1 77 5 view .LVU18
+ 115              		.loc 1 77 17 is_stmt 0 view .LVU19
+ 116 0010 C0F80061 		str	r6, [r0, #256]
+  78:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  79:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     /** I2C CTRL2 Configuration */
+  80:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     RCM_ReadPCLKFreq(&PCLK1, &PCLK2);
+ 117              		.loc 1 80 5 is_stmt 1 view .LVU20
+ 118 0014 6946     		mov	r1, sp
+ 119              	.LVL11:
+ 120              		.loc 1 80 5 is_stmt 0 view .LVU21
+ 121 0016 01A8     		add	r0, sp, #4
+ 122              	.LVL12:
+ 123              		.loc 1 80 5 view .LVU22
+ 124 0018 FFF7FEFF 		bl	RCM_ReadPCLKFreq
+ 125              	.LVL13:
+  81:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     freqrange = PCLK1 / 1000000;
+ 126              		.loc 1 81 5 is_stmt 1 view .LVU23
+ 127              		.loc 1 81 23 is_stmt 0 view .LVU24
+ 128 001c 019B     		ldr	r3, [sp, #4]
+ 129 001e 334A     		ldr	r2, .L18+4
+ 130 0020 A2FB0323 		umull	r2, r3, r2, r3
+ 131 0024 9A0C     		lsrs	r2, r3, #18
+ 132              	.LVL14:
+  82:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL2_B.CLKFCFG= freqrange;
+ 133              		.loc 1 82 5 is_stmt 1 view .LVU25
+ 134              		.loc 1 82 25 is_stmt 0 view .LVU26
+ 135 0026 C3F38543 		ubfx	r3, r3, #18, #6
+ 136 002a 6168     		ldr	r1, [r4, #4]
+ 137 002c 63F30501 		bfi	r1, r3, #0, #6
+ 138 0030 6160     		str	r1, [r4, #4]
+  83:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  84:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     /** I2C CLKCTRL Configuration */
+  85:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.I2CEN = BIT_RESET;
+ 139              		.loc 1 85 5 is_stmt 1 view .LVU27
+ 140              		.loc 1 85 24 is_stmt 0 view .LVU28
+ 141 0032 2368     		ldr	r3, [r4]
+ 142 0034 66F30003 		bfi	r3, r6, #0, #1
+ 143 0038 2360     		str	r3, [r4]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 5
+
+
+  86:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+  87:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(i2cConfig->clockSpeed <= 100000)
+ 144              		.loc 1 87 5 is_stmt 1 view .LVU29
+ 145              		.loc 1 87 17 is_stmt 0 view .LVU30
+ 146 003a 2B68     		ldr	r3, [r5]
+ 147              		.loc 1 87 7 view .LVU31
+ 148 003c 2C49     		ldr	r1, .L18+8
+ 149 003e 8B42     		cmp	r3, r1
+ 150 0040 29D8     		bhi	.L9
+  88:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+  89:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         result = (PCLK1 / (i2cConfig->clockSpeed << 1));
+ 151              		.loc 1 89 9 is_stmt 1 view .LVU32
+ 152              		.loc 1 89 50 is_stmt 0 view .LVU33
+ 153 0042 5900     		lsls	r1, r3, #1
+ 154              		.loc 1 89 25 view .LVU34
+ 155 0044 019B     		ldr	r3, [sp, #4]
+ 156 0046 B3FBF1F3 		udiv	r3, r3, r1
+ 157              		.loc 1 89 16 view .LVU35
+ 158 004a 9BB2     		uxth	r3, r3
+ 159              	.LVL15:
+  90:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         if(result < 0x04)
+ 160              		.loc 1 90 9 is_stmt 1 view .LVU36
+ 161              		.loc 1 90 11 is_stmt 0 view .LVU37
+ 162 004c 032B     		cmp	r3, #3
+ 163 004e 00D8     		bhi	.L10
+  91:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+  92:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result = 0x04;
+ 164              		.loc 1 92 20 view .LVU38
+ 165 0050 0423     		movs	r3, #4
+ 166              	.LVL16:
+ 167              	.L10:
+  93:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+  94:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->RISETMAX = freqrange + 1;
+ 168              		.loc 1 94 9 is_stmt 1 view .LVU39
+ 169              		.loc 1 94 35 is_stmt 0 view .LVU40
+ 170 0052 0132     		adds	r2, r2, #1
+ 171              	.LVL17:
+ 172              		.loc 1 94 23 view .LVU41
+ 173 0054 2262     		str	r2, [r4, #32]
+  95:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         tmpreg |= result;
+ 174              		.loc 1 95 9 is_stmt 1 view .LVU42
+ 175              	.LVL18:
+ 176              	.L11:
+  96:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+  97:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     /** Configure speed in fast mode */
+  98:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     else
+  99:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         if(i2cConfig->dutyCycle == I2C_DUTYCYCLE_2)
+ 101:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result = (PCLK1 / (i2cConfig->clockSpeed * 3));
+ 103:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 104:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         else
+ 105:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result = (PCLK1 / (i2cConfig->clockSpeed * 25));
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result |= I2C_DUTYCYCLE_16_9;
+ 108:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 109:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 6
+
+
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         if((result & 0x0FFF) == 0)
+ 111:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result |= 0x0001;
+ 113:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 114:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         tmpreg |= (uint16_t)(result | 0x8000);
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->RISETMAX = ((((freqrange) * 300) / 1000) + 1);
+ 117:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 118:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CLKCTRL = tmpreg;
+ 177              		.loc 1 118 5 view .LVU43
+ 178              		.loc 1 118 18 is_stmt 0 view .LVU44
+ 179 0056 E361     		str	r3, [r4, #28]
+ 119:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.I2CEN = BIT_SET;
+ 180              		.loc 1 119 5 is_stmt 1 view .LVU45
+ 181              		.loc 1 119 24 is_stmt 0 view .LVU46
+ 182 0058 2368     		ldr	r3, [r4]
+ 183              	.LVL19:
+ 184              		.loc 1 119 24 view .LVU47
+ 185 005a 43F00103 		orr	r3, r3, #1
+ 186 005e 2360     		str	r3, [r4]
+ 120:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 121:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     /** i2c CTRL1 Configuration  */
+ 122:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.ACKEN = BIT_RESET;
+ 187              		.loc 1 122 5 is_stmt 1 view .LVU48
+ 188              		.loc 1 122 24 is_stmt 0 view .LVU49
+ 189 0060 2368     		ldr	r3, [r4]
+ 190 0062 6FF38A23 		bfc	r3, #10, #1
+ 191 0066 2360     		str	r3, [r4]
+ 123:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.SMBTCFG = BIT_RESET;
+ 192              		.loc 1 123 5 is_stmt 1 view .LVU50
+ 193              		.loc 1 123 26 is_stmt 0 view .LVU51
+ 194 0068 2368     		ldr	r3, [r4]
+ 195 006a 6FF3C303 		bfc	r3, #3, #1
+ 196 006e 2360     		str	r3, [r4]
+ 124:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.SMBEN = BIT_RESET;
+ 197              		.loc 1 124 5 is_stmt 1 view .LVU52
+ 198              		.loc 1 124 24 is_stmt 0 view .LVU53
+ 199 0070 2368     		ldr	r3, [r4]
+ 200 0072 6FF34103 		bfc	r3, #1, #1
+ 201 0076 2360     		str	r3, [r4]
+ 125:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 126:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1 |= i2cConfig->mode;
+ 202              		.loc 1 126 5 is_stmt 1 view .LVU54
+ 203              		.loc 1 126 16 is_stmt 0 view .LVU55
+ 204 0078 2368     		ldr	r3, [r4]
+ 205              		.loc 1 126 28 view .LVU56
+ 206 007a 2A79     		ldrb	r2, [r5, #4]	@ zero_extendqisi2
+ 207              		.loc 1 126 16 view .LVU57
+ 208 007c 1343     		orrs	r3, r3, r2
+ 209 007e 2360     		str	r3, [r4]
+ 127:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.ACKEN = i2cConfig->ack;
+ 210              		.loc 1 127 5 is_stmt 1 view .LVU58
+ 211              		.loc 1 127 35 is_stmt 0 view .LVU59
+ 212 0080 AA7A     		ldrb	r2, [r5, #10]	@ zero_extendqisi2
+ 213              		.loc 1 127 24 view .LVU60
+ 214 0082 2368     		ldr	r3, [r4]
+ 215 0084 62F38A23 		bfi	r3, r2, #10, #1
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 7
+
+
+ 216 0088 2360     		str	r3, [r4]
+ 128:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 129:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->SADDR1 = i2cConfig->ackAddress | i2cConfig->ownAddress1;
+ 217              		.loc 1 129 5 is_stmt 1 view .LVU61
+ 218              		.loc 1 129 28 is_stmt 0 view .LVU62
+ 219 008a AB89     		ldrh	r3, [r5, #12]
+ 220              		.loc 1 129 52 view .LVU63
+ 221 008c 2A89     		ldrh	r2, [r5, #8]
+ 222              		.loc 1 129 41 view .LVU64
+ 223 008e 1343     		orrs	r3, r3, r2
+ 224              		.loc 1 129 17 view .LVU65
+ 225 0090 A360     		str	r3, [r4, #8]
+ 130:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 226              		.loc 1 130 1 view .LVU66
+ 227 0092 02B0     		add	sp, sp, #8
+ 228              	.LCFI3:
+ 229              		.cfi_remember_state
+ 230              		.cfi_def_cfa_offset 16
+ 231              		@ sp needed
+ 232 0094 70BD     		pop	{r4, r5, r6, pc}
+ 233              	.LVL20:
+ 234              	.L9:
+ 235              	.LCFI4:
+ 236              		.cfi_restore_state
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 237              		.loc 1 100 9 is_stmt 1 view .LVU67
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 238              		.loc 1 100 21 is_stmt 0 view .LVU68
+ 239 0096 E888     		ldrh	r0, [r5, #6]
+ 100:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 240              		.loc 1 100 11 view .LVU69
+ 241 0098 4BF6FF71 		movw	r1, #49151
+ 242 009c 8842     		cmp	r0, r1
+ 243 009e 1BD0     		beq	.L17
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result |= I2C_DUTYCYCLE_16_9;
+ 244              		.loc 1 106 13 is_stmt 1 view .LVU70
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result |= I2C_DUTYCYCLE_16_9;
+ 245              		.loc 1 106 54 is_stmt 0 view .LVU71
+ 246 00a0 03EB8303 		add	r3, r3, r3, lsl #2
+ 247 00a4 03EB8301 		add	r1, r3, r3, lsl #2
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result |= I2C_DUTYCYCLE_16_9;
+ 248              		.loc 1 106 29 view .LVU72
+ 249 00a8 019B     		ldr	r3, [sp, #4]
+ 250 00aa B3FBF1F3 		udiv	r3, r3, r1
+ 106:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****             result |= I2C_DUTYCYCLE_16_9;
+ 251              		.loc 1 106 20 view .LVU73
+ 252 00ae 9BB2     		uxth	r3, r3
+ 253              	.LVL21:
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 254              		.loc 1 107 13 is_stmt 1 view .LVU74
+ 107:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 255              		.loc 1 107 20 is_stmt 0 view .LVU75
+ 256 00b0 43F48043 		orr	r3, r3, #16384
+ 257              	.LVL22:
+ 258              	.L13:
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 259              		.loc 1 110 9 is_stmt 1 view .LVU76
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 8
+
+
+ 110:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         {
+ 260              		.loc 1 110 11 is_stmt 0 view .LVU77
+ 261 00b4 C3F30B01 		ubfx	r1, r3, #0, #12
+ 262 00b8 09B9     		cbnz	r1, .L14
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 263              		.loc 1 112 13 is_stmt 1 view .LVU78
+ 112:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 264              		.loc 1 112 20 is_stmt 0 view .LVU79
+ 265 00ba 43F00103 		orr	r3, r3, #1
+ 266              	.LVL23:
+ 267              	.L14:
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->RISETMAX = ((((freqrange) * 300) / 1000) + 1);
+ 268              		.loc 1 115 9 is_stmt 1 view .LVU80
+ 115:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->RISETMAX = ((((freqrange) * 300) / 1000) + 1);
+ 269              		.loc 1 115 16 is_stmt 0 view .LVU81
+ 270 00be 43F40043 		orr	r3, r3, #32768
+ 271              	.LVL24:
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 272              		.loc 1 116 9 is_stmt 1 view .LVU82
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 273              		.loc 1 116 40 is_stmt 0 view .LVU83
+ 274 00c2 4FF49671 		mov	r1, #300
+ 275 00c6 01FB02F2 		mul	r2, r1, r2
+ 276              	.LVL25:
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 277              		.loc 1 116 47 view .LVU84
+ 278 00ca 0A49     		ldr	r1, .L18+12
+ 279 00cc 81FB0212 		smull	r1, r2, r1, r2
+ 280 00d0 9211     		asrs	r2, r2, #6
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 281              		.loc 1 116 55 view .LVU85
+ 282 00d2 0132     		adds	r2, r2, #1
+ 116:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 283              		.loc 1 116 23 view .LVU86
+ 284 00d4 2262     		str	r2, [r4, #32]
+ 285 00d6 BEE7     		b	.L11
+ 286              	.LVL26:
+ 287              	.L17:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 288              		.loc 1 102 13 is_stmt 1 view .LVU87
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 289              		.loc 1 102 54 is_stmt 0 view .LVU88
+ 290 00d8 03EB4301 		add	r1, r3, r3, lsl #1
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 291              		.loc 1 102 29 view .LVU89
+ 292 00dc 019B     		ldr	r3, [sp, #4]
+ 293 00de B3FBF1F3 		udiv	r3, r3, r1
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 294              		.loc 1 102 20 view .LVU90
+ 295 00e2 9BB2     		uxth	r3, r3
+ 296              	.LVL27:
+ 102:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         }
+ 297              		.loc 1 102 20 view .LVU91
+ 298 00e4 E6E7     		b	.L13
+ 299              	.L19:
+ 300 00e6 00BF     		.align	2
+ 301              	.L18:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 9
+
+
+ 302 00e8 00127A00 		.word	8000000
+ 303 00ec 83DE1B43 		.word	1125899907
+ 304 00f0 A0860100 		.word	100000
+ 305 00f4 D34D6210 		.word	274877907
+ 306              		.cfi_endproc
+ 307              	.LFE66:
+ 309              		.section	.text.I2C_ConfigStructInit,"ax",%progbits
+ 310              		.align	1
+ 311              		.global	I2C_ConfigStructInit
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 316              	I2C_ConfigStructInit:
+ 317              	.LVL28:
+ 318              	.LFB67:
+ 131:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 132:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 133:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Fills each I2C_InitStruct member with its default value.
+ 134:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 135:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2cConfig: pointer to a I2C_Config_T structure
+ 136:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 137:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 138:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 139:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ConfigStructInit(I2C_Config_T* i2cConfig)
+ 140:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 319              		.loc 1 140 1 is_stmt 1 view -0
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 0
+ 322              		@ frame_needed = 0, uses_anonymous_args = 0
+ 323              		@ link register save eliminated.
+ 141:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2cConfig->clockSpeed = 5000;
+ 324              		.loc 1 141 5 view .LVU93
+ 325              		.loc 1 141 27 is_stmt 0 view .LVU94
+ 326 0000 41F28833 		movw	r3, #5000
+ 327 0004 0360     		str	r3, [r0]
+ 142:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2cConfig->mode = I2C_MODE_I2C;
+ 328              		.loc 1 142 5 is_stmt 1 view .LVU95
+ 329              		.loc 1 142 21 is_stmt 0 view .LVU96
+ 330 0006 0023     		movs	r3, #0
+ 331 0008 0371     		strb	r3, [r0, #4]
+ 143:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2cConfig->dutyCycle = I2C_DUTYCYCLE_2;
+ 332              		.loc 1 143 5 is_stmt 1 view .LVU97
+ 333              		.loc 1 143 26 is_stmt 0 view .LVU98
+ 334 000a 4BF6FF72 		movw	r2, #49151
+ 335 000e C280     		strh	r2, [r0, #6]	@ movhi
+ 144:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2cConfig->ownAddress1 = 0;
+ 336              		.loc 1 144 5 is_stmt 1 view .LVU99
+ 337              		.loc 1 144 28 is_stmt 0 view .LVU100
+ 338 0010 0381     		strh	r3, [r0, #8]	@ movhi
+ 145:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2cConfig->ack = I2C_ACK_DISABLE;
+ 339              		.loc 1 145 5 is_stmt 1 view .LVU101
+ 340              		.loc 1 145 20 is_stmt 0 view .LVU102
+ 341 0012 8372     		strb	r3, [r0, #10]
+ 146:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2cConfig->ackAddress = I2C_ACK_ADDRESS_7BIT;
+ 342              		.loc 1 146 5 is_stmt 1 view .LVU103
+ 343              		.loc 1 146 27 is_stmt 0 view .LVU104
+ 344 0014 4FF48043 		mov	r3, #16384
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 10
+
+
+ 345 0018 8381     		strh	r3, [r0, #12]	@ movhi
+ 147:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 346              		.loc 1 147 1 view .LVU105
+ 347 001a 7047     		bx	lr
+ 348              		.cfi_endproc
+ 349              	.LFE67:
+ 351              		.section	.text.I2C_Enable,"ax",%progbits
+ 352              		.align	1
+ 353              		.global	I2C_Enable
+ 354              		.syntax unified
+ 355              		.thumb
+ 356              		.thumb_func
+ 358              	I2C_Enable:
+ 359              	.LVL29:
+ 360              	.LFB68:
+ 148:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 149:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 150:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enable I2C
+ 151:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 152:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 153:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 154:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 155:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 156:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_Enable(I2C_T* i2c)
+ 157:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 361              		.loc 1 157 1 is_stmt 1 view -0
+ 362              		.cfi_startproc
+ 363              		@ args = 0, pretend = 0, frame = 0
+ 364              		@ frame_needed = 0, uses_anonymous_args = 0
+ 365              		@ link register save eliminated.
+ 158:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.I2CEN = ENABLE;
+ 366              		.loc 1 158 5 view .LVU107
+ 367              		.loc 1 158 24 is_stmt 0 view .LVU108
+ 368 0000 0368     		ldr	r3, [r0]
+ 369 0002 43F00103 		orr	r3, r3, #1
+ 370 0006 0360     		str	r3, [r0]
+ 159:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 371              		.loc 1 159 1 view .LVU109
+ 372 0008 7047     		bx	lr
+ 373              		.cfi_endproc
+ 374              	.LFE68:
+ 376              		.section	.text.I2C_Disable,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	I2C_Disable
+ 379              		.syntax unified
+ 380              		.thumb
+ 381              		.thumb_func
+ 383              	I2C_Disable:
+ 384              	.LVL30:
+ 385              	.LFB69:
+ 160:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 161:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 162:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disable I2C
+ 163:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 164:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 165:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 166:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 11
+
+
+ 167:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 168:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_Disable(I2C_T* i2c)
+ 169:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 386              		.loc 1 169 1 is_stmt 1 view -0
+ 387              		.cfi_startproc
+ 388              		@ args = 0, pretend = 0, frame = 0
+ 389              		@ frame_needed = 0, uses_anonymous_args = 0
+ 390              		@ link register save eliminated.
+ 170:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.I2CEN = DISABLE;
+ 391              		.loc 1 170 5 view .LVU111
+ 392              		.loc 1 170 24 is_stmt 0 view .LVU112
+ 393 0000 0368     		ldr	r3, [r0]
+ 394 0002 6FF30003 		bfc	r3, #0, #1
+ 395 0006 0360     		str	r3, [r0]
+ 171:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 396              		.loc 1 171 1 view .LVU113
+ 397 0008 7047     		bx	lr
+ 398              		.cfi_endproc
+ 399              	.LFE69:
+ 401              		.section	.text.I2C_EnableGenerateStart,"ax",%progbits
+ 402              		.align	1
+ 403              		.global	I2C_EnableGenerateStart
+ 404              		.syntax unified
+ 405              		.thumb
+ 406              		.thumb_func
+ 408              	I2C_EnableGenerateStart:
+ 409              	.LVL31:
+ 410              	.LFB70:
+ 172:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 173:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 174:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enable Generates i2c communication START condition.
+ 175:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 176:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 177:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 178:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 179:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 180:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableGenerateStart(I2C_T* i2c)
+ 181:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 411              		.loc 1 181 1 is_stmt 1 view -0
+ 412              		.cfi_startproc
+ 413              		@ args = 0, pretend = 0, frame = 0
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415              		@ link register save eliminated.
+ 182:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.START = BIT_SET;
+ 416              		.loc 1 182 5 view .LVU115
+ 417              		.loc 1 182 24 is_stmt 0 view .LVU116
+ 418 0000 0368     		ldr	r3, [r0]
+ 419 0002 43F48073 		orr	r3, r3, #256
+ 420 0006 0360     		str	r3, [r0]
+ 183:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 421              		.loc 1 183 1 view .LVU117
+ 422 0008 7047     		bx	lr
+ 423              		.cfi_endproc
+ 424              	.LFE70:
+ 426              		.section	.text.I2C_DisableGenerateStart,"ax",%progbits
+ 427              		.align	1
+ 428              		.global	I2C_DisableGenerateStart
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 12
+
+
+ 429              		.syntax unified
+ 430              		.thumb
+ 431              		.thumb_func
+ 433              	I2C_DisableGenerateStart:
+ 434              	.LVL32:
+ 435              	.LFB71:
+ 184:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 185:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 186:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disable Generates i2c communication START condition.
+ 187:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 188:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 189:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 190:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 191:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 192:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableGenerateStart(I2C_T* i2c)
+ 193:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 436              		.loc 1 193 1 is_stmt 1 view -0
+ 437              		.cfi_startproc
+ 438              		@ args = 0, pretend = 0, frame = 0
+ 439              		@ frame_needed = 0, uses_anonymous_args = 0
+ 440              		@ link register save eliminated.
+ 194:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.START = BIT_RESET;
+ 441              		.loc 1 194 5 view .LVU119
+ 442              		.loc 1 194 24 is_stmt 0 view .LVU120
+ 443 0000 0368     		ldr	r3, [r0]
+ 444 0002 6FF30823 		bfc	r3, #8, #1
+ 445 0006 0360     		str	r3, [r0]
+ 195:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 446              		.loc 1 195 1 view .LVU121
+ 447 0008 7047     		bx	lr
+ 448              		.cfi_endproc
+ 449              	.LFE71:
+ 451              		.section	.text.I2C_EnableGenerateStop,"ax",%progbits
+ 452              		.align	1
+ 453              		.global	I2C_EnableGenerateStop
+ 454              		.syntax unified
+ 455              		.thumb
+ 456              		.thumb_func
+ 458              	I2C_EnableGenerateStop:
+ 459              	.LVL33:
+ 460              	.LFB72:
+ 196:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 197:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 198:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enable Generates i2c communication STOP condition.
+ 199:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 200:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 201:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 202:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 203:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 204:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableGenerateStop(I2C_T* i2c)
+ 205:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 461              		.loc 1 205 1 is_stmt 1 view -0
+ 462              		.cfi_startproc
+ 463              		@ args = 0, pretend = 0, frame = 0
+ 464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 465              		@ link register save eliminated.
+ 206:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.STOP = BIT_SET;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 13
+
+
+ 466              		.loc 1 206 5 view .LVU123
+ 467              		.loc 1 206 23 is_stmt 0 view .LVU124
+ 468 0000 0368     		ldr	r3, [r0]
+ 469 0002 43F40073 		orr	r3, r3, #512
+ 470 0006 0360     		str	r3, [r0]
+ 207:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 471              		.loc 1 207 1 view .LVU125
+ 472 0008 7047     		bx	lr
+ 473              		.cfi_endproc
+ 474              	.LFE72:
+ 476              		.section	.text.I2C_DisableGenerateStop,"ax",%progbits
+ 477              		.align	1
+ 478              		.global	I2C_DisableGenerateStop
+ 479              		.syntax unified
+ 480              		.thumb
+ 481              		.thumb_func
+ 483              	I2C_DisableGenerateStop:
+ 484              	.LVL34:
+ 485              	.LFB73:
+ 208:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 209:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 210:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disable Generates i2c communication STOP condition.
+ 211:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 212:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 213:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 214:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 215:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 216:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableGenerateStop(I2C_T* i2c)
+ 217:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 486              		.loc 1 217 1 is_stmt 1 view -0
+ 487              		.cfi_startproc
+ 488              		@ args = 0, pretend = 0, frame = 0
+ 489              		@ frame_needed = 0, uses_anonymous_args = 0
+ 490              		@ link register save eliminated.
+ 218:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.STOP = BIT_RESET;
+ 491              		.loc 1 218 5 view .LVU127
+ 492              		.loc 1 218 23 is_stmt 0 view .LVU128
+ 493 0000 0368     		ldr	r3, [r0]
+ 494 0002 6FF34923 		bfc	r3, #9, #1
+ 495 0006 0360     		str	r3, [r0]
+ 219:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 496              		.loc 1 219 1 view .LVU129
+ 497 0008 7047     		bx	lr
+ 498              		.cfi_endproc
+ 499              	.LFE73:
+ 501              		.section	.text.I2C_EnableAcknowledge,"ax",%progbits
+ 502              		.align	1
+ 503              		.global	I2C_EnableAcknowledge
+ 504              		.syntax unified
+ 505              		.thumb
+ 506              		.thumb_func
+ 508              	I2C_EnableAcknowledge:
+ 509              	.LVL35:
+ 510              	.LFB74:
+ 220:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 221:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 222:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the specified I2C acknowledge feature.
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 14
+
+
+ 223:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 224:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 225:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 226:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 227:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 228:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableAcknowledge(I2C_T* i2c)
+ 229:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 511              		.loc 1 229 1 is_stmt 1 view -0
+ 512              		.cfi_startproc
+ 513              		@ args = 0, pretend = 0, frame = 0
+ 514              		@ frame_needed = 0, uses_anonymous_args = 0
+ 515              		@ link register save eliminated.
+ 230:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.ACKEN = ENABLE;
+ 516              		.loc 1 230 5 view .LVU131
+ 517              		.loc 1 230 24 is_stmt 0 view .LVU132
+ 518 0000 0368     		ldr	r3, [r0]
+ 519 0002 43F48063 		orr	r3, r3, #1024
+ 520 0006 0360     		str	r3, [r0]
+ 231:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 521              		.loc 1 231 1 view .LVU133
+ 522 0008 7047     		bx	lr
+ 523              		.cfi_endproc
+ 524              	.LFE74:
+ 526              		.section	.text.I2C_DisableAcknowledge,"ax",%progbits
+ 527              		.align	1
+ 528              		.global	I2C_DisableAcknowledge
+ 529              		.syntax unified
+ 530              		.thumb
+ 531              		.thumb_func
+ 533              	I2C_DisableAcknowledge:
+ 534              	.LVL36:
+ 535              	.LFB75:
+ 232:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 233:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 234:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disables the specified I2C acknowledge feature.
+ 235:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 236:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 237:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 238:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 239:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 240:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableAcknowledge(I2C_T* i2c)
+ 241:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 536              		.loc 1 241 1 is_stmt 1 view -0
+ 537              		.cfi_startproc
+ 538              		@ args = 0, pretend = 0, frame = 0
+ 539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 540              		@ link register save eliminated.
+ 242:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.ACKEN = DISABLE;
+ 541              		.loc 1 242 5 view .LVU135
+ 542              		.loc 1 242 24 is_stmt 0 view .LVU136
+ 543 0000 0368     		ldr	r3, [r0]
+ 544 0002 6FF38A23 		bfc	r3, #10, #1
+ 545 0006 0360     		str	r3, [r0]
+ 243:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 546              		.loc 1 243 1 view .LVU137
+ 547 0008 7047     		bx	lr
+ 548              		.cfi_endproc
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 15
+
+
+ 549              	.LFE75:
+ 551              		.section	.text.I2C_ConfigOwnAddress2,"ax",%progbits
+ 552              		.align	1
+ 553              		.global	I2C_ConfigOwnAddress2
+ 554              		.syntax unified
+ 555              		.thumb
+ 556              		.thumb_func
+ 558              	I2C_ConfigOwnAddress2:
+ 559              	.LVL37:
+ 560              	.LFB76:
+ 244:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 245:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 246:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Config the specified I2C own address2.
+ 247:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 248:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 249:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 250:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     address:specifies the 7bit I2C own address2.
+ 251:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 252:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 253:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 254:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ConfigOwnAddress2(I2C_T* i2c, uint8_t address)
+ 255:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 561              		.loc 1 255 1 is_stmt 1 view -0
+ 562              		.cfi_startproc
+ 563              		@ args = 0, pretend = 0, frame = 0
+ 564              		@ frame_needed = 0, uses_anonymous_args = 0
+ 565              		@ link register save eliminated.
+ 256:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->SADDR2_B.ADDR2 = address;
+ 566              		.loc 1 256 5 view .LVU139
+ 567              		.loc 1 256 25 is_stmt 0 view .LVU140
+ 568 0000 C368     		ldr	r3, [r0, #12]
+ 569 0002 61F34703 		bfi	r3, r1, #1, #7
+ 570 0006 C360     		str	r3, [r0, #12]
+ 257:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 571              		.loc 1 257 1 view .LVU141
+ 572 0008 7047     		bx	lr
+ 573              		.cfi_endproc
+ 574              	.LFE76:
+ 576              		.section	.text.I2C_EnableDualAddress,"ax",%progbits
+ 577              		.align	1
+ 578              		.global	I2C_EnableDualAddress
+ 579              		.syntax unified
+ 580              		.thumb
+ 581              		.thumb_func
+ 583              	I2C_EnableDualAddress:
+ 584              	.LVL38:
+ 585              	.LFB77:
+ 258:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 259:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 260:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the specified I2C dual addressing mode.
+ 261:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 262:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 263:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 264:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 265:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 266:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableDualAddress(I2C_T* i2c)
+ 267:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 16
+
+
+ 586              		.loc 1 267 1 is_stmt 1 view -0
+ 587              		.cfi_startproc
+ 588              		@ args = 0, pretend = 0, frame = 0
+ 589              		@ frame_needed = 0, uses_anonymous_args = 0
+ 590              		@ link register save eliminated.
+ 268:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->SADDR2_B.ADDRNUM = ENABLE;
+ 591              		.loc 1 268 5 view .LVU143
+ 592              		.loc 1 268 27 is_stmt 0 view .LVU144
+ 593 0000 C368     		ldr	r3, [r0, #12]
+ 594 0002 43F00103 		orr	r3, r3, #1
+ 595 0006 C360     		str	r3, [r0, #12]
+ 269:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 596              		.loc 1 269 1 view .LVU145
+ 597 0008 7047     		bx	lr
+ 598              		.cfi_endproc
+ 599              	.LFE77:
+ 601              		.section	.text.I2C_DisableDualAddress,"ax",%progbits
+ 602              		.align	1
+ 603              		.global	I2C_DisableDualAddress
+ 604              		.syntax unified
+ 605              		.thumb
+ 606              		.thumb_func
+ 608              	I2C_DisableDualAddress:
+ 609              	.LVL39:
+ 610              	.LFB78:
+ 270:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 271:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 272:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disables the specified I2C dual addressing mode.
+ 273:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 274:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 275:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 276:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 277:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 278:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableDualAddress(I2C_T* i2c)
+ 279:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 611              		.loc 1 279 1 is_stmt 1 view -0
+ 612              		.cfi_startproc
+ 613              		@ args = 0, pretend = 0, frame = 0
+ 614              		@ frame_needed = 0, uses_anonymous_args = 0
+ 615              		@ link register save eliminated.
+ 280:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->SADDR2_B.ADDRNUM = DISABLE;
+ 616              		.loc 1 280 5 view .LVU147
+ 617              		.loc 1 280 27 is_stmt 0 view .LVU148
+ 618 0000 C368     		ldr	r3, [r0, #12]
+ 619 0002 6FF30003 		bfc	r3, #0, #1
+ 620 0006 C360     		str	r3, [r0, #12]
+ 281:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 621              		.loc 1 281 1 view .LVU149
+ 622 0008 7047     		bx	lr
+ 623              		.cfi_endproc
+ 624              	.LFE78:
+ 626              		.section	.text.I2C_EnableGeneralCall,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	I2C_EnableGeneralCall
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 17
+
+
+ 633              	I2C_EnableGeneralCall:
+ 634              	.LVL40:
+ 635              	.LFB79:
+ 282:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 283:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 284:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the specified I2C general call feature.
+ 285:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 286:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 287:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 288:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 289:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 290:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableGeneralCall(I2C_T* i2c)
+ 291:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 636              		.loc 1 291 1 is_stmt 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 640              		@ link register save eliminated.
+ 292:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.SRBEN = ENABLE;
+ 641              		.loc 1 292 5 view .LVU151
+ 642              		.loc 1 292 24 is_stmt 0 view .LVU152
+ 643 0000 0368     		ldr	r3, [r0]
+ 644 0002 43F04003 		orr	r3, r3, #64
+ 645 0006 0360     		str	r3, [r0]
+ 293:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 646              		.loc 1 293 1 view .LVU153
+ 647 0008 7047     		bx	lr
+ 648              		.cfi_endproc
+ 649              	.LFE79:
+ 651              		.section	.text.I2C_DisableGeneralCall,"ax",%progbits
+ 652              		.align	1
+ 653              		.global	I2C_DisableGeneralCall
+ 654              		.syntax unified
+ 655              		.thumb
+ 656              		.thumb_func
+ 658              	I2C_DisableGeneralCall:
+ 659              	.LVL41:
+ 660              	.LFB80:
+ 294:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 295:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 296:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disables the specified I2C general call feature.
+ 297:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 298:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 299:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 300:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 301:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 302:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableGeneralCall(I2C_T* i2c)
+ 303:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 661              		.loc 1 303 1 is_stmt 1 view -0
+ 662              		.cfi_startproc
+ 663              		@ args = 0, pretend = 0, frame = 0
+ 664              		@ frame_needed = 0, uses_anonymous_args = 0
+ 665              		@ link register save eliminated.
+ 304:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.SRBEN = DISABLE;
+ 666              		.loc 1 304 5 view .LVU155
+ 667              		.loc 1 304 24 is_stmt 0 view .LVU156
+ 668 0000 0368     		ldr	r3, [r0]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 18
+
+
+ 669 0002 6FF38613 		bfc	r3, #6, #1
+ 670 0006 0360     		str	r3, [r0]
+ 305:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 671              		.loc 1 305 1 view .LVU157
+ 672 0008 7047     		bx	lr
+ 673              		.cfi_endproc
+ 674              	.LFE80:
+ 676              		.section	.text.I2C_TxData,"ax",%progbits
+ 677              		.align	1
+ 678              		.global	I2C_TxData
+ 679              		.syntax unified
+ 680              		.thumb
+ 681              		.thumb_func
+ 683              	I2C_TxData:
+ 684              	.LVL42:
+ 685              	.LFB81:
+ 306:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 307:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 308:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Send one byte
+ 309:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 310:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 311:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 312:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     data: data to send
+ 313:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 314:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 315:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 316:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_TxData(I2C_T* i2c, uint8_t data)
+ 317:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 686              		.loc 1 317 1 is_stmt 1 view -0
+ 687              		.cfi_startproc
+ 688              		@ args = 0, pretend = 0, frame = 0
+ 689              		@ frame_needed = 0, uses_anonymous_args = 0
+ 690              		@ link register save eliminated.
+ 318:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->DATA_B.DATA = data;
+ 691              		.loc 1 318 5 view .LVU159
+ 692              		.loc 1 318 22 is_stmt 0 view .LVU160
+ 693 0000 0369     		ldr	r3, [r0, #16]
+ 694              	.LVL43:
+ 695              		.loc 1 318 22 view .LVU161
+ 696 0002 61F30703 		bfi	r3, r1, #0, #8
+ 697 0006 0361     		str	r3, [r0, #16]
+ 319:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 698              		.loc 1 319 1 view .LVU162
+ 699 0008 7047     		bx	lr
+ 700              		.cfi_endproc
+ 701              	.LFE81:
+ 703              		.section	.text.I2C_RxData,"ax",%progbits
+ 704              		.align	1
+ 705              		.global	I2C_RxData
+ 706              		.syntax unified
+ 707              		.thumb
+ 708              		.thumb_func
+ 710              	I2C_RxData:
+ 711              	.LVL44:
+ 712              	.LFB82:
+ 320:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 321:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 19
+
+
+ 322:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Returns the recevie data
+ 323:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 324:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 325:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 326:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    received data
+ 327:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 328:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** uint8_t I2C_RxData(I2C_T* i2c)
+ 329:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 713              		.loc 1 329 1 is_stmt 1 view -0
+ 714              		.cfi_startproc
+ 715              		@ args = 0, pretend = 0, frame = 0
+ 716              		@ frame_needed = 0, uses_anonymous_args = 0
+ 717              		@ link register save eliminated.
+ 330:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     return i2c->DATA_B.DATA;
+ 718              		.loc 1 330 5 view .LVU164
+ 719              		.loc 1 330 23 is_stmt 0 view .LVU165
+ 720 0000 0069     		ldr	r0, [r0, #16]
+ 721              	.LVL45:
+ 331:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 722              		.loc 1 331 1 view .LVU166
+ 723 0002 C0B2     		uxtb	r0, r0
+ 724 0004 7047     		bx	lr
+ 725              		.cfi_endproc
+ 726              	.LFE82:
+ 728              		.section	.text.I2C_Tx7BitAddress,"ax",%progbits
+ 729              		.align	1
+ 730              		.global	I2C_Tx7BitAddress
+ 731              		.syntax unified
+ 732              		.thumb
+ 733              		.thumb_func
+ 735              	I2C_Tx7BitAddress:
+ 736              	.LVL46:
+ 737              	.LFB83:
+ 332:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 333:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 334:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Transmits the address byte to select the slave device.
+ 335:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 336:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 337:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 338:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     address: slave address which will be transmitted
+ 339:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 340:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     direction: Direction mode
+ 341:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of following values:
+ 342:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_DIRECTION_TX: Transmitter mode
+ 343:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_DIRECTION_RX: Receiver mode
+ 344:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 345:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 346:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_Tx7BitAddress(I2C_T* i2c, uint8_t address, I2C_DIRECTION_T direction)
+ 347:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 738              		.loc 1 347 1 is_stmt 1 view -0
+ 739              		.cfi_startproc
+ 740              		@ args = 0, pretend = 0, frame = 0
+ 741              		@ frame_needed = 0, uses_anonymous_args = 0
+ 742              		@ link register save eliminated.
+ 348:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(direction != I2C_DIRECTION_TX)
+ 743              		.loc 1 348 5 view .LVU168
+ 744              		.loc 1 348 7 is_stmt 0 view .LVU169
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 20
+
+
+ 745 0000 32B1     		cbz	r2, .L37
+ 349:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 350:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->DATA_B.DATA = address | 0x0001;
+ 746              		.loc 1 350 9 is_stmt 1 view .LVU170
+ 747              		.loc 1 350 26 is_stmt 0 view .LVU171
+ 748 0002 41F00101 		orr	r1, r1, #1
+ 749              	.LVL47:
+ 750              		.loc 1 350 26 view .LVU172
+ 751 0006 0369     		ldr	r3, [r0, #16]
+ 752 0008 61F30703 		bfi	r3, r1, #0, #8
+ 753 000c 0361     		str	r3, [r0, #16]
+ 754 000e 7047     		bx	lr
+ 755              	.LVL48:
+ 756              	.L37:
+ 351:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 352:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     else
+ 353:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 354:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->DATA_B.DATA = address & 0xFFFE;
+ 757              		.loc 1 354 9 is_stmt 1 view .LVU173
+ 758              		.loc 1 354 36 is_stmt 0 view .LVU174
+ 759 0010 01F0FE01 		and	r1, r1, #254
+ 760              	.LVL49:
+ 761              		.loc 1 354 26 view .LVU175
+ 762 0014 0369     		ldr	r3, [r0, #16]
+ 763 0016 61F30703 		bfi	r3, r1, #0, #8
+ 764 001a 0361     		str	r3, [r0, #16]
+ 355:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 356:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 765              		.loc 1 356 1 view .LVU176
+ 766 001c 7047     		bx	lr
+ 767              		.cfi_endproc
+ 768              	.LFE83:
+ 770              		.section	.text.I2C_ReadRegister,"ax",%progbits
+ 771              		.align	1
+ 772              		.global	I2C_ReadRegister
+ 773              		.syntax unified
+ 774              		.thumb
+ 775              		.thumb_func
+ 777              	I2C_ReadRegister:
+ 778              	.LVL50:
+ 779              	.LFB84:
+ 357:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 358:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 359:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Reads the I2C register and returns its value.
+ 360:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 361:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 362:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 363:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2cRegister : register to read
+ 364:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of following values:
+ 365:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_CTRL1: CTRL1 register
+ 366:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_CTRL2: CTRL2 register
+ 367:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_SADDR1: SADDR1 register
+ 368:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_SADDR2: SADDR2 register
+ 369:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_DATA: DATA register
+ 370:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_STS1: STS1 register
+ 371:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_STS2: STS2 register
+ 372:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_CLKCTRL: CLKCTRL register
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 21
+
+
+ 373:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_RISETMAX: RISETMAX register
+ 374:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_REGISTER_SWITCH: SWITCH register
+ 375:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 376:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    The value of the read register
+ 377:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 378:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** uint16_t I2C_ReadRegister(I2C_T* i2c, I2C_REGISTER_T i2cRegister)
+ 379:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 780              		.loc 1 379 1 is_stmt 1 view -0
+ 781              		.cfi_startproc
+ 782              		@ args = 0, pretend = 0, frame = 0
+ 783              		@ frame_needed = 0, uses_anonymous_args = 0
+ 784              		@ link register save eliminated.
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     switch (i2cRegister)
+ 785              		.loc 1 380 5 view .LVU178
+ 786 0000 0929     		cmp	r1, #9
+ 787 0002 25D8     		bhi	.L52
+ 788 0004 DFE801F0 		tbb	[pc, r1]
+ 789              	.L42:
+ 790 0008 05       		.byte	(.L51-.L42)/2
+ 791 0009 08       		.byte	(.L50-.L42)/2
+ 792 000a 0B       		.byte	(.L49-.L42)/2
+ 793 000b 0E       		.byte	(.L48-.L42)/2
+ 794 000c 11       		.byte	(.L47-.L42)/2
+ 795 000d 14       		.byte	(.L46-.L42)/2
+ 796 000e 17       		.byte	(.L45-.L42)/2
+ 797 000f 1A       		.byte	(.L44-.L42)/2
+ 798 0010 1D       		.byte	(.L43-.L42)/2
+ 799 0011 20       		.byte	(.L41-.L42)/2
+ 800              		.p2align 1
+ 801              	.L51:
+ 381:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 382:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_CTRL1:
+ 383:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->CTRL1;
+ 802              		.loc 1 383 9 view .LVU179
+ 803              		.loc 1 383 19 is_stmt 0 view .LVU180
+ 804 0012 0068     		ldr	r0, [r0]
+ 805              	.LVL51:
+ 806              		.loc 1 383 19 view .LVU181
+ 807 0014 80B2     		uxth	r0, r0
+ 808 0016 7047     		bx	lr
+ 809              	.LVL52:
+ 810              	.L50:
+ 384:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_CTRL2:
+ 385:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->CTRL2;
+ 811              		.loc 1 385 9 is_stmt 1 view .LVU182
+ 812              		.loc 1 385 19 is_stmt 0 view .LVU183
+ 813 0018 4068     		ldr	r0, [r0, #4]
+ 814              	.LVL53:
+ 815              		.loc 1 385 19 view .LVU184
+ 816 001a 80B2     		uxth	r0, r0
+ 817 001c 7047     		bx	lr
+ 818              	.LVL54:
+ 819              	.L49:
+ 386:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_SADDR1:
+ 387:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->SADDR1;
+ 820              		.loc 1 387 9 is_stmt 1 view .LVU185
+ 821              		.loc 1 387 19 is_stmt 0 view .LVU186
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 22
+
+
+ 822 001e 8068     		ldr	r0, [r0, #8]
+ 823              	.LVL55:
+ 824              		.loc 1 387 19 view .LVU187
+ 825 0020 80B2     		uxth	r0, r0
+ 826 0022 7047     		bx	lr
+ 827              	.LVL56:
+ 828              	.L48:
+ 388:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_SADDR2:
+ 389:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->SADDR2;
+ 829              		.loc 1 389 9 is_stmt 1 view .LVU188
+ 830              		.loc 1 389 19 is_stmt 0 view .LVU189
+ 831 0024 C068     		ldr	r0, [r0, #12]
+ 832              	.LVL57:
+ 833              		.loc 1 389 19 view .LVU190
+ 834 0026 80B2     		uxth	r0, r0
+ 835 0028 7047     		bx	lr
+ 836              	.LVL58:
+ 837              	.L47:
+ 390:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_DATA:
+ 391:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->DATA;
+ 838              		.loc 1 391 9 is_stmt 1 view .LVU191
+ 839              		.loc 1 391 19 is_stmt 0 view .LVU192
+ 840 002a 0069     		ldr	r0, [r0, #16]
+ 841              	.LVL59:
+ 842              		.loc 1 391 19 view .LVU193
+ 843 002c 80B2     		uxth	r0, r0
+ 844 002e 7047     		bx	lr
+ 845              	.LVL60:
+ 846              	.L46:
+ 392:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_STS1:
+ 393:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->STS1;
+ 847              		.loc 1 393 9 is_stmt 1 view .LVU194
+ 848              		.loc 1 393 19 is_stmt 0 view .LVU195
+ 849 0030 4069     		ldr	r0, [r0, #20]
+ 850              	.LVL61:
+ 851              		.loc 1 393 19 view .LVU196
+ 852 0032 80B2     		uxth	r0, r0
+ 853 0034 7047     		bx	lr
+ 854              	.LVL62:
+ 855              	.L45:
+ 394:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_STS2:
+ 395:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->STS2;
+ 856              		.loc 1 395 9 is_stmt 1 view .LVU197
+ 857              		.loc 1 395 19 is_stmt 0 view .LVU198
+ 858 0036 8069     		ldr	r0, [r0, #24]
+ 859              	.LVL63:
+ 860              		.loc 1 395 19 view .LVU199
+ 861 0038 80B2     		uxth	r0, r0
+ 862 003a 7047     		bx	lr
+ 863              	.LVL64:
+ 864              	.L44:
+ 396:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_CLKCTRL:
+ 397:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->CLKCTRL;
+ 865              		.loc 1 397 9 is_stmt 1 view .LVU200
+ 866              		.loc 1 397 19 is_stmt 0 view .LVU201
+ 867 003c C069     		ldr	r0, [r0, #28]
+ 868              	.LVL65:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 23
+
+
+ 869              		.loc 1 397 19 view .LVU202
+ 870 003e 80B2     		uxth	r0, r0
+ 871 0040 7047     		bx	lr
+ 872              	.LVL66:
+ 873              	.L43:
+ 398:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_RISETMAX:
+ 399:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->RISETMAX;
+ 874              		.loc 1 399 9 is_stmt 1 view .LVU203
+ 875              		.loc 1 399 19 is_stmt 0 view .LVU204
+ 876 0042 006A     		ldr	r0, [r0, #32]
+ 877              	.LVL67:
+ 878              		.loc 1 399 19 view .LVU205
+ 879 0044 80B2     		uxth	r0, r0
+ 880 0046 7047     		bx	lr
+ 881              	.LVL68:
+ 882              	.L41:
+ 400:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_REGISTER_SWITCH:
+ 401:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return i2c->SWITCH;
+ 883              		.loc 1 401 9 is_stmt 1 view .LVU206
+ 884              		.loc 1 401 19 is_stmt 0 view .LVU207
+ 885 0048 D0F80001 		ldr	r0, [r0, #256]
+ 886              	.LVL69:
+ 887              		.loc 1 401 19 view .LVU208
+ 888 004c 80B2     		uxth	r0, r0
+ 889 004e 7047     		bx	lr
+ 890              	.LVL70:
+ 891              	.L52:
+ 380:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 892              		.loc 1 380 5 view .LVU209
+ 893 0050 0020     		movs	r0, #0
+ 894              	.LVL71:
+ 402:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     default:
+ 403:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return 0;
+ 404:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 405:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 895              		.loc 1 405 1 view .LVU210
+ 896 0052 7047     		bx	lr
+ 897              		.cfi_endproc
+ 898              	.LFE84:
+ 900              		.section	.text.I2C_EnableSoftwareReset,"ax",%progbits
+ 901              		.align	1
+ 902              		.global	I2C_EnableSoftwareReset
+ 903              		.syntax unified
+ 904              		.thumb
+ 905              		.thumb_func
+ 907              	I2C_EnableSoftwareReset:
+ 908              	.LVL72:
+ 909              	.LFB85:
+ 406:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 407:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 408:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the I2C software reset.
+ 409:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 410:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 411:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 412:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 413:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 414:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableSoftwareReset(I2C_T* i2c)
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 24
+
+
+ 415:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 910              		.loc 1 415 1 is_stmt 1 view -0
+ 911              		.cfi_startproc
+ 912              		@ args = 0, pretend = 0, frame = 0
+ 913              		@ frame_needed = 0, uses_anonymous_args = 0
+ 914              		@ link register save eliminated.
+ 416:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.SWRST = ENABLE;
+ 915              		.loc 1 416 5 view .LVU212
+ 916              		.loc 1 416 24 is_stmt 0 view .LVU213
+ 917 0000 0368     		ldr	r3, [r0]
+ 918 0002 43F40043 		orr	r3, r3, #32768
+ 919 0006 0360     		str	r3, [r0]
+ 417:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 920              		.loc 1 417 1 view .LVU214
+ 921 0008 7047     		bx	lr
+ 922              		.cfi_endproc
+ 923              	.LFE85:
+ 925              		.section	.text.I2C_DisableSoftwareReset,"ax",%progbits
+ 926              		.align	1
+ 927              		.global	I2C_DisableSoftwareReset
+ 928              		.syntax unified
+ 929              		.thumb
+ 930              		.thumb_func
+ 932              	I2C_DisableSoftwareReset:
+ 933              	.LVL73:
+ 934              	.LFB86:
+ 418:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 419:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 420:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disables the I2C software reset.
+ 421:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 422:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 423:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 424:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 425:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 426:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableSoftwareReset(I2C_T* i2c)
+ 427:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 935              		.loc 1 427 1 is_stmt 1 view -0
+ 936              		.cfi_startproc
+ 937              		@ args = 0, pretend = 0, frame = 0
+ 938              		@ frame_needed = 0, uses_anonymous_args = 0
+ 939              		@ link register save eliminated.
+ 428:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.SWRST = DISABLE;
+ 940              		.loc 1 428 5 view .LVU216
+ 941              		.loc 1 428 24 is_stmt 0 view .LVU217
+ 942 0000 0368     		ldr	r3, [r0]
+ 943 0002 6FF3CF33 		bfc	r3, #15, #1
+ 944 0006 0360     		str	r3, [r0]
+ 429:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 945              		.loc 1 429 1 view .LVU218
+ 946 0008 7047     		bx	lr
+ 947              		.cfi_endproc
+ 948              	.LFE86:
+ 950              		.section	.text.I2C_ConfigNACKPosition,"ax",%progbits
+ 951              		.align	1
+ 952              		.global	I2C_ConfigNACKPosition
+ 953              		.syntax unified
+ 954              		.thumb
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 25
+
+
+ 955              		.thumb_func
+ 957              	I2C_ConfigNACKPosition:
+ 958              	.LVL74:
+ 959              	.LFB87:
+ 430:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 431:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 432:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Selects the specified I2C NACK position in master receiver mode.
+ 433:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 434:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 435:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 436:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     NACKPosition: specifies the NACK position.
+ 437:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 438:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 439:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 440:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ConfigNACKPosition(I2C_T* i2c, I2C_NACK_POSITION_T NACKPosition)
+ 441:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 960              		.loc 1 441 1 is_stmt 1 view -0
+ 961              		.cfi_startproc
+ 962              		@ args = 0, pretend = 0, frame = 0
+ 963              		@ frame_needed = 0, uses_anonymous_args = 0
+ 964              		@ link register save eliminated.
+ 442:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(NACKPosition == I2C_NACK_POSITION_NEXT)
+ 965              		.loc 1 442 5 view .LVU220
+ 966              		.loc 1 442 7 is_stmt 0 view .LVU221
+ 967 0000 21B9     		cbnz	r1, .L56
+ 443:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 444:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CTRL1_B.ACKPOS = BIT_SET;
+ 968              		.loc 1 444 9 is_stmt 1 view .LVU222
+ 969              		.loc 1 444 29 is_stmt 0 view .LVU223
+ 970 0002 0368     		ldr	r3, [r0]
+ 971 0004 43F40063 		orr	r3, r3, #2048
+ 972 0008 0360     		str	r3, [r0]
+ 973 000a 7047     		bx	lr
+ 974              	.L56:
+ 445:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 446:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     else
+ 447:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 448:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CTRL1_B.ACKPOS = BIT_RESET;
+ 975              		.loc 1 448 9 is_stmt 1 view .LVU224
+ 976              		.loc 1 448 29 is_stmt 0 view .LVU225
+ 977 000c 0368     		ldr	r3, [r0]
+ 978 000e 6FF3CB23 		bfc	r3, #11, #1
+ 979 0012 0360     		str	r3, [r0]
+ 449:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 450:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 980              		.loc 1 450 1 view .LVU226
+ 981 0014 7047     		bx	lr
+ 982              		.cfi_endproc
+ 983              	.LFE87:
+ 985              		.section	.text.I2C_ConfigSMBusAlert,"ax",%progbits
+ 986              		.align	1
+ 987              		.global	I2C_ConfigSMBusAlert
+ 988              		.syntax unified
+ 989              		.thumb
+ 990              		.thumb_func
+ 992              	I2C_ConfigSMBusAlert:
+ 993              	.LVL75:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 26
+
+
+ 994              	.LFB88:
+ 451:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 452:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 453:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Control the height of pin of SMBusAlert
+ 454:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 455:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 456:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 457:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     SMBusState: SMBAlert pin level.
+ 458:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of following values:
+ 459:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_SMBUSALER_LOW: SMBus Alert pin low
+ 460:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_SMBUSALER_HIGH: SMBus Alert pin high
+ 461:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 462:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 463:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ConfigSMBusAlert(I2C_T* i2c, I2C_SMBUSALER_T SMBusState)
+ 464:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 995              		.loc 1 464 1 is_stmt 1 view -0
+ 996              		.cfi_startproc
+ 997              		@ args = 0, pretend = 0, frame = 0
+ 998              		@ frame_needed = 0, uses_anonymous_args = 0
+ 999              		@ link register save eliminated.
+ 465:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(SMBusState == I2C_SMBUSALER_LOW)
+ 1000              		.loc 1 465 5 view .LVU228
+ 1001              		.loc 1 465 7 is_stmt 0 view .LVU229
+ 1002 0000 21B9     		cbnz	r1, .L59
+ 466:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 467:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CTRL1_B.ALERTEN = BIT_SET;
+ 1003              		.loc 1 467 9 is_stmt 1 view .LVU230
+ 1004              		.loc 1 467 30 is_stmt 0 view .LVU231
+ 1005 0002 0368     		ldr	r3, [r0]
+ 1006 0004 43F40053 		orr	r3, r3, #8192
+ 1007 0008 0360     		str	r3, [r0]
+ 1008 000a 7047     		bx	lr
+ 1009              	.L59:
+ 468:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 469:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     else
+ 470:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 471:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CTRL1_B.ALERTEN = BIT_RESET;
+ 1010              		.loc 1 471 9 is_stmt 1 view .LVU232
+ 1011              		.loc 1 471 30 is_stmt 0 view .LVU233
+ 1012 000c 0368     		ldr	r3, [r0]
+ 1013 000e 6FF34D33 		bfc	r3, #13, #1
+ 1014 0012 0360     		str	r3, [r0]
+ 472:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 473:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1015              		.loc 1 473 1 view .LVU234
+ 1016 0014 7047     		bx	lr
+ 1017              		.cfi_endproc
+ 1018              	.LFE88:
+ 1020              		.section	.text.I2C_EnablePECTransmit,"ax",%progbits
+ 1021              		.align	1
+ 1022              		.global	I2C_EnablePECTransmit
+ 1023              		.syntax unified
+ 1024              		.thumb
+ 1025              		.thumb_func
+ 1027              	I2C_EnablePECTransmit:
+ 1028              	.LVL76:
+ 1029              	.LFB89:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 27
+
+
+ 474:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 475:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 476:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the I2C PEC transfer.
+ 477:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 478:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 479:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 480:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 481:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 482:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnablePECTransmit(I2C_T* i2c)
+ 483:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1030              		.loc 1 483 1 is_stmt 1 view -0
+ 1031              		.cfi_startproc
+ 1032              		@ args = 0, pretend = 0, frame = 0
+ 1033              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1034              		@ link register save eliminated.
+ 484:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.PEC = BIT_SET;
+ 1035              		.loc 1 484 5 view .LVU236
+ 1036              		.loc 1 484 22 is_stmt 0 view .LVU237
+ 1037 0000 0368     		ldr	r3, [r0]
+ 1038 0002 43F48053 		orr	r3, r3, #4096
+ 1039 0006 0360     		str	r3, [r0]
+ 485:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1040              		.loc 1 485 1 view .LVU238
+ 1041 0008 7047     		bx	lr
+ 1042              		.cfi_endproc
+ 1043              	.LFE89:
+ 1045              		.section	.text.I2C_DisablePECTransmit,"ax",%progbits
+ 1046              		.align	1
+ 1047              		.global	I2C_DisablePECTransmit
+ 1048              		.syntax unified
+ 1049              		.thumb
+ 1050              		.thumb_func
+ 1052              	I2C_DisablePECTransmit:
+ 1053              	.LVL77:
+ 1054              	.LFB90:
+ 486:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 487:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 488:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disables the I2C PEC transfer.
+ 489:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 490:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 491:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 492:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 493:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 494:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisablePECTransmit(I2C_T* i2c)
+ 495:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1055              		.loc 1 495 1 is_stmt 1 view -0
+ 1056              		.cfi_startproc
+ 1057              		@ args = 0, pretend = 0, frame = 0
+ 1058              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1059              		@ link register save eliminated.
+ 496:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.PEC = BIT_RESET;
+ 1060              		.loc 1 496 5 view .LVU240
+ 1061              		.loc 1 496 22 is_stmt 0 view .LVU241
+ 1062 0000 0368     		ldr	r3, [r0]
+ 1063 0002 6FF30C33 		bfc	r3, #12, #1
+ 1064 0006 0360     		str	r3, [r0]
+ 497:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 28
+
+
+ 1065              		.loc 1 497 1 view .LVU242
+ 1066 0008 7047     		bx	lr
+ 1067              		.cfi_endproc
+ 1068              	.LFE90:
+ 1070              		.section	.text.I2C_ConfigPECPosition,"ax",%progbits
+ 1071              		.align	1
+ 1072              		.global	I2C_ConfigPECPosition
+ 1073              		.syntax unified
+ 1074              		.thumb
+ 1075              		.thumb_func
+ 1077              	I2C_ConfigPECPosition:
+ 1078              	.LVL78:
+ 1079              	.LFB91:
+ 498:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 499:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 500:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Selects the I2C PEC position.
+ 501:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 502:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 503:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****   *
+ 504:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     PECPosition: PEC position
+ 505:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of following values:
+ 506:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_PEC_POSITION_NEXT: indicates that the next byte is PEC
+ 507:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_PEC_POSITION_CURRENT: indicates that current byte is PEC
+ 508:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 509:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 510:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ConfigPECPosition(I2C_T* i2c, I2C_PEC_POSITION_T PECPosition)
+ 511:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1080              		.loc 1 511 1 is_stmt 1 view -0
+ 1081              		.cfi_startproc
+ 1082              		@ args = 0, pretend = 0, frame = 0
+ 1083              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1084              		@ link register save eliminated.
+ 512:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(PECPosition == I2C_PEC_POSITION_NEXT)
+ 1085              		.loc 1 512 5 view .LVU244
+ 1086              		.loc 1 512 7 is_stmt 0 view .LVU245
+ 1087 0000 21B9     		cbnz	r1, .L64
+ 513:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 514:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CTRL1_B.ACKPOS = BIT_SET;
+ 1088              		.loc 1 514 9 is_stmt 1 view .LVU246
+ 1089              		.loc 1 514 29 is_stmt 0 view .LVU247
+ 1090 0002 0368     		ldr	r3, [r0]
+ 1091 0004 43F40063 		orr	r3, r3, #2048
+ 1092 0008 0360     		str	r3, [r0]
+ 1093 000a 7047     		bx	lr
+ 1094              	.L64:
+ 515:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 516:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     else
+ 517:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 518:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CTRL1_B.ACKPOS = BIT_RESET;
+ 1095              		.loc 1 518 9 is_stmt 1 view .LVU248
+ 1096              		.loc 1 518 29 is_stmt 0 view .LVU249
+ 1097 000c 0368     		ldr	r3, [r0]
+ 1098 000e 6FF3CB23 		bfc	r3, #11, #1
+ 1099 0012 0360     		str	r3, [r0]
+ 519:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 520:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1100              		.loc 1 520 1 view .LVU250
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 29
+
+
+ 1101 0014 7047     		bx	lr
+ 1102              		.cfi_endproc
+ 1103              	.LFE91:
+ 1105              		.section	.text.I2C_EnablePEC,"ax",%progbits
+ 1106              		.align	1
+ 1107              		.global	I2C_EnablePEC
+ 1108              		.syntax unified
+ 1109              		.thumb
+ 1110              		.thumb_func
+ 1112              	I2C_EnablePEC:
+ 1113              	.LVL79:
+ 1114              	.LFB92:
+ 521:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 522:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 523:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the PEC value calculation of the transferred bytes.
+ 524:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 525:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 526:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 527:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 528:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 529:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnablePEC(I2C_T* i2c)
+ 530:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1115              		.loc 1 530 1 is_stmt 1 view -0
+ 1116              		.cfi_startproc
+ 1117              		@ args = 0, pretend = 0, frame = 0
+ 1118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1119              		@ link register save eliminated.
+ 531:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.PECEN = BIT_SET;
+ 1120              		.loc 1 531 5 view .LVU252
+ 1121              		.loc 1 531 24 is_stmt 0 view .LVU253
+ 1122 0000 0368     		ldr	r3, [r0]
+ 1123 0002 43F02003 		orr	r3, r3, #32
+ 1124 0006 0360     		str	r3, [r0]
+ 532:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1125              		.loc 1 532 1 view .LVU254
+ 1126 0008 7047     		bx	lr
+ 1127              		.cfi_endproc
+ 1128              	.LFE92:
+ 1130              		.section	.text.I2C_DisablePEC,"ax",%progbits
+ 1131              		.align	1
+ 1132              		.global	I2C_DisablePEC
+ 1133              		.syntax unified
+ 1134              		.thumb
+ 1135              		.thumb_func
+ 1137              	I2C_DisablePEC:
+ 1138              	.LVL80:
+ 1139              	.LFB93:
+ 533:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 534:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 535:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disables the PEC value calculation of the transferred bytes.
+ 536:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 537:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 538:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 539:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 540:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 541:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisablePEC(I2C_T* i2c)
+ 542:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 30
+
+
+ 1140              		.loc 1 542 1 is_stmt 1 view -0
+ 1141              		.cfi_startproc
+ 1142              		@ args = 0, pretend = 0, frame = 0
+ 1143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1144              		@ link register save eliminated.
+ 543:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.PECEN = BIT_RESET;
+ 1145              		.loc 1 543 5 view .LVU256
+ 1146              		.loc 1 543 24 is_stmt 0 view .LVU257
+ 1147 0000 0368     		ldr	r3, [r0]
+ 1148 0002 6FF34513 		bfc	r3, #5, #1
+ 1149 0006 0360     		str	r3, [r0]
+ 544:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1150              		.loc 1 544 1 view .LVU258
+ 1151 0008 7047     		bx	lr
+ 1152              		.cfi_endproc
+ 1153              	.LFE93:
+ 1155              		.section	.text.I2C_ReadPEC,"ax",%progbits
+ 1156              		.align	1
+ 1157              		.global	I2C_ReadPEC
+ 1158              		.syntax unified
+ 1159              		.thumb
+ 1160              		.thumb_func
+ 1162              	I2C_ReadPEC:
+ 1163              	.LVL81:
+ 1164              	.LFB94:
+ 545:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 546:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 547:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Read the PEC value for the I2C.
+ 548:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 549:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 550:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 551:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    value of PEC
+ 552:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 553:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** uint8_t I2C_ReadPEC(I2C_T* i2c)
+ 554:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1165              		.loc 1 554 1 is_stmt 1 view -0
+ 1166              		.cfi_startproc
+ 1167              		@ args = 0, pretend = 0, frame = 0
+ 1168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1169              		@ link register save eliminated.
+ 555:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     return i2c->STS2_B.PECVALUE;
+ 1170              		.loc 1 555 5 view .LVU260
+ 1171              		.loc 1 555 23 is_stmt 0 view .LVU261
+ 1172 0000 8069     		ldr	r0, [r0, #24]
+ 1173              	.LVL82:
+ 556:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1174              		.loc 1 556 1 view .LVU262
+ 1175 0002 C0F30720 		ubfx	r0, r0, #8, #8
+ 1176 0006 7047     		bx	lr
+ 1177              		.cfi_endproc
+ 1178              	.LFE94:
+ 1180              		.section	.text.I2C_EnableARP,"ax",%progbits
+ 1181              		.align	1
+ 1182              		.global	I2C_EnableARP
+ 1183              		.syntax unified
+ 1184              		.thumb
+ 1185              		.thumb_func
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 31
+
+
+ 1187              	I2C_EnableARP:
+ 1188              	.LVL83:
+ 1189              	.LFB95:
+ 557:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 558:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 559:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the I2C ARP.
+ 560:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 561:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 562:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 563:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 564:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 565:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableARP(I2C_T* i2c)
+ 566:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1190              		.loc 1 566 1 is_stmt 1 view -0
+ 1191              		.cfi_startproc
+ 1192              		@ args = 0, pretend = 0, frame = 0
+ 1193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1194              		@ link register save eliminated.
+ 567:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.ARPEN = BIT_SET;
+ 1195              		.loc 1 567 5 view .LVU264
+ 1196              		.loc 1 567 24 is_stmt 0 view .LVU265
+ 1197 0000 0368     		ldr	r3, [r0]
+ 1198 0002 43F01003 		orr	r3, r3, #16
+ 1199 0006 0360     		str	r3, [r0]
+ 568:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1200              		.loc 1 568 1 view .LVU266
+ 1201 0008 7047     		bx	lr
+ 1202              		.cfi_endproc
+ 1203              	.LFE95:
+ 1205              		.section	.text.I2C_DisableARP,"ax",%progbits
+ 1206              		.align	1
+ 1207              		.global	I2C_DisableARP
+ 1208              		.syntax unified
+ 1209              		.thumb
+ 1210              		.thumb_func
+ 1212              	I2C_DisableARP:
+ 1213              	.LVL84:
+ 1214              	.LFB96:
+ 569:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 570:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 571:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** * @brief      Disables the I2C ARP.
+ 572:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** *
+ 573:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** * @param      i2c: I2C selet 1 or 2
+ 574:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** *
+ 575:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** * @retval     None
+ 576:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** */
+ 577:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableARP(I2C_T* i2c)
+ 578:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1215              		.loc 1 578 1 is_stmt 1 view -0
+ 1216              		.cfi_startproc
+ 1217              		@ args = 0, pretend = 0, frame = 0
+ 1218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1219              		@ link register save eliminated.
+ 579:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.ARPEN = BIT_RESET;
+ 1220              		.loc 1 579 5 view .LVU268
+ 1221              		.loc 1 579 24 is_stmt 0 view .LVU269
+ 1222 0000 0368     		ldr	r3, [r0]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 32
+
+
+ 1223 0002 6FF30413 		bfc	r3, #4, #1
+ 1224 0006 0360     		str	r3, [r0]
+ 580:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1225              		.loc 1 580 1 view .LVU270
+ 1226 0008 7047     		bx	lr
+ 1227              		.cfi_endproc
+ 1228              	.LFE96:
+ 1230              		.section	.text.I2C_EnableStretchClock,"ax",%progbits
+ 1231              		.align	1
+ 1232              		.global	I2C_EnableStretchClock
+ 1233              		.syntax unified
+ 1234              		.thumb
+ 1235              		.thumb_func
+ 1237              	I2C_EnableStretchClock:
+ 1238              	.LVL85:
+ 1239              	.LFB97:
+ 581:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 582:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 583:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the I2C Clock stretching.
+ 584:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 585:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 586:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 587:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 588:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 589:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableStretchClock(I2C_T* i2c)
+ 590:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1240              		.loc 1 590 1 is_stmt 1 view -0
+ 1241              		.cfi_startproc
+ 1242              		@ args = 0, pretend = 0, frame = 0
+ 1243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1244              		@ link register save eliminated.
+ 591:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.CLKSTRETCHD = BIT_RESET;
+ 1245              		.loc 1 591 5 view .LVU272
+ 1246              		.loc 1 591 30 is_stmt 0 view .LVU273
+ 1247 0000 0368     		ldr	r3, [r0]
+ 1248 0002 6FF3C713 		bfc	r3, #7, #1
+ 1249 0006 0360     		str	r3, [r0]
+ 592:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1250              		.loc 1 592 1 view .LVU274
+ 1251 0008 7047     		bx	lr
+ 1252              		.cfi_endproc
+ 1253              	.LFE97:
+ 1255              		.section	.text.I2C_DisableStretchClock,"ax",%progbits
+ 1256              		.align	1
+ 1257              		.global	I2C_DisableStretchClock
+ 1258              		.syntax unified
+ 1259              		.thumb
+ 1260              		.thumb_func
+ 1262              	I2C_DisableStretchClock:
+ 1263              	.LVL86:
+ 1264              	.LFB98:
+ 593:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 594:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 595:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disables the I2C Clock stretching.
+ 596:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 597:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 598:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 33
+
+
+ 599:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 600:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 601:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableStretchClock(I2C_T* i2c)
+ 602:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1265              		.loc 1 602 1 is_stmt 1 view -0
+ 1266              		.cfi_startproc
+ 1267              		@ args = 0, pretend = 0, frame = 0
+ 1268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1269              		@ link register save eliminated.
+ 603:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL1_B.CLKSTRETCHD = BIT_SET;
+ 1270              		.loc 1 603 5 view .LVU276
+ 1271              		.loc 1 603 30 is_stmt 0 view .LVU277
+ 1272 0000 0368     		ldr	r3, [r0]
+ 1273 0002 43F08003 		orr	r3, r3, #128
+ 1274 0006 0360     		str	r3, [r0]
+ 604:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1275              		.loc 1 604 1 view .LVU278
+ 1276 0008 7047     		bx	lr
+ 1277              		.cfi_endproc
+ 1278              	.LFE98:
+ 1280              		.section	.text.I2C_ConfigFastModeDutyCycle,"ax",%progbits
+ 1281              		.align	1
+ 1282              		.global	I2C_ConfigFastModeDutyCycle
+ 1283              		.syntax unified
+ 1284              		.thumb
+ 1285              		.thumb_func
+ 1287              	I2C_ConfigFastModeDutyCycle:
+ 1288              	.LVL87:
+ 1289              	.LFB99:
+ 605:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 606:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 607:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Selects the specified I2C fast mode duty cycle.
+ 608:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 609:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 610:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 611:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     dutyCycle: the fast mode duty cycle.
+ 612:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of following values:
+ 613:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_DUTYCYCLE_16_9: I2C fast mode Tlow/Thigh = 16/9
+ 614:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_DUTYCYCLE_2: I2C fast mode Tlow/Thigh = 2
+ 615:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 616:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 617:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ConfigFastModeDutyCycle(I2C_T* i2c, I2C_DUTYCYCLE_T dutyCycle)
+ 618:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1290              		.loc 1 618 1 is_stmt 1 view -0
+ 1291              		.cfi_startproc
+ 1292              		@ args = 0, pretend = 0, frame = 0
+ 1293              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1294              		@ link register save eliminated.
+ 619:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(dutyCycle == I2C_DUTYCYCLE_16_9)
+ 1295              		.loc 1 619 5 view .LVU280
+ 1296              		.loc 1 619 7 is_stmt 0 view .LVU281
+ 1297 0000 B1F5804F 		cmp	r1, #16384
+ 1298 0004 04D0     		beq	.L76
+ 620:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 621:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CLKCTRL_B.FDUTYCFG = BIT_SET;
+ 622:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 623:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     else
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 34
+
+
+ 624:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 625:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->CLKCTRL_B.FDUTYCFG = BIT_RESET;
+ 1299              		.loc 1 625 9 is_stmt 1 view .LVU282
+ 1300              		.loc 1 625 33 is_stmt 0 view .LVU283
+ 1301 0006 C369     		ldr	r3, [r0, #28]
+ 1302 0008 6FF38E33 		bfc	r3, #14, #1
+ 1303 000c C361     		str	r3, [r0, #28]
+ 626:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 627:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1304              		.loc 1 627 1 view .LVU284
+ 1305 000e 7047     		bx	lr
+ 1306              	.L76:
+ 621:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 1307              		.loc 1 621 9 is_stmt 1 view .LVU285
+ 621:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 1308              		.loc 1 621 33 is_stmt 0 view .LVU286
+ 1309 0010 C369     		ldr	r3, [r0, #28]
+ 1310 0012 43F48043 		orr	r3, r3, #16384
+ 1311 0016 C361     		str	r3, [r0, #28]
+ 1312 0018 7047     		bx	lr
+ 1313              		.cfi_endproc
+ 1314              	.LFE99:
+ 1316              		.section	.text.I2C_EnableDMA,"ax",%progbits
+ 1317              		.align	1
+ 1318              		.global	I2C_EnableDMA
+ 1319              		.syntax unified
+ 1320              		.thumb
+ 1321              		.thumb_func
+ 1323              	I2C_EnableDMA:
+ 1324              	.LVL88:
+ 1325              	.LFB100:
+ 628:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 629:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 630:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the specified I2C DMA requests.
+ 631:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 632:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 633:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 634:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 635:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 636:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableDMA(I2C_T* i2c)
+ 637:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1326              		.loc 1 637 1 is_stmt 1 view -0
+ 1327              		.cfi_startproc
+ 1328              		@ args = 0, pretend = 0, frame = 0
+ 1329              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1330              		@ link register save eliminated.
+ 638:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL2_B.DMAEN = ENABLE;
+ 1331              		.loc 1 638 5 view .LVU288
+ 1332              		.loc 1 638 24 is_stmt 0 view .LVU289
+ 1333 0000 4368     		ldr	r3, [r0, #4]
+ 1334 0002 43F40063 		orr	r3, r3, #2048
+ 1335 0006 4360     		str	r3, [r0, #4]
+ 639:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1336              		.loc 1 639 1 view .LVU290
+ 1337 0008 7047     		bx	lr
+ 1338              		.cfi_endproc
+ 1339              	.LFE100:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 35
+
+
+ 1341              		.section	.text.I2C_DisableDMA,"ax",%progbits
+ 1342              		.align	1
+ 1343              		.global	I2C_DisableDMA
+ 1344              		.syntax unified
+ 1345              		.thumb
+ 1346              		.thumb_func
+ 1348              	I2C_DisableDMA:
+ 1349              	.LVL89:
+ 1350              	.LFB101:
+ 640:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 641:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 642:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disable the specified I2C DMA requests.
+ 643:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 644:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 645:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 646:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 647:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 648:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableDMA(I2C_T* i2c)
+ 649:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1351              		.loc 1 649 1 is_stmt 1 view -0
+ 1352              		.cfi_startproc
+ 1353              		@ args = 0, pretend = 0, frame = 0
+ 1354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1355              		@ link register save eliminated.
+ 650:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL2_B.DMAEN = DISABLE;
+ 1356              		.loc 1 650 5 view .LVU292
+ 1357              		.loc 1 650 24 is_stmt 0 view .LVU293
+ 1358 0000 4368     		ldr	r3, [r0, #4]
+ 1359 0002 6FF3CB23 		bfc	r3, #11, #1
+ 1360 0006 4360     		str	r3, [r0, #4]
+ 651:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1361              		.loc 1 651 1 view .LVU294
+ 1362 0008 7047     		bx	lr
+ 1363              		.cfi_endproc
+ 1364              	.LFE101:
+ 1366              		.section	.text.I2C_EnableDMALastTransfer,"ax",%progbits
+ 1367              		.align	1
+ 1368              		.global	I2C_EnableDMALastTransfer
+ 1369              		.syntax unified
+ 1370              		.thumb
+ 1371              		.thumb_func
+ 1373              	I2C_EnableDMALastTransfer:
+ 1374              	.LVL90:
+ 1375              	.LFB102:
+ 652:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 653:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 654:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enable DMA to receive the last transfer
+ 655:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 656:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 657:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 658:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 659:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 660:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableDMALastTransfer(I2C_T* i2c)
+ 661:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1376              		.loc 1 661 1 is_stmt 1 view -0
+ 1377              		.cfi_startproc
+ 1378              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 36
+
+
+ 1379              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1380              		@ link register save eliminated.
+ 662:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL2_B.LTCFG = BIT_SET;
+ 1381              		.loc 1 662 5 view .LVU296
+ 1382              		.loc 1 662 24 is_stmt 0 view .LVU297
+ 1383 0000 4368     		ldr	r3, [r0, #4]
+ 1384 0002 43F48053 		orr	r3, r3, #4096
+ 1385 0006 4360     		str	r3, [r0, #4]
+ 663:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1386              		.loc 1 663 1 view .LVU298
+ 1387 0008 7047     		bx	lr
+ 1388              		.cfi_endproc
+ 1389              	.LFE102:
+ 1391              		.section	.text.I2C_DisableDMALastTransfer,"ax",%progbits
+ 1392              		.align	1
+ 1393              		.global	I2C_DisableDMALastTransfer
+ 1394              		.syntax unified
+ 1395              		.thumb
+ 1396              		.thumb_func
+ 1398              	I2C_DisableDMALastTransfer:
+ 1399              	.LVL91:
+ 1400              	.LFB103:
+ 664:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 665:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 666:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disable DMA to receive the last transfer
+ 667:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 668:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 669:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 670:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 671:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 672:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableDMALastTransfer(I2C_T* i2c)
+ 673:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1401              		.loc 1 673 1 is_stmt 1 view -0
+ 1402              		.cfi_startproc
+ 1403              		@ args = 0, pretend = 0, frame = 0
+ 1404              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1405              		@ link register save eliminated.
+ 674:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL2_B.LTCFG = BIT_RESET;
+ 1406              		.loc 1 674 5 view .LVU300
+ 1407              		.loc 1 674 24 is_stmt 0 view .LVU301
+ 1408 0000 4368     		ldr	r3, [r0, #4]
+ 1409 0002 6FF30C33 		bfc	r3, #12, #1
+ 1410 0006 4360     		str	r3, [r0, #4]
+ 675:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1411              		.loc 1 675 1 view .LVU302
+ 1412 0008 7047     		bx	lr
+ 1413              		.cfi_endproc
+ 1414              	.LFE103:
+ 1416              		.section	.text.I2C_EnableInterrupt,"ax",%progbits
+ 1417              		.align	1
+ 1418              		.global	I2C_EnableInterrupt
+ 1419              		.syntax unified
+ 1420              		.thumb
+ 1421              		.thumb_func
+ 1423              	I2C_EnableInterrupt:
+ 1424              	.LVL92:
+ 1425              	.LFB104:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 37
+
+
+ 676:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 677:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 678:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Enables the specified I2C interrupts.
+ 679:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 680:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 681:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 682:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     interrupt:I2C interrupts sources
+ 683:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be any combination of following values:
+ 684:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_BUF: Buffer interrupt
+ 685:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_EVT: Event interrupt
+ 686:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_ERR: Error interrupt
+ 687:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 688:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 689:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 690:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_EnableInterrupt(I2C_T* i2c, uint16_t interrupt)
+ 691:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1426              		.loc 1 691 1 is_stmt 1 view -0
+ 1427              		.cfi_startproc
+ 1428              		@ args = 0, pretend = 0, frame = 0
+ 1429              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1430              		@ link register save eliminated.
+ 692:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL2 |= interrupt;
+ 1431              		.loc 1 692 5 view .LVU304
+ 1432              		.loc 1 692 16 is_stmt 0 view .LVU305
+ 1433 0000 4368     		ldr	r3, [r0, #4]
+ 1434 0002 1943     		orrs	r1, r1, r3
+ 1435              	.LVL93:
+ 1436              		.loc 1 692 16 view .LVU306
+ 1437 0004 4160     		str	r1, [r0, #4]
+ 693:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1438              		.loc 1 693 1 view .LVU307
+ 1439 0006 7047     		bx	lr
+ 1440              		.cfi_endproc
+ 1441              	.LFE104:
+ 1443              		.section	.text.I2C_DisableInterrupt,"ax",%progbits
+ 1444              		.align	1
+ 1445              		.global	I2C_DisableInterrupt
+ 1446              		.syntax unified
+ 1447              		.thumb
+ 1448              		.thumb_func
+ 1450              	I2C_DisableInterrupt:
+ 1451              	.LVL94:
+ 1452              	.LFB105:
+ 694:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 695:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 696:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Disable the specified I2C interrupts.
+ 697:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 698:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 699:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 700:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     interrupt:I2C interrupts sources
+ 701:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be any combination of following values:
+ 702:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_BUF: Buffer interrupt
+ 703:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_EVT: Event interrupt
+ 704:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_ERR: Error interrupt
+ 705:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 706:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 707:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 38
+
+
+ 708:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_DisableInterrupt(I2C_T* i2c, uint16_t interrupt)
+ 709:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1453              		.loc 1 709 1 is_stmt 1 view -0
+ 1454              		.cfi_startproc
+ 1455              		@ args = 0, pretend = 0, frame = 0
+ 1456              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1457              		@ link register save eliminated.
+ 710:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->CTRL2 &= ~interrupt;
+ 1458              		.loc 1 710 5 view .LVU309
+ 1459              		.loc 1 710 16 is_stmt 0 view .LVU310
+ 1460 0000 4368     		ldr	r3, [r0, #4]
+ 1461 0002 23EA0103 		bic	r3, r3, r1
+ 1462 0006 4360     		str	r3, [r0, #4]
+ 711:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1463              		.loc 1 711 1 view .LVU311
+ 1464 0008 7047     		bx	lr
+ 1465              		.cfi_endproc
+ 1466              	.LFE105:
+ 1468              		.section	.text.I2C_ReadEventStatus,"ax",%progbits
+ 1469              		.align	1
+ 1470              		.global	I2C_ReadEventStatus
+ 1471              		.syntax unified
+ 1472              		.thumb
+ 1473              		.thumb_func
+ 1475              	I2C_ReadEventStatus:
+ 1476              	.LVL95:
+ 1477              	.LFB106:
+ 712:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 713:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 714:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Check that the last event is equal to the last passed event
+ 715:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 716:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 717:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 718:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2cEvent: the event to be checked.
+ 719:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of the following values:
+ 720:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_TRANSMITTER_ADDRESS_MATCHED           : EV1
+ 721:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED              : EV1
+ 722:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_TRANSMITTER_SECONDADDRESS_MATCHED     : EV1
+ 723:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_RECEIVER_SECONDADDRESS_MATCHED        : EV1
+ 724:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_GENERALCALLADDRESS_MATCHED            : EV1
+ 725:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_BYTE_RECEIVED                         : EV2
+ 726:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_BYTE_TRANSMITTED                      : EV3
+ 727:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_ACK_FAILURE                           : EV3_2
+ 728:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_SLAVE_STOP_DETECTED                         : EV4
+ 729:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_MASTER_MODE_SELECT                          : EV5
+ 730:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED            : EV6
+ 731:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED               : EV6
+ 732:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_MASTER_BYTE_RECEIVED                        : EV7
+ 733:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_MASTER_BYTE_TRANSMITTING                    : EV8
+ 734:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_MASTER_BYTE_TRANSMITTED                     : EV8_2
+ 735:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_EVENT_MASTER_MODE_ADDRESS10                       : EV9
+ 736:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 737:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    Status: SUCCESS or ERROR
+ 738:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 739:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** uint8_t  I2C_ReadEventStatus(I2C_T* i2c, I2C_EVENT_T i2cEvent)
+ 740:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1478              		.loc 1 740 1 is_stmt 1 view -0
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 39
+
+
+ 1479              		.cfi_startproc
+ 1480              		@ args = 0, pretend = 0, frame = 0
+ 1481              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1482              		@ link register save eliminated.
+ 741:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint32_t lastevent = 0;
+ 1483              		.loc 1 741 5 view .LVU313
+ 742:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint32_t flag1 = 0, flag2 = 0;
+ 1484              		.loc 1 742 5 view .LVU314
+ 743:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 744:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     flag1 = i2c->STS1 & 0x0000FFFF;
+ 1485              		.loc 1 744 5 view .LVU315
+ 1486              		.loc 1 744 16 is_stmt 0 view .LVU316
+ 1487 0000 4369     		ldr	r3, [r0, #20]
+ 1488              		.loc 1 744 11 view .LVU317
+ 1489 0002 9BB2     		uxth	r3, r3
+ 1490              	.LVL96:
+ 745:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     flag2 = i2c->STS2 & 0x0000FFFF;
+ 1491              		.loc 1 745 5 is_stmt 1 view .LVU318
+ 1492              		.loc 1 745 16 is_stmt 0 view .LVU319
+ 1493 0004 8269     		ldr	r2, [r0, #24]
+ 1494              	.LVL97:
+ 746:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     flag2 = flag2 << 16;
+ 1495              		.loc 1 746 5 is_stmt 1 view .LVU320
+ 747:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 748:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     lastevent = (flag1 | flag2) & 0x00FFFFFF;
+ 1496              		.loc 1 748 5 view .LVU321
+ 1497              		.loc 1 748 24 is_stmt 0 view .LVU322
+ 1498 0006 43EA0243 		orr	r3, r3, r2, lsl #16
+ 1499              	.LVL98:
+ 1500              		.loc 1 748 15 view .LVU323
+ 1501 000a 23F07F43 		bic	r3, r3, #-16777216
+ 1502              	.LVL99:
+ 749:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 750:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if((lastevent & i2cEvent) == i2cEvent)
+ 1503              		.loc 1 750 5 is_stmt 1 view .LVU324
+ 1504              		.loc 1 750 7 is_stmt 0 view .LVU325
+ 1505 000e 31EA0303 		bics	r3, r1, r3
+ 1506              	.LVL100:
+ 1507              		.loc 1 750 7 view .LVU326
+ 1508 0012 01D0     		beq	.L85
+ 751:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 752:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return SUCCESS;
+ 753:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 754:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     return ERROR;
+ 1509              		.loc 1 754 12 view .LVU327
+ 1510 0014 0020     		movs	r0, #0
+ 1511              	.LVL101:
+ 1512              		.loc 1 754 12 view .LVU328
+ 1513 0016 7047     		bx	lr
+ 1514              	.LVL102:
+ 1515              	.L85:
+ 752:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 1516              		.loc 1 752 16 view .LVU329
+ 1517 0018 0120     		movs	r0, #1
+ 1518              	.LVL103:
+ 755:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1519              		.loc 1 755 1 view .LVU330
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 40
+
+
+ 1520 001a 7047     		bx	lr
+ 1521              		.cfi_endproc
+ 1522              	.LFE106:
+ 1524              		.section	.text.I2C_ReadLastEvent,"ax",%progbits
+ 1525              		.align	1
+ 1526              		.global	I2C_ReadLastEvent
+ 1527              		.syntax unified
+ 1528              		.thumb
+ 1529              		.thumb_func
+ 1531              	I2C_ReadLastEvent:
+ 1532              	.LVL104:
+ 1533              	.LFB107:
+ 756:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 757:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 758:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Read the last i2c Event.
+ 759:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 760:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 761:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 762:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    The last event
+ 763:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 764:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** uint32_t I2C_ReadLastEvent(I2C_T* i2c)
+ 765:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1534              		.loc 1 765 1 is_stmt 1 view -0
+ 1535              		.cfi_startproc
+ 1536              		@ args = 0, pretend = 0, frame = 0
+ 1537              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1538              		@ link register save eliminated.
+ 766:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint32_t lastevent = 0;
+ 1539              		.loc 1 766 5 view .LVU332
+ 767:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint32_t flag1 = 0, flag2 = 0;
+ 1540              		.loc 1 767 5 view .LVU333
+ 768:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 769:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     flag1 = i2c->STS1 & 0x0000FFFF;
+ 1541              		.loc 1 769 5 view .LVU334
+ 1542              		.loc 1 769 16 is_stmt 0 view .LVU335
+ 1543 0000 4369     		ldr	r3, [r0, #20]
+ 1544              		.loc 1 769 11 view .LVU336
+ 1545 0002 9BB2     		uxth	r3, r3
+ 1546              	.LVL105:
+ 770:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     flag2 = i2c->STS2 & 0x0000FFFF;
+ 1547              		.loc 1 770 5 is_stmt 1 view .LVU337
+ 1548              		.loc 1 770 16 is_stmt 0 view .LVU338
+ 1549 0004 8069     		ldr	r0, [r0, #24]
+ 1550              	.LVL106:
+ 771:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     flag2 = flag2 << 16;
+ 1551              		.loc 1 771 5 is_stmt 1 view .LVU339
+ 772:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 773:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     lastevent = (flag1 | flag2) & 0x00FFFFFF;
+ 1552              		.loc 1 773 5 view .LVU340
+ 1553              		.loc 1 773 24 is_stmt 0 view .LVU341
+ 1554 0006 43EA0040 		orr	r0, r3, r0, lsl #16
+ 1555              	.LVL107:
+ 774:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 775:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     return lastevent;
+ 1556              		.loc 1 775 5 is_stmt 1 view .LVU342
+ 776:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1557              		.loc 1 776 1 is_stmt 0 view .LVU343
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 41
+
+
+ 1558 000a 20F07F40 		bic	r0, r0, #-16777216
+ 1559              	.LVL108:
+ 1560              		.loc 1 776 1 view .LVU344
+ 1561 000e 7047     		bx	lr
+ 1562              		.cfi_endproc
+ 1563              	.LFE107:
+ 1565              		.section	.text.I2C_ReadStatusFlag,"ax",%progbits
+ 1566              		.align	1
+ 1567              		.global	I2C_ReadStatusFlag
+ 1568              		.syntax unified
+ 1569              		.thumb
+ 1570              		.thumb_func
+ 1572              	I2C_ReadStatusFlag:
+ 1573              	.LVL109:
+ 1574              	.LFB108:
+ 777:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 778:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 779:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Check whether the I2C flag is set
+ 780:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 781:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 782:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 783:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     flag: specifies the I2C flag
+ 784:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of the following values:
+ 785:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_DUALADDR: Dual flag (Slave mode)
+ 786:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_SMMHADDR: SMBus host header (Slave mode)
+ 787:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_SMBDADDR: SMBus default header (Slave mode)
+ 788:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_GENCALL:  General call header flag (Slave mode)
+ 789:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_TR:       Transmitter/Receiver flag
+ 790:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_BUSBSY:   Bus busy flag
+ 791:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_MS:       Master/Slave flag
+ 792:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_SMBALT:   SMBus Alert flag
+ 793:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_TTE:      Timeout or Tlow error flag
+ 794:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_PECE:     PEC error in reception flag
+ 795:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_OVRUR:    Overrun/Underrun flag (Slave mode)
+ 796:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_AE:       Acknowledge error flag
+ 797:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_AL:       Arbitration lost flag (Master mode)
+ 798:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_BERR:     Bus error flag
+ 799:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_TXBE:     Transmitter data register empty flag
+ 800:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_RXBNE:    Receiver data register not empty flag
+ 801:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_STOP:     Stop detection flag (Slave mode)
+ 802:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_ADDR10:   10-bit header sent flag (Master mode)
+ 803:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_BTC:      Byte transfer complete flag
+ 804:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_ADDR:     Address sent flag (Master mode)
+ 805:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_START:    Start bit flag (Master mode)
+ 806:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 807:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    Status: flag SET or RESET
+ 808:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 809:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** uint8_t I2C_ReadStatusFlag(I2C_T* i2c, I2C_FLAG_T flag)
+ 810:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1575              		.loc 1 810 1 is_stmt 1 view -0
+ 1576              		.cfi_startproc
+ 1577              		@ args = 0, pretend = 0, frame = 0
+ 1578              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1579              		@ link register save eliminated.
+ 811:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 812:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint8_t status = 0;
+ 1580              		.loc 1 812 5 view .LVU346
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 42
+
+
+ 813:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     switch (flag)
+ 1581              		.loc 1 813 5 view .LVU347
+ 1582 0000 1429     		cmp	r1, #20
+ 1583 0002 60D8     		bhi	.L111
+ 1584 0004 DFE801F0 		tbb	[pc, r1]
+ 1585              	.L90:
+ 1586 0008 0B       		.byte	(.L110-.L90)/2
+ 1587 0009 0F       		.byte	(.L109-.L90)/2
+ 1588 000a 13       		.byte	(.L108-.L90)/2
+ 1589 000b 17       		.byte	(.L107-.L90)/2
+ 1590 000c 1B       		.byte	(.L106-.L90)/2
+ 1591 000d 1F       		.byte	(.L105-.L90)/2
+ 1592 000e 23       		.byte	(.L104-.L90)/2
+ 1593 000f 27       		.byte	(.L103-.L90)/2
+ 1594 0010 2B       		.byte	(.L102-.L90)/2
+ 1595 0011 2F       		.byte	(.L101-.L90)/2
+ 1596 0012 33       		.byte	(.L100-.L90)/2
+ 1597 0013 37       		.byte	(.L99-.L90)/2
+ 1598 0014 3B       		.byte	(.L98-.L90)/2
+ 1599 0015 3F       		.byte	(.L97-.L90)/2
+ 1600 0016 43       		.byte	(.L96-.L90)/2
+ 1601 0017 47       		.byte	(.L95-.L90)/2
+ 1602 0018 4B       		.byte	(.L94-.L90)/2
+ 1603 0019 4F       		.byte	(.L93-.L90)/2
+ 1604 001a 53       		.byte	(.L92-.L90)/2
+ 1605 001b 57       		.byte	(.L91-.L90)/2
+ 1606 001c 5B       		.byte	(.L89-.L90)/2
+ 1607 001d 00       		.p2align 1
+ 1608              	.L110:
+ 814:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 815:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_DUALADDR:
+ 816:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS2_B.DUALADDRFLG;
+ 1609              		.loc 1 816 9 view .LVU348
+ 1610              		.loc 1 816 29 is_stmt 0 view .LVU349
+ 1611 001e 8069     		ldr	r0, [r0, #24]
+ 1612              	.LVL110:
+ 1613              		.loc 1 816 29 view .LVU350
+ 1614 0020 C0F3C010 		ubfx	r0, r0, #7, #1
+ 1615              	.LVL111:
+ 817:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1616              		.loc 1 817 9 is_stmt 1 view .LVU351
+ 1617 0024 7047     		bx	lr
+ 1618              	.LVL112:
+ 1619              	.L109:
+ 818:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_SMMHADDR:
+ 819:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS2_B.SMMHADDR;
+ 1620              		.loc 1 819 9 view .LVU352
+ 1621              		.loc 1 819 29 is_stmt 0 view .LVU353
+ 1622 0026 8069     		ldr	r0, [r0, #24]
+ 1623              	.LVL113:
+ 1624              		.loc 1 819 29 view .LVU354
+ 1625 0028 C0F38010 		ubfx	r0, r0, #6, #1
+ 1626              	.LVL114:
+ 820:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1627              		.loc 1 820 9 is_stmt 1 view .LVU355
+ 1628 002c 7047     		bx	lr
+ 1629              	.LVL115:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 43
+
+
+ 1630              	.L108:
+ 821:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_SMBDADDR:
+ 822:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS2_B.SMBDADDRFLG;
+ 1631              		.loc 1 822 9 view .LVU356
+ 1632              		.loc 1 822 29 is_stmt 0 view .LVU357
+ 1633 002e 8069     		ldr	r0, [r0, #24]
+ 1634              	.LVL116:
+ 1635              		.loc 1 822 29 view .LVU358
+ 1636 0030 C0F34010 		ubfx	r0, r0, #5, #1
+ 1637              	.LVL117:
+ 823:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1638              		.loc 1 823 9 is_stmt 1 view .LVU359
+ 1639 0034 7047     		bx	lr
+ 1640              	.LVL118:
+ 1641              	.L107:
+ 824:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_GENCALL:
+ 825:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS2_B.GENCALLFLG;
+ 1642              		.loc 1 825 9 view .LVU360
+ 1643              		.loc 1 825 29 is_stmt 0 view .LVU361
+ 1644 0036 8069     		ldr	r0, [r0, #24]
+ 1645              	.LVL119:
+ 1646              		.loc 1 825 29 view .LVU362
+ 1647 0038 C0F30010 		ubfx	r0, r0, #4, #1
+ 1648              	.LVL120:
+ 826:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1649              		.loc 1 826 9 is_stmt 1 view .LVU363
+ 1650 003c 7047     		bx	lr
+ 1651              	.LVL121:
+ 1652              	.L106:
+ 827:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_TR:
+ 828:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS2_B.TRFLG;
+ 1653              		.loc 1 828 9 view .LVU364
+ 1654              		.loc 1 828 29 is_stmt 0 view .LVU365
+ 1655 003e 8069     		ldr	r0, [r0, #24]
+ 1656              	.LVL122:
+ 1657              		.loc 1 828 29 view .LVU366
+ 1658 0040 C0F38000 		ubfx	r0, r0, #2, #1
+ 1659              	.LVL123:
+ 829:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1660              		.loc 1 829 9 is_stmt 1 view .LVU367
+ 1661 0044 7047     		bx	lr
+ 1662              	.LVL124:
+ 1663              	.L105:
+ 830:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_BUSBSY:
+ 831:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS2_B.BUSBSYFLG;
+ 1664              		.loc 1 831 9 view .LVU368
+ 1665              		.loc 1 831 29 is_stmt 0 view .LVU369
+ 1666 0046 8069     		ldr	r0, [r0, #24]
+ 1667              	.LVL125:
+ 1668              		.loc 1 831 29 view .LVU370
+ 1669 0048 C0F34000 		ubfx	r0, r0, #1, #1
+ 1670              	.LVL126:
+ 832:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1671              		.loc 1 832 9 is_stmt 1 view .LVU371
+ 1672 004c 7047     		bx	lr
+ 1673              	.LVL127:
+ 1674              	.L104:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 44
+
+
+ 833:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_MS:
+ 834:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS2_B.MSFLG;
+ 1675              		.loc 1 834 9 view .LVU372
+ 1676              		.loc 1 834 29 is_stmt 0 view .LVU373
+ 1677 004e 8069     		ldr	r0, [r0, #24]
+ 1678              	.LVL128:
+ 1679              		.loc 1 834 29 view .LVU374
+ 1680 0050 00F00100 		and	r0, r0, #1
+ 1681              	.LVL129:
+ 835:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1682              		.loc 1 835 9 is_stmt 1 view .LVU375
+ 1683 0054 7047     		bx	lr
+ 1684              	.LVL130:
+ 1685              	.L103:
+ 836:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_SMBALT:
+ 837:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.SMBALTFLG;
+ 1686              		.loc 1 837 9 view .LVU376
+ 1687              		.loc 1 837 29 is_stmt 0 view .LVU377
+ 1688 0056 4069     		ldr	r0, [r0, #20]
+ 1689              	.LVL131:
+ 1690              		.loc 1 837 29 view .LVU378
+ 1691 0058 C0F3C030 		ubfx	r0, r0, #15, #1
+ 1692              	.LVL132:
+ 838:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1693              		.loc 1 838 9 is_stmt 1 view .LVU379
+ 1694 005c 7047     		bx	lr
+ 1695              	.LVL133:
+ 1696              	.L102:
+ 839:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_TTE:
+ 840:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.TTEFLG;
+ 1697              		.loc 1 840 9 view .LVU380
+ 1698              		.loc 1 840 29 is_stmt 0 view .LVU381
+ 1699 005e 4069     		ldr	r0, [r0, #20]
+ 1700              	.LVL134:
+ 1701              		.loc 1 840 29 view .LVU382
+ 1702 0060 C0F38030 		ubfx	r0, r0, #14, #1
+ 1703              	.LVL135:
+ 841:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1704              		.loc 1 841 9 is_stmt 1 view .LVU383
+ 1705 0064 7047     		bx	lr
+ 1706              	.LVL136:
+ 1707              	.L101:
+ 842:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_PECE:
+ 843:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.PECEFLG;
+ 1708              		.loc 1 843 9 view .LVU384
+ 1709              		.loc 1 843 29 is_stmt 0 view .LVU385
+ 1710 0066 4069     		ldr	r0, [r0, #20]
+ 1711              	.LVL137:
+ 1712              		.loc 1 843 29 view .LVU386
+ 1713 0068 C0F30030 		ubfx	r0, r0, #12, #1
+ 1714              	.LVL138:
+ 844:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1715              		.loc 1 844 9 is_stmt 1 view .LVU387
+ 1716 006c 7047     		bx	lr
+ 1717              	.LVL139:
+ 1718              	.L100:
+ 845:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case  I2C_FLAG_OVRUR:
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 45
+
+
+ 846:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.OVRURFLG;
+ 1719              		.loc 1 846 9 view .LVU388
+ 1720              		.loc 1 846 29 is_stmt 0 view .LVU389
+ 1721 006e 4069     		ldr	r0, [r0, #20]
+ 1722              	.LVL140:
+ 1723              		.loc 1 846 29 view .LVU390
+ 1724 0070 C0F3C020 		ubfx	r0, r0, #11, #1
+ 1725              	.LVL141:
+ 847:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1726              		.loc 1 847 9 is_stmt 1 view .LVU391
+ 1727 0074 7047     		bx	lr
+ 1728              	.LVL142:
+ 1729              	.L99:
+ 848:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_AE:
+ 849:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.AEFLG;
+ 1730              		.loc 1 849 9 view .LVU392
+ 1731              		.loc 1 849 29 is_stmt 0 view .LVU393
+ 1732 0076 4069     		ldr	r0, [r0, #20]
+ 1733              	.LVL143:
+ 1734              		.loc 1 849 29 view .LVU394
+ 1735 0078 C0F38020 		ubfx	r0, r0, #10, #1
+ 1736              	.LVL144:
+ 850:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1737              		.loc 1 850 9 is_stmt 1 view .LVU395
+ 1738 007c 7047     		bx	lr
+ 1739              	.LVL145:
+ 1740              	.L98:
+ 851:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_AL:
+ 852:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.ALFLG;
+ 1741              		.loc 1 852 9 view .LVU396
+ 1742              		.loc 1 852 29 is_stmt 0 view .LVU397
+ 1743 007e 4069     		ldr	r0, [r0, #20]
+ 1744              	.LVL146:
+ 1745              		.loc 1 852 29 view .LVU398
+ 1746 0080 C0F34020 		ubfx	r0, r0, #9, #1
+ 1747              	.LVL147:
+ 853:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1748              		.loc 1 853 9 is_stmt 1 view .LVU399
+ 1749 0084 7047     		bx	lr
+ 1750              	.LVL148:
+ 1751              	.L97:
+ 854:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_BERR:
+ 855:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.BERRFLG;
+ 1752              		.loc 1 855 9 view .LVU400
+ 1753              		.loc 1 855 29 is_stmt 0 view .LVU401
+ 1754 0086 4069     		ldr	r0, [r0, #20]
+ 1755              	.LVL149:
+ 1756              		.loc 1 855 29 view .LVU402
+ 1757 0088 C0F30020 		ubfx	r0, r0, #8, #1
+ 1758              	.LVL150:
+ 856:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1759              		.loc 1 856 9 is_stmt 1 view .LVU403
+ 1760 008c 7047     		bx	lr
+ 1761              	.LVL151:
+ 1762              	.L96:
+ 857:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_TXBE:
+ 858:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.TXBEFLG;
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 46
+
+
+ 1763              		.loc 1 858 9 view .LVU404
+ 1764              		.loc 1 858 29 is_stmt 0 view .LVU405
+ 1765 008e 4069     		ldr	r0, [r0, #20]
+ 1766              	.LVL152:
+ 1767              		.loc 1 858 29 view .LVU406
+ 1768 0090 C0F3C010 		ubfx	r0, r0, #7, #1
+ 1769              	.LVL153:
+ 859:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1770              		.loc 1 859 9 is_stmt 1 view .LVU407
+ 1771 0094 7047     		bx	lr
+ 1772              	.LVL154:
+ 1773              	.L95:
+ 860:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_RXBNE:
+ 861:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.RXBNEFLG;
+ 1774              		.loc 1 861 9 view .LVU408
+ 1775              		.loc 1 861 29 is_stmt 0 view .LVU409
+ 1776 0096 4069     		ldr	r0, [r0, #20]
+ 1777              	.LVL155:
+ 1778              		.loc 1 861 29 view .LVU410
+ 1779 0098 C0F38010 		ubfx	r0, r0, #6, #1
+ 1780              	.LVL156:
+ 862:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1781              		.loc 1 862 9 is_stmt 1 view .LVU411
+ 1782 009c 7047     		bx	lr
+ 1783              	.LVL157:
+ 1784              	.L94:
+ 863:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_STOP:
+ 864:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.STOPFLG;
+ 1785              		.loc 1 864 9 view .LVU412
+ 1786              		.loc 1 864 29 is_stmt 0 view .LVU413
+ 1787 009e 4069     		ldr	r0, [r0, #20]
+ 1788              	.LVL158:
+ 1789              		.loc 1 864 29 view .LVU414
+ 1790 00a0 C0F30010 		ubfx	r0, r0, #4, #1
+ 1791              	.LVL159:
+ 865:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1792              		.loc 1 865 9 is_stmt 1 view .LVU415
+ 1793 00a4 7047     		bx	lr
+ 1794              	.LVL160:
+ 1795              	.L93:
+ 866:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_ADDR10:
+ 867:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.ADDR10FLG;
+ 1796              		.loc 1 867 9 view .LVU416
+ 1797              		.loc 1 867 29 is_stmt 0 view .LVU417
+ 1798 00a6 4069     		ldr	r0, [r0, #20]
+ 1799              	.LVL161:
+ 1800              		.loc 1 867 29 view .LVU418
+ 1801 00a8 C0F3C000 		ubfx	r0, r0, #3, #1
+ 1802              	.LVL162:
+ 868:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1803              		.loc 1 868 9 is_stmt 1 view .LVU419
+ 1804 00ac 7047     		bx	lr
+ 1805              	.LVL163:
+ 1806              	.L92:
+ 869:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_BTC:
+ 870:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.BTCFLG;
+ 1807              		.loc 1 870 9 view .LVU420
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 47
+
+
+ 1808              		.loc 1 870 29 is_stmt 0 view .LVU421
+ 1809 00ae 4069     		ldr	r0, [r0, #20]
+ 1810              	.LVL164:
+ 1811              		.loc 1 870 29 view .LVU422
+ 1812 00b0 C0F38000 		ubfx	r0, r0, #2, #1
+ 1813              	.LVL165:
+ 871:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1814              		.loc 1 871 9 is_stmt 1 view .LVU423
+ 1815 00b4 7047     		bx	lr
+ 1816              	.LVL166:
+ 1817              	.L91:
+ 872:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_ADDR:
+ 873:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.ADDRFLG;
+ 1818              		.loc 1 873 9 view .LVU424
+ 1819              		.loc 1 873 29 is_stmt 0 view .LVU425
+ 1820 00b6 4069     		ldr	r0, [r0, #20]
+ 1821              	.LVL167:
+ 1822              		.loc 1 873 29 view .LVU426
+ 1823 00b8 C0F34000 		ubfx	r0, r0, #1, #1
+ 1824              	.LVL168:
+ 874:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1825              		.loc 1 874 9 is_stmt 1 view .LVU427
+ 1826 00bc 7047     		bx	lr
+ 1827              	.LVL169:
+ 1828              	.L89:
+ 875:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_START:
+ 876:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         status = i2c->STS1_B.STARTFLG;
+ 1829              		.loc 1 876 9 view .LVU428
+ 1830              		.loc 1 876 29 is_stmt 0 view .LVU429
+ 1831 00be 4069     		ldr	r0, [r0, #20]
+ 1832              	.LVL170:
+ 1833              		.loc 1 876 29 view .LVU430
+ 1834 00c0 00F00100 		and	r0, r0, #1
+ 1835              	.LVL171:
+ 877:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1836              		.loc 1 877 9 is_stmt 1 view .LVU431
+ 1837 00c4 7047     		bx	lr
+ 1838              	.LVL172:
+ 1839              	.L111:
+ 813:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 1840              		.loc 1 813 5 is_stmt 0 view .LVU432
+ 1841 00c6 0020     		movs	r0, #0
+ 1842              	.LVL173:
+ 878:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     default:
+ 879:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 880:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 881:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     return status;
+ 1843              		.loc 1 881 5 is_stmt 1 view .LVU433
+ 882:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1844              		.loc 1 882 1 is_stmt 0 view .LVU434
+ 1845 00c8 7047     		bx	lr
+ 1846              		.cfi_endproc
+ 1847              	.LFE108:
+ 1849              		.section	.text.I2C_ClearStatusFlag,"ax",%progbits
+ 1850              		.align	1
+ 1851              		.global	I2C_ClearStatusFlag
+ 1852              		.syntax unified
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 48
+
+
+ 1853              		.thumb
+ 1854              		.thumb_func
+ 1856              	I2C_ClearStatusFlag:
+ 1857              	.LVL174:
+ 1858              	.LFB109:
+ 883:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 884:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 885:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Clear the I2C flag
+ 886:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 887:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 888:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 889:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     flag: specifies the I2C flag
+ 890:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of the following values:
+ 891:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_SMBALT:   SMBus Alert flag
+ 892:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_TTE:      Timeout or Tlow error flag
+ 893:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_PECE:     PEC error in reception flag
+ 894:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_OVRUR:    Overrun/Underrun flag (Slave mode)
+ 895:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_AE:       Acknowledge error flag
+ 896:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_AL:       Arbitration lost flag (Master mode)
+ 897:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_FLAG_BERR:     Bus error flag
+ 898:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 899:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+ 900:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 901:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @note      1)I2C_FLAG_STOP: Stop detection flag is cleared by software sequence:
+ 902:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadStatusFlag())
+ 903:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a write operation to I2C_CRTL1 register (I2C_Enable()).
+ 904:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            2)I2C_FLAG_ADDR10: 10-bit header sent flag is cleared by software sequence:
+ 905:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 (I2C_ReadStatusFlag())
+ 906:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by writing the second byte of the address in I2C_DATA register.
+ 907:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            3)I2C_FLAG_BTC: Byte transfer complete flag is cleared by software sequence:
+ 908:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadStatusFlag())
+ 909:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a read/write to I2C_DATA register (I2C_TxData()).
+ 910:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            4)I2C_FLAG_ADDR: Address sent flag is cleared by software sequence:
+ 911:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadStatusFlag())
+ 912:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a read operation to I2C_STS2 register ((void)(I2Cx->STS2)).
+ 913:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            5)I2C_FLAG_START: Start bit flag is cleared software sequence:
+ 914:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadStatusFlag())
+ 915:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a write operation to I2C_DATA register (I2C_TxData()).
+ 916:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 917:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ClearStatusFlag(I2C_T* i2c, I2C_FLAG_T flag)
+ 918:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1859              		.loc 1 918 1 is_stmt 1 view -0
+ 1860              		.cfi_startproc
+ 1861              		@ args = 0, pretend = 0, frame = 0
+ 1862              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1863              		@ link register save eliminated.
+ 919:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     switch (flag)
+ 1864              		.loc 1 919 5 view .LVU436
+ 1865 0000 0739     		subs	r1, r1, #7
+ 1866              	.LVL175:
+ 1867              		.loc 1 919 5 is_stmt 0 view .LVU437
+ 1868 0002 0629     		cmp	r1, #6
+ 1869 0004 27D8     		bhi	.L112
+ 1870 0006 DFE801F0 		tbb	[pc, r1]
+ 1871              	.L115:
+ 1872 000a 04       		.byte	(.L121-.L115)/2
+ 1873 000b 09       		.byte	(.L120-.L115)/2
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 49
+
+
+ 1874 000c 0E       		.byte	(.L119-.L115)/2
+ 1875 000d 13       		.byte	(.L118-.L115)/2
+ 1876 000e 18       		.byte	(.L117-.L115)/2
+ 1877 000f 1D       		.byte	(.L116-.L115)/2
+ 1878 0010 22       		.byte	(.L114-.L115)/2
+ 1879 0011 00       		.p2align 1
+ 1880              	.L121:
+ 920:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 921:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_SMBALT:
+ 922:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->STS1_B.SMBALTFLG = BIT_RESET;
+ 1881              		.loc 1 922 9 is_stmt 1 view .LVU438
+ 1882              		.loc 1 922 31 is_stmt 0 view .LVU439
+ 1883 0012 4369     		ldr	r3, [r0, #20]
+ 1884 0014 6FF3CF33 		bfc	r3, #15, #1
+ 1885 0018 4361     		str	r3, [r0, #20]
+ 923:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1886              		.loc 1 923 9 is_stmt 1 view .LVU440
+ 1887 001a 7047     		bx	lr
+ 1888              	.L120:
+ 924:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_TTE:
+ 925:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->STS1_B.TTEFLG = BIT_RESET;
+ 1889              		.loc 1 925 9 view .LVU441
+ 1890              		.loc 1 925 28 is_stmt 0 view .LVU442
+ 1891 001c 4369     		ldr	r3, [r0, #20]
+ 1892 001e 6FF38E33 		bfc	r3, #14, #1
+ 1893 0022 4361     		str	r3, [r0, #20]
+ 926:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1894              		.loc 1 926 9 is_stmt 1 view .LVU443
+ 1895 0024 7047     		bx	lr
+ 1896              	.L119:
+ 927:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_PECE:
+ 928:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->STS1_B.PECEFLG = BIT_RESET;
+ 1897              		.loc 1 928 9 view .LVU444
+ 1898              		.loc 1 928 29 is_stmt 0 view .LVU445
+ 1899 0026 4369     		ldr	r3, [r0, #20]
+ 1900 0028 6FF30C33 		bfc	r3, #12, #1
+ 1901 002c 4361     		str	r3, [r0, #20]
+ 929:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1902              		.loc 1 929 9 is_stmt 1 view .LVU446
+ 1903 002e 7047     		bx	lr
+ 1904              	.L118:
+ 930:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case  I2C_FLAG_OVRUR:
+ 931:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->STS1_B.OVRURFLG = BIT_RESET;
+ 1905              		.loc 1 931 9 view .LVU447
+ 1906              		.loc 1 931 30 is_stmt 0 view .LVU448
+ 1907 0030 4369     		ldr	r3, [r0, #20]
+ 1908 0032 6FF3CB23 		bfc	r3, #11, #1
+ 1909 0036 4361     		str	r3, [r0, #20]
+ 932:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1910              		.loc 1 932 9 is_stmt 1 view .LVU449
+ 1911 0038 7047     		bx	lr
+ 1912              	.L117:
+ 933:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_AE:
+ 934:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->STS1_B.AEFLG = BIT_RESET;
+ 1913              		.loc 1 934 9 view .LVU450
+ 1914              		.loc 1 934 27 is_stmt 0 view .LVU451
+ 1915 003a 4369     		ldr	r3, [r0, #20]
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 50
+
+
+ 1916 003c 6FF38A23 		bfc	r3, #10, #1
+ 1917 0040 4361     		str	r3, [r0, #20]
+ 935:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1918              		.loc 1 935 9 is_stmt 1 view .LVU452
+ 1919 0042 7047     		bx	lr
+ 1920              	.L116:
+ 936:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_AL:
+ 937:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->STS1_B.ALFLG = BIT_RESET;
+ 1921              		.loc 1 937 9 view .LVU453
+ 1922              		.loc 1 937 27 is_stmt 0 view .LVU454
+ 1923 0044 4369     		ldr	r3, [r0, #20]
+ 1924 0046 6FF34923 		bfc	r3, #9, #1
+ 1925 004a 4361     		str	r3, [r0, #20]
+ 938:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1926              		.loc 1 938 9 is_stmt 1 view .LVU455
+ 1927 004c 7047     		bx	lr
+ 1928              	.L114:
+ 939:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     case I2C_FLAG_BERR:
+ 940:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         i2c->STS1_B.BERRFLG = BIT_RESET;
+ 1929              		.loc 1 940 9 view .LVU456
+ 1930              		.loc 1 940 29 is_stmt 0 view .LVU457
+ 1931 004e 4369     		ldr	r3, [r0, #20]
+ 1932 0050 6FF30823 		bfc	r3, #8, #1
+ 1933 0054 4361     		str	r3, [r0, #20]
+ 941:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 1934              		.loc 1 941 9 is_stmt 1 view .LVU458
+ 1935              	.L112:
+ 942:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     default:
+ 943:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         break;
+ 944:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 945:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1936              		.loc 1 945 1 is_stmt 0 view .LVU459
+ 1937 0056 7047     		bx	lr
+ 1938              		.cfi_endproc
+ 1939              	.LFE109:
+ 1941              		.section	.text.I2C_ReadIntFlag,"ax",%progbits
+ 1942              		.align	1
+ 1943              		.global	I2C_ReadIntFlag
+ 1944              		.syntax unified
+ 1945              		.thumb
+ 1946              		.thumb_func
+ 1948              	I2C_ReadIntFlag:
+ 1949              	.LVL176:
+ 1950              	.LFB110:
+ 946:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 947:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 948:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Check whether the I2C interrupts is set
+ 949:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 950:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 951:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 952:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     flag: specifies the I2C interrupts
+ 953:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be one of the following values:
+ 954:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_SMBALT:   SMBus Alert flag
+ 955:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_TTE:      Timeout or Tlow error flag
+ 956:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_PECE:     PEC error in reception flag
+ 957:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_OVRUR:    Overrun/Underrun flag (Slave mode)
+ 958:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_AE:       Acknowledge error flag
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 51
+
+
+ 959:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_AL:       Arbitration lost flag (Master mode)
+ 960:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_BERR:     Bus error flag
+ 961:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_TXBE:     Transmitter data register empty flag
+ 962:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_RXBNE:    Receiver data register not empty flag
+ 963:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_STOP:     Stop detection flag (Slave mode)
+ 964:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_ADDR10:   10-bit header sent flag (Master mode)
+ 965:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_BTC:      Byte transfer complete flag
+ 966:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_ADDR:     Address sent flag (Master mode)
+ 967:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_START:    Start bit flag (Master mode)
+ 968:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 969:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    Status: flag SET or RESET
+ 970:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+ 971:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** uint8_t I2C_ReadIntFlag(I2C_T* i2c, I2C_INT_FLAG_T flag)
+ 972:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 1951              		.loc 1 972 1 is_stmt 1 view -0
+ 1952              		.cfi_startproc
+ 1953              		@ args = 0, pretend = 0, frame = 0
+ 1954              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1955              		@ link register save eliminated.
+ 973:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     uint32_t enablestatus = 0;
+ 1956              		.loc 1 973 5 view .LVU461
+ 974:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 975:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     enablestatus = ((flag & 0x07000000) >> 16) & (i2c->CTRL2);
+ 1957              		.loc 1 975 5 view .LVU462
+ 1958              		.loc 1 975 54 is_stmt 0 view .LVU463
+ 1959 0000 4368     		ldr	r3, [r0, #4]
+ 1960              		.loc 1 975 48 view .LVU464
+ 1961 0002 03EA1143 		and	r3, r3, r1, lsr #16
+ 1962              		.loc 1 975 18 view .LVU465
+ 1963 0006 03F4E063 		and	r3, r3, #1792
+ 1964              	.LVL177:
+ 976:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     flag &= 0x00FFFFFF;
+ 1965              		.loc 1 976 5 is_stmt 1 view .LVU466
+ 1966              		.loc 1 976 10 is_stmt 0 view .LVU467
+ 1967 000a 21F07F41 		bic	r1, r1, #-16777216
+ 1968              	.LVL178:
+ 977:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     if(((i2c->STS1 & flag) != RESET) && enablestatus)
+ 1969              		.loc 1 977 5 is_stmt 1 view .LVU468
+ 1970              		.loc 1 977 13 is_stmt 0 view .LVU469
+ 1971 000e 4269     		ldr	r2, [r0, #20]
+ 1972              		.loc 1 977 7 view .LVU470
+ 1973 0010 0A42     		tst	r2, r1
+ 1974 0012 02D0     		beq	.L124
+ 1975              		.loc 1 977 38 discriminator 1 view .LVU471
+ 1976 0014 1BB9     		cbnz	r3, .L125
+ 978:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     {
+ 979:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****         return SET;
+ 980:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 981:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     return RESET;
+ 1977              		.loc 1 981 12 view .LVU472
+ 1978 0016 0020     		movs	r0, #0
+ 1979              	.LVL179:
+ 1980              		.loc 1 981 12 view .LVU473
+ 1981 0018 7047     		bx	lr
+ 1982              	.LVL180:
+ 1983              	.L124:
+ 1984              		.loc 1 981 12 view .LVU474
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 52
+
+
+ 1985 001a 0020     		movs	r0, #0
+ 1986              	.LVL181:
+ 1987              		.loc 1 981 12 view .LVU475
+ 1988 001c 7047     		bx	lr
+ 1989              	.LVL182:
+ 1990              	.L125:
+ 979:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     }
+ 1991              		.loc 1 979 16 view .LVU476
+ 1992 001e 0120     		movs	r0, #1
+ 1993              	.LVL183:
+ 982:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 1994              		.loc 1 982 1 view .LVU477
+ 1995 0020 7047     		bx	lr
+ 1996              		.cfi_endproc
+ 1997              	.LFE110:
+ 1999              		.section	.text.I2C_ClearIntFlag,"ax",%progbits
+ 2000              		.align	1
+ 2001              		.global	I2C_ClearIntFlag
+ 2002              		.syntax unified
+ 2003              		.thumb
+ 2004              		.thumb_func
+ 2006              	I2C_ClearIntFlag:
+ 2007              	.LVL184:
+ 2008              	.LFB111:
+ 983:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** 
+ 984:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** /*!
+ 985:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @brief     Clears the I2C interrupt flag bits.
+ 986:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 987:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     i2c: I2C selet 1 or 2
+ 988:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 989:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @param     flag: specifies the I2C flag
+ 990:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              The parameter can be any combination of the following values:
+ 991:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_SMBALT:   SMBus Alert flag
+ 992:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_TTE:      Timeout or Tlow error flag
+ 993:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_PECE:     PEC error in reception flag
+ 994:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_OVRUR:    Overrun/Underrun flag (Slave mode)
+ 995:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_AE:       Acknowledge error flag
+ 996:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_AL:       Arbitration lost flag (Master mode)
+ 997:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              @arg I2C_INT_FLAG_BERR:     Bus error flag
+ 998:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+ 999:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @retval    None
+1000:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *
+1001:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  * @note      1)I2C_INT_FLAG_STOP: Stop detection flag is cleared by software sequence:
+1002:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadIntFlag())
+1003:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a write operation to I2C_CRTL1 register (I2C_Enable()).
+1004:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            2)I2C_INT_FLAG_ADDR10: 10-bit header sent flag is cleared by software sequence:
+1005:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 (I2C_ReadIntFlag())
+1006:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by writing the second byte of the address in I2C_DATA register.
+1007:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            3)I2C_INT_FLAG_BTC: Byte transfer complete flag is cleared by software sequence:
+1008:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadIntFlag())
+1009:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a read/write to I2C_DATA register (I2C_TxData()).
+1010:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            4)I2C_INT_FLAG_ADDR: Address sent flag is cleared by software sequence:
+1011:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadIntFlag())
+1012:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a read operation to I2C_STS2 register ((void)(I2Cx->STS2)).
+1013:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *            5)I2C_INT_FLAG_START: Start bit flag is cleared software sequence:
+1014:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              a read operation to I2C_STS1 register (I2C_ReadIntFlag())
+1015:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  *              followed by a write operation to I2C_DATA register (I2C_TxData()).
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 53
+
+
+1016:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****  */
+1017:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** void I2C_ClearIntFlag(I2C_T* i2c, uint32_t flag)
+1018:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** {
+ 2009              		.loc 1 1018 1 is_stmt 1 view -0
+ 2010              		.cfi_startproc
+ 2011              		@ args = 0, pretend = 0, frame = 0
+ 2012              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2013              		@ link register save eliminated.
+1019:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c ****     i2c->STS1 = (uint16_t)~(flag & 0x00FFFFFF);
+ 2014              		.loc 1 1019 5 view .LVU479
+ 2015              		.loc 1 1019 17 is_stmt 0 view .LVU480
+ 2016 0000 C943     		mvns	r1, r1
+ 2017              	.LVL185:
+ 2018              		.loc 1 1019 17 view .LVU481
+ 2019 0002 89B2     		uxth	r1, r1
+ 2020              	.LVL186:
+ 2021              		.loc 1 1019 15 view .LVU482
+ 2022 0004 4161     		str	r1, [r0, #20]
+1020:Library/APM32F10x_StdPeriphDriver/src/apm32f10x_i2c.c **** }
+ 2023              		.loc 1 1020 1 view .LVU483
+ 2024 0006 7047     		bx	lr
+ 2025              		.cfi_endproc
+ 2026              	.LFE111:
+ 2028              		.text
+ 2029              	.Letext0:
+ 2030              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 2031              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 2032              		.file 4 "Library/Device/Geehy/APM32F10x/Include/apm32f10x.h"
+ 2033              		.file 5 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_i2c.h"
+ 2034              		.file 6 "Library/APM32F10x_StdPeriphDriver/inc/apm32f10x_rcm.h"
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 54
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apm32f10x_i2c.c
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:18     .text.I2C_Reset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:24     .text.I2C_Reset:00000000 I2C_Reset
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:72     .text.I2C_Reset:0000002c $d
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:77     .text.I2C_Config:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:83     .text.I2C_Config:00000000 I2C_Config
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:302    .text.I2C_Config:000000e8 $d
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:310    .text.I2C_ConfigStructInit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:316    .text.I2C_ConfigStructInit:00000000 I2C_ConfigStructInit
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:352    .text.I2C_Enable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:358    .text.I2C_Enable:00000000 I2C_Enable
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:377    .text.I2C_Disable:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:383    .text.I2C_Disable:00000000 I2C_Disable
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:402    .text.I2C_EnableGenerateStart:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:408    .text.I2C_EnableGenerateStart:00000000 I2C_EnableGenerateStart
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:427    .text.I2C_DisableGenerateStart:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:433    .text.I2C_DisableGenerateStart:00000000 I2C_DisableGenerateStart
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:452    .text.I2C_EnableGenerateStop:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:458    .text.I2C_EnableGenerateStop:00000000 I2C_EnableGenerateStop
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:477    .text.I2C_DisableGenerateStop:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:483    .text.I2C_DisableGenerateStop:00000000 I2C_DisableGenerateStop
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:502    .text.I2C_EnableAcknowledge:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:508    .text.I2C_EnableAcknowledge:00000000 I2C_EnableAcknowledge
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:527    .text.I2C_DisableAcknowledge:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:533    .text.I2C_DisableAcknowledge:00000000 I2C_DisableAcknowledge
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:552    .text.I2C_ConfigOwnAddress2:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:558    .text.I2C_ConfigOwnAddress2:00000000 I2C_ConfigOwnAddress2
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:577    .text.I2C_EnableDualAddress:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:583    .text.I2C_EnableDualAddress:00000000 I2C_EnableDualAddress
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:602    .text.I2C_DisableDualAddress:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:608    .text.I2C_DisableDualAddress:00000000 I2C_DisableDualAddress
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:627    .text.I2C_EnableGeneralCall:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:633    .text.I2C_EnableGeneralCall:00000000 I2C_EnableGeneralCall
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:652    .text.I2C_DisableGeneralCall:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:658    .text.I2C_DisableGeneralCall:00000000 I2C_DisableGeneralCall
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:677    .text.I2C_TxData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:683    .text.I2C_TxData:00000000 I2C_TxData
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:704    .text.I2C_RxData:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:710    .text.I2C_RxData:00000000 I2C_RxData
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:729    .text.I2C_Tx7BitAddress:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:735    .text.I2C_Tx7BitAddress:00000000 I2C_Tx7BitAddress
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:771    .text.I2C_ReadRegister:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:777    .text.I2C_ReadRegister:00000000 I2C_ReadRegister
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:790    .text.I2C_ReadRegister:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:800    .text.I2C_ReadRegister:00000012 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:901    .text.I2C_EnableSoftwareReset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:907    .text.I2C_EnableSoftwareReset:00000000 I2C_EnableSoftwareReset
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:926    .text.I2C_DisableSoftwareReset:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:932    .text.I2C_DisableSoftwareReset:00000000 I2C_DisableSoftwareReset
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:951    .text.I2C_ConfigNACKPosition:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:957    .text.I2C_ConfigNACKPosition:00000000 I2C_ConfigNACKPosition
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:986    .text.I2C_ConfigSMBusAlert:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:992    .text.I2C_ConfigSMBusAlert:00000000 I2C_ConfigSMBusAlert
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1021   .text.I2C_EnablePECTransmit:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1027   .text.I2C_EnablePECTransmit:00000000 I2C_EnablePECTransmit
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1046   .text.I2C_DisablePECTransmit:00000000 $t
+ARM GAS  C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s 			page 55
+
+
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1052   .text.I2C_DisablePECTransmit:00000000 I2C_DisablePECTransmit
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1071   .text.I2C_ConfigPECPosition:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1077   .text.I2C_ConfigPECPosition:00000000 I2C_ConfigPECPosition
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1106   .text.I2C_EnablePEC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1112   .text.I2C_EnablePEC:00000000 I2C_EnablePEC
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1131   .text.I2C_DisablePEC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1137   .text.I2C_DisablePEC:00000000 I2C_DisablePEC
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1156   .text.I2C_ReadPEC:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1162   .text.I2C_ReadPEC:00000000 I2C_ReadPEC
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1181   .text.I2C_EnableARP:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1187   .text.I2C_EnableARP:00000000 I2C_EnableARP
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1206   .text.I2C_DisableARP:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1212   .text.I2C_DisableARP:00000000 I2C_DisableARP
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1231   .text.I2C_EnableStretchClock:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1237   .text.I2C_EnableStretchClock:00000000 I2C_EnableStretchClock
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1256   .text.I2C_DisableStretchClock:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1262   .text.I2C_DisableStretchClock:00000000 I2C_DisableStretchClock
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1281   .text.I2C_ConfigFastModeDutyCycle:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1287   .text.I2C_ConfigFastModeDutyCycle:00000000 I2C_ConfigFastModeDutyCycle
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1317   .text.I2C_EnableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1323   .text.I2C_EnableDMA:00000000 I2C_EnableDMA
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1342   .text.I2C_DisableDMA:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1348   .text.I2C_DisableDMA:00000000 I2C_DisableDMA
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1367   .text.I2C_EnableDMALastTransfer:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1373   .text.I2C_EnableDMALastTransfer:00000000 I2C_EnableDMALastTransfer
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1392   .text.I2C_DisableDMALastTransfer:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1398   .text.I2C_DisableDMALastTransfer:00000000 I2C_DisableDMALastTransfer
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1417   .text.I2C_EnableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1423   .text.I2C_EnableInterrupt:00000000 I2C_EnableInterrupt
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1444   .text.I2C_DisableInterrupt:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1450   .text.I2C_DisableInterrupt:00000000 I2C_DisableInterrupt
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1469   .text.I2C_ReadEventStatus:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1475   .text.I2C_ReadEventStatus:00000000 I2C_ReadEventStatus
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1525   .text.I2C_ReadLastEvent:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1531   .text.I2C_ReadLastEvent:00000000 I2C_ReadLastEvent
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1566   .text.I2C_ReadStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1572   .text.I2C_ReadStatusFlag:00000000 I2C_ReadStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1586   .text.I2C_ReadStatusFlag:00000008 $d
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1850   .text.I2C_ClearStatusFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1856   .text.I2C_ClearStatusFlag:00000000 I2C_ClearStatusFlag
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1872   .text.I2C_ClearStatusFlag:0000000a $d
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1942   .text.I2C_ReadIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1948   .text.I2C_ReadIntFlag:00000000 I2C_ReadIntFlag
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:2000   .text.I2C_ClearIntFlag:00000000 $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:2006   .text.I2C_ClearIntFlag:00000000 I2C_ClearIntFlag
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1607   .text.I2C_ReadStatusFlag:0000001d $d
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1607   .text.I2C_ReadStatusFlag:0000001e $t
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1879   .text.I2C_ClearStatusFlag:00000011 $d
+C:\Users\geehy\AppData\Local\Temp\cchBQJaB.s:1879   .text.I2C_ClearStatusFlag:00000012 $t
+
+UNDEFINED SYMBOLS
+RCM_EnableAPB1PeriphReset
+RCM_DisableAPB1PeriphReset
+RCM_ReadPCLKFreq
